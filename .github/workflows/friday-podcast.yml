@@ -1,0 +1,29 @@
+name: friday-podcast
+
+on:
+  schedule:
+    # Fridays 06:00 ET (= 11:00 UTC during EST, 10:00 UTC during EDT)
+    - cron: '0 11 * * 5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  select:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - run: uv sync
+
+      - name: Pick trending paper and open Issue
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+        run: uv run python scripts/select_friday_paper.py

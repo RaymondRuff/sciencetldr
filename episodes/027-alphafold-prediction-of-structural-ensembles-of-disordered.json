@@ -1,0 +1,14 @@
+{
+  "guid": "866be043-3888-4759-84ba-dc6d447e1a80",
+  "title": "AlphaFold prediction of structural ensembles of disordered proteins",
+  "itunes_title": "AlphaFold prediction of structural ensembles of disordered proteins",
+  "description": "<p>DOI: 10.1038/s41467-025-56572-9</p><p></p><p>Key Points:</p><p>- Introduces AlphaFold-Metainference, a new method combining AlphaFold predictions with physics simulations</p><p>- Notable because AlphaFold was trained on structured proteins but shows surprising accuracy with disordered ones</p><p>- Validated against experimental data from 11 different disordered proteins using SAXS (small-angle X-ray scattering)</p><p>- Further validated against detailed simulations of two neurodegenerative disease-related proteins (Abeta and alpha-synuclein)</p><p></p><p>Major Implications:</p><p>- Could revolutionize study of disordered proteins involved in diseases like Alzheimer's and Parkinson's</p><p>- Suggests AlphaFold may be detecting fundamental principles of protein behavior beyond just structured proteins</p><p>- Opens new possibilities for drug discovery and personalized medicine</p><p>- May require rethinking our definition of protein \"disorder\"</p><p></p><p>Technical Details:</p><p>- AlphaFold provides distance predictions between amino acids</p><p>- Limited to predictions up to ~22 angstroms</p><p>- Metainference uses physics simulations to explore possible conformations within AlphaFold's predictions</p><p></p><p>Limitations Discussed:</p><p>- 22 angstrom distance prediction limit means some longer-range interactions may be missed</p><p>- Particularly relevant for very extended disordered regions</p><p>- May need integration with other experimental techniques for complete picture</p>",
+  "pub_date": "Fri, 21 Feb 2025 01:07:54 GMT",
+  "duration_seconds": 511,
+  "episode_number": 27,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "027-alphafold-prediction-of-structural-ensembles-of-disordered.mp3",
+  "enclosure_length_bytes": 8177833,
+  "source": "migrated_from_rss.com"
+}

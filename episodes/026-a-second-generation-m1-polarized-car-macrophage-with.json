@@ -1,0 +1,14 @@
+{
+  "guid": "7615cfb7-3979-4ec0-83c8-8922d3873fa1",
+  "title": "A second-generation M1-polarized CAR macrophage with antitumor efficacy",
+  "itunes_title": "A second-generation M1-polarized CAR macrophage with antitumor efficacy",
+  "description": "<p>DOI: 10.1038/s41590-023-01687-8</p><p></p><p>Key Points:</p><p>- Research focuses on using engineered macrophages (CAR-iMACs) instead of typical CAR T cells to fight solid tumors</p><p>- Started with iPSCs (induced pluripotent stem cells) which were differentiated into macrophages and engineered with CARs</p><p>- Created two versions:</p><p>  - First generation with CD3ζ domain</p><p>  - Second generation with added TIR domain</p><p>- Second generation showed superior results due to TIR domain activating NFκB pathway</p><p>- Testing showed complete tumor remission in liver cancer mouse models</p><p></p><p>Mechanisms:</p><p>- TIR domain helps polarize macrophages to M1 (pro-inflammatory) state</p><p>- Two-step killing process:</p><p>  1. Induces apoptosis in tumor cells</p><p>  2. Cleans up debris through efferocytosis</p><p>- Confirmed mechanism through:</p><p>  - Single cell RNA sequencing </p><p>  - Time-lapse microscopy</p><p>  - NFκB pathway activation visualization</p><p></p><p>Limitations/Challenges:</p><p>- Still preclinical (only tested in cells/mice)</p><p>- CAR-iMACs don't survive long in body</p><p>- Need more research before human trials</p><p></p><p>Clinical Implications:</p><p>- Promising for treating resistant solid tumors</p><p>- Antigen-specific targeting means fewer side effects</p><p>- Could be game-changing if survival time improved</p><p>- Works well in combination with other treatments</p>",
+  "pub_date": "Thu, 13 Feb 2025 10:00:27 GMT",
+  "duration_seconds": 843,
+  "episode_number": 26,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "026-a-second-generation-m1-polarized-car-macrophage-with.mp3",
+  "enclosure_length_bytes": 13495946,
+  "source": "migrated_from_rss.com"
+}

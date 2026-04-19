@@ -1,0 +1,14 @@
+{
+  "guid": "dd5ae342-9441-42bc-a88d-67428ca255ab",
+  "title": "Sequence clustering confounds AlphaFold2",
+  "itunes_title": "Sequence clustering confounds AlphaFold2",
+  "description": "<p><strong>Main Topic:</strong> A critical evaluation of AF-cluster, a method used to predict the structures of metamorphic proteins with AlphaFold2 (AF2).</p><p><strong>Key Points:</strong></p><ul><li>Metamorphic proteins can adopt multiple stable conformations, making their structure prediction challenging.</li><li>AF-cluster, initially presented as a solution, is called into question by Schafer et al. due to:<ul><li>Inaccurate predictions compared to random sampling.</li><li>Misidentification of non-metamorphic proteins and erroneous conformation predictions.</li><li>Discrepancies in confidence scores for predicted structures.</li></ul></li><li><strong>CF-random</strong>, a method using ColabFold with random MSAs, is introduced as a more reliable and efficient alternative.</li><li>The study highlights the need for:<ul><li><strong>Rigorous validation</strong> of computational predictions.</li><li><strong>Complementary approaches</strong> for accurate protein structure prediction.</li><li><strong>Transparency</strong> in methodology to facilitate further research.</li></ul></li></ul>",
+  "pub_date": "Mon, 26 Feb 2024 03:57:33 GMT",
+  "duration_seconds": 567,
+  "episode_number": 1,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "001-sequence-clustering-confounds-alphafold2.mp3",
+  "enclosure_length_bytes": 9073937,
+  "source": "migrated_from_rss.com"
+}

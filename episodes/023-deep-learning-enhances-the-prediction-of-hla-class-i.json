@@ -1,0 +1,14 @@
+{
+  "guid": "09758c74-8c91-4073-80b0-e59599fdaf48",
+  "title": "Deep learning enhances the prediction of  HLA class I-presented CD8+  T cell epitopes  in foreign pathogens",
+  "itunes_title": "Deep learning enhances the prediction of  HLA class I-presented CD8+  T cell epitopes  in foreign pathogens",
+  "description": "<p>DOI: 10.1038/s42256-024-00971-y</p><p>Key Topics:</p><p>- New deep learning model MUNIS for predicting CD8+ T-cell epitopes</p><p>- Implications for vaccine development and personalized medicine</p><p>- Real-world validation using Epstein-Barr virus (EBV)</p><p></p><p>Background Science:</p><p>- HLAI molecules display protein fragments (epitopes) on cell surfaces</p><p>- CD8+ T-cells recognize foreign epitopes to trigger immune response</p><p>- Traditional lab identification of epitopes is time-consuming and expensive</p><p></p><p>MUNIS Model Details:</p><p>- Bimodal architecture with two components:</p><p>1. Predicts peptide binding to HLAI molecules</p><p>2. Models antigen processing</p><p>- Trained on 650,000+ HLAI ligands</p><p>- Outperforms existing prediction tools</p><p>- Validated through cross-validation and real lab experiments</p><p></p><p>Key Results:</p><p>- Successfully identified known and novel EBV epitopes</p><p>- Triggered both effector and memory T-cell responses</p><p>- Performed comparably to experimental stability assays</p><p></p><p>Limitations:</p><p>- Not perfect at predicting immunogenicity</p><p>- Limited to subset of HLA variants</p><p>- More T-cell receptor data needed</p><p></p><p>Future Applications:</p><p>- Personalized vaccine development</p><p>- Autoimmune disease treatments</p><p>- Preparation for emerging pathogens</p><p>- More efficient vaccine design process</p><p></p><p>Next Steps:</p><p>- Incorporate more T-cell receptor data</p><p>- Expand HLA diversity in training</p><p>- Increase collaboration across fields</p><p>- Develop predictive systems for future threats</p><p></p><p>Impact:</p><p>- Could accelerate vaccine development</p><p>- Enable more personalized treatments</p><p>- Reduce experimental burden</p><p>- Help prepare for future pandemics</p>",
+  "pub_date": "Thu, 06 Feb 2025 10:00:56 GMT",
+  "duration_seconds": 623,
+  "episode_number": 23,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "023-deep-learning-enhances-the-prediction-of-hla-class-i.mp3",
+  "enclosure_length_bytes": 9980491,
+  "source": "migrated_from_rss.com"
+}

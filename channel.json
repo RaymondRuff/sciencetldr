@@ -1,0 +1,17 @@
+{
+  "title": "Science TLDR",
+  "description": "<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href=\"mailto:sciencetldrpod@gmail.com\">sciencetldrpod@gmail.com</a></p>",
+  "link": "https://raymondruff.github.io/sciencetldr/",
+  "language": "en",
+  "copyright": "Raymond Ruff 2023",
+  "author": "Raymond Ruff",
+  "itunes_type": "episodic",
+  "explicit": "false",
+  "owner_name": "Raymond Ruff",
+  "owner_email": "sciencetldrpod@gmail.com",
+  "category": "Science",
+  "podcast_guid": "691fbb09-e6fa-57d1-a62f-9393edbcbba1",
+  "podcast_locked": "yes",
+  "podcast_license": "Raymond Ruff 2023",
+  "base_url": "https://raymondruff.github.io/sciencetldr/"
+}

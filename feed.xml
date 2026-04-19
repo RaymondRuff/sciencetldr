@@ -1,0 +1,885 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <atom:link href="https://raymondruff.github.io/sciencetldr/feed.xml" rel="self" type="application/rss+xml"/>
+    <title><![CDATA[Science TLDR]]></title>
+    <link>https://raymondruff.github.io/sciencetldr/</link>
+    <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
+    <language>en</language>
+    <copyright>Raymond Ruff 2023</copyright>
+    <lastBuildDate>Wed, 24 Dec 2025 04:46:57 GMT</lastBuildDate>
+    <generator>sciencetldr/feed_builder.py</generator>
+    <itunes:author>Raymond Ruff</itunes:author>
+    <itunes:type>episodic</itunes:type>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:owner>
+      <itunes:name>Raymond Ruff</itunes:name>
+      <itunes:email>sciencetldrpod@gmail.com</itunes:email>
+    </itunes:owner>
+    <itunes:image href="https://raymondruff.github.io/sciencetldr/cover.jpg"/>
+    <itunes:category text="Science"/>
+    <image>
+      <url>https://raymondruff.github.io/sciencetldr/cover.jpg</url>
+      <title>Science TLDR</title>
+      <link>https://raymondruff.github.io/sciencetldr/</link>
+    </image>
+    <podcast:guid>691fbb09-e6fa-57d1-a62f-9393edbcbba1</podcast:guid>
+    <podcast:locked owner="sciencetldrpod@gmail.com">yes</podcast:locked>
+    <podcast:medium>podcast</podcast:medium>
+    <podcast:license>Raymond Ruff 2023</podcast:license>
+    <item>
+      <title><![CDATA[Sequence clustering confounds AlphaFold2]]></title>
+      <itunes:title><![CDATA[Sequence clustering confounds AlphaFold2]]></itunes:title>
+      <description><![CDATA[<p><strong>Main Topic:</strong> A critical evaluation of AF-cluster, a method used to predict the structures of metamorphic proteins with AlphaFold2 (AF2).</p><p><strong>Key Points:</strong></p><ul><li>Metamorphic proteins can adopt multiple stable conformations, making their structure prediction challenging.</li><li>AF-cluster, initially presented as a solution, is called into question by Schafer et al. due to:<ul><li>Inaccurate predictions compared to random sampling.</li><li>Misidentification of non-metamorphic proteins and erroneous conformation predictions.</li><li>Discrepancies in confidence scores for predicted structures.</li></ul></li><li><strong>CF-random</strong>, a method using ColabFold with random MSAs, is introduced as a more reliable and efficient alternative.</li><li>The study highlights the need for:<ul><li><strong>Rigorous validation</strong> of computational predictions.</li><li><strong>Complementary approaches</strong> for accurate protein structure prediction.</li><li><strong>Transparency</strong> in methodology to facilitate further research.</li></ul></li></ul>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-001</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/001-sequence-clustering-confounds-alphafold2.mp3" length="9073937" type="audio/mpeg"/>
+      <guid isPermaLink="false">dd5ae342-9441-42bc-a88d-67428ca255ab</guid>
+      <itunes:duration>567</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>1</itunes:episode>
+      <podcast:episode>1</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 26 Feb 2024 03:57:33 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Immunoinformatics Approach to Design a Chimeric CD70-Peptide Vaccine against Renal Cell Carcinoma]]></title>
+      <itunes:title><![CDATA[Immunoinformatics Approach to Design a Chimeric CD70-Peptide Vaccine against Renal Cell Carcinoma]]></itunes:title>
+      <description><![CDATA[<p><strong>This episode dives into a promising study utilizing immunoinformatics to design a novel vaccine against Renal Cell Carcinoma (RCC), a prevalent and deadly form of kidney cancer.</strong></p><p><strong>Key Findings:</strong></p><ul><li>Researchers identified multiple immunogenic epitopes within the CD70 protein, a molecule overexpressed in RCC.</li><li>These epitopes were carefully selected based on their antigenicity, non-allergenicity, and non-toxicity.</li><li>The final vaccine constructs combined these CD70 epitopes with a cell-penetrating peptide (CPP) and the entire sequence of tumor necrosis factor-α (TNF-α) as an adjuvant.</li><li>Computational analyses predicted strong binding affinity between the vaccine constructs and the TNF receptor, suggesting efficient uptake by antigen-presenting cells.</li><li>Molecular dynamics simulations confirmed the stability of the vaccine-receptor complex.</li><li>In silico cloning and codon optimization indicated high expression potential in E. coli.</li><li>Immune simulations predicted a robust immune response, including B cell activation, T cell proliferation, and production of key cytokines like IFN-γ and IL-2.</li></ul><p><strong>Discussion Points:</strong></p><ul><li>Advantages of this multiepitope vaccine design:<ul><li>Targets multiple epitopes, potentially overcoming tumor heterogeneity and antigen loss.</li><li>Includes both CD8+ and CD4+ T cell epitopes, promoting a comprehensive immune response.</li><li>Utilizes CPP and TNF-α to enhance immunogenicity and uptake by antigen-presenting cells.</li></ul></li><li>Need for further research:<ul><li>Validate the in silico findings through in vitro and in vivo experiments.</li><li>Assess the safety and efficacy of the vaccine in preclinical and clinical settings.</li><li>Optimize vaccine delivery methods and investigate potential side effects.</li></ul></li></ul><p><strong>Top Three Takeaways:</strong></p><ol><li>Immunoinformatics offers a powerful tool for designing effective and safe multiepitope vaccines against complex diseases like RCC.</li><li>The CD70-CPP-TNF vaccine construct shows promising potential for triggering a robust immune response against RCC.</li><li>Further research is needed to translate these findings into clinical practice and improve RCC treatment outcomes.</li></ol><p><strong>Future Directions:</strong></p><ul><li>Conduct preclinical and clinical trials to evaluate the vaccine's safety and efficacy.</li><li>Explore different vaccine delivery methods and adjuvants to optimize immune response.</li><li>Investigate the potential of this vaccine platform for other types of cancer.</li></ul><p><strong>Overall, this study paves the way for novel and effective immunotherapies against RCC, offering hope for improved patient outcomes.</strong></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-002</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/002-immunoinformatics-approach-to-design-a-chimeric-cd70-peptide.mp3" length="10922571" type="audio/mpeg"/>
+      <guid isPermaLink="false">8bb3fd99-1d10-468a-b274-e3f81b1c69eb</guid>
+      <itunes:duration>682</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>2</itunes:episode>
+      <podcast:episode>2</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 20 Mar 2024 01:43:34 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Neutrophil profiling illuminates anti-tumor antigen-presenting potency]]></title>
+      <itunes:title><![CDATA[Neutrophil profiling illuminates anti-tumor antigen-presenting potency]]></itunes:title>
+      <description><![CDATA[<p>This episode explores a groundbreaking study that unveils the remarkable diversity and potential of neutrophils in cancer immunotherapy.</p><p><strong>Key Findings:</strong></p><ul><li>Researchers identified 10 distinct neutrophil states within the tumor microenvironment, including an antigen-presenting state characterized by HLA-DR expression.</li><li>HLA-DR+ neutrophils can effectively present tumor neoantigens and activate T cell responses, offering a promising avenue for novel immunotherapies.</li><li>Leucine metabolism plays a crucial role in activating the antigen-presenting program in neutrophils, providing a potential metabolic target for therapeutic intervention.</li></ul><p><strong>Discussion Points:</strong></p><ul><li>Advantages of neutrophils as antigen-presenting cells: abundance, rapid response, phagocytic capabilities, and short lifespan.</li><li>Need for further research to optimize and translate these findings into clinical practice, including exploring leucine delivery methods and investigating potential side effects.</li><li>Importance of understanding the mechanisms behind antigen-independent T cell activation by HLA-DR+ neutrophils.</li></ul><p><strong>Limitations:</strong></p><ul><li>Relatively small sample size; need for validation in larger cohorts.</li><li>Potential adverse effects of leucine-rich diet require further investigation.</li><li>Mechanisms of antigen-independent T cell activation remain unclear.</li></ul><p><strong>Top Three Takeaways:</strong></p><ol><li>Neutrophils exhibit remarkable diversity and functional specialization within the tumor microenvironment.</li><li>HLA-DR+ neutrophils hold promise as alternative antigen-presenting cells for cancer immunotherapy.</li><li>Leucine metabolism may serve as a metabolic switch to enhance the anti-tumor efficacy of neutrophils.</li></ol><p><strong>Future Directions:</strong></p><ul><li>Develop strategies to reprogram neutrophils into the antigen-presenting state.</li><li>Investigate the safety and efficacy of neutrophil-based therapies in preclinical and clinical settings.</li><li>Elucidate the mechanisms of antigen-independent T cell activation by HLA-DR+ neutrophils.</li></ul><p><strong>Overall, this study opens up exciting new possibilities for harnessing the power of neutrophils in the fight against cancer.</strong></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-003</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/003-neutrophil-profiling-illuminates-anti-tumor-antigen.mp3" length="20131048" type="audio/mpeg"/>
+      <guid isPermaLink="false">38e20831-05f8-4442-8857-4b27668a1267</guid>
+      <itunes:duration>1258</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>3</itunes:episode>
+      <podcast:episode>3</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 20 Mar 2024 02:00:19 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[ITPRIPL1 binds CD3ε to impede T cell activation and enable tumor immune evasion]]></title>
+      <itunes:title><![CDATA[ITPRIPL1 binds CD3ε to impede T cell activation and enable tumor immune evasion]]></itunes:title>
+      <description><![CDATA[<p><strong>This episode delves into a fascinating study that uncovers a novel immune checkpoint molecule, ITPRIPL1, and its role in suppressing T cell activation and enabling tumor immune evasion.</strong></p><p><strong>Key Findings:</strong></p><ul><li>ITPRIPL1, a protein normally enriched in the testes, is overexpressed in various human cancers, particularly those with low or no PD-L1 expression.</li><li>ITPRIPL1 directly binds to CD3ε, a component of the T cell receptor complex, and inhibits downstream signaling pathways, ultimately impeding T cell activation and function.</li><li>ITPRIPL1 knockout mice exhibit increased T cell infiltration in the testes, suggesting its role in maintaining immune privilege.</li><li>A neutralizing antibody targeting ITPRIPL1 effectively reverses T cell suppression in vitro and inhibits tumor growth in vivo by promoting T cell infiltration into the tumor microenvironment.</li><li>High ITPRIPL1 expression in human tumor samples is associated with low CD8+ T cell infiltration and worse patient survival.</li></ul><p><strong>Discussion Points:</strong></p><ul><li>The implications of discovering a natural ligand for CD3ε and its role in regulating T cell activity.</li><li>The potential of ITPRIPL1 as a therapeutic target for cancer immunotherapy, particularly in combination with existing immune checkpoint blockade therapies.</li><li>The importance of understanding the complex interplay between different immune checkpoint pathways in the tumor microenvironment.</li></ul><p><strong>Limitations:</strong></p><ul><li>The need for further investigation of the correlation between ITPRIPL1 and PD-L1 expression at the protein level.</li><li>The need for a more thorough understanding of the molecular mechanisms underlying ITPRIPL1-mediated T cell suppression.</li><li>Further research is required to explore the efficacy and safety of anti-ITPRIPL1 therapy in clinical settings.</li></ul><p><strong>Top Three Takeaways:</strong></p><ul><li>ITPRIPL1 is a novel immune checkpoint molecule that plays a crucial role in tumor immune evasion.</li><li>Targeting ITPRIPL1 with neutralizing antibodies holds promise for improving cancer immunotherapy outcomes.</li><li>This research highlights the importance of exploring alternative immune checkpoint pathways to overcome resistance to existing therapies.</li></ul><p><strong>Tune in to learn about this groundbreaking research and its potential to revolutionize cancer treatment!</strong></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-004</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/004-itpripl1-binds-cd3e-to-impede-t-cell-activation-and-enable.mp3" length="14311802" type="audio/mpeg"/>
+      <guid isPermaLink="false">3f0286b7-3549-42fd-b943-0973ebfd8d9f</guid>
+      <itunes:duration>894</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>4</itunes:episode>
+      <podcast:episode>4</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 23 Apr 2024 01:27:55 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Circadian tumor infiltration and function of CD8+ T cells dictate immunotherapy efficacy]]></title>
+      <itunes:title><![CDATA[Circadian tumor infiltration and function of CD8+ T cells dictate immunotherapy efficacy]]></itunes:title>
+      <description><![CDATA[<p>Reference PMID: 38723627</p><p><strong>This episode explores groundbreaking research demonstrating that the efficacy of cancer immunotherapy is influenced by the time of day of administration, highlighting the critical role of circadian rhythms in shaping anti-tumor immune responses.</strong></p><p><strong>Key Findings:</strong></p><ul><li>The number of tumor-infiltrating leukocytes (TILs) in melanoma tumors oscillates throughout the day, peaking in the evening in mouse models.</li><li>This rhythmicity is driven by the circadian clock in endothelial cells lining the blood vessels in the tumor, which regulate the expression of the adhesion molecule ICAM-1.</li><li>Both the quantity and the phenotype of TILs exhibit circadian oscillations, with a more anti-tumorigenic profile present in the evening.</li><li>The expression of the immune checkpoint molecule PD-1 on CD8+ T cells also oscillates, peaking in the morning and reaching its trough in the evening.</li><li>Timed administration of CAR T-cell therapy and anti-PD-1 therapy in mouse models demonstrated enhanced efficacy when treatments were given in the evening, coinciding with peak TIL infiltration and a more favorable T cell phenotype.</li><li>Analyses of human melanoma samples revealed that the number of TILs and the ratio of exhausted to non-exhausted CD8+ T cells also varied depending on the time of day, with a more favorable immune state predicted for the morning hours.</li><li>A higher expression of the evening T cell gene signature identified in mice correlated with better response to immune checkpoint blockade in human patients.</li></ul><p><strong>Discussion Points:</strong></p><ul><li>The importance of considering circadian rhythms as a key factor in anti-tumor immunity and immunotherapy response.</li><li>The potential of optimizing cancer treatment through chronotherapy, timing interventions to coincide with the body's natural rhythms.</li><li>The need for prospective clinical trials to validate the optimal time of day for administering immunotherapies in humans.</li><li>The complex interplay between different immune cell populations and their circadian regulation within the tumor microenvironment.</li></ul><p><strong>Limitations:</strong></p><ul><li>The primary focus on melanoma models necessitates further research to determine if these findings apply to other cancer types.</li><li>The specific molecular mechanisms underlying the observed circadian oscillations require further investigation.</li></ul><p><strong>Top Three Takeaways:</strong></p><ol><li><strong>Circadian rhythms have a profound impact on the tumor immune microenvironment and can influence the efficacy of cancer immunotherapies.</strong></li><li><strong>Timing immunotherapies to coincide with peak immune cell infiltration and a more favorable anti-tumorigenic state could significantly improve treatment outcomes.</strong></li><li><strong>This research opens up new avenues for personalized cancer treatment strategies based on an individual's circadian rhythms.</strong></li></ol><p><strong>Tune in to learn about this groundbreaking research and its potential to revolutionize cancer treatment by harnessing the power of our internal biological clocks!</strong></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-005</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/005-circadian-tumor-infiltration-and-function-of-cd8-t-cells.mp3" length="22709856" type="audio/mpeg"/>
+      <guid isPermaLink="false">e1fe9c17-58b5-4f4a-a428-ba88047e0dbc</guid>
+      <itunes:duration>1419</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>5</itunes:episode>
+      <podcast:episode>5</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 15 May 2024 01:48:47 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Osr2 functions as a biomechanical checkpoint to aggravate CD8+ T cell exhaustion in tumor]]></title>
+      <itunes:title><![CDATA[Osr2 functions as a biomechanical checkpoint to aggravate CD8+ T cell exhaustion in tumor]]></itunes:title>
+      <description><![CDATA[<p>This episode explores groundbreaking research that uncovers a novel link between the mechanical properties of the tumor microenvironment and CD8+ T cell exhaustion, a major hurdle for effective cancer immunotherapy.</p><p><strong>Key Findings:</strong></p><ul><li>Stiffer tumor regions, rich in collagen, harbor a higher proportion of exhausted CD8+ T cells.</li><li>Mechanical stress, mimicked by culturing T cells on stiff matrices or using a cell stretching device, exacerbates T cell exhaustion.</li><li>The mechanosensitive ion channel Piezo1 is essential for this process, as Piezo1-deficient T cells show reduced exhaustion in response to mechanical stress.</li><li>The transcription factor Osr2 emerges as a key downstream mediator of this pathway, specifically induced in activated T cells under mechanical stress.</li><li>Osr2 expression is directly regulated by a signaling cascade initiated by Piezo1 activation: mechanical force -&gt; Piezo1 -&gt; calcium influx -&gt; CaMKII activation -&gt; CREB activation -&gt; <em>Osr2</em> gene expression.</li><li>Osr2 is primarily expressed in highly exhausted T cells characterized by PD-1 and TIM-3 expression.</li><li>Osr2 overexpression is sufficient to drive T cell exhaustion, even in the absence of mechanical stress.</li><li>Osr2 acts as a transcriptional repressor, recruiting HDAC3 to silence genes essential for T cell effector function.</li><li>Deleting Osr2 in T cells enhances their ability to control tumor growth, suggesting a potential therapeutic target.</li></ul><p><strong>Discussion Points:</strong></p><ul><li>The implications of mechanical stress as a critical regulator of T cell function in the tumor microenvironment.</li><li>The interplay between mechanical cues and traditional immune checkpoints like PD-1 and TIM-3.</li><li>The potential for developing therapies that target Osr2 or other components of the Piezo1-Osr2 pathway to enhance cancer immunotherapy.</li></ul><p><strong>Limitations:</strong></p><ul><li>The need for further investigation into the role of other mechanosensitive ion channels and signaling pathways.</li><li>The need to explore the potential for off-target effects when targeting the Piezo1-Osr2 pathway therapeutically.</li><li>The need for clinical trials to assess the safety and efficacy of Osr2-targeted therapies in human cancer patients.</li></ul><p><strong>Top Three Takeaways:</strong></p><ul><li>The biomechanical properties of the tumor microenvironment play a critical role in shaping T cell responses.</li><li>Osr2 is a novel, mechanically responsive transcription factor that promotes T cell exhaustion and could be a valuable therapeutic target.</li><li>This research highlights the importance of considering the physical context of the tumor microenvironment when developing cancer immunotherapies.</li></ul><p>Tune in to learn more about this fascinating research and its potential to revolutionize our understanding of and approach to cancer treatment!</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-006</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/006-osr2-functions-as-a-biomechanical-checkpoint-to-aggravate.mp3" length="16198888" type="audio/mpeg"/>
+      <guid isPermaLink="false">5f61fa95-5531-4872-bf5c-173a9480a30f</guid>
+      <itunes:duration>1012</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>6</itunes:episode>
+      <podcast:episode>6</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 11 Jul 2024 01:28:27 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[In vivo dendritic cell reprogramming for cancer immunotherapy]]></title>
+      <itunes:title><![CDATA[In vivo dendritic cell reprogramming for cancer immunotherapy]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1126/science.adn9083">10.1126/science.adn9083</a></p><p></p><p>This episode delves into a novel approach to cancer immunotherapy: in vivo reprogramming of tumor cells into type 1 conventional dendritic cells (cDC1s) using the transcription factors PU.1, IRF8, and BATF3 (PIB).</p><p><strong>Key Findings:</strong></p><ul><li>PIB overexpression reprograms tumor cells into cDC1-like cells in vivo, inducing robust, systemic antitumor immunity in mouse melanoma models.</li><li>Reprogrammed tumor cells remodel the tumor microenvironment (TME), recruiting and expanding polyclonal cytotoxic T cells, and forming tertiary lymphoid structure (TLS)-like formations.</li><li>In vivo reprogramming establishes long-term systemic immunity, protecting mice from tumor re-challenge.</li><li>Reprogramming to immunogenic dendritic-like cells occurs in human tumor spheroids and xenografts, independent of immunosuppression.</li><li>Adenoviral vectors effectively deliver PIB factors to tumors in situ, eliciting potent antitumor responses, even at low doses.</li><li>A gene therapy approach using adenoviral PIB delivery combined with immune checkpoint blockade (ICB) results in complete tumor regression and long-term immunological memory in mice.</li></ul><p><strong>Discussion Points:</strong></p><ul><li>The potential of in vivo cDC1 reprogramming as a novel, tumor-agnostic, and personalized immunotherapy modality.</li><li>The role of CD4+ T cells as critical effectors in PIB-mediated antitumor immunity.</li><li>The significance of TLS formation in reprogrammed tumors and its potential as a predictive biomarker.</li><li>The advantages of adenoviral vectors for PIB delivery and their potential for clinical translation.</li><li>The potential synergy of in vivo cDC1 reprogramming with other immunotherapies, such as adoptive T cell therapy or agonistic CD40 antibodies.</li></ul><p><strong>Limitations:</strong></p><ul><li>The need to further investigate the contribution of partially versus completely reprogrammed cells to the antitumor response.</li><li>The need to explore the long-term safety and efficacy of this approach in humans.</li><li>The need to optimize delivery methods and reprogramming efficiency for clinical application.</li></ul><p><strong>Top Three Takeaways:</strong></p><ul><li>In vivo reprogramming of tumor cells into cDC1s offers a promising new strategy for cancer immunotherapy, effectively turning the tumor itself into a weapon against cancer.</li><li>This approach triggers robust, systemic, and long-lasting antitumor immunity, offering the potential for durable responses and protection from recurrence.</li><li>Adenoviral delivery of PIB provides a clinically translatable platform for a gene therapy approach to cDC1 reprogramming, paving the way for future clinical trials.</li></ul>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-007</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/007-in-vivo-dendritic-cell-reprogramming-for-cancer.mp3" length="22373399" type="audio/mpeg"/>
+      <guid isPermaLink="false">0856c91e-5a70-4757-a799-a451c8a3bf7a</guid>
+      <itunes:duration>1398</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>7</itunes:episode>
+      <podcast:episode>7</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 10 Oct 2024 01:06:56 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[The hallmarks of cancer immune evasion]]></title>
+      <itunes:title><![CDATA[The hallmarks of cancer immune evasion]]></itunes:title>
+      <description><![CDATA[<p><strong>Review: The Hallmarks of Cancer Immune Evasion</strong></p><p>DOI: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1016/j.ccell.2024.09.010">10.1016/j.ccell.2024.09.010</a></p><p><em>Claudia Galassi, Timothy A. Chan, Ilio Vitale &amp; Lorenzo Galluzzi</em></p><p><strong>Central Idea:</strong> This review proposes a "Three Cs" framework (Camouflage, Coercion, and Cytoprotection) to categorize the diverse mechanisms cancer cells utilize to evade the immune system.</p><p><strong>Key Concepts:</strong></p><ul><li><strong>Camouflage:</strong> Hiding from immune detection.<ul><li>Downregulation of MHC class I molecules and/or associated proteins (e.g., B2M, TAP1/2).</li><li>Epigenetic silencing of MHC and antigen processing genes.</li><li>Impaired chemoattraction through altered ATP, ANXA1, and chemokine (e.g., CXCL10, CCL2) signaling.</li><li>Defective ICD-driven phagocytosis via altered CALR exposure or signaling.</li><li>Physical immune exclusion by CAFs, TAMs, or TANs via mechanisms including TGFβ1 signaling or NET formation.</li></ul></li><li><strong>Coercion:</strong> Suppressing immune cell activity.<ul><li>Upregulation of immune checkpoint ligands (e.g., PD-L1, HLA-E, CD47).</li><li>Defective PRR, DAMP, and type I IFN signaling (e.g., altered CGAS-STING pathway, viral mimicry impairment).</li><li>Altered cytokine secretion favoring anti-inflammatory molecules (e.g., CCL2, TGFβ1, CXCL8, IL33) over pro-inflammatory factors (e.g., IFNs, IL1B).</li><li>Metabolic modulation of the TME by depleting nutrients (e.g., glucose, glutamine, methionine) or releasing immunosuppressive metabolites (e.g., adenosine, kynurenine, lactate, TCA cycle byproducts, bioactive lipids like PGE2).</li></ul></li><li><strong>Cytoprotection:</strong> Resisting immune-mediated killing.<ul><li>Altered immunological synapse formation.</li><li>Defective cell death signaling (e.g., mutations in CASP8, downregulation of FAS, impaired TNF/IFNG signaling).</li><li>Compensatory mechanisms like autophagy upregulation.</li></ul></li></ul><p><strong>Clinical Translation:</strong></p><ul><li>The review highlights existing and emerging immunotherapies targeting the "Three Cs."</li><li>Approved agents: ICIs targeting PD-1/PD-L1, CTLA-4, LAG-3; CAR T cells; bispecific antibodies; some cytokine therapies.</li><li>Investigational strategies: Inhibitors of other immune checkpoints (e.g., TIM-3, TIGIT, VISTA, NKG2A, CD47); metabolic modulators targeting glutamine, methionine, lactate, or adenosine pathways; STING agonists; and agents targeting multiple mechanisms simultaneously (e.g., epigenetic modifiers, PRMT5/KDM1A inhibitors).</li></ul><p><strong>Limitations &amp; Future Directions:</strong></p><ul><li>Some evasion mechanisms don't neatly fall into the "Three Cs" framework.</li><li>Intratumoral heterogeneity: Different tumor regions might employ different "Cs."</li><li>Need for more specific and effective therapies targeting metabolic pathways.</li><li>Importance of developing biomarkers to predict response to specific immunotherapies, especially those beyond PD-L1 expression.</li><li>The need for better understanding the hierarchy of the three "C"s as drivers of resistance and thus targets for therapy.</li></ul>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-008</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/008-the-hallmarks-of-cancer-immune-evasion.mp3" length="23531982" type="audio/mpeg"/>
+      <guid isPermaLink="false">21169b0e-5325-4af1-a06b-017355945976</guid>
+      <itunes:duration>1470</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>8</itunes:episode>
+      <podcast:episode>8</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 18 Oct 2024 18:16:46 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Engineered allogeneic T cells decoupling T-cell-receptor and CD3 signalling enhance the antitumour activity of bispecific antibodies]]></title>
+      <itunes:title><![CDATA[Engineered allogeneic T cells decoupling T-cell-receptor and CD3 signalling enhance the antitumour activity of bispecific antibodies]]></itunes:title>
+      <description><![CDATA[<p><strong>Authors:</strong> Kapetanovic et al. </p><p><strong>DOI:</strong>  <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1038/s41551-024-01255-x">10.1038/s41551-024-01255-x</a></p><p><strong>Central Idea:</strong> This study demonstrates a method to engineer allogeneic T cells that are unresponsive to their native target antigen, thereby reducing the risk of graft-versus-host disease (GvHD), while retaining their ability to be activated by bispecific antibodies (biAbs) for cancer immunotherapy. These "Allogeneic-Engineered-Decoupled" (AED) T cells could pave the way for "off-the-shelf" T cell therapies combined with biAbs.</p><p><strong>Key Concepts:</strong></p><ul><li><strong>BiAb limitations:</strong> Current biAb therapies rely on the patient's own T cells, which are often compromised in cancer patients, limiting effectiveness. Allogeneic T cells offer a potential solution, but risk causing GvHD.</li><li><strong>Decoupling TCR and CD3 signaling:</strong> Researchers engineered T cells by mutating a conserved motif (FGxGT) within the T cell receptor (TCR) alpha chain. This mutation disrupts the link between TCR antigen recognition and downstream CD3 signaling activation.</li><li><strong>AED T cell function:</strong> AED T cells don't respond to their native antigen but can still be activated through CD3 by biAbs like blinatumomab, triggering their cancer-killing abilities.</li><li><strong>In vitro validation:</strong> AED T cells showed reduced proliferation, cytokine release, and cytotoxicity in response to their native antigen, but normal activation and tumor cell killing when stimulated with blinatumomab and CD19+ tumor cells.</li><li><strong>In vivo validation (mouse model):</strong> AED T cells effectively eliminated CD19+ tumors in mice when combined with blinatumomab, without signs of alloreactivity. Control allogeneic T cells <em>did</em> show signs of alloreactivity.</li></ul><p><strong>Further Research/Unanswered Questions:</strong></p><ul><li>Optimizing the engineering process and exploring other mutations for even more precise control of T cell activity.</li><li>Testing the effectiveness of AED T cells with different types of biAbs and against various cancer types.</li><li>Addressing the potential for host-versus-graft disease (HvGD), where the recipient's immune system attacks the donor T cells.</li><li>Investigating the long-term safety and efficacy of AED T cell therapy in human clinical trials.</li></ul><p></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-009</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/009-engineered-allogeneic-t-cells-decoupling-t-cell-receptor-and.mp3" length="18851675" type="audio/mpeg"/>
+      <guid isPermaLink="false">b7b12eff-21a6-4fd4-974b-60185c4807bc</guid>
+      <itunes:duration>1178</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>9</itunes:episode>
+      <podcast:episode>9</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 22 Oct 2024 01:24:11 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Probiotic neoantigen delivery vectors for precision cancer immunotherapy]]></title>
+      <itunes:title><![CDATA[Probiotic neoantigen delivery vectors for precision cancer immunotherapy]]></itunes:title>
+      <description><![CDATA[<p><strong>Authors:</strong> Redenti et al.</p><p><strong>DOI:</strong> 10.1038/s41586-024-08033-4</p><p><strong>Central Idea:</strong> This study engineers a probiotic <em>E. coli</em> Nissle 1917 strain to deliver tumor-specific neoantigens, creating a potent in situ cancer vaccine. This engineered probiotic effectively stimulates anti-tumor immunity and controls or eliminates tumor growth in mouse models of colorectal cancer and melanoma.</p><p><strong>Key Concepts:</strong></p><ul><li><strong>Neoantigen-based vaccines:</strong> Neoantigens are tumor-specific mutations, making them ideal targets for immunotherapy. Existing neoantigen vaccine approaches have shown limited efficacy.</li><li><strong>Engineered <em>E. coli</em> vector:</strong> Researchers modified <em>E. coli</em> Nissle 1917 to enhance neoantigen production and delivery. Key modifications include removing cryptic plasmids and Lon/OmpT proteases, increasing phagocytosis susceptibility, and expressing listeriolysin O (LLO).</li><li><strong>Enhanced neoantigen production:</strong> Removing proteases and cryptic plasmids significantly boosted neoantigen expression within the bacteria.</li><li><strong>Improved antigen presentation:</strong> Increased phagocytosis and LLO expression enhanced neoantigen uptake and presentation by antigen-presenting cells (APCs), including MHC class I presentation via cytosolic delivery.</li><li><strong>Antitumor efficacy:</strong> The engineered <em>E. coli</em> vaccine elicited potent T cell responses, controlled tumor growth, and even eradicated tumors in both primary and metastatic tumor models. Intravenous administration proved effective, overcoming limitations of direct tumor injection.</li><li><strong>Systemic anti-tumor immunity:</strong> The vaccine induced systemic anti-tumor immunity, enabling the elimination of distant, untreated tumors.</li><li><strong>Favorable safety profile:</strong> The engineered bacteria exhibited reduced persistence in the bloodstream and minimal side effects compared to wild-type <em>E. coli</em>.</li></ul><p><strong>Further Research/Unanswered Questions:</strong></p><ul><li><strong>Optimizing neoantigen selection:</strong> Refining neoantigen prediction algorithms and selection criteria for maximal immunogenicity.</li><li><strong>Clinical translation:</strong> Evaluating the safety and efficacy of this approach in human clinical trials.</li><li><strong>Combination therapies:</strong> Exploring the potential for synergy with other immunotherapies, such as checkpoint inhibitors or adoptive cell therapies.</li><li><strong>Long-term immunity and durability of response:</strong> Assessing the duration of anti-tumor immunity and the potential for tumor recurrence.</li><li><strong>Broader applicability:</strong> Testing the effectiveness against other cancer types.</li><li><strong>Manufacturing and scalability:</strong> Developing scalable manufacturing processes for clinical use.</li><li><strong>Microbiome impact:</strong> Investigating the long-term impact of the engineered bacteria on the gut microbiome.</li></ul>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-010</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/010-probiotic-neoantigen-delivery-vectors-for-precision-cancer.mp3" length="16602636" type="audio/mpeg"/>
+      <guid isPermaLink="false">abc38c74-aa67-47a9-be7e-b747dd85a603</guid>
+      <itunes:duration>1037</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>10</itunes:episode>
+      <podcast:episode>10</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 25 Oct 2024 01:09:08 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Decomposing causality into its synergistic, unique, and redundant components]]></title>
+      <itunes:title><![CDATA[Decomposing causality into its synergistic, unique, and redundant components]]></itunes:title>
+      <description><![CDATA[<p><strong>DOI</strong>: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1098/rsta.2021.0150">10.1098/rsta.2021.0150</a></p><p><strong>Central Idea:</strong> This paper introduces SURD (Synergistic-Unique-Redundant Decomposition), a novel framework for quantifying causality by decomposing it into its synergistic, unique, and redundant components based on information theory. SURD overcomes limitations of existing causal inference methods, especially in complex systems with nonlinear dependencies, stochasticity, and hidden variables.</p><p><strong>Key Concepts:</strong></p><ul><li><strong>Causality vs. Correlation/Association:</strong> The paper emphasizes the distinction between causality (physical influence), correlation (monotonic association), and association (statistical relationship). SURD focuses on quantifying actual causal influences.</li><li><strong>Mediator, Confounder, Collider Variables:</strong> SURD effectively identifies these fundamental causal interactions:<ul><li><strong>Mediator:</strong> Variable transmitting influence (A → B → C).</li><li><strong>Confounder:</strong> Common cause (B → A and B → C).</li><li><strong>Collider:</strong> Common effect (A → B and C → B) – can be redundant (separate influences on same effect) or synergistic (combined influence greater than individual effects).</li></ul></li><li><strong>Information-Theoretic Approach:</strong> SURD uses information theory (Shannon entropy and mutual information) to quantify the information gain about a target variable's future based on observing other variables' pasts.</li><li><strong>Redundant Causality (ΔI):</strong> Information about the target shared by multiple sources.</li><li><strong>Unique Causality (ΔI):</strong> Information unique to a specific source.</li><li><strong>Synergistic Causality (ΔI):</strong> Information gain from combined source effects exceeding individual contributions.</li><li><strong>Causality Leak (ΔI):</strong> Causality from unobserved variables, indicating potential hidden influences.</li><li><strong>Normalization:</strong> SURD normalizes causality components to reveal relative importance.</li></ul><p><strong>Further Research/Unanswered Questions:</strong></p><ul><li><strong>Computational Cost:</strong> Optimize SURD for large datasets and high dimensions.</li><li><strong>Applications:</strong> Apply SURD across various scientific domains (e.g., climate science, neuroscience, economics).</li><li><strong>Theoretical Foundations:</strong> Deepen the theoretical basis of SURD and its connection to other causality frameworks.</li><li><strong>Higher-Order Interactions:</strong> Explore capturing higher-order synergistic interactions beyond pairwise effects.</li></ul>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-011</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/011-decomposing-causality-into-its-synergistic-unique-and.mp3" length="10319874" type="audio/mpeg"/>
+      <guid isPermaLink="false">f02847a8-6a89-4427-a4ea-f3c10781f417</guid>
+      <itunes:duration>644</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>11</itunes:episode>
+      <podcast:episode>11</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sun, 03 Nov 2024 02:02:03 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Coordinated inheritance of extrachromosomal DNAs in cancer cells]]></title>
+      <itunes:title><![CDATA[Coordinated inheritance of extrachromosomal DNAs in cancer cells]]></itunes:title>
+      <description><![CDATA[<p><strong>DOI</strong>: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1038/s41586-024-07861-8">10.1038/s41586-024-07861-8</a></p><p></p><p><strong>Central Idea</strong>: This paper investigates the coordinated inheritance of extrachromosomal DNAs (ecDNAs) in cancer cells, revealing that distinct ecDNA species co-segregate during mitosis, influenced by intermolecular interactions and transcription. This coordinated inheritance impacts oncogene co-amplification, ecDNA specialization, and responses to targeted therapy.</p><p><strong>Key Concepts</strong>:</p><ul><li>ecDNAs: Circular DNA molecules, common in cancer, driving oncogene amplification and intratumoral heterogeneity.</li><li>ecDNA Species: Distinct ecDNA sequences within a cell, potentially carrying different oncogenes or regulatory elements.</li><li>Co-segregation: The non-random, correlated inheritance of distinct ecDNA species into daughter cells during mitosis.</li><li>Co-selection: The selective advantage conferred by the combined presence of multiple ecDNA species.</li><li>Co-occurrence: The presence of multiple ecDNA species within the same cell or tumor.</li><li>Intermolecular Interactions: Physical proximity and interaction between ecDNA species within the nucleus, particularly in ecDNA hubs.</li><li>Transcriptional Influence: Active transcription at the start of mitosis facilitates ecDNA co-segregation.</li><li>Enhancer-only ecDNAs: Specialized ecDNAs containing enhancer elements but no oncogenes, contributing to oncogene regulation through intermolecular interactions.</li><li>Therapeutic Implications: Coordinated inheritance affects drug resistance mechanisms and informs therapeutic strategies for targeting cooperating oncogenes.</li><li>Chromosomal Integration: ecDNA integration into chromosomes as a potential mechanism for escaping drug pressure and co-inheritance.</li></ul><p><strong>Further Research/Unanswered Questions</strong>:</p><ul><li>Mechanism of Transcriptional Influence: Further investigate the precise mechanism by which transcription promotes co-segregation (e.g., specific protein factors involved).</li><li>Generalizability to Other Episomes: Explore whether coordinated inheritance applies to other extrachromosomal elements like viral episomes or biomolecular condensates.</li><li>Clinical Translation: Develop therapeutic strategies to exploit coordinated inheritance for improved cancer treatment (e.g., simultaneously targeting co-segregating oncogenes).</li><li>Role in Cancer Evolution: Further investigate the contribution of coordinated inheritance to the overall dynamics of cancer evolution and adaptation.</li><li>Higher-Order Interactions: Explore the potential for higher-order interactions between more than two ecDNA species and their impact on co-assortment.</li><li>Long-term Effects of Drug Treatment: Investigate the long-term consequences of coordinated ecDNA dynamics under continuous and intermittent drug exposure.</li></ul>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-012</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/012-coordinated-inheritance-of-extrachromosomal-dnas-in-cancer.mp3" length="20601252" type="audio/mpeg"/>
+      <guid isPermaLink="false">02b9038e-68c0-447a-8fdc-7ba948597d9e</guid>
+      <itunes:duration>1287</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>12</itunes:episode>
+      <podcast:episode>12</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 13 Nov 2024 02:14:12 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[A mechanism for hypoxia-induced inflammatory cell death in cancer]]></title>
+      <itunes:title><![CDATA[A mechanism for hypoxia-induced inflammatory cell death in cancer]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1038/s41586-024-08136-y">10.1038/s41586-024-08136-y</a></p><p></p><p><strong>Central Idea:</strong> This paper elucidates a novel mechanism for hypoxia-induced inflammatory cell death in cancer, specifically pyroptosis, mediated by a PTP1B-RNF213-CYLD-SPATA2 pathway. This pathway presents potential therapeutic targets for resistant hypoxic tumors.</p><p><strong>Key Concepts:</strong></p><ul><li><strong>Hypoxia and Cancer:</strong> Hypoxia within the tumor microenvironment promotes resistance to therapy and cancer recurrence. This paper focuses on the mechanisms of cell death in hypoxic cancer cells.</li><li><strong>PTP1B and RNF213 Regulation:</strong> Protein tyrosine phosphatase PTP1B and the E3 ubiquitin ligase RNF213 are key players. PTP1B inhibition activates RNF213, the mechanism of which is explored through RNF213 tyrosine phosphorylation (specifically at Tyr-1275) by ABL1/2 kinases and subsequent control of RNF213 oligomerization and RZ domain activation.</li><li><strong>CYLD/SPATA2 Ubiquitylation and Degradation:</strong> RNF213's RZ domain ubiquitylates and induces the degradation of CYLD/SPATA2, negative regulators of NF-kB. The role of RNF213’s RING domain in negatively regulating RZ activity is investigated.</li><li><strong>NF-kB Activation and NLRP3 Inflammasome:</strong> CYLD/SPATA2 degradation leads to NF-kB activation and induction of the NLRP3 inflammasome. This, coupled with hypoxia-induced endoplasmic reticulum (ER) stress, triggers pyroptotic cell death.</li><li><strong>Pyroptosis as Cell Death Mechanism:</strong> The paper establishes pyroptosis, a form of inflammatory programmed cell death, as the primary mechanism of cell death in hypoxic, PTP1B-deficient cancer cells, differentiated from other forms of cell death (apoptosis, necroptosis, ferroptosis). GSDMD and inflammatory caspase activity are examined as pyroptosis markers.</li><li><strong>In vivo Validation and Therapeutic Implications:</strong> The pathway is validated in vivo using xenograft models. The effects of PTP1B, CYLD, NLRP3 and RNF213 deletion/mutation on tumor growth are explored, highlighting potential therapeutic targets (PTP1B, CYLD/SPATA2, NLRP3).</li></ul><p><strong>Further Research/Unanswered Questions:</strong></p><ul><li><strong>RNF213 Substrate Specificity:</strong> Fully characterize the substrate specificity of the RING and RZ domains of RNF213 and the interplay between the two domains.</li><li><strong>Role in Normal Tissues:</strong> Investigate the role of the PTP1B-RNF213 pathway in normal tissues under hypoxic conditions.</li><li><strong>MMD and Other Diseases:</strong> Further explore the implications of this pathway for Moyamoya disease (MMD), given the established role of RNF213, and for other inflammatory and autoimmune diseases.</li><li><strong>Therapeutic Development:</strong> Develop and test targeted therapies based on this pathway, including PTP1B and/or CYLD/SPATA2 inhibitors or NLRP3 inflammasome antagonists, for cancers and potentially other diseases.</li><li><strong>Mechanism of LUBAC Involvement:</strong> Further elucidate the mechanism by which LUBAC contributes to CYLD/SPATA2 degradation in this pathway and its relationship to RNF213 RZ domain activity.</li></ul>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-013</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/013-a-mechanism-for-hypoxia-induced-inflammatory-cell-death-in.mp3" length="15078757" type="audio/mpeg"/>
+      <guid isPermaLink="false">94b4f544-0412-4ab2-a93e-6b2b50026d3b</guid>
+      <itunes:duration>942</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>13</itunes:episode>
+      <podcast:episode>13</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 14 Nov 2024 11:02:01 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Autonomous mobile robots for exploratory synthetic chemistry]]></title>
+      <itunes:title><![CDATA[Autonomous mobile robots for exploratory synthetic chemistry]]></itunes:title>
+      <description><![CDATA[<p><strong>DOI</strong>: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1038/s41586-024-08173-7">10.1038/s41586-024-08173-7</a></p><p></p><p><strong>Central Idea</strong>: This paper presents a modular autonomous chemical synthesis platform integrating mobile robots, a Chemspeed ISynth synthesizer, UPLC-MS, and benchtop NMR, enabling automated experimentation and heuristic decision-making for exploratory synthesis. This approach mimics human workflows by using orthogonal characterization data and is applicable to diverse chemical challenges, including structural diversification, supramolecular assembly discovery, and photochemical synthesis.</p><p><strong>Key Concepts</strong>:</p><p>Autonomous vs. Automated Synthesis: The paper distinguishes between automated experiments (researcher-driven decisions) and autonomous experiments (machine-driven decisions), emphasizing the importance of automated analysis and decision-making for true autonomy.</p><p>Modular Robotic Workflow: The platform utilizes mobile robots to link physically separated synthesis and analysis modules (ISynth synthesizer, UPLC-MS, benchtop NMR, and photoreactor), allowing flexible integration of existing laboratory equipment without extensive redesign.</p><p>Heuristic Decision-Making: A customizable, application-agnostic heuristic algorithm processes orthogonal UPLC-MS and 1H NMR data, autonomously selecting successful reactions, checking reproducibility, and directing subsequent synthetic steps. This allows for navigating complex reaction spaces and exploring unexpected outcomes.</p><p>Orthogonal Characterization: The platform employs both UPLC-MS and 1H NMR for comprehensive product analysis, mimicking human workflows and mitigating limitations of relying on single analytical techniques. This approach addresses the diverse characterization data arising from exploratory synthesis.</p><p>Exemplified Applications: The platform’s capabilities are demonstrated across diverse chemical challenges:</p><ul><li>Structural Diversification Chemistry: Autonomous multi-step synthesis of a library of compounds with medicinal chemistry relevance.</li><li>Supramolecular Assembly Discovery: Autonomous screening, replication, and functional assessment (host-guest binding) of supramolecular cages and helicates.</li><li>Photochemical Synthesis: Integration of a standalone photoreactor for automated photocatalytic reaction screening.</li></ul><p><strong>Further Research/Challenges</strong>:</p><p>Scalability: Continued development for larger-scale applications in industrial settings.</p><p>Integration of High-Field NMR: Incorporation of high-field automated NMR for enhanced characterization of complex molecules.</p><p>Advanced Algorithms: Development of more sophisticated algorithms for closed-loop optimization, potentially leveraging existing literature and AI.</p><p>Unexpected Outcomes/Edge Cases: Handling unexpected reactions or analytical results that fall outside pre-defined criteria.</p><p>Defining "Novelty" and "Importance": Establishing quantitative metrics for novelty and importance in exploratory synthesis to guide autonomous decision-making.</p><p>Human-Robot Collaboration: Balancing autonomous operations with human intervention and expert analysis.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-014</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/014-autonomous-mobile-robots-for-exploratory-synthetic-chemistry.mp3" length="17524236" type="audio/mpeg"/>
+      <guid isPermaLink="false">18594d31-1843-46de-bf30-df6439ad859d</guid>
+      <itunes:duration>1095</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>14</itunes:episode>
+      <podcast:episode>14</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 15 Nov 2024 11:01:35 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Recombinant venom proteins in insect seminal fluid reduce female lifespan]]></title>
+      <itunes:title><![CDATA[Recombinant venom proteins in insect seminal fluid reduce female lifespan]]></itunes:title>
+      <description><![CDATA[<p>DOI: https://doi.org/10.1038/s41467-024-54863-1</p><p></p><p>Central Idea: </p><p>Researchers developed a new genetic biocontrol technique called the "Toxic Male Technique" (TMT) where engineered male insects express venom proteins in their reproductive tract that reduce female lifespan after mating. This represents a paradigm shift from traditional genetic biocontrol methods by affecting females within the same generation rather than their offspring.</p><p></p><p>Key Concepts:</p><p></p><p>1. Intragenerational vs Traditional Biocontrol:</p><p>- Current methods (like RIDL, SIT) affect offspring viability or sex ratios</p><p>- TMT directly reduces survival of mated females</p><p>- Faster population control for disease vectors like mosquitoes</p><p>- Could provide rapid response to outbreaks</p><p></p><p>2. Proof of Concept in Fruit Flies:</p><p>- Tested 7 different venom proteins in Drosophila melanogaster</p><p>- Two successful candidates reduced female lifespan:</p><p>  * Γ-CNTX-Pn1a (spider venom): 37% reduction</p><p>  * δ-AITX-Avd2a (sea anemone venom): 64% reduction</p><p>- Higher male:female ratios increased effectiveness</p><p></p><p>3. Computer Modeling Results:</p><p>- Simulated Aedes aegypti mosquito control programs</p><p>- TMT showed 40-60% greater reduction in blood feeding vs current methods</p><p>- Effectiveness increased with:</p><p>  * Higher release ratios of modified males</p><p>  * Higher rates of female remating</p><p>  * Lower density-dependent mortality</p><p></p><p>4. Technical Implementation:</p><p>- Uses genetic system to express venom in male accessory glands</p><p>- Venom proteins transferred to females during mating</p><p>- Selected venoms specifically target insect ion channels</p><p>- No effect on mammals/vertebrates</p><p></p><p>Future Directions/Challenges:</p><p></p><p>1. Development Needs:</p><p>- Optimize venom expression levels</p><p>- Engineer conditional expression systems</p><p>- Integrate with existing sterilization methods</p><p>- Test in target pest species</p><p></p><p>2. Key Questions:</p><p>- Long-term ecological impacts</p><p>- Resistance development</p><p>- Cost-effectiveness at scale</p><p>- Regulatory pathway</p><p></p><p>3. Potential Applications:</p><p>- Mosquito-borne disease control</p><p>- Agricultural pest management</p><p>- Invasive species control</p><p>- Integration with existing control programs</p><p></p><p>Notable Implications:</p><p>- First example of same-generation genetic pest control</p><p>- Could provide faster response to disease outbreaks</p><p>- More targeted than chemical pesticides</p><p>- Self-limiting (genes lost without continued releases)</p><p></p><p>The research represents a novel approach to insect control with particular promise for disease vectors, though significant development work remains before field implementation.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-015</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/015-recombinant-venom-proteins-in-insect-seminal-fluid-reduce.mp3" length="13416951" type="audio/mpeg"/>
+      <guid isPermaLink="false">d1ed64df-01d5-41e0-bd13-573d893f0681</guid>
+      <itunes:duration>838</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>15</itunes:episode>
+      <podcast:episode>15</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sun, 12 Jan 2025 16:17:55 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[System vaccinology analysis of predictors  and mechanisms of antibody response  durability to multiple vaccines in humans]]></title>
+      <itunes:title><![CDATA[System vaccinology analysis of predictors  and mechanisms of antibody response  durability to multiple vaccines in humans]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1038/s41590-024-02036-z</p><p></p><p>Central Idea: </p><p>This study reveals how platelets and their precursor cells (megakaryocytes) influence the durability of vaccine-induced antibody responses. The researchers identified a platelet-associated signature that predicts how long antibody responses will last across multiple vaccine types and discovered a mechanism involving megakaryocytes supporting plasma cell survival in bone marrow.</p><p></p><p>Key Concepts:</p><p></p><p>1. Predictive Signature Discovery:</p><p>- Identified a blood transcriptional signature on day 7 post-vaccination that predicts antibody longevity</p><p>- Signature primarily originated from platelets and involved cell adhesion genes</p><p>- Successfully predicted durability across six different vaccines in seven independent trials</p><p></p><p>2. Mechanistic Insights:</p><p>- Megakaryocytes (platelet precursor cells) support plasma cell survival in bone marrow</p><p>- Process involves direct cell contact through specific proteins (integrins)</p><p>- Survival factors APRIL and MIF-CD74 axis play important roles</p><p>- TPO (thrombopoietin) activation of megakaryocytes enhances antibody durability</p><p></p><p>3. Clinical Applications:</p><p>- AS03-adjuvanted H5N1 vaccine used as primary model system</p><p>- Findings validated across diverse vaccines including:</p><p>  * COVID-19 mRNA vaccines</p><p>  * Malaria vaccine</p><p>  * Meningococcal vaccines</p><p>  * Pneumococcal vaccines</p><p></p><p>4. Therapeutic Implications:</p><p>- TPO administration could potentially enhance vaccine durability</p><p>- Suggests new strategies for improving vaccine design</p><p>- Offers potential therapeutic targets for enhancing immunity</p><p></p><p>Further Research/Challenges:</p><p></p><p>1. Clinical Translation:</p><p>- Testing TPO enhancement in human vaccines</p><p>- Optimizing timing and dosing of TPO administration</p><p>- Safety considerations for platelet manipulation</p><p></p><p>2. Mechanistic Questions:</p><p>- Full understanding of megakaryocyte-plasma cell interactions</p><p>- Role of platelets themselves in immune responses</p><p>- Impact on different types of antibody responses</p><p></p><p>3. Technical Developments:</p><p>- Developing better predictive models</p><p>- Standardizing measurement of antibody durability</p><p>- Integration with other immune monitoring approaches</p><p></p><p>Unexpected Insights:</p><p>- Novel role for platelets/megakaryocytes in immunity</p><p>- Conserved mechanism across different vaccine types</p><p>- Importance of cell-cell contact in plasma cell survival</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-016</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/016-system-vaccinology-analysis-of-predictors-and-mechanisms-of.mp3" length="21063515" type="audio/mpeg"/>
+      <guid isPermaLink="false">9c9457fe-5d6e-4fd1-bf16-568cf064f1a3</guid>
+      <itunes:duration>1316</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>16</itunes:episode>
+      <podcast:episode>16</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 13 Jan 2025 15:05:59 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Learning the language of antibody hypervariability]]></title>
+      <itunes:title><![CDATA[Learning the language of antibody hypervariability]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1073/pnas.2418918121</p><p></p><p>Central Idea: </p><p>This paper introduces AbMAP (Antibody Mutagenesis-Augmented Processing), a novel transfer learning framework that adapts foundational protein language models (PLMs) specifically for antibody analysis. The key innovation is focusing on hypervariable regions (CDRs) while leveraging the broader protein knowledge from foundational models, achieving superior performance in antibody optimization and analysis.</p><p></p><p>Key Concepts:</p><p></p><p>The Antibody Modeling Challenge:</p><p>- General protein language models struggle with antibody hypervariable regions</p><p>- These regions don't follow typical evolutionary conservation patterns</p><p>- Previous approaches either used general models (missing antibody specifics) or antibody-only models (missing broader protein insights)</p><p></p><p>AbMAP's Novel Approach:</p><p>- Uses transfer learning to adapt any foundational protein language model</p><p>- Focuses specifically on complementarity-determining regions (CDRs)</p><p>- Employs contrastive augmentation through in silico mutations</p><p>- Combines structural and functional learning in a multitask framework</p><p></p><p>Experimental Validation:</p><p>- Achieved 82% hit rate in optimizing SARS-CoV-2 binding antibodies</p><p>- Demonstrated up to 22-fold increase in binding affinity</p><p>- Successfully predicted both strong and weak binders</p><p>- More efficient than existing computational approaches</p><p></p><p>Immune Repertoire Analysis:</p><p>- Enabled large-scale analysis of B-cell receptor repertoires</p><p>- Revealed structural/functional convergence across individuals</p><p>- Showed repertoires are more similar in function than sequence</p><p>- Found therapeutic antibodies cluster in specific regions of representation space</p><p></p><p>Applications &amp; Impact:</p><p>- Accelerates antibody optimization for therapeutic development</p><p>- Enables efficient analysis of large immune repertoire datasets</p><p>- Provides insights into antibody diversity and function</p><p>- Adaptable to future advances in protein language models</p><p></p><p>Further Research/Challenges:</p><p>- Balancing framework vs hypervariable region representation</p><p>- Computational efficiency of contrastive augmentation</p><p>- Integration with newer protein language models</p><p>- Scaling to industrial antibody development pipelines</p><p></p><p>Notable Innovation:</p><p>The paper's middle-ground approach between general protein models and antibody-specific models represents a significant advance in computational antibody engineering, with immediate practical applications in therapeutic development.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-017</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/017-learning-the-language-of-antibody-hypervariability.mp3" length="10501686" type="audio/mpeg"/>
+      <guid isPermaLink="false">80996e22-3e34-43d4-a023-4ecb9f61b072</guid>
+      <itunes:duration>656</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>17</itunes:episode>
+      <podcast:episode>17</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 16 Jan 2025 00:25:35 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Discovery of a new class  of cell‑penetrating peptides  by novel phage display platform]]></title>
+      <itunes:title><![CDATA[Discovery of a new class  of cell‑penetrating peptides  by novel phage display platform]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1038/s41598-024-64405-w</p><p></p><p>Central Idea: Researchers developed a novel phage display platform called NNJA (Novel peptides for intracellular delivery by hijacking two cell systems) that discovers cell-penetrating peptides capable of delivering therapeutic cargo to the cell cytoplasm while avoiding lysosomal degradation. This platform addresses a major challenge in the field of therapeutic delivery.</p><p></p><p>Key Concepts:</p><p></p><p>The NNJA Platform:</p><p>- Engineered a lysosomal cathepsin substrate within phage protein PIII</p><p>- Phage that enter lysosomes are cleaved and eliminated from selection</p><p>- Only phage that successfully reach cytoplasm survive selection process</p><p>- Results in peptides optimized for cytoplasmic delivery</p><p></p><p>Novel CPP Characteristics:</p><p>- Nine amino acids in length</p><p>- Lack the typical positive charge clusters of traditional CPPs</p><p>- Contain specific enriched amino acids:</p><p>  * Methionine/Leucine at first position</p><p>  * Serine/Threonine at second position</p><p>  * Proline in middle and C-terminus</p><p>- Show efficient cellular uptake without significant toxicity</p><p></p><p>Experimental Validation:</p><p>- Demonstrated delivery of various cargoes:</p><p>  * siRNA (achieved significant gene knockdown)</p><p>  * Antibodies</p><p>  * Proteins</p><p>  * Reporter molecules</p><p>- Verified cytoplasmic localization through confocal microscopy</p><p>- Tested across multiple cell types</p><p>- Showed comparable or superior performance to traditional CPPs like TAT</p><p></p><p>Future Applications/Implications:</p><p></p><p>Research Applications:</p><p>- Platform can be adapted for tissue-specific delivery</p><p>- Potential for targeting specific cellular compartments</p><p>- Discovery of novel peptide sequences for various therapeutic cargoes</p><p></p><p>Therapeutic Potential:</p><p>- Improved delivery of oligonucleotides</p><p>- Enhanced antibody internalization</p><p>- Possible applications in protein therapeutics</p><p>- Potential for oral delivery systems</p><p></p><p>Further Research/Challenges:</p><p></p><p>Technical Considerations:</p><p>- Optimizing peptide sequences for specific applications</p><p>- Understanding exact mechanisms of cell entry</p><p>- Improving tissue selectivity</p><p>- Scaling up synthesis and conjugation processes</p><p></p><p>Development Needs:</p><p>- In vivo validation studies</p><p>- Stability and pharmacokinetic analysis</p><p>- Tissue-specific targeting strategies</p><p>- Investigation of cargo size limitations</p><p></p><p>Broad Impact: This work provides a new tool for discovering CPPs that could significantly improve the delivery of therapeutic molecules, particularly for challenging intracellular targets. The platform's flexibility and the novel characteristics of the discovered peptides open new possibilities in drug delivery research.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-018</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/018-discovery-of-a-new-class-of-cell-penetrating-peptides-by.mp3" length="9811635" type="audio/mpeg"/>
+      <guid isPermaLink="false">83767faf-1673-435b-9fc9-feb03c04e3d5</guid>
+      <itunes:duration>613</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>18</itunes:episode>
+      <podcast:episode>18</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 17 Jan 2025 00:34:21 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Accelerated enzyme engineering by machine-learning guided cell-free expression]]></title>
+      <itunes:title><![CDATA[Accelerated enzyme engineering by machine-learning guided cell-free expression]]></itunes:title>
+      <description><![CDATA[<p>DOI: https://doi.org/10.1038/s41467-024-55399-0</p><p></p><p>Central Idea: This paper presents an ML-guided platform for accelerating enzyme engineering by combining cell-free protein synthesis, functional screening, and machine learning to rapidly optimize enzymes for multiple distinct chemical reactions. The approach is demonstrated by engineering variants of an amide synthetase (McbA) to improve synthesis of various pharmaceutical compounds.</p><p></p><p>Key Concepts:</p><p></p><p>Cell-Free Platform Integration:</p><p>- Combines cell-free DNA assembly, protein expression, and activity screening</p><p>- Enables rapid testing of enzyme variants without time-consuming cloning steps</p><p>- Complete process from DNA design to activity testing takes hours instead of weeks</p><p></p><p>Machine Learning Strategy:</p><p>- Uses single mutation data to predict beneficial higher-order mutations</p><p>- Employs augmented ridge regression models with evolutionary predictions</p><p>- Successfully identifies improved enzyme variants with reduced screening burden</p><p>- Model training requires minimal computational resources (runs on standard CPU)</p><p></p><p>Engineering Campaign Results:</p><p>- Engineered 9 specialized McbA variants for different pharmaceutical compounds</p><p>- Achieved 1.6 to 42-fold improvements in activity over wild-type enzyme</p><p>- Maintained important properties like stereo- and regioselectivity</p><p>- Generated comprehensive dataset: 2,856 enzyme variants tested across 12,584 reactions</p><p></p><p>Exemplified Applications:</p><p></p><p>Moclobemide Synthesis:</p><p>- Achieved 96% conversion (42-fold improvement)</p><p>- Demonstrated scalability to milligram quantities</p><p>- Maintained enzyme stability while improving activity</p><p></p><p>Multi-Product Engineering:</p><p>- Parallel optimization for 6 different pharmaceutical products</p><p>- Each campaign completed in approximately one week</p><p>- Successful prediction of beneficial mutations across diverse substrates</p><p></p><p>Further Research/Challenges:</p><p></p><p>Model Improvements:</p><p>- Exploring more sophisticated ML models for complex fitness landscapes</p><p>- Incorporating additional data types (kinetics, stability) into predictions</p><p>- Better understanding of mutation effects on substrate specificity</p><p></p><p>Screening Bottlenecks:</p><p>- Development of higher-throughput analytical methods</p><p>- Integration with selection-based approaches where applicable</p><p>- Handling products requiring complex detection methods</p><p></p><p>Broader Applications:</p><p>- Extending approach to other enzyme classes and reaction types</p><p>- Scaling to industrial-relevant conditions</p><p>- Integration with de novo protein design methods</p><p></p><p>This work represents a significant advance in making enzyme engineering more accessible and efficient, with potential impact on biocatalyst development for pharmaceutical and chemical manufacturing.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-019</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/019-accelerated-enzyme-engineering-by-machine-learning-guided.mp3" length="17937180" type="audio/mpeg"/>
+      <guid isPermaLink="false">2b4e7b76-392c-4d0a-b7df-2c57c7f41853</guid>
+      <itunes:duration>1121</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>19</itunes:episode>
+      <podcast:episode>19</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 23 Jan 2025 05:09:19 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Prior vaccination prevents overactivation of innate immune responses during COVID-19breakthrough infection]]></title>
+      <itunes:title><![CDATA[Prior vaccination prevents overactivation of innate immune responses during COVID-19breakthrough infection]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1126/scitranslmed.adq1086">10.1126/scitranslmed.adq1086</a></p><p></p><p>Central Idea: This study examines how previous COVID-19 vaccination influences both innate and adaptive immune responses during breakthrough infections. The researchers found that vaccination helps prevent excessive activation of the immune system, particularly in innate immune cells like monocytes and natural killer (NK) cells.</p><p>Key Concepts:</p><ol><li>Breakthrough vs Primary Infections:</li></ol><ul><li>Breakthrough infections = COVID infections in vaccinated people</li><li>Primary infections = COVID infections in unvaccinated people</li><li>Study focused on Delta variant period (April-December 2021)</li></ul><ol start="2"><li>Immune Response Differences:</li></ol><ul><li>Vaccinated individuals showed less inflammatory response</li><li>Monocytes and NK cells were less activated in breakthrough infections</li><li>Prior vaccination prevented immune system overactivation</li><li>Sex-specific differences observed in immune responses</li></ul><ol start="3"><li>Methodology:</li></ol><ul><li>Analyzed blood samples from three groups:<ul><li>Healthy vaccinated controls</li><li>Unvaccinated COVID patients</li><li>Vaccinated COVID patients</li></ul></li><li>Used multiple analysis techniques including single-cell RNA sequencing and mass cytometry</li></ul><p>Key Findings:</p><ol><li>Monocyte Response:</li></ol><ul><li>Less inflammatory activation in vaccinated individuals</li><li>Reduced migration potential</li><li>Better regulated immune response</li></ul><ol start="2"><li>NK Cell Activity:</li></ol><ul><li>Lower proliferation in breakthrough infections</li><li>More controlled response in vaccinated individuals</li><li>Maintained protective functions while avoiding overactivation</li></ul><ol start="3"><li>Sex Differences:</li></ol><ul><li>Females showed stronger innate immune activation in breakthrough infections</li><li>Different immune regulation patterns between males and females</li><li>Potential implications for sex-specific treatment approaches</li></ul><p>Implications:</p><p>Clinical Practice:</p><ul><li>Helps explain reduced disease severity in vaccinated individuals</li><li>Suggests potential for targeted therapeutic approaches</li><li>Highlights importance of considering sex differences in treatment</li></ul><p>Future Research:</p><ul><li>Need for longitudinal studies</li><li>Investigation of other vaccine types</li><li>Further exploration of sex-specific immune responses</li></ul><p>This paper provides valuable insights into how vaccination shapes immune responses to COVID-19 and could inform future vaccine development and therapeutic strategies.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-020</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/020-prior-vaccination-prevents-overactivation-of-innate-immune.mp3" length="14053503" type="audio/mpeg"/>
+      <guid isPermaLink="false">3d8c688f-a987-497b-bc52-a7b4574495c7</guid>
+      <itunes:duration>878</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>20</itunes:episode>
+      <podcast:episode>20</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 31 Jan 2025 13:01:02 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Scratching promotes allergic inflammation and host defense via neurogenic mast cell activation]]></title>
+      <itunes:title><![CDATA[Scratching promotes allergic inflammation and host defense via neurogenic mast cell activation]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1126/science.adn9390">10.1126/science.adn9390</a></p><p>Key points:</p><ol><li>The Itch-Scratch Paradox</li></ol><ul><li>Scratching is an evolutionarily conserved behavior but seems counterproductive as it worsens inflammation</li><li>Research found scratching serves both harmful and beneficial purposes:<ul><li>Can exacerbate allergic skin conditions</li><li>Helps protect against bacterial infections like S. aureus</li><li>Provides insight into why scratching is pleasurable despite negative effects</li></ul></li></ul><ol start="2"><li>The Mechanism:</li></ol><ul><li>When scratching occurs:<ol><li>Activates pain-sensing neurons (nociceptors) in the skin</li><li>Nociceptors release substance P (a neuropeptide)</li><li>Substance P activates mast cells through receptor MrgprB2</li><li>Mast cells release:<ul><li>Histamine (causes itching and inflammation)</li><li>TNF (tumor necrosis factor - recruits neutrophils)</li><li>Other inflammatory mediators</li></ul></li></ol></li></ul><ol start="3"><li>Key Findings:</li></ol><ul><li>Scratching amplifies allergic responses through this neurogenic inflammation pathway</li><li>In bacterial infections, this inflammatory response helps fight pathogens</li><li>Scratching can alter the skin's microbiome composition</li><li>The research explains the "itch-scratch cycle" where scratching temporarily relieves but ultimately worsens itching</li></ul><ol start="4"><li>Clinical Implications:</li></ol><ul><li>Helps explain why scratching exacerbates conditions like atopic dermatitis</li><li>Opens new therapeutic possibilities targeting:<ul><li>Substance P</li><li>MrgprB2 receptor</li><li>Neurogenic inflammation pathway</li></ul></li><li>Could lead to better treatments for allergic skin conditions while preserving beneficial anti-bacterial effects</li></ul><ol start="5"><li>Evolutionary Context:</li></ol><ul><li>Scratching likely evolved as a defense mechanism against skin pathogens</li><li>Benefits in fighting bacterial infections may outweigh downsides in allergic conditions</li><li>Explains why scratching persists despite seeming counterproductive in some contexts</li></ul><p>This research provides the first detailed molecular explanation for how scratching both helps and harms, reconciling its dual nature as both a pathological process and evolutionary adaptation.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-021</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/021-scratching-promotes-allergic-inflammation-and-host-defense.mp3" length="19786649" type="audio/mpeg"/>
+      <guid isPermaLink="false">54fb539c-c566-4934-a425-0b8408c74445</guid>
+      <itunes:duration>1236</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>21</itunes:episode>
+      <podcast:episode>21</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 04 Feb 2025 10:01:30 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Second-generation anti-amyloid monoclonal antibodies for Alzheimer’s disease: current landscape and future perspectives]]></title>
+      <itunes:title><![CDATA[Second-generation anti-amyloid monoclonal antibodies for Alzheimer’s disease: current landscape and future perspectives]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1186/s40035-025-00465-w">https://doi.org/10.1186/s40035-025-00465-w</a></p><p>Key Discussion Points:</p><p>1. Overview of Current Landscape</p><p>- Three FDA-approved second-generation antibodies: Aducanumab, Lecanemab, Donanemab</p><p>- Lecanemab recently received traditional FDA approval</p><p>- Represents validation of amyloid cascade hypothesis</p><p>2. Individual Antibody Profiles:</p><p>Aducanumab</p><p>- Derived from memory B cells of both healthy and cognitively impaired individuals</p><p>- Targets amyloid beta plaques (amino acids 3-7)</p><p>- Shows dose-dependent reduction in amyloid beta</p><p>- Notable occurrence of ARIA side effects</p><p>Lecanemab</p><p>- Derived from mouse antibody MA158</p><p>- Targets amyloid beta protofibrils (amino acids 1-16 and 21-29)</p><p>- ClarityAD trial showed slowing of cognitive decline</p><p>- Affects both amyloid beta and phosphorylated tau levels</p><p>Donanemab</p><p>- Targets N-terminal pyroglutamate of amyloid beta</p><p>- Trailblazer ALZ trials showed significant amyloid reduction</p><p>- Initially denied accelerated approval due to limited patient data</p><p>- Later trials showed more positive findings</p><p>Gantenerumab</p><p>- Engineered using Hucal phage display technology</p><p>- Targets amyloid beta fibrils (amino acids 3-11 and 18-27)</p><p>- Mixed results: Early trials showed amyloid reduction but larger Graduate I/II trials didn't show significant cognitive improvement</p><p>- Dosing and delivery methods may have affected results</p><p>3. Key Challenges:</p><p>ARIA (Amyloid-Related Imaging Abnormalities)</p><p>- Manifests as edema (ARIA-E) or hemorrhage (ARIA-H)</p><p>- Involves complement cascade and FCR-mediated signaling</p><p>- Major safety concern requiring careful monitoring</p><p>Blood-Brain Barrier</p><p>- Limits antibody penetration</p><p>- Requires high doses which can increase ARIA risk</p><p>4. Future Directions:</p><p>Innovative Strategies:</p><p>- Antibody Drug Conjugates (ADCs) combining antibodies with targeted payloads</p><p>- Targeted Protein Degradation (TPD) approaches</p><p>- Modified antibodies like α Aβ-Gas6 fusion protein</p><p>- Personalized therapy approaches based on biomarkers</p><p>- Combination therapies targeting multiple disease aspects</p><p>Biomarker Development:</p><p>- MicroRNA-based early detection</p><p>- Blood-based testing potential</p><p>- Importance of early intervention</p><p>Conclusion:</p><p>The field shows promise but requires continued research to optimize safety and efficacy. Future success likely lies in combination approaches and personalized treatment strategies.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-022</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/022-second-generation-anti-amyloid-monoclonal-antibodies-for.mp3" length="11574169" type="audio/mpeg"/>
+      <guid isPermaLink="false">3011fa6f-294e-40ad-85dd-a74c230e0fc1</guid>
+      <itunes:duration>723</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>22</itunes:episode>
+      <podcast:episode>22</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 05 Feb 2025 10:00:13 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Deep learning enhances the prediction of  HLA class I-presented CD8+  T cell epitopes  in foreign pathogens]]></title>
+      <itunes:title><![CDATA[Deep learning enhances the prediction of  HLA class I-presented CD8+  T cell epitopes  in foreign pathogens]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1038/s42256-024-00971-y</p><p>Key Topics:</p><p>- New deep learning model MUNIS for predicting CD8+ T-cell epitopes</p><p>- Implications for vaccine development and personalized medicine</p><p>- Real-world validation using Epstein-Barr virus (EBV)</p><p></p><p>Background Science:</p><p>- HLAI molecules display protein fragments (epitopes) on cell surfaces</p><p>- CD8+ T-cells recognize foreign epitopes to trigger immune response</p><p>- Traditional lab identification of epitopes is time-consuming and expensive</p><p></p><p>MUNIS Model Details:</p><p>- Bimodal architecture with two components:</p><p>1. Predicts peptide binding to HLAI molecules</p><p>2. Models antigen processing</p><p>- Trained on 650,000+ HLAI ligands</p><p>- Outperforms existing prediction tools</p><p>- Validated through cross-validation and real lab experiments</p><p></p><p>Key Results:</p><p>- Successfully identified known and novel EBV epitopes</p><p>- Triggered both effector and memory T-cell responses</p><p>- Performed comparably to experimental stability assays</p><p></p><p>Limitations:</p><p>- Not perfect at predicting immunogenicity</p><p>- Limited to subset of HLA variants</p><p>- More T-cell receptor data needed</p><p></p><p>Future Applications:</p><p>- Personalized vaccine development</p><p>- Autoimmune disease treatments</p><p>- Preparation for emerging pathogens</p><p>- More efficient vaccine design process</p><p></p><p>Next Steps:</p><p>- Incorporate more T-cell receptor data</p><p>- Expand HLA diversity in training</p><p>- Increase collaboration across fields</p><p>- Develop predictive systems for future threats</p><p></p><p>Impact:</p><p>- Could accelerate vaccine development</p><p>- Enable more personalized treatments</p><p>- Reduce experimental burden</p><p>- Help prepare for future pandemics</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-023</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/023-deep-learning-enhances-the-prediction-of-hla-class-i.mp3" length="9980491" type="audio/mpeg"/>
+      <guid isPermaLink="false">09758c74-8c91-4073-80b0-e59599fdaf48</guid>
+      <itunes:duration>623</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>23</itunes:episode>
+      <podcast:episode>23</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 06 Feb 2025 10:00:56 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Triple knockdown of CD11a, CD49d, and PSGL1 in T cells reduces CAR-T cell toxicity but preserves activity against solid tumors in mice]]></title>
+      <itunes:title><![CDATA[Triple knockdown of CD11a, CD49d, and PSGL1 in T cells reduces CAR-T cell toxicity but preserves activity against solid tumors in mice]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1126/scitranslmed.adl6432">10.1126/scitranslmed.adl6432</a></p><p></p><p>Key Points:</p><ol><li>The Research Problem:</li></ol><ul><li>CAR-T cell therapy has been successful for blood cancers but faces challenges with solid tumors</li><li>Major challenge: "On-target, off-tumor toxicity" where CAR-T cells attack healthy tissues</li><li>Previous patient death case: HER2-targeted CAR-T cells attacked lung tissue due to HER2 expression on lung cells</li></ul><ol start="2"><li>Study Focus:</li></ol><ul><li>Target: EpCAM (epithelial cell adhesion molecule) found on many solid tumors</li><li>Challenge: EpCAM is also present in normal tissues, raising toxicity concerns</li><li>Goal: Fine-tune CAR-T cells to attack tumor cells while sparing healthy tissues</li></ul><ol start="3"><li>Key Innovation - Triple Knockdown Strategy:</li></ol><ul><li>Researchers targeted three genes simultaneously: CD11a, CD49d, and PSGL1</li><li>These genes control how T cells migrate through blood vessel walls into tissues</li><li>Used shRNA to silence these genes in CAR-T cells</li></ul><ol start="4"><li>Key Findings:</li></ol><ul><li>Triple knockdown dramatically reduced toxicity to normal tissues</li><li>Maintained ability to kill cancer cells</li><li>Enhanced CAR-T cell memory formation</li><li>Reduced "tonic signaling" (constant activation that can exhaust CAR-T cells)</li></ul><ol start="5"><li>Technical Methodology:</li></ol><ul><li>Used multiple techniques including:<ul><li>Gene knockdown with shRNA</li><li>Gene knockout with CRISPR-Cas9</li><li>Flow cytometry</li><li>Immunostaining</li><li>Mouse models</li></ul></li></ul><ol start="6"><li>Advantages of Modified CAR-T Cells:</li></ol><ul><li>Reduced exhaustion</li><li>Better persistence</li><li>Improved memory formation</li><li>Maintained anti-tumor effectiveness</li><li>Lower toxicity to normal tissues</li></ul><ol start="7"><li>Limitations &amp; Future Work:</li></ol><ul><li>Results in living animals not as impressive as lab results</li><li>Need to better understand differences between lab and living systems</li><li>More research needed on tumor microenvironment effects</li><li>Need to validate approach with other cancer targets</li></ul><ol start="8"><li>Clinical Implications:</li></ol><ul><li>Potential pathway to safer CAR-T therapy for solid tumors</li><li>Could expand range of possible CAR-T targets</li><li>Might make CAR-T therapy applicable to more cancer types</li><li>Cost and accessibility remain concerns</li></ul><p>This research represents a significant step toward making CAR-T cell therapy safer and more effective for solid tumors, though more work is needed to fully understand and optimize the approach.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-024</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/024-triple-knockdown-of-cd11a-cd49d-and-psgl1-in-t-cells-reduces.mp3" length="13701999" type="audio/mpeg"/>
+      <guid isPermaLink="false">d44c49f2-cb09-4321-84e3-be4e525ee025</guid>
+      <itunes:duration>856</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>24</itunes:episode>
+      <podcast:episode>24</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 10 Feb 2025 10:01:24 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Efficacy and Safety of Obinutuzumab in Active Lupus Nephritis]]></title>
+      <itunes:title><![CDATA[Efficacy and Safety of Obinutuzumab in Active Lupus Nephritis]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1056/NEJMoa2410965</p><p></p><p>Key Points:</p><p>- Phase 3 trial testing obinutuzumab (anti-CD20 monoclonal antibody) + standard therapy vs placebo + standard therapy for lupus nephritis</p><p>- Primary endpoint: Complete renal response at week 76</p><p>- Notable finding: 46.4% response with obinutuzumab vs 33.1% with placebo (13.4% improvement, p=0.02)</p><p></p><p>Trial Design:</p><p>- 271 adult patients with active lupus nephritis </p><p>- Randomized 1:1 to receive obinutuzumab or placebo</p><p>- All patients received standard therapy (mycophenolate mofetil + prednisone)</p><p>- Target prednisone dose: 7.5mg/day by week 12, 5mg/day by week 24</p><p></p><p>Key Results:</p><p>1. Primary Endpoint:</p><p>- Complete renal response at week 76 significantly better with obinutuzumab</p><p>- Lower intercurrent events with obinutuzumab (treatment failure 3.7% vs 17.6%)</p><p></p><p>2. Secondary Endpoints:</p><p>- Better complete response with prednisone ≤7.5mg/day (42.7% vs 30.9%)</p><p>- More patients achieved UPCR &lt;0.8 (55.5% vs 41.9%)</p><p>- Less death/renal events with obinutuzumab (18.9% vs 35.6%)</p><p></p><p>Safety Findings:</p><p>- More serious adverse events with obinutuzumab (32.4% vs 18.2%)</p><p>- Main issues: infections including COVID-19</p><p>- 4 deaths total (3 in obinutuzumab group, 1 in placebo)</p><p>- When excluding COVID-19, serious infection rates were 11% vs 7.6%</p><p></p><p>Clinical Implications:</p><p>- First successful phase 3 trial showing benefit of B-cell depletion in lupus nephritis</p><p>- Results support the role of B-cells in disease pathogenesis</p><p>- Safety concerns need to be balanced against efficacy</p><p>- COVID-19 vaccination important for patients receiving this therapy</p><p></p><p>Study Limitations:</p><p>- COVID-19 pandemic affected safety outcomes</p><p>- Trial started before widespread vaccination</p><p>- Relatively short follow-up period (76 weeks)</p><p>- Need more data on long-term outcomes</p><p></p><p>Next Steps:</p><p>- Longer follow-up needed</p><p>- Study impact of vaccination on safety</p><p>- Identify optimal patient selection</p><p>- Evaluate combination with other therapies</p><p></p><p>The trial represents a significant advance in lupus nephritis treatment while highlighting important safety considerations that need to be addressed in clinical practice.</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-025</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/025-efficacy-and-safety-of-obinutuzumab-in-active-lupus.mp3" length="9549157" type="audio/mpeg"/>
+      <guid isPermaLink="false">a5edacdc-7e81-40e6-a549-e3b19441f53b</guid>
+      <itunes:duration>596</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>25</itunes:episode>
+      <podcast:episode>25</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 12 Feb 2025 01:12:58 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[A second-generation M1-polarized CAR macrophage with antitumor efficacy]]></title>
+      <itunes:title><![CDATA[A second-generation M1-polarized CAR macrophage with antitumor efficacy]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1038/s41590-023-01687-8</p><p></p><p>Key Points:</p><p>- Research focuses on using engineered macrophages (CAR-iMACs) instead of typical CAR T cells to fight solid tumors</p><p>- Started with iPSCs (induced pluripotent stem cells) which were differentiated into macrophages and engineered with CARs</p><p>- Created two versions:</p><p>  - First generation with CD3ζ domain</p><p>  - Second generation with added TIR domain</p><p>- Second generation showed superior results due to TIR domain activating NFκB pathway</p><p>- Testing showed complete tumor remission in liver cancer mouse models</p><p></p><p>Mechanisms:</p><p>- TIR domain helps polarize macrophages to M1 (pro-inflammatory) state</p><p>- Two-step killing process:</p><p>  1. Induces apoptosis in tumor cells</p><p>  2. Cleans up debris through efferocytosis</p><p>- Confirmed mechanism through:</p><p>  - Single cell RNA sequencing </p><p>  - Time-lapse microscopy</p><p>  - NFκB pathway activation visualization</p><p></p><p>Limitations/Challenges:</p><p>- Still preclinical (only tested in cells/mice)</p><p>- CAR-iMACs don't survive long in body</p><p>- Need more research before human trials</p><p></p><p>Clinical Implications:</p><p>- Promising for treating resistant solid tumors</p><p>- Antigen-specific targeting means fewer side effects</p><p>- Could be game-changing if survival time improved</p><p>- Works well in combination with other treatments</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-026</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/026-a-second-generation-m1-polarized-car-macrophage-with.mp3" length="13495946" type="audio/mpeg"/>
+      <guid isPermaLink="false">7615cfb7-3979-4ec0-83c8-8922d3873fa1</guid>
+      <itunes:duration>843</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>26</itunes:episode>
+      <podcast:episode>26</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 13 Feb 2025 10:00:27 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[AlphaFold prediction of structural ensembles of disordered proteins]]></title>
+      <itunes:title><![CDATA[AlphaFold prediction of structural ensembles of disordered proteins]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1038/s41467-025-56572-9</p><p></p><p>Key Points:</p><p>- Introduces AlphaFold-Metainference, a new method combining AlphaFold predictions with physics simulations</p><p>- Notable because AlphaFold was trained on structured proteins but shows surprising accuracy with disordered ones</p><p>- Validated against experimental data from 11 different disordered proteins using SAXS (small-angle X-ray scattering)</p><p>- Further validated against detailed simulations of two neurodegenerative disease-related proteins (Abeta and alpha-synuclein)</p><p></p><p>Major Implications:</p><p>- Could revolutionize study of disordered proteins involved in diseases like Alzheimer's and Parkinson's</p><p>- Suggests AlphaFold may be detecting fundamental principles of protein behavior beyond just structured proteins</p><p>- Opens new possibilities for drug discovery and personalized medicine</p><p>- May require rethinking our definition of protein "disorder"</p><p></p><p>Technical Details:</p><p>- AlphaFold provides distance predictions between amino acids</p><p>- Limited to predictions up to ~22 angstroms</p><p>- Metainference uses physics simulations to explore possible conformations within AlphaFold's predictions</p><p></p><p>Limitations Discussed:</p><p>- 22 angstrom distance prediction limit means some longer-range interactions may be missed</p><p>- Particularly relevant for very extended disordered regions</p><p>- May need integration with other experimental techniques for complete picture</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-027</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/027-alphafold-prediction-of-structural-ensembles-of-disordered.mp3" length="8177833" type="audio/mpeg"/>
+      <guid isPermaLink="false">866be043-3888-4759-84ba-dc6d447e1a80</guid>
+      <itunes:duration>511</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>27</itunes:episode>
+      <podcast:episode>27</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 21 Feb 2025 01:07:54 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[CD33–CD123 IF-THEN Gating Reduces Toxicity while Enhancing the Specificity and Memory Phenotype of AML-Targeting CAR-T Cells]]></title>
+      <itunes:title><![CDATA[CD33–CD123 IF-THEN Gating Reduces Toxicity while Enhancing the Specificity and Memory Phenotype of AML-Targeting CAR-T Cells]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1158/2643-3230.bcd-23-0258">10.1158/2643-3230.BCD-23-0258</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-028</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/028-cd33-cd123-if-then-gating-reduces-toxicity-while-enhancing.mp3" length="8282741" type="audio/mpeg"/>
+      <guid isPermaLink="false">f4608872-d02a-4d83-8415-18403df92362</guid>
+      <itunes:duration>517</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>28</itunes:episode>
+      <podcast:episode>28</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 19 Mar 2025 20:24:35 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Sequencing by Expansion (SBX) – a novel, high-throughput single-molecule sequencing technology]]></title>
+      <itunes:title><![CDATA[Sequencing by Expansion (SBX) – a novel, high-throughput single-molecule sequencing technology]]></itunes:title>
+      <description><![CDATA[<p>https://www.biorxiv.org/content/10.1101/2025.02.19.639056v1</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-029</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/029-sequencing-by-expansion-sbx-a-novel-high-throughput-single.mp3" length="13614646" type="audio/mpeg"/>
+      <guid isPermaLink="false">9150fd1f-c5bb-4461-88b9-c94e3bae3014</guid>
+      <itunes:duration>850</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>29</itunes:episode>
+      <podcast:episode>29</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 26 Mar 2025 23:25:52 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Embodied large language models enable robots to complete complex tasks in unpredictable environments]]></title>
+      <itunes:title><![CDATA[Embodied large language models enable robots to complete complex tasks in unpredictable environments]]></itunes:title>
+      <description><![CDATA[<p>https://www.nature.com/articles/s42256-025-01005-x</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-030</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/030-embodied-large-language-models-enable-robots-to-complete.mp3" length="11712514" type="audio/mpeg"/>
+      <guid isPermaLink="false">00b66da2-73f5-4c17-ae28-85cde8de1662</guid>
+      <itunes:duration>732</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>30</itunes:episode>
+      <podcast:episode>30</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sun, 30 Mar 2025 17:24:23 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[The end of the genetic paradigm of cancer]]></title>
+      <itunes:title><![CDATA[The end of the genetic paradigm of cancer]]></itunes:title>
+      <description><![CDATA[<p>https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3003052</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-031</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/031-the-end-of-the-genetic-paradigm-of-cancer.mp3" length="24501647" type="audio/mpeg"/>
+      <guid isPermaLink="false">e286f85d-7961-4065-985f-21210156c46b</guid>
+      <itunes:duration>1531</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>31</itunes:episode>
+      <podcast:episode>31</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 02 Apr 2025 03:42:50 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[A natural experiment on the effect of herpes zoster vaccination on dementia]]></title>
+      <itunes:title><![CDATA[A natural experiment on the effect of herpes zoster vaccination on dementia]]></itunes:title>
+      <description><![CDATA[<p>DOI: <a target="_blank" rel="noopener" class="id-link" href="https://doi.org/10.1038/s41586-025-08800-x">10.1038/s41586-025-08800-x</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-032</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/032-a-natural-experiment-on-the-effect-of-herpes-zoster.mp3" length="11364772" type="audio/mpeg"/>
+      <guid isPermaLink="false">b29b05d4-8082-4733-b82c-fea77e68cc84</guid>
+      <itunes:duration>710</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>32</itunes:episode>
+      <podcast:episode>32</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 07 Apr 2025 22:32:56 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Immune checkpoint TIM-3 regulates  microglia and Alzheimer’s disease]]></title>
+      <itunes:title><![CDATA[Immune checkpoint TIM-3 regulates  microglia and Alzheimer’s disease]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41586-025-08852-z</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-033</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/033-immune-checkpoint-tim-3-regulates-microglia-and-alzheimers.mp3" length="12764517" type="audio/mpeg"/>
+      <guid isPermaLink="false">c3d72dbd-2f9a-421d-8497-a1ddccffe15f</guid>
+      <itunes:duration>797</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>33</itunes:episode>
+      <podcast:episode>33</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 14 Apr 2025 23:10:46 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Adversarial testing of global neuronal workspace and integrated information theories of consciousness]]></title>
+      <itunes:title><![CDATA[Adversarial testing of global neuronal workspace and integrated information theories of consciousness]]></itunes:title>
+      <description><![CDATA[<p>https://www.nature.com/articles/s41586-025-08888-1</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-034</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/034-adversarial-testing-of-global-neuronal-workspace-and.mp3" length="9185115" type="audio/mpeg"/>
+      <guid isPermaLink="false">2d5f00ce-12e8-4549-b620-fa5c65904225</guid>
+      <itunes:duration>574</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>34</itunes:episode>
+      <podcast:episode>34</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 02 May 2025 04:11:29 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Patient-Specific In Vivo Gene Editing to Treat a Rare Genetic Disease]]></title>
+      <itunes:title><![CDATA[Patient-Specific In Vivo Gene Editing to Treat a Rare Genetic Disease]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1056/NEJMoa2504747</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-035</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/035-patient-specific-in-vivo-gene-editing-to-treat-a-rare.mp3" length="12341542" type="audio/mpeg"/>
+      <guid isPermaLink="false">1a146a6c-ac3a-4c17-890e-87c3c0f18c41</guid>
+      <itunes:duration>771</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>35</itunes:episode>
+      <podcast:episode>35</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 20 May 2025 00:32:49 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Deep-learning-based single-domain and  multidomain protein structure prediction  with D-I-TASSER]]></title>
+      <itunes:title><![CDATA[Deep-learning-based single-domain and  multidomain protein structure prediction  with D-I-TASSER]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41587-025-02654-4</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-036</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/036-deep-learning-based-single-domain-and-multidomain-protein.mp3" length="10957679" type="audio/mpeg"/>
+      <guid isPermaLink="false">88d74a84-3397-4d88-9383-e3c85f207955</guid>
+      <itunes:duration>684</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>36</itunes:episode>
+      <podcast:episode>36</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 26 May 2025 17:35:39 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Glioblastoma-instructed astrocytes suppress  tumour-specific T cell immunity]]></title>
+      <itunes:title><![CDATA[Glioblastoma-instructed astrocytes suppress  tumour-specific T cell immunity]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41586-025-08997-x</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-037</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/037-glioblastoma-instructed-astrocytes-suppress-tumour-specific.mp3" length="12820942" type="audio/mpeg"/>
+      <guid isPermaLink="false">835572f9-ca96-48b8-ab86-8ce78cbad2ec</guid>
+      <itunes:duration>801</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>37</itunes:episode>
+      <podcast:episode>37</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 27 May 2025 13:01:29 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Cross-tissue multicellular coordination and its rewiring in cancer]]></title>
+      <itunes:title><![CDATA[Cross-tissue multicellular coordination and its rewiring in cancer]]></itunes:title>
+      <description><![CDATA[<p>doi: 10.1038/s41586-025-09053-4</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-038</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/038-cross-tissue-multicellular-coordination-and-its-rewiring-in.mp3" length="17459035" type="audio/mpeg"/>
+      <guid isPermaLink="false">41504807-4c5a-4116-a7e0-df62860bed4d</guid>
+      <itunes:duration>1091</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>38</itunes:episode>
+      <podcast:episode>38</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sat, 31 May 2025 15:33:41 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Why people follow rules]]></title>
+      <itunes:title><![CDATA[Why people follow rules]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41562-025-02196-4</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-039</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/039-why-people-follow-rules.mp3" length="6572452" type="audio/mpeg"/>
+      <guid isPermaLink="false">489c1919-5ffa-49f2-9da3-adcedd748f52</guid>
+      <itunes:duration>410</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>39</itunes:episode>
+      <podcast:episode>39</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 03 Jun 2025 02:43:46 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[3 Papers on Antibody Tumor Penetration and Clearance]]></title>
+      <itunes:title><![CDATA[3 Papers on Antibody Tumor Penetration and Clearance]]></itunes:title>
+      <description><![CDATA[<p>Mixing it up a little with an episode covering 3 papers on the same topic.</p><p></p><ol><li>Antibody tumor penetration: Transport opposed by systemic and antigen-mediated clearancedoi:10.1016/j.addr.2008.04.012.</li><li>A highly stable human single-domain antibody-drug conjugate exhibits superior penetration and treatment of solid tumorshttps://doi.org/10.1016/j.ymthe.2022.04.013.</li><li>Influence of molecular size on tissue distribution of antibody fragmentshttps://doi.org/10.1080/19420862.2015.1111497</li></ol>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-040</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/040-3-papers-on-antibody-tumor-penetration-and-clearance.mp3" length="14713879" type="audio/mpeg"/>
+      <guid isPermaLink="false">d4e0f7af-4828-41ae-b5a2-b6ae2820f5fd</guid>
+      <itunes:duration>919</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>40</itunes:episode>
+      <podcast:episode>40</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sat, 07 Jun 2025 15:54:52 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[What Is It Like to Be a Bat?]]></title>
+      <itunes:title><![CDATA[What Is It Like to Be a Bat?]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://www.jstor.org/stable/2183914">https://www.jstor.org/stable/2183914</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-041</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/041-what-is-it-like-to-be-a-bat.mp3" length="10303991" type="audio/mpeg"/>
+      <guid isPermaLink="false">eccae640-078b-4bf1-a181-1c9fd1601c3e</guid>
+      <itunes:duration>643</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>41</itunes:episode>
+      <podcast:episode>41</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 12 Jun 2025 21:33:57 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Soil and cherry bacterial communities predict flavor on coffee farms]]></title>
+      <itunes:title><![CDATA[Soil and cherry bacterial communities predict flavor on coffee farms]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41598-025-03665-6</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-042</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/042-soil-and-cherry-bacterial-communities-predict-flavor-on.mp3" length="6031613" type="audio/mpeg"/>
+      <guid isPermaLink="false">8ca07708-c932-4d2c-82c3-674e2d69b7ac</guid>
+      <itunes:duration>376</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>42</itunes:episode>
+      <podcast:episode>42</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 20 Jun 2025 23:47:36 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Lying increases trust in science]]></title>
+      <itunes:title><![CDATA[Lying increases trust in science]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1007/s11186-025-09635-1</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-043</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/043-lying-increases-trust-in-science.mp3" length="12621993" type="audio/mpeg"/>
+      <guid isPermaLink="false">cfa5fe06-727b-464a-8fc5-3632ad68f7cc</guid>
+      <itunes:duration>788</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>43</itunes:episode>
+      <podcast:episode>43</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sat, 26 Jul 2025 17:46:37 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Tuning antibody stability and function by rational designs of framework mutations]]></title>
+      <itunes:title><![CDATA[Tuning antibody stability and function by rational designs of framework mutations]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1080/19420862.2025.2532117</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-044</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/044-tuning-antibody-stability-and-function-by-rational-designs.mp3" length="13897604" type="audio/mpeg"/>
+      <guid isPermaLink="false">70033ee1-ac5e-498a-bcb3-22cf0615693f</guid>
+      <itunes:duration>868</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>44</itunes:episode>
+      <podcast:episode>44</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sun, 27 Jul 2025 08:00:09 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Predicting human decisions with behavioural theories and machine learning]]></title>
+      <itunes:title><![CDATA[Predicting human decisions with behavioural theories and machine learning]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41562-025-02267-6</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-045</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/045-predicting-human-decisions-with-behavioural-theories-and.mp3" length="17329978" type="audio/mpeg"/>
+      <guid isPermaLink="false">3621a61e-1a59-4810-95d0-990ff55ecb2f</guid>
+      <itunes:duration>1083</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>45</itunes:episode>
+      <podcast:episode>45</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
+      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
+      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
+      <itunes:duration>934</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
+      <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-sliding-window-interaction-grammar-swing-a-generalized.mp3" length="16072339" type="audio/mpeg"/>
+      <guid isPermaLink="false">9201969d-0f95-4f0e-9bc1-c21da915fa14</guid>
+      <itunes:duration>1004</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
+      <itunes:title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1016/j.celrep.2025.115965">https://doi.org/10.1016/j.celrep.2025.115965</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-047</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/047-bispecific-antibody-antigen-complex-structures-reveal.mp3" length="11601012" type="audio/mpeg"/>
+      <guid isPermaLink="false">8adcecf7-0560-46bc-ac4b-ed0eff677fcb</guid>
+      <itunes:duration>725</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>47</itunes:episode>
+      <podcast:episode>47</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 04 Aug 2025 15:12:08 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Single-Chain Fab Chain-Exchange (scFab-PACE) converts targeted prodrugs into functional T cell engagers on tumor cells]]></title>
+      <itunes:title><![CDATA[Single-Chain Fab Chain-Exchange (scFab-PACE) converts targeted prodrugs into functional T cell engagers on tumor cells]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1016/j.jbc.2025.110490">https://doi.org/10.1016/j.jbc.2025.110490</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-048</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/048-single-chain-fab-chain-exchange-scfab-pace-converts-targeted.mp3" length="15844551" type="audio/mpeg"/>
+      <guid isPermaLink="false">54d3c17c-f001-4490-ab6f-06f415ca15de</guid>
+      <itunes:duration>990</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>48</itunes:episode>
+      <podcast:episode>48</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 05 Aug 2025 07:10:07 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[AlphaEarth Foundations: An embedding field model for accurate and efficient global mapping from sparse label data]]></title>
+      <itunes:title><![CDATA[AlphaEarth Foundations: An embedding field model for accurate and efficient global mapping from sparse label data]]></itunes:title>
+      <description><![CDATA[<p>arXiv:2507.22291v1</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-049</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/049-alphaearth-foundations-an-embedding-field-model-for-accurate.mp3" length="18044688" type="audio/mpeg"/>
+      <guid isPermaLink="false">9008aef2-1cb8-4bbe-92b5-d3d67e3d482d</guid>
+      <itunes:duration>1127</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>49</itunes:episode>
+      <podcast:episode>49</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 06 Aug 2025 17:18:08 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Cancer-induced nerve injury promotes  resistance to anti-PD-1 therapy]]></title>
+      <itunes:title><![CDATA[Cancer-induced nerve injury promotes  resistance to anti-PD-1 therapy]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41586-025-09370-8</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-050</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/050-cancer-induced-nerve-injury-promotes-resistance-to-anti-pd-1.mp3" length="19492499" type="audio/mpeg"/>
+      <guid isPermaLink="false">fa11843c-303d-45f2-98bf-99e36fb052b7</guid>
+      <itunes:duration>1218</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>50</itunes:episode>
+      <podcast:episode>50</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 26 Aug 2025 23:33:53 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Glycan shielding enables TCR-sufficient allogeneic CAR-T therapy]]></title>
+      <itunes:title><![CDATA[Glycan shielding enables TCR-sufficient allogeneic CAR-T therapy]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1016/j.cell.2025.07.046</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-051</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/051-glycan-shielding-enables-tcr-sufficient-allogeneic-car-t.mp3" length="18613949" type="audio/mpeg"/>
+      <guid isPermaLink="false">f0f557f2-eba3-4d07-bf09-85e94940fb67</guid>
+      <itunes:duration>1163</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>51</itunes:episode>
+      <podcast:episode>51</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
+      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
+      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
+      <itunes:duration>837</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
+      <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-the-impact-of-cd3-affinity-attenuation-on-t-cell-engaging.mp3" length="16364075" type="audio/mpeg"/>
+      <guid isPermaLink="false">ef6b64ae-650d-4e35-bfbd-88e0168f0b2c</guid>
+      <itunes:duration>1022</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
+      <itunes:title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41380-025-03237-0</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-053</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/053-a-genetic-common-factor-underlying-self-reported-math.mp3" length="15479673" type="audio/mpeg"/>
+      <guid isPermaLink="false">ca47439a-9fc3-44c3-87c5-b319b3eaa250</guid>
+      <itunes:duration>967</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>53</itunes:episode>
+      <podcast:episode>53</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sat, 11 Oct 2025 00:53:12 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Improving dual targeting selectivity in T-cell engagers via synapse-gated and affinity-tuned trispecific antibody design]]></title>
+      <itunes:title><![CDATA[Improving dual targeting selectivity in T-cell engagers via synapse-gated and affinity-tuned trispecific antibody design]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1080/19420862.2025.2570748</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-054</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/054-improving-dual-targeting-selectivity-in-t-cell-engagers-via.mp3" length="14880319" type="audio/mpeg"/>
+      <guid isPermaLink="false">87d62444-675a-442b-8501-24a7c8c4bf5b</guid>
+      <itunes:duration>929</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>54</itunes:episode>
+      <podcast:episode>54</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 16 Oct 2025 00:19:35 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Guidelines for Early Food Introduction and Patterns of Food Allergy]]></title>
+      <itunes:title><![CDATA[Guidelines for Early Food Introduction and Patterns of Food Allergy]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1542/peds.2024-070516</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-055</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/055-guidelines-for-early-food-introduction-and-patterns-of-food.mp3" length="13996336" type="audio/mpeg"/>
+      <guid isPermaLink="false">f46a3f4b-48eb-47dd-a337-6282615f8c5e</guid>
+      <itunes:duration>874</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>55</itunes:episode>
+      <podcast:episode>55</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 22 Oct 2025 01:07:42 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[SARS-CoV-2 mRNA vaccines sensitize  tumours to immune checkpoint blockade]]></title>
+      <itunes:title><![CDATA[SARS-CoV-2 mRNA vaccines sensitize  tumours to immune checkpoint blockade]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41586-025-09655-y</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-056</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/056-sars-cov-2-mrna-vaccines-sensitize-tumours-to-immune.mp3" length="15965341" type="audio/mpeg"/>
+      <guid isPermaLink="false">c83130e5-09a1-456f-b546-b7e4aad15c68</guid>
+      <itunes:duration>997</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>56</itunes:episode>
+      <podcast:episode>56</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 28 Oct 2025 01:59:16 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Spatially organized inflammatory myeloid-CD8+ T cell  aggregates linked to Merkel-cell Polyomavirus driven  Reorganization of the Tumor Microenvironment]]></title>
+      <itunes:title><![CDATA[Spatially organized inflammatory myeloid-CD8+ T cell  aggregates linked to Merkel-cell Polyomavirus driven  Reorganization of the Tumor Microenvironment]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1101/2025.06.06.657162</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-057</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/057-spatially-organized-inflammatory-myeloid-cd8-t-cell.mp3" length="18562540" type="audio/mpeg"/>
+      <guid isPermaLink="false">82b1d488-c54c-46b5-9ec0-9aa9f26f81f5</guid>
+      <itunes:duration>1160</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>57</itunes:episode>
+      <podcast:episode>57</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 06 Nov 2025 00:59:58 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Language models cannot reliably distinguish  belief from knowledge and fact]]></title>
+      <itunes:title><![CDATA[Language models cannot reliably distinguish  belief from knowledge and fact]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s42256-025-01113-8</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-058</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/058-language-models-cannot-reliably-distinguish-belief-from.mp3" length="14168953" type="audio/mpeg"/>
+      <guid isPermaLink="false">05ce3240-9236-471e-bb4a-58dae31e760b</guid>
+      <itunes:duration>885</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>58</itunes:episode>
+      <podcast:episode>58</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 07 Nov 2025 09:00:23 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[A trispecific antibody engaging T cells with tumour and myeloid cells augments antitumour immunity]]></title>
+      <itunes:title><![CDATA[A trispecific antibody engaging T cells with tumour and myeloid cells augments antitumour immunity]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41551-025-01569-4">https://doi.org/10.1038/s41551-025-01569-4</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-059</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/059-a-trispecific-antibody-engaging-t-cells-with-tumour-and.mp3" length="11445948" type="audio/mpeg"/>
+      <guid isPermaLink="false">8734ca56-4c9b-4f81-b699-ae368852e54b</guid>
+      <itunes:duration>715</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>59</itunes:episode>
+      <podcast:episode>59</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 24 Dec 2025 04:46:57 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
