@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'inbox/**.mp3'
+      - 'inbox/**.m4a'
+      - 'inbox/**.mp4a'
 
 permissions:
   contents: write

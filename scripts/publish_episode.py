@@ -1,6 +1,7 @@
-"""Pair MP3s in inbox/ with pending podcast Issues, publish, update feed.
+"""Pair audio files in inbox/ with pending podcast Issues, publish, update feed.
 
-Triggered by .github/workflows/publish.yml on push to inbox/**.mp3.
+Triggered by .github/workflows/publish.yml on push to inbox/**.{mp3,m4a,mp4a}.
+ffmpeg transcodes any accepted input format to a normalized mp3 episode file.
 """
 from __future__ import annotations
 
@@ -33,8 +34,12 @@ SHOW_NOTES_MODEL = "claude-sonnet-4-6"
 SHOW_NOTES_MAX_TOKENS = 1500
 
 
-def list_inbox_mp3s() -> list[Path]:
-    return sorted(INBOX.glob("*.mp3"), key=lambda p: p.stat().st_mtime)
+INBOX_AUDIO_EXTS = (".mp3", ".m4a", ".mp4a", ".wav")
+
+
+def list_inbox_audio() -> list[Path]:
+    files = [p for p in INBOX.iterdir() if p.is_file() and p.suffix.lower() in INBOX_AUDIO_EXTS]
+    return sorted(files, key=lambda p: p.stat().st_mtime)
 
 
 def next_episode_number() -> int:
@@ -79,7 +84,7 @@ def generate_show_notes(metadata: dict) -> str:
     return resp.content[0].text.strip()
 
 
-def publish_one(mp3: Path, issue: dict) -> dict:
+def publish_one(src: Path, issue: dict) -> dict:
     metadata = github_issue.parse_metadata(issue["body"])
     if not metadata:
         sys.exit(f"Issue #{issue['number']} has no METADATA block")
@@ -91,11 +96,11 @@ def publish_one(mp3: Path, issue: dict) -> dict:
     final_mp3 = EPISODES_DIR / f"{base_name}.mp3"
     json_path = EPISODES_DIR / f"{base_name}.json"
 
-    print(f"[publish] Episode {episode_number}: {paper_title[:60]}")
+    print(f"[publish] Episode {episode_number}: {paper_title[:60]} (source: {src.suffix})")
     EPISODES_DIR.mkdir(parents=True, exist_ok=True)
 
     print("  • normalizing audio")
-    normalize_audio(mp3, final_mp3)
+    normalize_audio(src, final_mp3)
     duration = mp3_duration_seconds(final_mp3)
     length_bytes = final_mp3.stat().st_size
 
@@ -122,34 +127,34 @@ def publish_one(mp3: Path, issue: dict) -> dict:
         json.dumps(episode_meta, indent=2, ensure_ascii=False), encoding="utf-8"
     )
 
-    mp3.unlink()
+    src.unlink()
     print(f"  ✓ wrote {final_mp3.name}")
     return episode_meta
 
 
 def main() -> None:
-    mp3s = list_inbox_mp3s()
-    if not mp3s:
-        print("No MP3s in inbox/, nothing to publish.")
+    audio_files = list_inbox_audio()
+    if not audio_files:
+        print("No audio files in inbox/, nothing to publish.")
         return
 
     pending = github_issue.list_pending_issues()
     if not pending:
         sys.exit(
-            "Found MP3s in inbox/ but no open issues with the "
+            "Found audio files in inbox/ but no open issues with the "
             f"'{github_issue.PENDING_LABEL}' label. Aborting."
         )
 
-    pairs = list(zip(mp3s, pending))
-    if len(mp3s) != len(pending):
+    pairs = list(zip(audio_files, pending))
+    if len(audio_files) != len(pending):
         print(
-            f"WARNING: {len(mp3s)} MP3s vs {len(pending)} pending issues — "
+            f"WARNING: {len(audio_files)} audio files vs {len(pending)} pending issues — "
             f"pairing oldest {len(pairs)} only."
         )
 
     published = []
-    for mp3, issue in pairs:
-        meta = publish_one(mp3, issue)
+    for src, issue in pairs:
+        meta = publish_one(src, issue)
         published.append((meta, issue))
 
     print("\n[feed] regenerating feed.xml")
