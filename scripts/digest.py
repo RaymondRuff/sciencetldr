@@ -194,6 +194,7 @@ def run_agent(system_prompt: str, user_message: str) -> tuple[bool, Path | None]
             max_tokens=MAX_OUTPUT_TOKENS,
             thinking={"type": "adaptive"},
             output_config={"effort": THINKING_EFFORT},
+            cache_control={"type": "ephemeral"},
             system=system_prompt,
             tools=tools,
             messages=messages,
