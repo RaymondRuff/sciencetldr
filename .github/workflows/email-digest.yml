@@ -1,0 +1,49 @@
+name: email-digest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'digest/*.md'
+  workflow_dispatch:
+    inputs:
+      digest_file:
+        description: 'Path to digest file (optional, defaults to newest in digest/)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  email:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - run: uv sync
+
+      - name: Find newly-added digest file
+        id: find
+        run: |
+          if [ -n "${{ inputs.digest_file }}" ]; then
+            echo "file=${{ inputs.digest_file }}" >> "$GITHUB_OUTPUT"
+          else
+            file=$(git diff-tree --no-commit-id --name-only -r --diff-filter=AM HEAD -- 'digest/*.md' | head -1)
+            echo "file=$file" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Send email
+        if: steps.find.outputs.file != ''
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DIGEST_RECIPIENTS: ${{ secrets.DIGEST_RECIPIENTS }}
+          DIGEST_FILE: ${{ steps.find.outputs.file }}
+        run: uv run python scripts/email_digest.py

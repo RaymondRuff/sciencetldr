@@ -1,10 +1,10 @@
 name: monday-podcast
 
 on:
-  workflow_run:
-    workflows: ["digest"]
-    types: [completed]
+  push:
     branches: [main]
+    paths:
+      - 'digest/*.md'
   workflow_dispatch: {}
 
 permissions:
@@ -13,7 +13,6 @@ permissions:
 
 jobs:
   select:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -154,18 +154,38 @@ Don't trigger the digest yet — first verify the publish path works end-to-end 
 
 ---
 
-## 7. Trigger the digest manually (~25 min)
+## 7. Set up the Claude Code routine (~10 min)
 
-Before letting it run on its Monday cron, test it once:
+The weekly digest is produced by a **Claude Code routine** (configured at
+claude.ai), not by a GitHub Actions job. The routine commits
+`digest/YYYY-MM-DD.md` to `main`; that push fires two GitHub workflows:
 
-1. **Actions** tab → `digest` workflow → "Run workflow" button → main branch
-2. Wait ~10–15 min (Opus + thinking + tool calls take time)
-3. Check that:
-   - A new file appeared in `digest/` (e.g. `2026-04-20.md`)
-   - Your `DIGEST_RECIPIENTS` received the email from `sciencetldrpod@gmail.com`
-   - The content matches your expected DICE-scored format
+- **email-digest** — emails the new file to `DIGEST_RECIPIENTS`
+- **monday-podcast** — picks the top-DICE paper and opens a podcast Issue
 
-If it works, the Monday selection workflow will also fire automatically (it's chained off the digest's success).
+### Create the routine
+
+1. At claude.ai, open **Routines → New routine**
+2. **Name:** `Science TLDR weekly digest`
+3. **Repo:** link `RaymondRuff/sciencetldr`, allow unrestricted branch pushes
+4. **Model:** Opus 4.7
+5. **Trigger:** Schedule → Mondays 06:00 ET (cron `0 11 * * 1`)
+6. **Connectors:** PubMed and bioRxiv at minimum; the GitHub workflow handles email
+7. **Prompt:**
+   ```
+   Read prompts/digest.md from this repo and follow it to produce this week's
+   literature digest. When done, commit the final markdown to
+   digest/YYYY-MM-DD.md on main (using today's UTC date).
+   ```
+
+### Test it once
+
+1. From the routine page, click "Run now"
+2. Wait ~10–15 min
+3. Confirm:
+   - A new file appeared in `digest/`
+   - `email-digest` ran and `DIGEST_RECIPIENTS` received the email
+   - `monday-podcast` ran and opened a new Issue
 
 ---
 
@@ -190,6 +210,6 @@ Monitor for 30 days — check that the new feed's listener count grows and that 
 
 - **Cost:** ~$5–10/month total Anthropic API spend. GitHub Pages and Actions are free for public repos within their generous limits.
 - **PAT rotation:** rotate `GH_PAT` and `ANTHROPIC_API_KEY` every 90 days. Add a calendar reminder.
-- **If the digest runs over budget:** edit `THINKING_EFFORT` in [scripts/digest.py](scripts/digest.py), lower from `"xhigh"` to `"high"` or `"medium"`.
+- **If the digest runs over Pro plan budget:** tune the routine's model or effort settings at claude.ai. The routine bills against the Pro plan, not the API.
 - **If PubMed trending breaks:** the friday workflow will fail loudly with "Only parsed N trending entries". Update the CSS selector in [scripts/select_friday_paper.py](scripts/select_friday_paper.py).
 - **Manual override:** any workflow can be triggered on demand via the Actions tab "Run workflow" button.
