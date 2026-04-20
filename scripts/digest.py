@@ -29,7 +29,7 @@ PROMPTS_DIR = ROOT / "prompts"
 DIGEST_DIR = ROOT / "digest"
 
 DIGEST_MODEL = "claude-opus-4-7"
-THINKING_BUDGET = 10000
+THINKING_EFFORT = "xhigh"  # low | medium | high | xhigh | max — Opus 4.7 adaptive thinking
 MAX_OUTPUT_TOKENS = 16000
 MAX_AGENT_ITERATIONS = 30
 
@@ -192,7 +192,8 @@ def run_agent(system_prompt: str, user_message: str) -> tuple[bool, Path | None]
         response = client.messages.create(
             model=DIGEST_MODEL,
             max_tokens=MAX_OUTPUT_TOKENS,
-            thinking={"type": "enabled", "budget_tokens": THINKING_BUDGET},
+            thinking={"type": "adaptive"},
+            output_config={"effort": THINKING_EFFORT},
             system=system_prompt,
             tools=tools,
             messages=messages,

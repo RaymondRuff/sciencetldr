@@ -190,6 +190,6 @@ Monitor for 30 days — check that the new feed's listener count grows and that 
 
 - **Cost:** ~$5–10/month total Anthropic API spend. GitHub Pages and Actions are free for public repos within their generous limits.
 - **PAT rotation:** rotate `GH_PAT` and `ANTHROPIC_API_KEY` every 90 days. Add a calendar reminder.
-- **If the digest runs over budget:** edit `THINKING_BUDGET` in [scripts/digest.py](scripts/digest.py), lower from 10000 to 5000.
+- **If the digest runs over budget:** edit `THINKING_EFFORT` in [scripts/digest.py](scripts/digest.py), lower from `"xhigh"` to `"high"` or `"medium"`.
 - **If PubMed trending breaks:** the friday workflow will fail loudly with "Only parsed N trending entries". Update the CSS selector in [scripts/select_friday_paper.py](scripts/select_friday_paper.py).
 - **Manual override:** any workflow can be triggered on demand via the Actions tab "Run workflow" button.
