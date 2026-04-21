@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Wed, 24 Dec 2025 04:46:57 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 14 Nov 2024 11:02:01 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -880,6 +880,50 @@
       <podcast:episode>59</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 24 Dec 2025 04:46:57 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 60: Resurrecting 5T4 drugs with metabolic sensing]]></title>
+      <itunes:title><![CDATA[Resurrecting 5T4 drugs with metabolic sensing]]></itunes:title>
+      <description><![CDATA[I don't have enough information to write accurate show notes for this paper. The metadata provided only includes a title ("Resurrecting 5T4 drugs with metabolic sensing") and no additional details — no authors, journal, DOI, abstract, full text, or digest entry.
+
+To write show notes that meet the constraints (no invented results, findings grounded in the results section), I would need at minimum:
+
+- **The abstract** (to identify the research question, approach, and headline results)
+- **Authors and journal/DOI** (for proper citation)
+- Ideally: the full text or digest entry
+
+Could you provide the paper's abstract, DOI, or full text? Once you share those, I can write the show notes accurately and in full.]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-060</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/060-resurrecting-5t4-drugs-with-metabolic-sensing.mp3" length="16311429" type="audio/mpeg"/>
+      <guid isPermaLink="false">ca4c1a2f-0be1-42de-ae88-1bb36231ba20</guid>
+      <itunes:duration>1359</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>60</itunes:episode>
+      <podcast:episode>60</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 21 Apr 2026 21:32:23 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 61: A trophoblast glycoprotein specific 5 T4-Vδ2 bispecific T cell engager recruits Vγ9Vδ2-T cells for tumor-selective cytotoxicity across solid malignancies]]></title>
+      <itunes:title><![CDATA[A trophoblast glycoprotein specific 5 T4-Vδ2 bispecific T cell engager recruits Vγ9Vδ2-T cells for tumor-selective cytotoxicity across solid malignancies]]></itunes:title>
+      <description><![CDATA[I don't have access to the full text or abstract of this paper — the metadata provided includes only bibliographic information with an empty abstract field, and I can't retrieve the paper from its DOI.
+
+To write accurate show notes without inventing results, I'd need at least one of the following:
+
+- The paper's **abstract**
+- The **full text** (or key sections: introduction, results, conclusion)
+- The **digest entry** with reasoning
+
+Could you paste the abstract or relevant excerpts? Once you do, I can produce the show notes following the template exactly.]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-061</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/061-a-trophoblast-glycoprotein-specific-5-t4-vd2-bispecific-t.mp3" length="16311854" type="audio/mpeg"/>
+      <guid isPermaLink="false">adf94004-cc29-4214-b0b6-867658a63602</guid>
+      <itunes:duration>1359</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>61</itunes:episode>
+      <podcast:episode>61</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 21 Apr 2026 21:33:21 +0000</pubDate>
     </item>
   </channel>
 </rss>
