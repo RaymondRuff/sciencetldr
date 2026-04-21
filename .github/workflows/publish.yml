@@ -7,6 +7,7 @@ on:
       - 'inbox/**.mp3'
       - 'inbox/**.m4a'
       - 'inbox/**.mp4a'
+  workflow_dispatch: {}
 
 permissions:
   contents: write

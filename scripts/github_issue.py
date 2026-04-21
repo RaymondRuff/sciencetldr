@@ -22,7 +22,19 @@ def _run(args: list[str]) -> str:
     return result.stdout
 
 
+def ensure_label(name: str, color: str = "ededed", description: str = "") -> None:
+    """Create the label if it doesn't exist; no-op if it does."""
+    subprocess.run(
+        ["gh", "label", "create", name, "--color", color, "--description", description, "--force"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+
 def open_issue(title: str, body: str, labels: list[str]) -> int:
+    for label in labels:
+        ensure_label(label)
     out = _run([
         "gh", "issue", "create",
         "--title", title,
