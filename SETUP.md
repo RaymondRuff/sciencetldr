@@ -125,11 +125,17 @@ GitHub Pages will publish within ~2 minutes at:
 
 ## 6. Test the publish pipeline (~10 min)
 
-Don't trigger the digest yet — first verify the publish path works end-to-end with a fake episode.
+The publish workflow accepts any of `.mp3 / .m4a / .mp4a / .wav` and resolves
+metadata in this order:
 
-1. Manually open a test Issue (Issues → New issue) with title `📄 Test paper` and body:
-   ````markdown
-   <!-- METADATA -->
+1. **JSON sidecar** with the same basename (one-off flow)
+2. **Oldest open Issue** with the `podcast-pending` label (digest flow)
+3. **Filename fallback** — derive title from the filename; look up DOI via PubMed
+
+### Test the one-off path with a sidecar
+
+1. Pick any short audio file (rename to `inbox/test-episode.m4a`)
+2. Create `inbox/test-episode.json` with:
    ```json
    {
      "title": "Test paper for pipeline verification",
@@ -137,18 +143,16 @@ Don't trigger the digest yet — first verify the publish path works end-to-end 
      "source": "manual-test"
    }
    ```
-   <!-- /METADATA -->
-   ````
-2. Add label `podcast-pending` to the issue (create the label if it doesn't exist)
-3. Drop a small test MP3 (any short audio file) into `inbox/` via the GitHub web UI
-4. Watch the **Actions** tab — `publish` workflow should run, and within ~2 min:
-   - The MP3 moves from `inbox/` to `episodes/`
+3. Commit and push both files in one commit. Git web UI caps uploads at 25 MB;
+   for larger files use the `git` CLI or GitHub Desktop.
+4. Watch the **Actions** tab — `publish` runs and within ~2 min:
+   - The audio is transcoded+normalized into `episodes/NNN-test-paper-....mp3`
    - `feed.xml` updates
-   - The test issue gets a comment and closes
-5. Once verified, delete the test commit:
+   - The audio and sidecar are removed from `inbox/`
+5. Once verified, revert the test commit:
    ```bash
    git pull
-   git revert HEAD -m 1  # revert the publish commit
+   git revert HEAD -m 1
    git push
    ```
 
