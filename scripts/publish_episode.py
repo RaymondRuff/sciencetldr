@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import uuid
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import format_datetime
 from pathlib import Path
@@ -132,6 +133,47 @@ def crossref_metadata(doi: str) -> dict:
     }
 
 
+def pubmed_abstract_for_doi(doi: str) -> str | None:
+    """Fetch the abstract from PubMed for a given DOI.
+
+    CrossRef frequently returns no abstract (many publishers don't deposit one),
+    so we fall back to PubMed's efetch to fill the gap before the LLM sees the
+    metadata. Returns None on any failure.
+    """
+    try:
+        es_params = {"db": "pubmed", "term": f"{doi}[aid]", "retmode": "json", "retmax": 1}
+        if NCBI_KEY:
+            es_params["api_key"] = NCBI_KEY
+        es = requests.get(
+            "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+            params=es_params, timeout=15,
+        )
+        es.raise_for_status()
+        ids = es.json().get("esearchresult", {}).get("idlist", [])
+        if not ids:
+            return None
+        ef_params = {"db": "pubmed", "id": ids[0], "rettype": "abstract", "retmode": "xml"}
+        if NCBI_KEY:
+            ef_params["api_key"] = NCBI_KEY
+        ef = requests.get(
+            "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
+            params=ef_params, timeout=15,
+        )
+        ef.raise_for_status()
+        root = ET.fromstring(ef.content)
+        parts: list[str] = []
+        for el in root.iter("AbstractText"):
+            text = "".join(el.itertext()).strip()
+            if not text:
+                continue
+            label = el.get("Label")
+            parts.append(f"{label}: {text}" if label else text)
+        return "\n\n".join(parts) or None
+    except Exception as exc:
+        print(f"  [metadata] PubMed abstract lookup failed: {exc}")
+        return None
+
+
 def pubmed_doi_from_title(title: str) -> str | None:
     """Best-effort DOI lookup via PubMed title search. Returns None on any error."""
     try:
@@ -193,6 +235,13 @@ def resolve_metadata(audio_path: Path, pending: list[dict]) -> tuple[dict, dict 
                 meta = crossref_metadata(doi)
                 if meta.get("title"):
                     print(f"  [metadata] CrossRef title: {meta['title'][:60]}")
+                    if not meta.get("abstract"):
+                        pm_abstract = pubmed_abstract_for_doi(doi)
+                        if pm_abstract:
+                            meta["abstract"] = pm_abstract
+                            print(f"  [metadata] abstract from PubMed ({len(pm_abstract)} chars)")
+                        else:
+                            print("  [metadata] no abstract available from CrossRef or PubMed")
                     return meta, None
                 print("  [metadata] CrossRef returned no title; falling through")
             except Exception as exc:
