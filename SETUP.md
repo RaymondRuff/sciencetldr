@@ -128,27 +128,27 @@ GitHub Pages will publish within ~2 minutes at:
 The publish workflow accepts any of `.mp3 / .m4a / .mp4a / .wav` and resolves
 metadata in this order:
 
-1. **JSON sidecar** with the same basename (one-off flow)
+1. **DOI in the audio file's Comment tag** → CrossRef canonical title/authors/journal (one-off flow)
 2. **Oldest open Issue** with the `podcast-pending` label (digest flow)
 3. **Filename fallback** — derive title from the filename; look up DOI via PubMed
 
-### Test the one-off path with a sidecar
+### Test the one-off path with an embedded DOI
 
-1. Pick any short audio file (rename to `inbox/test-episode.m4a`)
-2. Create `inbox/test-episode.json` with:
-   ```json
-   {
-     "title": "Test paper for pipeline verification",
-     "doi": "10.0000/test",
-     "source": "manual-test"
-   }
+1. Open the m4a/mp3 in Finder (macOS) or Explorer (Windows) → Get Info / Properties
+2. Paste the paper's DOI (e.g. `10.1038/s41586-024-07123-8`) into the **Comment** field → Save
+3. Drop the file into `inbox/` and push:
+   ```bash
+   git add inbox/your-file.m4a
+   git commit -m "inbox: test episode"
+   git push
    ```
-3. Commit and push both files in one commit. Git web UI caps uploads at 25 MB;
-   for larger files use the `git` CLI or GitHub Desktop.
+   (Git web UI caps uploads at 25 MB; for larger files use the `git` CLI or GitHub Desktop.)
 4. Watch the **Actions** tab — `publish` runs and within ~2 min:
-   - The audio is transcoded+normalized into `episodes/NNN-test-paper-....mp3`
+   - CrossRef returns the canonical title
+   - ffmpeg transcodes, normalizes to -16 LUFS, stamps ID3 tags (title, artist, album, genre)
+   - The episode lands in `episodes/NNN-<slug>.mp3`
    - `feed.xml` updates
-   - The audio and sidecar are removed from `inbox/`
+   - The audio is removed from `inbox/`
 5. Once verified, revert the test commit:
    ```bash
    git pull
