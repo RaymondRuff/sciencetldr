@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Wed, 24 Dec 2025 04:46:57 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 14 Nov 2024 11:02:01 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -880,6 +880,40 @@
       <podcast:episode>59</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 24 Dec 2025 04:46:57 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 60: A trophoblast glycoprotein specific 5 T4-Vδ2 bispecific T cell engager recruits Vγ9Vδ2-T cells for tumor-selective cytotoxicity across solid malignancies]]></title>
+      <itunes:title><![CDATA[A trophoblast glycoprotein specific 5 T4-Vδ2 bispecific T cell engager recruits Vγ9Vδ2-T cells for tumor-selective cytotoxicity across solid malignancies]]></itunes:title>
+      <description><![CDATA[**Paper:** [A trophoblast glycoprotein specific 5T4-Vδ2 bispecific T cell engager recruits Vγ9Vδ2-T cells for tumor-selective cytotoxicity across solid malignancies](https://doi.org/10.1016/j.clim.2026.110707)
+
+**Authors:** Milon de Jong, Rok Žiberna, Myrthe Veth, Elisabetta Michielon, et al.
+
+**Journal:** Clinical Immunology, 2026
+
+**Why it matters:** Solid tumors have largely resisted bispecific T cell engager therapies due to on-target toxicity in healthy tissue, and this study presents a strategy using gamma-delta T cells that may sidestep that problem.
+
+**Summary**
+
+Bispecific T cell engagers (bsTCEs) are antibody-like molecules that physically link a tumor antigen to a T cell receptor, forcing immune cells into proximity with cancer cells. While highly effective in blood cancers, their use in solid tumors has been hampered by "on-target off-tumor" toxicity — damage to healthy tissues that express the same antigen being targeted. This study addresses that problem by focusing on two components: the tumor antigen 5T4 (trophoblast glycoprotein), an oncofetal protein broadly overexpressed across solid malignancies but largely absent from healthy adult tissue, and Vγ9Vδ2-T cells, a subset of gamma-delta T cells known for potent anti-tumor activity and an intrinsic capacity to discriminate between stressed tumor cells and normal tissue.
+
+The researchers developed high-affinity VHHs — single-domain antibody fragments derived from camelid antibodies — specific to 5T4, and linked them to a VHH targeting the Vδ2 T cell receptor to create the 5T4-Vδ2 bsTCE. They validated 5T4 expression across a broad panel of solid tumor types and then tested the engager in both conventional 2D cell cultures and more clinically representative 3D patient-derived tumor models. In these systems, the bsTCE triggered robust Vγ9Vδ2-T cell activation, proinflammatory cytokine production, and tumor cell lysis. Critically, when the construct was tested against healthy tissues that do express 5T4 at low levels, Vγ9Vδ2-T cell cytotoxicity was not observed — suggesting that the gamma-delta T cell arm of the engager contributes an intrinsic selectivity that conventional alpha-beta T cell engagers lack. One caveat is that these remain preclinical findings, and whether the tumor-preferential activity holds in the more complex immunosuppressive environment of human tumors in vivo will require clinical investigation.
+
+**Three takeaways**
+
+1. The 5T4-Vδ2 bsTCE induced potent Vγ9Vδ2-T cell-mediated killing and cytokine production in both 2D and 3D patient-derived solid tumor models.
+2. 5T4 protein was expressed across the majority of solid malignancies evaluated, supporting its utility as a broad-spectrum therapeutic target.
+3. Despite low-level 5T4 expression on some healthy tissues, the bsTCE did not trigger Vγ9Vδ2-T cell cytotoxicity against those tissues, demonstrating tumor-preferential activity in preclinical testing.
+
+**Read the paper:** https://doi.org/10.1016/j.clim.2026.110707]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-060</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/060-a-trophoblast-glycoprotein-specific-5-t4-vd2-bispecific-t.mp3" length="16311854" type="audio/mpeg"/>
+      <guid isPermaLink="false">b29f7ad4-4a8d-4b09-b23b-de6530549269</guid>
+      <itunes:duration>1359</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>60</itunes:episode>
+      <podcast:episode>60</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 22 Apr 2026 15:55:23 +0000</pubDate>
     </item>
   </channel>
 </rss>
