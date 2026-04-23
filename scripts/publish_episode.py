@@ -51,6 +51,9 @@ DATE_PREFIX_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 NCBI_KEY = os.environ.get("NCBI_API_KEY")
 CROSSREF_UA = "sciencetldr/1.0 (mailto:sciencetldrpod@gmail.com)"
 
+WHISPER_MODEL = os.environ.get("WHISPER_MODEL", "small")
+WHISPER_COMPUTE_TYPE = os.environ.get("WHISPER_COMPUTE_TYPE", "int8")
+
 
 def list_inbox_audio() -> list[Path]:
     files = [p for p in INBOX.iterdir() if p.is_file() and p.suffix.lower() in INBOX_AUDIO_EXTS]
@@ -291,19 +294,47 @@ def mp3_duration_seconds(path: Path) -> int:
     return int(MP3(path).info.length)
 
 
-def generate_show_notes(metadata: dict) -> str:
+def transcribe_audio(audio_path: Path) -> str | None:
+    """Transcribe an audio file with faster-whisper. Returns None on failure.
+
+    Uses the `small` int8 CPU model by default (~240 MB, ~2-4x realtime).
+    Override via WHISPER_MODEL / WHISPER_COMPUTE_TYPE env vars if needed.
+    A transcription failure is non-fatal — we fall back to abstract-only notes.
+    """
+    try:
+        from faster_whisper import WhisperModel
+    except ImportError as exc:
+        print(f"  [transcribe] faster-whisper unavailable, skipping: {exc}")
+        return None
+    try:
+        print(f"  [transcribe] loading whisper {WHISPER_MODEL} ({WHISPER_COMPUTE_TYPE})")
+        model = WhisperModel(WHISPER_MODEL, device="cpu", compute_type=WHISPER_COMPUTE_TYPE)
+        segments, info = model.transcribe(str(audio_path), vad_filter=True)
+        parts = [seg.text.strip() for seg in segments]
+        transcript = " ".join(p for p in parts if p).strip()
+        print(f"  [transcribe] {len(transcript)} chars, language={info.language}")
+        return transcript or None
+    except Exception as exc:
+        print(f"  [transcribe] failed: {exc}")
+        return None
+
+
+def generate_show_notes(metadata: dict, transcript: str | None = None) -> str:
     template = (PROMPTS_DIR / "show_notes.md").read_text(encoding="utf-8")
     client = anthropic.Anthropic()
-    user_message = (
-        "Paper metadata (JSON):\n"
-        f"{json.dumps(metadata, indent=2, ensure_ascii=False)}\n\n"
-        "Write the show notes following the template in the system prompt."
-    )
+    parts = [f"Paper metadata (JSON):\n{json.dumps(metadata, indent=2, ensure_ascii=False)}"]
+    if transcript:
+        parts.append(
+            "Episode transcript (Whisper ASR — may contain minor errors in "
+            "specialized terminology; reconcile against the paper metadata):\n"
+            f"{transcript}"
+        )
+    parts.append("Write the show notes following the template in the system prompt.")
     resp = client.messages.create(
         model=SHOW_NOTES_MODEL,
         max_tokens=SHOW_NOTES_MAX_TOKENS,
         system=template,
-        messages=[{"role": "user", "content": user_message}],
+        messages=[{"role": "user", "content": "\n\n".join(parts)}],
     )
     return resp.content[0].text.strip()
 
@@ -324,8 +355,15 @@ def publish_one(src: Path, metadata: dict, issue: dict | None) -> dict:
     duration = mp3_duration_seconds(final_mp3)
     length_bytes = final_mp3.stat().st_size
 
+    print("  • transcribing episode")
+    transcript = transcribe_audio(src)
+    if transcript:
+        (EPISODES_DIR / f"{base_name}.transcript.txt").write_text(
+            transcript, encoding="utf-8"
+        )
+
     print("  • generating show notes (Sonnet)")
-    show_notes = generate_show_notes(metadata)
+    show_notes = generate_show_notes(metadata, transcript=transcript)
 
     pub_date = format_datetime(datetime.now(tz=timezone.utc))
     episode_meta = {

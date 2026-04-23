@@ -11,6 +11,7 @@ dependencies = [
     "mutagen>=1.47",
     "python-slugify>=8.0",
     "markdown>=3.6",
+    "faster-whisper>=1.0",
 ]
 
 [tool.uv]

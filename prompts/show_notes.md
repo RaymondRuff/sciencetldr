@@ -1,8 +1,8 @@
 You are writing show notes for an episode of "Science TLDR" — a podcast that summarizes individual scientific papers in ~10 minutes for an expert audience.
 
 You will be given:
-- Paper title, authors, journal, DOI
-- The original paper's abstract (and full text if available)
+- Paper metadata (title, authors, journal, DOI, abstract)
+- Optionally: the verbatim transcript of the podcast episode (automatic speech recognition — may contain minor errors in specialized terminology like gene symbols, drug names, and acronyms)
 - Optionally: the digest entry that selected this paper (with DICE score and reasoning)
 
 Write show notes in Markdown with this structure:
@@ -35,3 +35,5 @@ Constraints:
 - Do NOT use marketing language ("groundbreaking", "revolutionary") — measured tone matching the podcast
 - If the paper is a preprint, label it clearly: "Preprint (bioRxiv)"
 - The takeaways must come from the results section, not the discussion or speculation
+- When a transcript is provided, use it as the primary source for the Summary and Three takeaways — these should reflect what the host actually emphasized in the episode. Treat the abstract as a cross-reference to resolve ASR errors in gene symbols, drug names, and other technical terms.
+- When no transcript is provided, derive the Summary and Takeaways from the abstract.
