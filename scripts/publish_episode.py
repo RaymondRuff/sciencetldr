@@ -264,7 +264,18 @@ def resolve_metadata(audio_path: Path, pending: list[dict]) -> tuple[dict, dict 
                             print(f"  [metadata] abstract from PubMed ({len(pm_abstract)} chars)")
                         else:
                             print("  [metadata] no abstract available from CrossRef or PubMed")
-                    return meta, None
+                    matched_issue = None
+                    doi_key = doi.lower().rstrip(".,;)")
+                    for candidate in pending:
+                        cm = github_issue.parse_metadata(candidate["body"]) or {}
+                        cdoi = (cm.get("doi") or "").lower().rstrip(".,;)")
+                        if cdoi and cdoi == doi_key:
+                            matched_issue = candidate
+                            if cm.get("source"):
+                                meta["source"] = cm["source"]
+                            print(f"  [metadata] paired with Issue #{matched_issue['number']} (source={meta.get('source')})")
+                            break
+                    return meta, matched_issue
                 print("  [metadata] CrossRef returned no title; falling through")
             except Exception as exc:
                 print(f"  [metadata] CrossRef lookup failed: {exc}; falling through")
