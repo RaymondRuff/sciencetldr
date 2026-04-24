@@ -915,5 +915,39 @@ The researchers developed high-affinity VHHs — single-domain antibody fragment
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 22 Apr 2026 15:55:23 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 61: Improving mitochondria and ER stability helps eliminate upper motor neuron degeneration that occurs due to mSOD1 toxicity and TDP‐43 pathology]]></title>
+      <itunes:title><![CDATA[Improving mitochondria and ER stability helps eliminate upper motor neuron degeneration that occurs due to mSOD1 toxicity and TDP‐43 pathology]]></itunes:title>
+      <description><![CDATA[**Paper:** [Improving mitochondria and ER stability helps eliminate upper motor neuron degeneration that occurs due to mSOD1 toxicity and TDP‐43 pathology](https://doi.org/10.1002/ctm2.336)
+
+**Authors:** Barış Genç, Mukesh Gautam, Öge Gözütok, Ina Dervishi, Santana Sanchez, et al.
+
+**Journal:** Clinical and Translational Medicine, 2021
+
+**Why it matters:** NU-9 is the first compound shown to halt upper motor neuron degeneration — the cortical neurons whose loss defines ALS, primary lateral sclerosis, and hereditary spastic paraplegia — by physically restoring the structural integrity of mitochondria and the endoplasmic reticulum in living animals.
+
+**Summary**
+
+Upper motor neurons (UMNs), the cortical cells that issue commands for voluntary movement, degenerate in ALS, primary lateral sclerosis (PLS), and hereditary spastic paraplegia (HSP), yet have been largely overlooked in drug development because they are difficult to isolate and monitor in vivo. To address this, the researchers crossed disease mouse models — one driven by misfolded SOD1 protein (mSOD1) toxicity, another by TDP-43 pathology — with a UCHL1-eGFP reporter line that labels UMNs with green fluorescent protein, enabling direct visualization and quantification of these specific neurons during treatment. Electron microscopy revealed that both genetic triggers, despite operating through distinct molecular pathways, converge on the same organelle-level destruction: mitochondria lose their cristae (the inner membrane folds essential for energy production), the endoplasmic reticulum (ER) cisternae fracture and detach from ribosomes, and the apical dendrite — the neuron's primary signal-receiving antenna — becomes riddled with vacuoles. Critically, this pattern of damage was also observed in postmortem tissue from human ALS patients, validating the mouse model at the ultrastructural level.
+
+The compound NU-9, identified from a screen of over 50,000 candidates, was administered orally once daily from postnatal day 60 to day 120 in both disease models. At 100 mg/kg/day, NU-9 demonstrated 94% oral bioavailability, robust blood-brain barrier penetration, and no cardiac or systemic toxicity at therapeutic doses. Electron microscopy at end stage showed near-complete restoration of mitochondrial cristae (healthy mitochondria rising from 10% to 86% of the total pool), reassembly of intact ER cisternae with attached ribosomes, and clearance of apical dendrite vacuoles. UMN counts in treated disease mice matched those of healthy wild-type controls, and treated mice performed significantly better on the hanging wire test. One important caveat: NU-9 had no protective effect on lower motor neurons in the spinal cord, which continued to degenerate at the same rate as in untreated controls — underscoring that upper and lower motor neurons have fundamentally different cellular vulnerabilities.
+
+**Three takeaways**
+
+1. Mitochondrial cristae loss and ER fragmentation are convergent structural pathologies in UMNs regardless of whether the upstream trigger is mSOD1 toxicity or TDP-43 pathology, and the same damage pattern is seen in postmortem human ALS tissue.
+2. NU-9 treatment at 100 mg/kg/day restored the proportion of structurally healthy mitochondria from ~10% to ~86%, fully reassembled ER cisternae, and cleared apical dendrite vacuoles — returning UMN architecture to wild-type baseline in vivo.
+3. NU-9 preserved UMN populations at healthy control levels and improved motor behavior on the hanging wire test, but provided no protection to lower motor neurons, demonstrating that the two neuron populations have distinct survival requirements within the same motor circuit.
+
+**Read the paper:** https://doi.org/10.1002/ctm2.336]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-061</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/061-improving-mitochondria-and-er-stability-helps-eliminate.mp3" length="15089804" type="audio/mpeg"/>
+      <guid isPermaLink="false">05a21dc5-5aba-4ee4-a2a0-d5c9f4c29daf</guid>
+      <itunes:duration>1257</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>61</itunes:episode>
+      <podcast:episode>61</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 24 Apr 2026 16:40:21 +0000</pubDate>
+    </item>
   </channel>
 </rss>
