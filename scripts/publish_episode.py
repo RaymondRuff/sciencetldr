@@ -54,6 +54,25 @@ CROSSREF_UA = "sciencetldr/1.0 (mailto:sciencetldrpod@gmail.com)"
 WHISPER_MODEL = os.environ.get("WHISPER_MODEL", "small")
 WHISPER_COMPUTE_TYPE = os.environ.get("WHISPER_COMPUTE_TYPE", "int8")
 
+# Recurring-series branding. Keyed by the `source` field set by the
+# select_*_paper.py scripts in the issue's METADATA block.
+SERIES = {
+    "friday-trending": {
+        "title_prefix": "Trending — ",
+        "description_header": (
+            "**Top Trending Friday** — our weekly pick of the "
+            "most-discussed paper on PubMed this week."
+        ),
+    },
+    "monday-digest": {
+        "title_prefix": "",
+        "description_header": (
+            "**Monday Immune Engager** — our weekly pick from the "
+            "latest immune-engager digest."
+        ),
+    },
+}
+
 
 def list_inbox_audio() -> list[Path]:
     files = [p for p in INBOX.iterdir() if p.is_file() and p.suffix.lower() in INBOX_AUDIO_EXTS]
@@ -342,6 +361,8 @@ def generate_show_notes(metadata: dict, transcript: str | None = None) -> str:
 def publish_one(src: Path, metadata: dict, issue: dict | None) -> dict:
     episode_number = next_episode_number()
     paper_title = metadata.get("title", "Untitled")
+    series = SERIES.get(metadata.get("source") or "")
+    display_title = f"{series['title_prefix']}{paper_title}" if series else paper_title
     slug = slugify(paper_title, max_length=60, word_boundary=True, save_order=True)
     base_name = f"{episode_number:03d}-{slug}"
     final_mp3 = EPISODES_DIR / f"{base_name}.mp3"
@@ -364,12 +385,14 @@ def publish_one(src: Path, metadata: dict, issue: dict | None) -> dict:
 
     print("  • generating show notes (Sonnet)")
     show_notes = generate_show_notes(metadata, transcript=transcript)
+    if series and series.get("description_header"):
+        show_notes = f"{series['description_header']}\n\n{show_notes}"
 
     pub_date = format_datetime(datetime.now(tz=timezone.utc))
     episode_meta = {
         "guid": str(uuid.uuid4()),
-        "title": f"Episode {episode_number}: {paper_title}",
-        "itunes_title": paper_title,
+        "title": f"Episode {episode_number}: {display_title}",
+        "itunes_title": display_title,
         "description": show_notes,
         "pub_date": pub_date,
         "duration_seconds": duration,
