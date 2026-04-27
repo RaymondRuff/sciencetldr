@@ -24,7 +24,7 @@ DIGEST_DIR = ROOT / "digest"
 PROMPTS_DIR = ROOT / "prompts"
 
 DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
-DICE_RE = re.compile(r"DICE\s*(?:score)?\s*[:\-]?\s*(\d)", re.IGNORECASE)
+DICE_RE = re.compile(r"DICE\s*(?:score)?\s*[:\-]?\s*\*{0,2}(\d)\*{0,2}", re.IGNORECASE)
 
 
 def latest_digest() -> Path:
@@ -42,7 +42,7 @@ def parse_papers(markdown: str) -> list[dict]:
     prompt enforces blank lines between fields, so each paper is its own
     paragraph cluster.
     """
-    chunks = re.split(r"\n(?:---+|\*\*\*+|===+)\n+", markdown)
+    chunks = re.split(r"\n(?:---+|\*\*\*+|===+)\n+|\n(?=## (?!#))", markdown)
     if len(chunks) < 3:
         chunks = re.split(r"\n{3,}", markdown)
 
@@ -56,7 +56,14 @@ def parse_papers(markdown: str) -> list[dict]:
         if not (dice_match and doi_match):
             continue
 
-        first_lines = [line.strip(" *#-•\t").strip() for line in chunk.splitlines() if line.strip()]
+        first_lines = []
+        for line in chunk.splitlines():
+            raw = line.lstrip()
+            if raw.startswith("## ") and not raw.startswith("### "):
+                continue
+            stripped = line.strip(" *#-•\t").strip()
+            if stripped:
+                first_lines.append(stripped)
         title = next(
             (l for l in first_lines if len(l) > 15 and not l.lower().startswith(("authors", "journal", "doi", "dice"))),
             first_lines[0] if first_lines else "",
