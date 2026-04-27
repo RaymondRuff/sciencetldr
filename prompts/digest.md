@@ -23,23 +23,42 @@ DICE SCORING GUIDE:
 - 2: Useful but routine. Literature review, regulatory tracking, or incremental optimization.
 - 1: Incremental improvement only.
 
-FOR EACH PAPER (Each on a new line):
-- Title
-- Authors
-- Journal (or preprint server — label preprints clearly)
-- DOI/link (must be clickable)
-- Target antigens and format/architecture (if applicable, should be very short. For example "EGFR x CD3, scFv bispecific with Fc")
-- 2-3 sentence summary focused on what is novel from a protein engineering perspective
-- DICE score: [1-6] — one sentence explaining why this score was assigned
-- Flag if clinical-stage, and note the originating lab/group if prominent
+REQUIRED OUTPUT FORMAT — the digest is consumed by an automated parser that picks the top-DICE paper for the Monday podcast. Follow this format exactly; drift breaks the pipeline.
 
-OUTPUT: Rank by DICE score (highest first).
-- Each of these sections should be on its own line.
+Per-paper template (applies to both peer-reviewed papers and preprints; every field separated by a blank line):
 
-Have a section for a few notable pre-prints, up to 5, these are not included in the main rankings of the paper. Also give these a DICE score and a brief description.
+```
+### N. {Title}
 
-End with a brief "Weekly Themes" paragraph noting patterns or trends.
+{Authors, comma-separated, et al. if more than ~6}
+
+*{Journal}*  (append " (preprint)" for preprints)
+
+[{DOI}](https://doi.org/{DOI})
+
+{Target antigens and format/architecture — short, e.g. "EGFR × CD3 scFv-VHH tandem"}
+
+{2-3 sentence summary focused on what is novel from a protein engineering perspective.}
+
+DICE score: {N} — {one-sentence justification}
+
+{Optional final line: clinical-stage flag and originating lab/group if prominent.}
+```
+
+HARD CONSTRAINTS — these are what the parser depends on:
+- The DICE line must read literally `DICE score: {digit} — {reason}` where `{digit}` is a single bare character 1-6. No bold, asterisks, brackets, or other markdown around the digit. Write `DICE score: 4 — ...`, never `DICE score: **4** — ...`.
+- The DOI line must contain the canonical DOI (`10.xxxx/...`). If only a PubMed URL is available, resolve it to the DOI; do not emit a paper block without a DOI.
+- Every paper block (peer-reviewed and preprint) must be terminated by `---` on its own line, with blank lines above and below the rule.
+- Every `## ` section header must also be preceded by a `---` rule, including the rule between the last peer-reviewed paper and `## Notable Preprints`.
+- Every metadata field within a block must be separated by a blank line — consecutive bold-labeled lines collapse into one rendered paragraph.
+
+OUTPUT STRUCTURE:
+1. `# {Digest title}` and a one-line coverage-window note.
+2. `---`
+3. `## Top Papers` — peer-reviewed papers only, ranked by DICE descending, up to 10-12 entries.
+4. `---`
+5. `## Notable Preprints` — up to 5 preprints (not part of the main ranking), each with a DICE score and brief description.
+6. `---`
+7. `## Weekly Themes` — one paragraph on patterns and trends.
 
 Generate the output by calling the `write_digest_file` tool with the full markdown content.
-
-MARKDOWN FORMATTING RULE: Each metadata field per paper (Title, Authors, Journal, DOI, Target/format, Summary, DICE, Clinical flag) must be separated by a blank line in the markdown source. Consecutive lines starting with bold labels will collapse into a single paragraph in rendered markdown. Always insert a blank line between them.
