@@ -47,10 +47,17 @@ def parse_papers(markdown: str) -> list[dict]:
         chunks = re.split(r"\n{3,}", markdown)
 
     papers = []
+    in_preprint_section = False
+    position = 0
     for chunk in chunks:
         chunk = chunk.strip()
         if not chunk:
             continue
+        if re.search(r"^##\s+Notable\s+Preprints", chunk, re.MULTILINE | re.IGNORECASE):
+            in_preprint_section = True
+        elif re.search(r"^##\s+Top\s+(?:Peer-Reviewed\s+)?Papers", chunk, re.MULTILINE | re.IGNORECASE):
+            in_preprint_section = False
+
         dice_match = DICE_RE.search(chunk)
         doi_match = DOI_RE.search(chunk)
         if not (dice_match and doi_match):
@@ -71,14 +78,23 @@ def parse_papers(markdown: str) -> list[dict]:
         if title.lower().startswith("title"):
             title = title.split(":", 1)[-1].strip()
 
+        doi = doi_match.group(0).rstrip(".,);")
+        is_preprint = (
+            in_preprint_section
+            or "(preprint)" in chunk.lower()
+            or doi.startswith("10.1101/")
+        )
         papers.append({
             "title": title[:300],
-            "doi": doi_match.group(0).rstrip(".,);"),
+            "doi": doi,
             "dice": int(dice_match.group(1)),
             "raw": chunk[:2000],
+            "is_preprint": is_preprint,
+            "position": position,
         })
+        position += 1
 
-    papers.sort(key=lambda p: (-p["dice"], len(p["raw"])))
+    papers.sort(key=lambda p: (-p["dice"], p["position"]))
     return papers
 
 
@@ -143,9 +159,12 @@ def main() -> None:
     papers = parse_papers(digest_path.read_text(encoding="utf-8"))
     if not papers:
         sys.exit("Could not parse any papers from the digest")
-    print(f"[select-monday] parsed {len(papers)} candidates")
+    peer_reviewed = [p for p in papers if not p["is_preprint"]]
+    print(f"[select-monday] parsed {len(papers)} candidates ({len(peer_reviewed)} peer-reviewed)")
+    if not peer_reviewed:
+        sys.exit("No peer-reviewed papers parsed from digest (only preprints found)")
 
-    top = papers[0]
+    top = peer_reviewed[0]
     print(f"[select-monday] top pick (DICE {top['dice']}): {top['title'][:80]}")
 
     pdf_url = paper_resolver.resolve_pdf(doi=top["doi"])
