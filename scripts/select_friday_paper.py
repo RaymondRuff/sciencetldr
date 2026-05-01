@@ -3,9 +3,14 @@
 Scrapes https://pubmed.ncbi.nlm.nih.gov/trending/ — there is no native
 trending endpoint in E-utilities. The page is a stable user-facing list;
 we assert >=10 entries and fail loudly if the markup changes.
+
+Walks the top entries in order and skips any paper whose DOI is already
+in episodes/ or in an open podcast-pending issue, so we do not republish
+last week's pick when the trending list is sticky.
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -22,11 +27,13 @@ import select_monday_paper
 
 ROOT = Path(__file__).resolve().parent.parent
 PROMPTS_DIR = ROOT / "prompts"
+EPISODES_DIR = ROOT / "episodes"
 
 TRENDING_URL = "https://pubmed.ncbi.nlm.nih.gov/trending/"
 USER_AGENT = "ScienceTLDR-bot/1.0 (https://github.com/RaymondRuff/sciencetldr)"
 
 MIN_TRENDING_ENTRIES = 10
+MAX_CANDIDATES_TO_CHECK = 10
 
 
 def fetch_trending() -> list[dict]:
@@ -62,6 +69,30 @@ def fetch_doi_for_pmid(pmid: str) -> str:
     return ""
 
 
+def already_seen_dois() -> set[str]:
+    """DOIs of episodes already published or queued in an open issue."""
+    seen: set[str] = set()
+    for path in EPISODES_DIR.glob("*.json"):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        doi = ((data.get("source_metadata") or {}).get("doi") or "").strip()
+        if doi:
+            seen.add(doi.lower())
+    try:
+        pending = github_issue.list_pending_issues()
+    except Exception as exc:
+        print(f"[select-friday] warning: could not list pending issues: {exc}")
+        pending = []
+    for issue in pending:
+        meta = github_issue.parse_metadata(issue.get("body") or "") or {}
+        doi = (meta.get("doi") or "").strip()
+        if doi:
+            seen.add(doi.lower())
+    return seen
+
+
 def main() -> None:
     print("[select-friday] fetching PubMed trending")
     entries = fetch_trending()
@@ -72,25 +103,42 @@ def main() -> None:
             "PubMed trending page markup may have changed; aborting before publishing the wrong paper."
         )
 
-    top = entries[0]
-    print(f"[select-friday] top trending: {top['title'][:80]}")
+    seen = already_seen_dois()
+    print(f"[select-friday] {len(seen)} DOIs already published or pending")
 
-    doi = fetch_doi_for_pmid(top["pmid"]) if top["pmid"] else ""
-    pdf_url = paper_resolver.resolve_pdf(doi=doi, pmid=top["pmid"])
+    chosen = None
+    for rank, entry in enumerate(entries[:MAX_CANDIDATES_TO_CHECK], start=1):
+        doi = fetch_doi_for_pmid(entry["pmid"]) if entry["pmid"] else ""
+        if doi and doi.lower() in seen:
+            print(f"[select-friday]  #{rank} skip (already seen): {entry['title'][:70]} [{doi}]")
+            continue
+        chosen = {**entry, "rank": rank, "doi": doi}
+        break
+
+    if chosen is None:
+        print(
+            f"[select-friday] all top {MAX_CANDIDATES_TO_CHECK} trending papers already "
+            "published or pending — nothing new to publish this week."
+        )
+        return
+
+    print(f"[select-friday] picking #{chosen['rank']}: {chosen['title'][:80]}")
+
+    pdf_url = paper_resolver.resolve_pdf(doi=chosen["doi"], pmid=chosen["pmid"])
     print(f"[select-friday] PDF: {pdf_url or 'none (closed-access fallback)'}")
 
     paper = {
-        "title": top["title"],
-        "doi": doi,
+        "title": chosen["title"],
+        "doi": chosen["doi"],
         "dice": None,
         "raw": (
-            f"PubMed Trending #1\n"
-            f"PMID: {top['pmid']}\n"
-            f"Citation: {top['journal_citation']}"
+            f"PubMed Trending #{chosen['rank']}\n"
+            f"PMID: {chosen['pmid']}\n"
+            f"Citation: {chosen['journal_citation']}"
         ),
     }
     body = select_monday_paper.render_issue_body(paper, pdf_url, "friday-trending")
-    title = f"🔥 {top['title'][:160]}"
+    title = f"🔥 {chosen['title'][:160]}"
     issue_number = github_issue.open_issue(
         title=title,
         body=body,
