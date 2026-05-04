@@ -1,0 +1,39 @@
+{
+  "guid": "4757a771-6a4f-417b-97c4-c32a16c85411",
+  "title": "Episode 63: Engineering of acidic pH-responsive anti-CD3 binding antibodies",
+  "itunes_title": "Engineering of acidic pH-responsive anti-CD3 binding antibodies",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**Paper:** [Engineering of acidic pH-responsive anti-CD3 binding antibodies](https://doi.org/10.1080/19420862.2026.2658902)\n\n**Authors:** Grégory La Sala, Katharina B. Kroell, Mudita Pincha, Christian Gassner, et al.\n\n**Journal:** mAbs, 2026\n\n**Why it matters:** Tumor-selective T-cell engagers could dramatically reduce the on-target, off-tumor toxicity that limits current CD3-directed cancer immunotherapies.\n\n**Summary**\n\nT-cell engagers are bispecific antibodies that physically tether a cytotoxic T-cell to a tumor cell by simultaneously binding a tumor-associated antigen and the CD3 receptor complex — the master activation switch of T-cells. The problem is that CD3-binding potency is indiscriminate: if the target antigen appears even at trace levels on healthy tissue, activated T-cells will attack it. This paper from Roche exploits a well-characterized feature of the tumor microenvironment — a local pH of roughly 6.5–6.8 driven by lactic acid accumulation and poor vascular clearance, versus the tightly regulated systemic pH of 7.4 — to engineer anti-CD3 antibodies that bind avidly inside a tumor but disengage in healthy tissue.\n\nStarting from the parental antibody 40G5C, the team built a phage-display library of hundreds of trillions of sequence variants, selectively incorporating pH-sensitive amino acids (histidine, aspartate, glutamate) at solvent-exposed positions and the CD3 interface. Only 1–2% of recovered clones showed genuine pH-responsive behavior, and the dominant hits were unexpected: threonine-to-aspartate (T89LD) and glutamine-to-glutamate (Q90LE) substitutions in the CDRL3 loop — neither of which directly contacts the CD3 antigen. Constant-pH molecular dynamics (CpHMD) simulations revealed two distinct allosteric mechanisms: Q90LE causes electrostatic rigidification of the CDR binding loops at acidic pH, collapsing into a floppy, non-binding conformation at pH 7.4; T89LD shifts the angle between the variable heavy and light chain domains by approximately 2 degrees at neutral pH, distorting the binding pocket enough to prevent CD3 engagement.\n\nFunctional assays in primary human PBMCs confirmed a 789-fold difference in binding affinity between pH 6.5 and pH 7.4 for the Q90LE variant, with corresponding selective T-cell activation (measured by CD69 upregulation). The engineered switch came at a cost to raw potency, but combining Q90LE with affinity-enhancing histidine mutations in the variable domains produced an optimized clone — P1AK5F7-19 — that restored parental-level potency at acidic pH while retaining the safety window at physiological pH.\n\n**Three takeaways**\n\n1. pH-dependent CD3 binding can be achieved through allosteric mutations in the CDRL3 loop that do not contact the antigen directly, challenging the field's conventional focus on mutating residues at the binding interface.\n2. CpHMD simulations identified two mechanistically distinct pH switches: loop rigidification (Q90LE) and a ~2-degree VH/VL domain tilt (T89LD), either of which is sufficient to ablate binding at neutral pH.\n3. The potency-selectivity trade-off inherent to pH-switch engineering was resolved by combining the Q90LE safety-switch mutation with histidine-based affinity-enhancing mutations, yielding a clone that matched parental T-cell activation at pH 6.5 while remaining largely inactive at pH 7.4 in human primary cell models.\n\n**Read the paper:** https://doi.org/10.1080/19420862.2026.2658902",
+  "pub_date": "Mon, 04 May 2026 17:58:45 +0000",
+  "duration_seconds": 1288,
+  "episode_number": 63,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "063-engineering-of-acidic-ph-responsive-anti-cd3-binding.mp3",
+  "enclosure_length_bytes": 15457008,
+  "source_metadata": {
+    "title": "Engineering of acidic pH-responsive anti-CD3 binding antibodies",
+    "doi": "10.1080/19420862.2026.2658902",
+    "authors": [
+      "Grégory La Sala",
+      "Katharina B. Kroell",
+      "Mudita Pincha",
+      "Christian Gassner",
+      "Lorenzo Deho",
+      "Ekkehard Moessner",
+      "Xavier Gueripel",
+      "Nicole Borin",
+      "Moritz Classen",
+      "Jörg Benz",
+      "Alexander Bujotzek",
+      "Christian Klein",
+      "Guy Georges",
+      "Adrian Hugenmatter",
+      "Klaus R. Liedl",
+      "Anna Vangone"
+    ],
+    "journal": "mAbs",
+    "abstract": "",
+    "source": "monday-digest"
+  },
+  "source_issue": 5
+}
