@@ -1,0 +1,75 @@
+name: promote-digest
+
+# Fires when the cloud digest routine pushes a new digest/YYYY-MM-DD.md to one
+# of its session branches (claude/*). The routine's sandbox can't push to main
+# directly, so this workflow verifies the branch only adds a digest file and
+# then fast-forwards main to that commit. Downstream monday-podcast and
+# email-digest workflows fire on the resulting push to main.
+
+on:
+  push:
+    branches:
+      - 'claude/**'
+    paths:
+      - 'digest/*.md'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Claude session branch to promote (e.g. claude/cool-carson-EVfrp)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.author.email == 'noreply@anthropic.com'
+    steps:
+      - name: Resolve branch ref
+        id: ref
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "ref=${{ inputs.branch }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout session branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.ref.outputs.ref }}
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Verify branch only touches digest/YYYY-MM-DD.md
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          base=$(git merge-base origin/main HEAD)
+          changed=$(git diff --name-only "$base"..HEAD)
+          echo "Files changed vs main:"
+          printf '  %s\n' $changed
+          if [ -z "$changed" ]; then
+            echo "::error::No changes vs main; nothing to promote"
+            exit 1
+          fi
+          while IFS= read -r f; do
+            case "$f" in
+              digest/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].md) ;;
+              *)
+                echo "::error::Branch touches '$f' outside digest/YYYY-MM-DD.md; aborting promotion"
+                exit 1
+                ;;
+            esac
+          done <<< "$changed"
+          echo "::notice::Verified — all changes are digest/YYYY-MM-DD.md files"
+
+      - name: Fast-forward main
+        run: |
+          git push origin HEAD:main
+          echo "::notice::Promoted ${{ steps.ref.outputs.ref }} to main"
+
+      - name: Delete session branch
+        run: git push origin --delete "${{ steps.ref.outputs.ref }}" || true
