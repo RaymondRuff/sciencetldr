@@ -1,0 +1,33 @@
+{
+  "guid": "cb381243-840b-4309-b2bf-2caa2943c324",
+  "title": "Episode 65: Enable CAR T cell immunotherapy in glioblastoma by modifying its microenvironment via oncolytic adenovirus encoding bispecific T cell engager",
+  "itunes_title": "Enable CAR T cell immunotherapy in glioblastoma by modifying its microenvironment via oncolytic adenovirus encoding bispecific T cell engager",
+  "description": "**Paper:** [Enable CAR T cell immunotherapy in glioblastoma by modifying its microenvironment via oncolytic adenovirus encoding bispecific T cell engager](https://doi.org/10.1016/j.omton.2026.201201)\n\n**Authors:** Moon Jung Choi, Eui Young So, Bedia Akosman, Young Eun Lee, et al.\n\n**Journal:** Molecular Therapy Oncology, 2026\n\n**Why it matters:** Glioblastoma has resisted every modern immunotherapy due to its physical and immunological defenses, and this study presents a multimodal platform that simultaneously addresses immune exclusion, antigen escape, and tumor heterogeneity.\n\n---\n\n**Summary**\n\nGlioblastoma (GBM) remains one of the most treatment-resistant cancers, with median survival stubbornly anchored near 12–18 months despite maximal surgical resection, radiation, and temozolomide chemotherapy. CAR T cell therapies have shown only transient responses in clinical trials, stymied by two compounding problems: the blood-brain barrier (BBB) physically restricts immune cell trafficking into the tumor, and GBM's extreme antigen heterogeneity allows surviving cells to simply downregulate the targeted antigen and escape. To address this, the authors engineered a conditionally replicative oncolytic adenovirus — Ad5-Δ24-RGD, which carries a 24-base-pair deletion in its E1A gene preventing replication in cells with intact retinoblastoma (RB) tumor suppressor pathway — to act as a local factory, continuously producing a bispecific T cell engager (BiTE) that simultaneously binds CD3 on T cells and IL-13Rα2, an antigen highly specific to GBM. This \"OV-BiTE\" was then combined with intravenously infused CAR T cells dual-targeted to EGFR and EGFRvIII, creating a three-antigen crossfire against the tumor.\n\nIn 3D GBM-BBB spheroid models incorporating astrocytes, endothelial cells, and pericytes, OV-BiTE treatment downregulated key endothelial tight junction proteins — Claudin-5, Occludin, and ZO-1 — measurably increasing barrier permeability and T cell infiltration compared to virus or controls alone. In a subcutaneous U87 GBM xenograft mouse model, sequential intratumoral OV-BiTE injection followed three days later by intravenous dual-targeted CAR T cell infusion produced markedly superior tumor regression versus any monotherapy arm, with histology confirming deep CD3+ T cell infiltration into the tumor core and significant reduction in IL-13Rα2-expressing cells. Importantly, mice tolerated the combination without body weight loss or overt toxicity signs. The critical caveat is that all in vivo efficacy data derives from a subcutaneous flank model rather than an intracranial orthotopic model, meaning true BBB dynamics, neuroinflammatory risk, and cerebral edema potential remain untested in a physiologically relevant CNS setting.\n\n---\n\n**Three takeaways**\n\n1. OV-BiTE infection actively downregulated endothelial tight junction proteins Claudin-5, Occludin, and ZO-1 in GBM-BBB spheroid models, significantly increasing the physical infiltration of circulating T cells across the barrier compared to untreated or virus-only controls.\n2. Sequential intratumoral OV-BiTE followed by systemic dual-targeted EGFR/EGFRvIII CAR T cell infusion produced superior tumor regression and deeper intratumoral CD3+ T cell infiltration in a xenograft mouse model compared to either CAR T cell therapy or oncolytic virus alone.\n3. Simultaneously targeting three distinct antigens — IL-13Rα2 via the virus-encoded BiTE, and EGFR/EGFRvIII via the CAR T cells — produced a multi-antigen crossfire that directly countered GBM's antigen escape mechanism, which monotherapy approaches consistently fail to overcome.\n\n---\n\n**Read the paper:** [https://doi.org/10.1016/j.omton.2026.201201](https://doi.org/10.1016/j.omton.2026.201201)",
+  "pub_date": "Mon, 11 May 2026 17:52:43 +0000",
+  "duration_seconds": 1294,
+  "episode_number": 65,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "065-enable-car-t-cell-immunotherapy-in-glioblastoma-by-modifying.mp3",
+  "enclosure_length_bytes": 15539946,
+  "source_metadata": {
+    "title": "Enable CAR T cell immunotherapy in glioblastoma by modifying its microenvironment via oncolytic adenovirus encoding bispecific T cell engager",
+    "doi": "10.1016/j.omton.2026.201201",
+    "authors": [
+      "Moon Jung Choi",
+      "Eui Young So",
+      "Bedia Akosman",
+      "Young Eun Lee",
+      "Alexander G. Raufi",
+      "Anthony M. Reginato",
+      "Clark C. Chen",
+      "Sean E. Lawler",
+      "Eric T. Wong",
+      "Olin D. Liang"
+    ],
+    "journal": "Molecular Therapy Oncology",
+    "abstract": "Recent clinical trials show that CAR T cell therapies can initially blunt tumor growth in patients with glioblastoma (GBM). However, therapeutic efficacy remains limited by the immunosuppressive tumor microenvironment and restricted immune cell trafficking across the blood-brain barrier (BBB). To counteract these challenges, we have utilized the oncolytic adenovirus (OV) Ad5-Δ24-RGD as a platform to overexpress a bispecific T cell engager (BiTE) targeting both CD3 on T cells and the GBM-specific tumor associated antigen IL-13Rα2. We first demonstrated that OV-BiTE can significantly increase the recruitment of T cells to GBM, both in vitro and in vivo. Moreover, OV-BiTE treatment also markedly enhanced CAR T cell infiltration and tumor cytotoxicity in a GBM-BBB spheroid model, possibly through downregulation of endothelial junction protein expression. We then showed that intratumoral injection of OV-BiTE followed by infusion of combined EGFR and EGFRvIII CAR T cells was more effective than OV-BiTE supplemented with either CAR T therapy alone and led to significant tumor reduction in a GBM xenograft mouse model. In conclusion, our multimodal OV-BiTE plus CAR T cell immunotherapy is capable of overcoming the immunosuppressive tumor microenvironment and GBM resistance to treatment.",
+    "source": "crossref"
+  },
+  "source_issue": null
+}
