@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Thu, 14 Nov 2024 11:02:01 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 17:52:43 +0000</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -658,20 +658,6 @@
       <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
-      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
-      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
-      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
-      <itunes:duration>934</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>46</itunes:episode>
-      <podcast:episode>46</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
       <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
       <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
@@ -684,6 +670,20 @@
       <podcast:episode>46</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
+      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
+      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
+      <itunes:duration>934</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
@@ -756,20 +756,6 @@
       <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
-      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
-      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
-      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
-      <itunes:duration>837</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>52</itunes:episode>
-      <podcast:episode>52</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
       <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
       <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
@@ -782,6 +768,20 @@
       <podcast:episode>52</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
+      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
+      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
+      <itunes:duration>837</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
@@ -1104,6 +1104,48 @@ In 3D GBM-BBB spheroid models incorporating astrocytes, endothelial cells, and p
       <podcast:episode>65</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 11 May 2026 17:52:43 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 66: The political polarization of health outcomes in the USA]]></title>
+      <itunes:title><![CDATA[The political polarization of health outcomes in the USA]]></itunes:title>
+      <description><![CDATA[**Paper:** [The political polarization of health outcomes in the USA](https://doi.org/10.1038/s41562-026-02474-9)
+
+**Authors:** Elizabeth Elder, Neil A. O'Brian
+
+**Journal:** Nature Human Behaviour, 2026
+
+**Why it matters:** Political ideology has emerged as a measurable social determinant of health in the United States, with conservative Americans showing widening gaps in both clinical biomarkers and mortality that persist after accounting for COVID-19, geography, and demographic change.
+
+---
+
+**Summary**
+
+To move beyond the well-known limitations of county-level ecological data and subjective self-reports, Elder and O'Brian used individual-level longitudinal data from the Add Health cohort — the same participants tracked from adolescence in 1994 through adulthood — alongside CDC death records. They focused on Waves 4 and 5 of the survey (2008–2009 and 2016–2018), during which trained interviewers collected five objective clinical biomarkers in respondents' homes: BMI, lipid panels, HbA1c (a blood glucose marker), blood pressure, and C-reactive protein (a marker of systemic inflammation). These were combined into a single comorbidity index. In Wave 4, when participants were in their late 20s to early 30s, equivalence testing revealed no statistically significant health gap across the political spectrum. By Wave 5, the most conservative respondents had diverged significantly, with the gap representing roughly one-third of a standard deviation on the comorbidity index — an unusually large split for a relatively young cohort over less than a decade.
+
+To decompose the gap's origins, the authors applied a Kitagawa-Oaxaca-Blinder decomposition, which partitions a between-group difference into changes in observable characteristics versus unexplained factors. Approximately half of the widening was explained by socioeconomic sorting: individuals with higher education and income — strongly protective health endowments — increasingly aligned with the liberal coalition, while less healthy individuals shifted toward the conservative camp. Conservatives showed relative gains in marriage rates and religious community ties, both protective factors, but these were outweighed by the income and education effects.
+
+The remaining unexplained gap persisted into the mortality data: cross-referencing the cohort with the National Death Index through 2020–2022, very conservative respondents were 1.144 percentage points more likely to die of internal causes than very liberal respondents. Critically, this gap held after excluding COVID-19 deaths and after applying county fixed effects — meaning the disparity survived among liberals and conservatives living in the same local health jurisdiction. A large 2024 public opinion survey (the CHIP 50, n > 21,000) pointed toward a behavioral mechanism: right-leaning individuals reported substantially lower trust in primary care providers and emergency physicians, lower willingness to seek care for acute symptoms, and — among those with chronic conditions like hypertension or diabetes — greater skepticism about the safety and effectiveness of their own medications.
+
+---
+
+**Three takeaways**
+
+1. A comorbidity gap between conservative and liberal Americans was essentially absent in 2008–2009 but had grown to roughly one-third of a standard deviation by 2016–2018; Kitagawa-Oaxaca-Blinder decomposition attributes approximately half of this widening to socioeconomic sorting into political coalitions.
+2. By the early 2020s, very conservative respondents faced a statistically significant elevation in non-COVID internal-cause mortality (heart disease, cancer, stroke) that was not explained by geographic location, local public health policy, demographic composition, or the COVID-19 pandemic.
+3. Survey data from 2024 show that right-leaning individuals — measured by vote choice, partisanship, and ideological self-placement — are significantly less likely to seek care for acute cardiac symptoms and more likely to doubt the effectiveness of medications they are already taking for chronic conditions, suggesting declining medical trust as a partial behavioral driver of the mortality gap.
+
+---
+
+**Read the paper:** [https://doi.org/10.1038/s41562-026-02474-9](https://doi.org/10.1038/s41562-026-02474-9)]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-066</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/066-the-political-polarization-of-health-outcomes-in-the-usa.mp3" length="14375923" type="audio/mpeg"/>
+      <guid isPermaLink="false">0a36fece-d316-471c-9f15-553346201177</guid>
+      <itunes:duration>1197</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>66</itunes:episode>
+      <podcast:episode>66</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 15 May 2026 20:44:40 +0000</pubDate>
     </item>
   </channel>
 </rss>
