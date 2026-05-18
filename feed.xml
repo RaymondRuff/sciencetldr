@@ -1147,5 +1147,43 @@ The remaining unexplained gap persisted into the mortality data: cross-referenci
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 15 May 2026 20:44:40 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 67: Deep peptide recognition profiling decodes TCR specificity and enables disease-associated antigen discovery]]></title>
+      <itunes:title><![CDATA[Deep peptide recognition profiling decodes TCR specificity and enables disease-associated antigen discovery]]></itunes:title>
+      <description><![CDATA[**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.
+
+**Paper:** [Deep peptide recognition profiling decodes TCR specificity and enables disease-associated antigen discovery](https://doi.org/10.1038/s41587-026-03128-x)
+
+**Authors:** Nan Wang, Hugh Yeh, Ben Lai, Jason Perera, Kevin M. Jude, et al.
+
+**Journal:** Nature Biotechnology, 2026
+
+**Why it matters:** Mapping how T cell receptors actually recognize peptides — rather than inferring it from sequence alone — opens a scalable path to identifying the self-antigens driving autoimmune diseases like ankylosing spondylitis.
+
+**Summary**
+
+Predicting what a T cell receptor (TCR) will recognize based on its amino acid sequence is notoriously unreliable: nearly identical TCRs can bind completely different antigens, while structurally dissimilar TCRs can converge on the same target. To attack this problem directly, the authors focused on a clinically defined set of HLA-B\*27:05-restricted TCRs from patients with ankylosing spondylitis (a disease causing spinal fusion) and acute anterior uveitis (severe inflammatory eye disease). They used high-throughput yeast display — engineering yeast to present roughly one billion peptides on their surfaces — to screen 21 patient-derived TCRs and generate what they call deep peptide recognition profiles (PRPs): empirical maps of which peptides each TCR actually binds. Because the HLA-B\*27:05 binding groove strongly favors arginine at position 2 and proline at position 8 as anchor residues, the team fixed those positions to stabilize the library and concentrate diversity in the central contact residues where the CDR3β loop — the dominant recognition element in this system — makes its contacts.
+
+The resulting PRPs were used to fine-tune protein language models (pLMs) built on a transformer encoder paired with a convolutional neural network. These models substantially outperformed AlphaFold3 and tFold-TCR at predicting T cell activation. Critically, functional clustering of TCRs by Jensen-Shannon divergence of their PRPs was largely independent of sequence similarity metrics like CDR3β edit distance and TCRdist — confirming that sequence proximity is a poor proxy for recognition overlap. Turning the trained models on the human proteome, the team identified novel candidate autoantigens, including a peptide derived from the gene *PSG5*, and validated it by showing that CD8⁺ T cells from HLA-B27-positive patients upregulated the activation marker CD69 in response to this peptide. An important caveat: fixing anchor residues creates a reductionist model of the natural peptide repertoire, and while CDR3β dominates in this system, the authors acknowledge that the alpha chain modulates response magnitude and could limit generalization to other HLA contexts.
+
+To address uncertainty when predicting novel TCRs, the authors introduced a Mahalanobis distance metric that quantifies how far a new TCR sits from the training distribution in the model's learned embedding space — effectively a built-in confidence score that flags when predictions should not be trusted and directs experimental resources toward functionally uncharted receptors.
+
+**Three takeaways**
+
+1. TCR functional clustering based on PRP divergence (Jensen-Shannon distance) is largely independent of sequence similarity, demonstrating that CDR3β edit distance and TCRdist fail to capture convergent recognition in this system.
+2. pLMs fine-tuned on PRPs outperform AlphaFold3 and tFold-TCR in predicting T cell activation, and this capability enabled the discovery and in vitro validation of *PSG5* as a novel candidate autoantigen recognized by patient-derived HLA-B27-positive CD8⁺ T cells.
+3. Model generalization to held-out TCRs correlates with functional distance (PRP divergence) rather than sequence similarity, and Mahalanobis distance in the model's embedding space serves as a reliable intrinsic confidence metric to prioritize future experimental mapping.
+
+**Read the paper:** [https://doi.org/10.1038/s41587-026-03128-x](https://doi.org/10.1038/s41587-026-03128-x)]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-067</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/067-deep-peptide-recognition-profiling-decodes-tcr-specificity.mp3" length="15237546" type="audio/mpeg"/>
+      <guid isPermaLink="false">926266d3-fb8b-49bc-af9f-ee6021dcb513</guid>
+      <itunes:duration>1269</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>67</itunes:episode>
+      <podcast:episode>67</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 18 May 2026 17:46:51 +0000</pubDate>
+    </item>
   </channel>
 </rss>
