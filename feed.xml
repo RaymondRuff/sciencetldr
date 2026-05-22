@@ -1185,5 +1185,47 @@ To address uncertainty when predicting novel TCRs, the authors introduced a Maha
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 18 May 2026 17:46:51 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 68: The lived experience of rejection sensitivity in ADHD - A qualitative exploration]]></title>
+      <itunes:title><![CDATA[The lived experience of rejection sensitivity in ADHD - A qualitative exploration]]></itunes:title>
+      <description><![CDATA[**Paper:** [The lived experience of rejection sensitivity in ADHD — A qualitative exploration](https://doi.org/10.1371/journal.pone.0314669)
+
+**Authors:** Annabel Rowney-Smith, Beth Sutton, Lisa Quadt, Jessica A. Eccles
+
+**Journal:** PLOS One, 2024
+
+**Why it matters:** Emotional dysregulation — and rejection sensitivity in particular — affects the majority of adults with ADHD yet remains largely absent from standard diagnostic criteria, leaving a significant dimension of patient suffering unrecognized and untreated.
+
+---
+
+**Summary**
+
+Rejection sensitivity is a facet of emotional dysregulation in which perceived criticism or social rejection triggers intense dysphoria (profound psychological unease, from the Greek "hard to bear"). Despite emotional dysregulation being estimated to affect up to 70% of adults with ADHD, it is systematically excluded from mainstream diagnostic criteria, which have historically prioritized observable, externalizing behaviors like inattention and hyperactivity. To capture this hidden internal experience, the authors conducted semi-structured focus group interviews with five undergraduate students holding formal ADHD diagnoses, then applied thematic analysis to the transcripts. The open-ended prompt — "If you do, how do you identify with rejection-sensitive dysphoria?" — allowed participants to drive the narrative.
+
+Analysis revealed three core themes. First, **withdrawal**: participants described preemptive social and academic avoidance, including deliberately submitting university work late or below standard to create a psychological buffer against a professor's criticism — even when a 10% grade penalty was automatic. Second, **masking** (also called camouflaging): to avoid being labeled "needy," participants constructed a performed exterior of toughness so sustained that it produced dissociation — a state in which they felt like outside observers of their own conversations, disconnected from their authentic emotional states. Third, **bodily sensations**: perceived rejection triggered vivid physical responses — chest tightness, throat constriction, gastrointestinal nausea, and a spreading internal heat one participant compared to a chemical hand warmer — consistent with acute sympathetic nervous system (fight-or-flight) activation.
+
+The key limitation is sample size: only five participants, two of whom also carried an autism spectrum diagnosis and one a dyslexia diagnosis, making it impossible to isolate ADHD-specific mechanisms from co-occurring neurodivergent traits. The findings are a valuable starting point for a larger research agenda rather than generalizable conclusions.
+
+---
+
+**Three takeaways**
+
+1. Anticipatory fear of rejection — not confirmed rejection itself — was the primary driver of preemptive withdrawal, including deliberate academic self-sabotage that narrowed participants' long-term social and career trajectories.
+2. Sustained masking backfired: projecting indifference caused peers to deliver harsher criticism, intensifying the very rejection sensitivity it was meant to conceal and producing a dissociative disconnection from participants' own emotional states.
+3. Rejection sensitivity produced acute, individualized physical symptoms — spreading heat, cardiac awareness, nausea, and paralysis — that participants and the authors characterized as functionally identical to a fight-or-flight stress response.
+
+---
+
+**Read the paper:** [https://doi.org/10.1371/journal.pone.0314669](https://doi.org/10.1371/journal.pone.0314669)]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-068</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/068-the-lived-experience-of-rejection-sensitivity-in-adhd-a.mp3" length="17138462" type="audio/mpeg"/>
+      <guid isPermaLink="false">d130b4d0-891b-4086-8c9c-17706bec100e</guid>
+      <itunes:duration>1428</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>68</itunes:episode>
+      <podcast:episode>68</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 22 May 2026 19:01:50 +0000</pubDate>
+    </item>
   </channel>
 </rss>
