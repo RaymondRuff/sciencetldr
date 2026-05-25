@@ -1227,5 +1227,47 @@ The key limitation is sample size: only five participants, two of whom also carr
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 22 May 2026 19:01:50 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 69: Novel bispecific T-cell engagers overcoming acquired EGFR resistance]]></title>
+      <itunes:title><![CDATA[Novel bispecific T-cell engagers overcoming acquired EGFR resistance]]></itunes:title>
+      <description><![CDATA[**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.
+
+**Paper:** [Novel bispecific T-cell engagers overcoming acquired EGFR resistance](https://doi.org/10.1080/19420862.2026.2674236)
+
+**Authors:** Lennart Kühl, Ann-Kathrin Löffler, Oliver Seifert, Dennis Michler, et al.
+
+**Journal:** mAbs, 2026
+
+**Why it matters:** Acquired resistance to EGFR-targeted antibody therapies remains a major barrier in colorectal and head-and-neck cancers, and this study presents an engineered antibody-based approach that circumvents both extracellular receptor mutations and downstream signaling bypass.
+
+---
+
+**Summary**
+
+EGFR (epidermal growth factor receptor) is a well-validated oncology target, but monoclonal antibodies like cetuximab frequently lose efficacy as tumors acquire missense mutations — single amino acid substitutions such as S492R and G465R — in the extracellular domain where cetuximab binds. To find antibodies that could sidestep these escape variants, the researchers screened a human antibody phage display library against mutant EGFR protein, identifying an initial hit (A7) and then improving its binding roughly eightfold through VL shuffling (systematically swapping the antibody light chain while retaining the productive heavy chain), yielding the lead antibody H10 with a dissociation constant of ~4 nM. Epitope mapping confirmed that H10 binds a region overlapping but spatially shifted from the cetuximab site, explaining why it retains high affinity for the clinically prevalent escape variants that abolish cetuximab binding. Functional assays showed H10 suppresses EGFR phosphorylation, blocks downstream ERK signaling, and inhibits tumor cell proliferation comparably to cetuximab on wild-type-expressing cells.
+
+Because tumors can also acquire activating KRAS mutations that short-circuit EGFR signaling downstream — rendering surface blockade irrelevant — the team re-engineered H10 into bispecific T-cell engagers (TCEs) that physically recruit CD3-positive killer T cells to the tumor cell, bypassing intracellular resistance entirely. Two formats were tested: a 1+1 (one EGFR arm, one CD3 arm) and a 2+1 (two EGFR arms, one CD3 arm). The 2+1 format exploited avidity — a stronger, geometrically stable two-handed grip — and proved markedly superior on tumor cells expressing low levels of EGFR (~1,000 receptors/cell). In vitro co-culture assays demonstrated potent T cell–mediated killing of cells bearing S492R, G465R, and KRAS-mutant backgrounds where cetuximab-based TCEs completely failed, and a syngeneic mouse model showed significant tumor growth inhibition. A key limitation acknowledged by the authors is on-target/off-tumor toxicity: EGFR is expressed on healthy epithelial tissues, and broad T-cell activation risks cytokine release syndrome — a challenge the researchers note will likely require protease-activatable masking strategies in future clinical development.
+
+---
+
+**Three takeaways**
+
+1. H10 binds an epitope that overlaps with but is spatially shifted from the cetuximab binding site, enabling it to maintain high affinity for the major clinical escape variants S492R and G465R that completely abrogate cetuximab binding.
+2. A 2+1 bispecific format — two EGFR-binding arms and one CD3-binding arm — leverages avidity to achieve potent T cell–mediated cytotoxicity even on tumor cells expressing as few as ~1,000 EGFR molecules per cell, where the 1+1 format was substantially less effective.
+3. H10-based TCEs successfully killed tumor cells harboring both extracellular EGFR escape mutations and downstream KRAS activating mutations in vitro, and suppressed tumor growth in a syngeneic mouse model — resistance mechanisms that rendered cetuximab-based TCEs ineffective.
+
+---
+
+**Read the paper:** [https://doi.org/10.1080/19420862.2026.2674236](https://doi.org/10.1080/19420862.2026.2674236)]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-069</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/069-novel-bispecific-t-cell-engagers-overcoming-acquired-egfr.mp3" length="15561500" type="audio/mpeg"/>
+      <guid isPermaLink="false">b55c8533-4159-43b6-b9a8-68abdaf6cdaa</guid>
+      <itunes:duration>1296</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>69</itunes:episode>
+      <podcast:episode>69</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 25 May 2026 17:20:10 +0000</pubDate>
+    </item>
   </channel>
 </rss>
