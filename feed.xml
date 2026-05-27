@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Mon, 11 May 2026 17:52:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jul 2024 01:28:27 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -756,20 +756,6 @@
       <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
-      <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
-      <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-the-impact-of-cd3-affinity-attenuation-on-t-cell-engaging.mp3" length="16364075" type="audio/mpeg"/>
-      <guid isPermaLink="false">ef6b64ae-650d-4e35-bfbd-88e0168f0b2c</guid>
-      <itunes:duration>1022</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>52</itunes:episode>
-      <podcast:episode>52</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
       <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
       <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
@@ -782,6 +768,20 @@
       <podcast:episode>52</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
+      <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-the-impact-of-cd3-affinity-attenuation-on-t-cell-engaging.mp3" length="16364075" type="audio/mpeg"/>
+      <guid isPermaLink="false">ef6b64ae-650d-4e35-bfbd-88e0168f0b2c</guid>
+      <itunes:duration>1022</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
@@ -1268,6 +1268,48 @@ Because tumors can also acquire activating KRAS mutations that short-circuit EGF
       <podcast:episode>69</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 25 May 2026 17:20:10 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 70: Language Modeling Materializes a World Model of Protein Biology]]></title>
+      <itunes:title><![CDATA[Language Modeling Materializes a World Model of Protein Biology]]></itunes:title>
+      <description><![CDATA[**Paper:** [Language Modeling Materializes a World Model of Protein Biology](https://biohub.ai/papers/esm_protein.pdf)
+
+**Authors:** Salvatore Candido, Alexander Rives, et al.
+
+**Journal:** White paper — Biohub / Evolutionary Scale
+
+**Why it matters:** Training a protein language model on billions of diverse metagenomic sequences appears to produce not just pattern matching but an internally organized, causally predictive representation of biophysical and functional principles — with direct implications for structure prediction and therapeutic design.
+
+---
+
+**Summary**
+
+The paper asks whether scaling masked language modeling on protein sequences — where the model learns to predict missing amino acids from surrounding context — genuinely forces the emergence of a world model of protein biology, or merely produces sophisticated statistical memorization. The training corpus for the ESM Cambrian (ESMC) model family expands from the ~50 million sequences used in ESM2 to roughly 2.8 billion sequences, drawn heavily from metagenomic datasets including samples from hydrothermal vents, permafrost, and hypersaline lakes. Scaling compute up to a 6-billion-parameter model reveals a log-linear relationship between compute and precision in predicting long-range tertiary contacts — the physical touches between amino acids that are distant in the 1D sequence — with no observed plateau.
+
+Layer-level analysis of ESMC shows the network decouples enzymatic function (peaking around layers 50–60) from fine-grained 3D structural information (peaking in the final layers), and can recognize identical catalytic function across entirely different protein fold topologies. The companion structure prediction system, ESMFold 2, projects atomic coordinates directly from single-sequence representations using a stabilized recurrent architecture — looping pairwise state through the same weights up to 48 times with a contractive map to prevent exploding activations — achieving state-of-the-art results on FoldBench, particularly on antibody–antigen docking (scored by DockQ). Generative design experiments produced single-chain variable fragments binding clinically relevant targets like PD-L1 at nanomolar affinity.
+
+To interrogate the latent space, the researchers applied sparse autoencoders (SAEs) to layer 60 of ESMC, decomposing polysemantic dense embeddings into interpretable, higher-dimensional sparse features corresponding to secondary structures, taxonomic groups, and complex pathway memberships such as MitoCarta assignments. Using max-pooled SAE features as protein barcodes, remote homology retrieval outperformed both FoldSeek (structure-based) and MMseqs2 (sequence-based) at under 30% sequence identity. Two validation experiments — unsupervised clustering of over 2 million unannotated proteins and NMF-based pathway assignment to uncharacterized sequences — support the claim that these features reflect causal biological organization rather than label projection.
+
+---
+
+**Three takeaways**
+
+1. Scaling a masked protein language model on 2.8 billion metagenomic sequences produces a log-linear improvement in long-range contact prediction that shows no sign of plateauing at 6 billion parameters.
+2. ESMFold 2's stabilized recurrent folding module achieves state-of-the-art DockQ performance on antibody–antigen complexes from single sequences, largely without relying on multiple sequence alignments.
+3. Sparse autoencoder features extracted from ESMC layer 60 enable remote homology retrieval at below 30% sequence identity that outperforms both structural and sequence-alignment baselines, and successfully clusters over 2 million functionally unannotated proteins.
+
+---
+
+**Read the source:** https://biohub.ai/papers/esm_protein.pdf]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-070</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/070-language-modeling-materializes-a-world-model-of-protein.mp3" length="14093627" type="audio/mpeg"/>
+      <guid isPermaLink="false">688f3c0d-eaf0-4807-b818-cf8f2a46c686</guid>
+      <itunes:duration>1174</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>70</itunes:episode>
+      <podcast:episode>70</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 27 May 2026 17:03:25 +0000</pubDate>
     </item>
   </channel>
 </rss>
