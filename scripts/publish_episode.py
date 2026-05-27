@@ -6,8 +6,10 @@ and stamps it with canonical ID3 tags.
 
 Metadata resolution order for each audio file:
   1. DOI embedded in the audio file's Comment tag → CrossRef canonical metadata.
-  2. Oldest open Issue with the `podcast-pending` label → digest flow.
-  3. Filename fallback: derive title from filename; optional PubMed DOI lookup.
+  2. Plain URL embedded in the Comment tag (e.g. a white paper) → skip CrossRef,
+     use filename for title, transcript-driven show notes.
+  3. Oldest open Issue with the `podcast-pending` label → digest flow.
+  4. Filename fallback: derive title from filename; optional PubMed DOI lookup.
 """
 from __future__ import annotations
 
@@ -47,6 +49,7 @@ SHOW_NOTES_MAX_TOKENS = 1500
 
 INBOX_AUDIO_EXTS = (".mp3", ".m4a", ".mp4a", ".wav")
 DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
+URL_RE = re.compile(r"https?://\S+", re.IGNORECASE)
 DATE_PREFIX_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 NCBI_KEY = os.environ.get("NCBI_API_KEY")
 CROSSREF_UA = "sciencetldr/1.0 (mailto:sciencetldrpod@gmail.com)"
@@ -122,6 +125,13 @@ def extract_comment(audio_path: Path) -> str | None:
 
 def extract_doi(text: str) -> str | None:
     match = DOI_RE.search(text)
+    if not match:
+        return None
+    return match.group(0).rstrip(".,);")
+
+
+def extract_url(text: str) -> str | None:
+    match = URL_RE.search(text)
     if not match:
         return None
     return match.group(0).rstrip(".,);")
@@ -227,11 +237,13 @@ def pubmed_doi_from_title(title: str) -> str | None:
     return None
 
 
-def metadata_from_filename(audio_path: Path) -> dict:
+def metadata_from_filename(audio_path: Path, *, lookup_pubmed: bool = True) -> dict:
     stem = DATE_PREFIX_RE.sub("", audio_path.stem)
     title = stem.replace("_", " ").replace("-", " ").strip()
     title = (title[:1].upper() + title[1:]) if title else "Untitled"
     meta = {"title": title, "source": "filename-fallback"}
+    if not lookup_pubmed:
+        return meta
     doi = pubmed_doi_from_title(title)
     if doi:
         meta["doi"] = doi
@@ -264,6 +276,7 @@ def resolve_metadata(audio_path: Path, pending: list[dict]) -> tuple[dict, dict 
                             print(f"  [metadata] abstract from PubMed ({len(pm_abstract)} chars)")
                         else:
                             print("  [metadata] no abstract available from CrossRef or PubMed")
+                    meta["source_url"] = f"https://doi.org/{doi}"
                     matched_issue = None
                     doi_key = doi.lower().rstrip(".,;)")
                     for candidate in pending:
@@ -280,15 +293,28 @@ def resolve_metadata(audio_path: Path, pending: list[dict]) -> tuple[dict, dict 
             except Exception as exc:
                 print(f"  [metadata] CrossRef lookup failed: {exc}; falling through")
 
+        url = extract_url(comment)
+        if url:
+            print(f"  [metadata] URL from tag (not a DOI): {url}")
+            meta = metadata_from_filename(audio_path, lookup_pubmed=False)
+            meta["source_url"] = url
+            meta["source"] = "url-tag"
+            return meta, None
+
     if pending:
         issue = pending[0]
         meta = github_issue.parse_metadata(issue["body"])
         if meta:
             print(f"  [metadata] pairing with Issue #{issue['number']}")
+            if meta.get("doi") and not meta.get("source_url"):
+                meta["source_url"] = f"https://doi.org/{meta['doi']}"
             return meta, issue
 
     print("  [metadata] filename fallback")
-    return metadata_from_filename(audio_path), None
+    meta = metadata_from_filename(audio_path)
+    if meta.get("doi") and not meta.get("source_url"):
+        meta["source_url"] = f"https://doi.org/{meta['doi']}"
+    return meta, None
 
 
 def normalize_audio(src: Path, dest: Path, metadata: dict, episode_number: int) -> None:
@@ -311,7 +337,12 @@ def normalize_audio(src: Path, dest: Path, metadata: dict, episode_number: int) 
     ]
     if author_str:
         cmd.extend(["-metadata", f"composer={author_str}"])
-    comment_bits = [f"DOI: {doi}"] if doi else []
+    source_url = metadata.get("source_url", "")
+    comment_bits = []
+    if doi:
+        comment_bits.append(f"DOI: {doi}")
+    elif source_url:
+        comment_bits.append(f"Source: {source_url}")
     if journal:
         comment_bits.append(f"Journal: {journal}")
     if comment_bits:
