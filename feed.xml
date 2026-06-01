@@ -1311,5 +1311,49 @@ To interrogate the latent space, the researchers applied sparse autoencoders (SA
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 27 May 2026 17:03:25 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 71: MAGE-A4/MAGE-A8-targeted TCR-based bispecific T cell engager in recurrent and/or refractory solid tumors: a phase 1 trial]]></title>
+      <itunes:title><![CDATA[MAGE-A4/MAGE-A8-targeted TCR-based bispecific T cell engager in recurrent and/or refractory solid tumors: a phase 1 trial]]></itunes:title>
+      <description><![CDATA[**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.
+
+**Paper:** [MAGE-A4/MAGE-A8-targeted TCR-based bispecific T cell engager in recurrent and/or refractory solid tumors: a phase 1 trial](https://doi.org/10.1038/s41591-026-04455-x)
+
+**Authors:** Martin Wermke, Sebastian Ochsenreither, Dirk Jaeger, Heiko Becker, et al.
+
+**Journal:** Nature Medicine, 2025
+
+**Why it matters:** By using an engineered T cell receptor domain instead of an antibody to target intracellular cancer-testis antigens presented on the cell surface via HLA, IMA401 opens a route to solid tumor immunotherapy that sidesteps the target-scarcity problem that has long limited bispecific T cell engagers in this setting.
+
+---
+
+**Summary**
+
+Conventional bispecific T cell engagers (TCEs) are constrained to surface antigens, which are rarely tumor-specific enough in solid tumors to avoid on-target, off-tumor toxicity. IMA401 addresses this by replacing the antibody-based targeting arm with a high-affinity TCR domain that recognizes a peptide derived from the cancer-testis antigens MAGE-A4 and MAGE-A8 presented on the HLA-A\*02:01 allele — proteins that are epigenetically silenced in normal adult tissue but re-expressed across a broad range of solid tumors. The molecule also incorporates a deliberately low-affinity CD3-recruiting domain, which reduces peripheral T cell "sink" sequestration and limits hyperactivation-driven exhaustion, and a silenced Fc region that extends serum half-life to roughly 15–17 days, enabling biweekly dosing.
+
+This prespecified interim analysis of a phase 1 basket trial enrolled 61 heavily pretreated patients (median 3–4 prior lines) across more than 15 solid tumor indications, using a Bayesian logistic regression model to guide dose escalation from 0.0066 mg to 2.5 mg. The maximum tolerated dose was not reached per protocol, and the recommended phase 2 dose (RP2D) was set at 1–2 mg biweekly. At 2.5 mg, three of seven patients experienced dose-limiting grade 4 neutropenia; introducing 8 mg dexamethasone premedication with step dosing eliminated further dose-limiting toxicities within the RP2D range. Cytokine release syndrome occurred in 38% of patients but was exclusively grades 1–2, and no cases of immune effector cell-associated neurotoxicity syndrome (ICANS) were observed. One possibly treatment-related death from pneumonia occurred at 2.5 mg without dexamethasone premedication, in a patient with rapidly progressing lung metastases.
+
+In the RP2D-treated population (n = 41), the confirmed objective response rate (ORR) was 20%, rising to 29% in the largest histology subgroup — head and neck squamous cell carcinoma (4/14 patients) — with a 64% disease control rate and a median duration of response of 8.8 months. Objective responses were also observed in patients who had previously progressed on immune checkpoint inhibitors, including in a combination cohort with pembrolizumab that showed no additive toxicity. One melanoma patient maintained ongoing progression-free survival exceeding 33.9 months.
+
+---
+
+**Three takeaways**
+
+1. IMA401 demonstrated a 20% confirmed ORR at the RP2D across 15 tumor types, reaching 29% in head and neck squamous cell carcinoma — in patients with a median of 3–4 prior lines of therapy.
+2. The safety profile at the RP2D was characterized by exclusively low-grade (grades 1–2) cytokine release syndrome, zero cases of ICANS, and a dose-dependent neutropenia that was clinically mitigated with dexamethasone premedication and step dosing.
+3. Objective responses were observed in patients with prior immune checkpoint inhibitor resistance, and combining IMA401 with pembrolizumab produced no additive toxicity while maintaining antitumor activity.
+
+---
+
+**Read the source:** https://doi.org/10.1038/s41591-026-04455-x]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-071</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/071-mage-a4-mage-a8-targeted-tcr-based-bispecific-t-cell-engager.mp3" length="15958384" type="audio/mpeg"/>
+      <guid isPermaLink="false">300fea7e-fae0-4f55-af4d-410946f4d770</guid>
+      <itunes:duration>1329</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>71</itunes:episode>
+      <podcast:episode>71</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 01 Jun 2026 16:20:44 +0000</pubDate>
+    </item>
   </channel>
 </rss>
