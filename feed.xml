@@ -1355,5 +1355,47 @@ In the RP2D-treated population (n = 41), the confirmed objective response rate (
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 01 Jun 2026 16:20:44 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 72: From free speech advocates to critics: The Trump administration’s new rhetoric promotes support for censorship among Trump voters]]></title>
+      <itunes:title><![CDATA[From free speech advocates to critics: The Trump administration’s new rhetoric promotes support for censorship among Trump voters]]></itunes:title>
+      <description><![CDATA[**Paper:** [From free speech advocates to critics: The Trump administration's new rhetoric promotes support for censorship among Trump voters](https://doi.org/10.1073/pnas.2532084123)
+
+**Authors:** Matthew E. K. Hall, B. Tyler Leigh, Brittany C. Solomon
+
+**Journal:** Proceedings of the National Academy of Sciences, 2026
+
+**Why it matters:** The study offers rare experimental evidence — using real, not hypothetical, elite rhetoric — that partisan cues can meaningfully erode public commitment to one of the most widely endorsed democratic norms in the United States.
+
+---
+
+**Summary**
+
+Following the assassination of conservative activist Charlie Kirk, the Trump administration's messaging shifted from championing free speech to explicitly endorsing restrictions on it — an unusual move for a sitting president. Researchers at the University of Notre Dame seized on this as a natural experimental stimulus and conducted a pre-registered survey experiment (meaning hypotheses, sample sizes, and statistical models were publicly locked in before any data were collected) with 13,305 quota-matched U.S. adults in October 2025. Participants were randomly assigned to read real anti-speech quotes from Trump and his allies, researcher-generated pro-speech quotes in a similar style, or no quotes at all, and their support for government censorship of out-party media and individuals was then measured.
+
+Among Trump voters exposed to the anti-speech rhetoric, support for censoring the opposing party increased significantly — a shift of roughly 0.35 on a standard scale, translating to approximately one in three respondents moving from opposition or neutrality toward acceptance of censorship. The researchers describe this migration toward indifference as "democratic neutrality," arguing that a norm does not require passionate authoritarians to collapse; it only requires enough people to stop actively defending it. The pro-speech control quotes, by contrast, produced no measurable effect in either direction, suggesting that confirming an existing baseline belief does not trigger the same cognitive reprocessing that a norm violation does.
+
+One particularly striking finding — and a key methodological strength — was that stripping Trump's name from the quotes and attributing them to a generic "prominent politician" produced identical results. The rhetoric moved attitudes at the same rate regardless of explicit attribution, indicating that the grievance framing and linguistic style had been sufficiently internalized to function as a partisan signal on their own. A notable caveat is that the study captures a short-term attitudinal snapshot; whether repeated exposure consolidates these shifts into durable opinion change remains an open question.
+
+---
+
+**Three takeaways**
+
+1. Exposure to explicit anti-speech rhetoric from Trump and his allies produced a statistically significant increase in support for government censorship of the out-party among Trump voters (β = 0.35), shifting roughly one in three toward a position of democratic neutrality.
+2. The identical rhetoric had the opposite effect on non-Trump voters — Harris voters, third-party voters, and non-voters — who responded with a significant backlash, becoming meaningfully *more* protective of out-party speech.
+3. The attitudinal shifts occurred at equivalent rates whether or not the quotes were attributed to Trump by name, demonstrating that the rhetorical style and grievance framing alone were sufficient to trigger partisan realignment without an explicit source label.
+
+---
+
+**Read the source:** https://doi.org/10.1073/pnas.2532084123]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-072</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/072-from-free-speech-advocates-to-critics-the-trump.mp3" length="13834601" type="audio/mpeg"/>
+      <guid isPermaLink="false">60859954-a98f-456e-9be1-ae191d50b293</guid>
+      <itunes:duration>1152</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>72</itunes:episode>
+      <podcast:episode>72</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 02 Jun 2026 19:11:42 +0000</pubDate>
+    </item>
   </channel>
 </rss>
