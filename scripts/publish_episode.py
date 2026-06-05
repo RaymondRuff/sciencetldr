@@ -60,6 +60,13 @@ WHISPER_COMPUTE_TYPE = os.environ.get("WHISPER_COMPUTE_TYPE", "int8")
 # Recurring-series branding. Keyed by the `source` field set by the
 # select_*_paper.py scripts in the issue's METADATA block.
 SERIES = {
+    "friday-reddit": {
+        "title_prefix": "Trending — ",
+        "description_header": (
+            "**Top Trending Friday** — our weekly pick of the "
+            "top-trending paper on r/science this week."
+        ),
+    },
     "friday-trending": {
         "title_prefix": "Trending — ",
         "description_header": (
