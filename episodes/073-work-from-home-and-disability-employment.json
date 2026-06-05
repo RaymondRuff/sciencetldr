@@ -1,0 +1,27 @@
+{
+  "guid": "b183b0bb-d2af-4d60-a2e5-d3076e35d220",
+  "title": "Episode 73: Trending — Work from Home and Disability Employment",
+  "itunes_title": "Trending — Work from Home and Disability Employment",
+  "description": "**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.\n\n**Paper:** [Work from Home and Disability Employment](https://doi.org/10.1257/aeri.20240538)\n\n**Authors:** Nicholas Bloom, Gordon B. Dahl, Dan-Olof Rooth\n\n**Journal:** American Economic Review: Insights, 2025\n\n**Why it matters:** The post-pandemic rise in remote work appears to have accomplished more for disability employment than three decades of targeted legal mandates ever did.\n\n**Summary**\n\nBetween 2019 and 2024, full-time employment for working-age adults with physical disabilities surged roughly 14% — an unprecedented divergence from employment trends for non-disabled workers, which remained essentially flat over the same period. Bloom, Dahl, and Rooth ask whether the concurrent fourfold increase in work-from-home (WFH) rates caused this surge, or whether a tight post-pandemic labor market and shifting demographics are responsible.\n\nTo isolate the causal effect of WFH, the authors clear three methodological hurdles. First, they restrict their sample to the five physical disability categories in the Current Population Survey (hearing, vision, ambulatory, self-care, and independent living), dropping the cognitive category entirely — its population grew by over a million during the pandemic, likely due to long COVID and anxiety, which would artificially inflate apparent employment gains. Second, they measure WFH rates using only non-disabled workers within each occupation, preventing reverse causality: individuals with disabilities make up roughly 3% of the workforce and cannot plausibly have driven a society-wide 400% shift in remote work adoption. Third, they exploit variation across 86 occupational codes — comparing high-WFH occupations like computer science against low-WFH ones like secondary teaching — while flexibly controlling for general employment growth within each occupation to strip out the effect of labor market tightness.\n\nThe resulting causal estimate is a 1.0% increase in full-time disability employment for every 1 percentage point rise in WFH, strengthening to 1.3% when the authors use a pre-pandemic instrumental variable (the Dingel–Neiman remote-work feasibility index) that is entirely free of pandemic-era demand shocks. To determine *why*, the team examined wage data using a triple-difference model comparing disabled and non-disabled workers in the same remote-heavy occupations. Relative wages for disabled workers fell 4.2% — a textbook signature of an outward labor supply shift, not a demand shock. Workers previously locked out by commuting barriers and inaccessible office environments entered the market once those frictions disappeared, and their influx outpaced employer demand, pushing relative wages down even as employment climbed.\n\n**Three takeaways**\n\n1. A 1 percentage point increase in WFH within an occupation causally increases full-time employment for physically disabled workers by 1.0–1.3%, depending on the estimation strategy.\n2. The post-pandemic expansion of remote work accounts for 68–85% of the total rise in full-time employment for this demographic — ruling out labor market tightness as the primary driver.\n3. A 4.2% relative wage decline for disabled workers in high-WFH occupations, alongside rising employment, is consistent with a labor supply expansion: WFH removed commuting and workplace accessibility barriers, drawing a large latent workforce into the market.\n\n**Read the source:** https://doi.org/10.1257/aeri.20240538",
+  "pub_date": "Fri, 05 Jun 2026 22:10:20 +0000",
+  "duration_seconds": 1360,
+  "episode_number": 73,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "073-work-from-home-and-disability-employment.mp3",
+  "enclosure_length_bytes": 16328278,
+  "source_metadata": {
+    "title": "Work from Home and Disability Employment",
+    "doi": "10.1257/aeri.20240538",
+    "authors": [
+      "Nicholas Bloom",
+      "Gordon B. Dahl",
+      "Dan-Olof Rooth"
+    ],
+    "journal": "American Economic Review: Insights",
+    "abstract": "There has been a dramatic rise in disability employment since the pandemic, while work from home (WFH) has risen fourfold. This paper asks whether the two are causally related. Controlling for compositional changes and labor market tightness, a 1 percentage point increase in WFH increases full-time employment by 1.0 percent for individuals with a physical disability. The postpandemic increase in working from home explains 68–85 percent of the rise in full-time employment. Wage data suggest that WFH increased the supply of workers with a physical disability, likely by reducing commuting costs and enabling better control of working conditions. (JEL I12, J14, J22, J28, J81)",
+    "source": "friday-reddit",
+    "source_url": "https://doi.org/10.1257/aeri.20240538"
+  },
+  "source_issue": 16
+}

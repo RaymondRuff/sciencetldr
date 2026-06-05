@@ -1397,5 +1397,43 @@ One particularly striking finding — and a key methodological strength — was 
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Tue, 02 Jun 2026 19:11:42 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 73: Trending — Work from Home and Disability Employment]]></title>
+      <itunes:title><![CDATA[Trending — Work from Home and Disability Employment]]></itunes:title>
+      <description><![CDATA[**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.
+
+**Paper:** [Work from Home and Disability Employment](https://doi.org/10.1257/aeri.20240538)
+
+**Authors:** Nicholas Bloom, Gordon B. Dahl, Dan-Olof Rooth
+
+**Journal:** American Economic Review: Insights, 2025
+
+**Why it matters:** The post-pandemic rise in remote work appears to have accomplished more for disability employment than three decades of targeted legal mandates ever did.
+
+**Summary**
+
+Between 2019 and 2024, full-time employment for working-age adults with physical disabilities surged roughly 14% — an unprecedented divergence from employment trends for non-disabled workers, which remained essentially flat over the same period. Bloom, Dahl, and Rooth ask whether the concurrent fourfold increase in work-from-home (WFH) rates caused this surge, or whether a tight post-pandemic labor market and shifting demographics are responsible.
+
+To isolate the causal effect of WFH, the authors clear three methodological hurdles. First, they restrict their sample to the five physical disability categories in the Current Population Survey (hearing, vision, ambulatory, self-care, and independent living), dropping the cognitive category entirely — its population grew by over a million during the pandemic, likely due to long COVID and anxiety, which would artificially inflate apparent employment gains. Second, they measure WFH rates using only non-disabled workers within each occupation, preventing reverse causality: individuals with disabilities make up roughly 3% of the workforce and cannot plausibly have driven a society-wide 400% shift in remote work adoption. Third, they exploit variation across 86 occupational codes — comparing high-WFH occupations like computer science against low-WFH ones like secondary teaching — while flexibly controlling for general employment growth within each occupation to strip out the effect of labor market tightness.
+
+The resulting causal estimate is a 1.0% increase in full-time disability employment for every 1 percentage point rise in WFH, strengthening to 1.3% when the authors use a pre-pandemic instrumental variable (the Dingel–Neiman remote-work feasibility index) that is entirely free of pandemic-era demand shocks. To determine *why*, the team examined wage data using a triple-difference model comparing disabled and non-disabled workers in the same remote-heavy occupations. Relative wages for disabled workers fell 4.2% — a textbook signature of an outward labor supply shift, not a demand shock. Workers previously locked out by commuting barriers and inaccessible office environments entered the market once those frictions disappeared, and their influx outpaced employer demand, pushing relative wages down even as employment climbed.
+
+**Three takeaways**
+
+1. A 1 percentage point increase in WFH within an occupation causally increases full-time employment for physically disabled workers by 1.0–1.3%, depending on the estimation strategy.
+2. The post-pandemic expansion of remote work accounts for 68–85% of the total rise in full-time employment for this demographic — ruling out labor market tightness as the primary driver.
+3. A 4.2% relative wage decline for disabled workers in high-WFH occupations, alongside rising employment, is consistent with a labor supply expansion: WFH removed commuting and workplace accessibility barriers, drawing a large latent workforce into the market.
+
+**Read the source:** https://doi.org/10.1257/aeri.20240538]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-073</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/073-work-from-home-and-disability-employment.mp3" length="16328278" type="audio/mpeg"/>
+      <guid isPermaLink="false">b183b0bb-d2af-4d60-a2e5-d3076e35d220</guid>
+      <itunes:duration>1360</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>73</itunes:episode>
+      <podcast:episode>73</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 05 Jun 2026 22:10:20 +0000</pubDate>
+    </item>
   </channel>
 </rss>
