@@ -1435,5 +1435,49 @@ The resulting causal estimate is a 1.0% increase in full-time disability employm
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 05 Jun 2026 22:10:20 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 74: Discovery of TCR-like antibodies to the KRAS G12D neoantigen via in silico-in vitro workflow]]></title>
+      <itunes:title><![CDATA[Discovery of TCR-like antibodies to the KRAS G12D neoantigen via in silico-in vitro workflow]]></itunes:title>
+      <description><![CDATA[**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.
+
+**Paper:** [Discovery of TCR-like antibodies to the KRAS G12D neoantigen via in silico-in vitro workflow](https://doi.org/10.1016/j.ymthe.2026.05.032)
+
+**Authors:** SangPhil Ahn, Tae-Sung Oh, Seonghyuk Suh, Joon-Young Jeon, et al.
+
+**Journal:** Molecular Therapy, 2026
+
+**Why it matters:** A hybrid computational-experimental pipeline now offers a practical route to generate stable, high-affinity antibodies against intracellular oncoproteins — a class of targets that has long resisted conventional drug discovery.
+
+---
+
+**Summary**
+
+KRAS G12D is one of the most prevalent oncogenic mutations in pancreatic, colorectal, and lung cancer, yet it sits inside the cell, beyond the reach of conventional antibody drugs. The cell's own antigen-presentation machinery offers a workaround: proteasomal degradation continuously loads short peptide fragments of intracellular proteins onto MHC class I complexes (here, HLA-C\*08:02) for display at the surface. TCR-like antibodies — synthetic immunoglobulins engineered to recognize these peptide–MHC complexes — could exploit this window, but traditional screening tends to produce binders that grip the large, invariant HLA scaffold rather than the tiny, single-amino-acid-variant peptide, creating a catastrophic off-target risk.
+
+To solve this, the authors built a two-stage pipeline. In the computational stage, the inverse-folding model ProteinMPNN was used to redesign only the complementarity-determining region (CDR) loop tips of human antibody variable fragments docked against the KRAS G12D–HLA-C\*08:02 complex, leaving the backbone fixed to prevent misfolding. The nine top-scoring designs seeded a yeast surface-display library for iterative selection, including negative selection against cells pulsed with a SARS-CoV-2 peptide to eliminate cross-reactive binders. X-ray crystallography at 4.5 Å confirmed the final antibody contacts the mutant aspartate at position 3 and lysine at position 7 directly — notably, AlphaFold2 failed to predict this interface accurately, underscoring that physical validation remains essential.
+
+Final affinity maturation and solubility engineering yielded variants with KD values as low as 2.38 nM and no detectable human off-target reactivity by phage display profiling. When the targeting head was reformatted as a CAR-T construct or a bispecific T-cell engager (SCDB), both formats selectively killed KRAS G12D-positive cells while sparing wild-type KRAS cells in vitro. The study's main limitation is that all cytotoxicity data are from cell-based assays; in vivo efficacy and safety remain to be demonstrated.
+
+---
+
+**Three takeaways**
+
+1. A combined in silico–in vitro workflow — structural docking plus constrained CDR redesign by ProteinMPNN, followed by yeast display selection with rigorous negative sorting — produced antibodies with ~70-fold affinity improvement over the initial hit (KD 1.36 µM → 17.4 nM), ultimately reaching 2.38 nM after solubility engineering.
+2. Solubility-focused amino acid substitutions (variants DQE and DE) eliminated hydrophobic aggregation patches, dramatically improving manufacturing yield while simultaneously boosting affinity — a result not typically expected from solubility optimization.
+3. The same targeting head retained its exquisite peptide selectivity in both CAR-T and SCDB formats, driving dose-dependent, selective cytotoxicity against KRAS G12D-positive target cells with no detectable killing of wild-type KRAS cells.
+
+---
+
+**Read the source:** https://doi.org/10.1016/j.ymthe.2026.05.032]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-074</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/074-discovery-of-tcr-like-antibodies-to-the-kras-g12d-neoantigen.mp3" length="8595815" type="audio/mpeg"/>
+      <guid isPermaLink="false">1f61ad86-4efb-4d09-953b-e2db6030289b</guid>
+      <itunes:duration>716</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>74</itunes:episode>
+      <podcast:episode>74</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 09 Jun 2026 17:32:21 +0000</pubDate>
+    </item>
   </channel>
 </rss>
