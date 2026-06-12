@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Thu, 11 Jul 2024 01:28:27 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jun 2026 22:10:20 +0000</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -1478,6 +1478,50 @@ Final affinity maturation and solubility engineering yielded variants with KD va
       <podcast:episode>74</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Tue, 09 Jun 2026 17:32:21 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 75: Trending — A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone]]></title>
+      <itunes:title><![CDATA[Trending — A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone]]></itunes:title>
+      <description><![CDATA[**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.
+
+**Paper:** [A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone](https://doi.org/10.1038/s41586-026-10546-z)
+
+**Authors:** Xiaotong Peng, Peng Zhou, Xikun Song, Giovanni Bianucci, et al.
+
+**Journal:** Nature, 2026
+
+**Why it matters:** The discovery of a 1,200-kilometer accumulation of whale skeletons in the southeastern Indian Ocean rewrites the known depth limits of complex ecosystems and establishes the deep seafloor as a multi-million-year fossil archive for cetacean evolution.
+
+---
+
+**Summary**
+
+In 2023, researchers piloting the human-occupied submersible *Fendouzhe* mapped the Diamantina Zone, a V-shaped trench in the southeastern Indian Ocean plunging between 4,600 and 7,000 meters depth. They documented 485 whale sites across roughly 1,200 kilometers of seafloor — 476 fossilized and five actively decomposing — shattering the previous global record of a few dozen known whale-fall sites, nearly all at shallower depths. The deepest active community was observed at 6,789 meters, far exceeding the previous depth record of ~4,200 meters for any whale-fall ecosystem.
+
+The five active sites were all in the sulfur-philic stage, in which anaerobic bacteria metabolize lipids stored in whale bone marrow and produce hydrogen sulfide — a toxin to most life but the chemical foundation of a chemosynthesis-based food web (one that replaces sunlight with chemical energy). Organism densities reached 2,840 individuals per square meter, dominated by *Osedax* "zombie" worms (which bore into bone using secreted acid and digest lipids via symbiotic gut bacteria), chemosynthetic bivalves hosting sulfur-oxidizing bacteria in their gills, brittle stars, and — notably — *Xyloplax* sea daisies previously known only from sunken wood. The authors propose a "super corridor" hypothesis: with an estimated density of ~8 whale falls per square kilometer, the trench provides densely packed stepping stones allowing specialized larvae to disperse between falls, and onward to hydrothermal vents and cold seeps, across otherwise barren abyssal plains.
+
+Strontium isotope dating (exploiting the fact that seawater's Sr-87/Sr-86 ratio shifts predictably over geologic time and becomes locked into bone mineral) of 33 fossil specimens yielded ages ranging from 120,000 years to 5.26 million years ago, with the oldest belonging to a newly described extinct beaked whale, *Pterocetus diamantinae*. Preservation over such timescales is attributed to an ultra-low sedimentation rate (<0.5 cm per 1,000 years), ferromanganese oxide coating that petrifies exposed surfaces, and the extraordinary bone density — pachyosteosclerosis — of beaked whale rostra, which resists both biological boring and chemical dissolution.
+
+---
+
+**Three takeaways**
+
+1. Active whale-fall communities were documented at 6,789 meters depth, extending the known hadal depth limit for complex chemosynthesis-based ecosystems by more than 2,500 meters beyond the previous record.
+2. Strontium isotope dating confirmed continuous whale-fall deposition in the Diamantina Zone since at least 5.26 million years ago, with the oldest specimen — a newly named extinct beaked whale — preserved on the open seafloor for over five million years.
+3. Sea daisies (*Xyloplax* spp.), previously recorded only on sunken wood, were found colonizing whale bone at depths exceeding 5,600 meters, demonstrating that specialized deep-sea fauna can transition between chemically analogous organic-fall substrates.
+
+---
+
+**Read the source:** https://doi.org/10.1038/s41586-026-10546-z]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-075</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/075-a-5-3-million-year-old-deep-sea-whale-necropolis-in-the.mp3" length="13444760" type="audio/mpeg"/>
+      <guid isPermaLink="false">1d148b6e-b886-4925-8c64-8f75cb238bd3</guid>
+      <itunes:duration>1120</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>75</itunes:episode>
+      <podcast:episode>75</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 12 Jun 2026 22:26:18 +0000</pubDate>
     </item>
   </channel>
 </rss>
