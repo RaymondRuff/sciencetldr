@@ -1,0 +1,42 @@
+{
+  "guid": "8e14b56a-b587-4404-add8-445e760d6e65",
+  "title": "Episode 76: Combination therapy with a novel CD2-targeted costimulatory bispecific antibody overcomes limitations of CD3 T cell engager treatment for solid tumors",
+  "itunes_title": "Combination therapy with a novel CD2-targeted costimulatory bispecific antibody overcomes limitations of CD3 T cell engager treatment for solid tumors",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**Paper:** [Combination therapy with a novel CD2-targeted costimulatory bispecific antibody overcomes limitations of CD3 T cell engager treatment for solid tumors](https://doi.org/10.1080/19420862.2026.2684378)\n\n**Authors:** Welbeck Danquah, Mélanie Pichery, Thomas Eden, Aurelien Boyance, et al.\n\n**Journal:** mAbs, 2026\n\n**Why it matters:** CD3 T cell engagers have transformed blood cancer treatment but largely failed in solid tumors — this study proposes a modular two-drug strategy that separates T cell activation signals to rescue efficacy while dramatically reducing systemic toxicity.\n\n---\n\n**Summary**\n\nCD3 T cell engagers (TCEs) work by bridging a T cell directly to a tumor cell, providing what immunologists call Signal 1. In blood cancers this is often sufficient, but solid tumors present an immunosuppressive microenvironment that demands a second costimulatory signal (Signal 2) for a sustained cytotoxic response. Pushing TCE doses higher to compensate triggers severe dose-limiting toxicities before the tumor is controlled — a bottleneck that has left tarlatamab as the only approved classical TCE for solid tumors. The Evotec team's solution is to keep the two signals as entirely separate drugs: a conventional EpCAM×CD3 TCE (solitomab) for Signal 1, and a novel HER2×CD2 bispecific for Signal 2.\n\nThe CD2 arm is built on a non-blocking antibody that acts as a positive allosteric modulator — rather than competing with CD58, the tumor's natural CD2 ligand, it increases CD2–CD58 binding by over twofold, amplifying the natural immune adhesion while simultaneously providing artificial costimulation. The Fc domain is silenced to prevent macrophage-mediated depletion of CD2-expressing T cells. In humanized xenograft mice bearing established HER2-positive breast tumors, the combination achieved complete tumor remission in 8 of 9 animals at a TCE dose that produced remission in only 1 of 9 when used alone.\n\nTwo additional findings underscore the approach's clinical relevance. First, when tumor cells were engineered via CRISPR-Cas9 to completely lack CD58 — mimicking a well-documented immune escape mechanism — the HER2×CD2 combination physically bridged the T cell to the tumor anyway, boosting TCE killing efficacy 25–35-fold over the TCE alone. Second, because CD28 expression is lost from a large proportion of CD8⁺ killer T cells with aging, CD28-targeted costimulatory strategies may be ineffective in the elderly patients who make up most solid tumor cases; CD2 expression remains robust on these cells. In a direct head-to-head comparison at matched killing efficacy, the CD2 bispecific induced only up to a 2-fold increase in IL-6, TNF, and IL-2, compared to up to a 200-fold increase from a comparable HER2×CD28 bispecific.\n\n---\n\n**Three takeaways**\n\n1. Adding the HER2×CD2 bispecific to a sub-efficacious low dose of an EpCAM×CD3 TCE restored full anti-tumor cytotoxicity in vitro (~10-fold improvement) and drove complete tumor remission in 8 of 9 humanized mice versus 1 of 9 with the TCE alone.\n2. The CD2 combination overcame CD58 loss — a common tumor immune escape route — by physically forcing T cell–tumor contact, boosting TCE efficacy 25–35-fold against CD58-knockout cancer cells.\n3. CD2 costimulation effectively engaged CD28-negative CD8⁺ T cells (the dominant cytotoxic subset in elderly patients and solid tumors) while triggering up to 200-fold less pro-inflammatory cytokine release than a matched-efficacy HER2×CD28 bispecific.\n\n---\n\n**Read the source:** https://doi.org/10.1080/19420862.2026.2684378",
+  "pub_date": "Mon, 15 Jun 2026 16:16:41 +0000",
+  "duration_seconds": 1227,
+  "episode_number": 76,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "076-combination-therapy-with-a-novel-cd2-targeted-costimulatory.mp3",
+  "enclosure_length_bytes": 14726176,
+  "source_metadata": {
+    "title": "Combination therapy with a novel CD2-targeted costimulatory bispecific antibody overcomes limitations of CD3 T cell engager treatment for solid tumors",
+    "doi": "10.1080/19420862.2026.2684378",
+    "authors": [
+      "Welbeck Danquah",
+      "Mélanie Pichery",
+      "Thomas Eden",
+      "Aurelien Boyance",
+      "Lise Pasquet",
+      "Virginie Roure",
+      "Marion Mars",
+      "Alice Marchand",
+      "Ellen Gumz",
+      "Mylène Gador",
+      "Lou Valente",
+      "Marion Contini",
+      "Lukas Czernecki",
+      "Sanjith Shanmuganathan",
+      "Pauline Barron",
+      "Sophie Chabot",
+      "Markus Dangl",
+      "Gerhard Niederfellner"
+    ],
+    "journal": "mAbs",
+    "abstract": "CD3 T cell engagers (TCEs) have transformed hematologic oncology, but dose-liming toxicity and the absence of adequate costimulation have limited TCE success in solid tumors. Consequently, to date, only one classical TCE developed for solid tumors - tarlatamab - has been granted a marketing approval. Here, we report a pioneer combination strategy using a novel CD2-targeted costimulatory bispecific antibody to overcome these limitations. Building on a unique non-blocking CD2 antibody, we developed a HER2×CD2 proof-of-concept bispecific that, combined with an EpCAM×CD3 TCE, provides tumor-dependent costimulation and enhances anti-tumor cytotoxicity mediated by the TCE. We show that HER2×CD2 can be dosed independently to restore optimal anti-tumor cytotoxicity of a sub-efficacious low dose of the EpCAM×CD3 TCE, thus providing a route to avoid TCE-driven toxicity while maintaining efficacy. In a humanized xenograft model, co-treatment with HER2×CD2 achieved complete tumor remission in 8 of 9 mice at a TCE dose that otherwise mediated complete remission in only 1 of 9 mice. We show that HER2×CD2 compensates for the loss of CD58 expression by tumor cells - a well-documented tumor escape mechanism. Notably, unlike CD28-based costimulation, HER2×CD2 effectively also harnessed the anti-tumor cytotoxicity of CD28-negative CD8 T cells - a potent cytotoxic subset prevalent in elderly patients and dominant in solid tumors. Furthermore, HER2×CD2 induced markedly lower cytokine release than a HER2×CD28 bispecific while mediating comparable improvement in anti-tumor cytotoxicity. These findings establish our novel CD2-targeted costimulatory bispecific antibody approach as a promising and potentially safe way to expand and enhance TCE immunotherapy for solid tumors.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1080/19420862.2026.2684378"
+  },
+  "source_issue": 19
+}
