@@ -1567,5 +1567,41 @@ Two additional findings underscore the approach's clinical relevance. First, whe
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 15 Jun 2026 16:16:41 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 77: Trending — People prefer to negotiate with women, even when outcomes are identical and gender is unknown]]></title>
+      <itunes:title><![CDATA[Trending — People prefer to negotiate with women, even when outcomes are identical and gender is unknown]]></itunes:title>
+      <description><![CDATA[**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.
+
+**Paper:** [People prefer to negotiate with women, even when outcomes are identical and gender is unknown](https://doi.org/10.1073/pnas.2523202123)
+
+**Authors:** Charlotte H. Townsend, Laura J. Kray, Solène Delecourt
+
+**Journal:** Proceedings of the National Academy of Sciences, 2026
+
+**Why it matters:** Decades of negotiation research have focused on who wins the most money, but this paper shows that the social and emotional quality of a negotiation — and its compounding career consequences — may matter just as much.
+
+**Summary**
+
+Negotiation research has long prioritized *economic* outcomes (who captured the most value) while largely ignoring *subjective* outcomes: trust built, perceived fairness, and the counterpart's desire to negotiate again. This paper, drawing on over 2,000 observations, finds that people consistently report higher subjective value when negotiating with women — and that this preference survives even complete anonymization. In a text-chat study using a fictitious resource-allocation task, gender was so effectively hidden that third-party observers reading the transcripts guessed the negotiator's gender correctly only 43% of the time — statistically worse than a coin flip — yet participants still preferred their women counterparts on subjective measures. Crucially, women achieved identical distributive and integrative economic outcomes to men across all conditions.
+
+To uncover the behavioral mechanism, the researchers fed anonymous transcripts through a natural language processing model trained to classify negotiation utterances into 12 behavioral codes. Women were significantly more likely to make multi-issue offers and to accept offers — a pattern that might look like capitulation but functioned as *strategic validation*: yielding on lower-priority points while holding firm on overall economic value, leaving counterparts feeling heard without sacrificing outcomes. A Monte Carlo simulation then modeled what happens when a modest 2.5-percentage-point difference in willingness to re-engage compounds over a career: women accumulated roughly 44–56% more negotiation opportunities, translating a subjective edge into a substantial long-term earnings gap. One important caveat: all studies used low-ambiguity settings where negotiation was explicit; prior work suggests women can face economic and social penalties when the appropriateness of negotiating is itself unclear.
+
+**Three takeaways**
+
+1. People rated subjective value — liking, trust, and desire to negotiate again — significantly higher with women partners even in fully anonymous text negotiations where gender could not be inferred from behavior.
+2. AI-coded transcripts identified two specific behaviors driving the effect: women made multi-issue offers and accepted offers at higher rates, yet still achieved the same economic point totals as men, indicating strategic rather than costly yielding.
+3. A Monte Carlo simulation based on observed re-engagement probabilities (94.4% vs. 91.9%) projected that women would accumulate ~44–56% more negotiation opportunities over time, compounding into roughly $55,000 more in simulated career earnings under identical per-deal performance.
+
+**Read the source:** https://doi.org/10.1073/pnas.2523202123]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-077</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/077-people-prefer-to-negotiate-with-women-even-when-outcomes-are.mp3" length="14045667" type="audio/mpeg"/>
+      <guid isPermaLink="false">1e5c0556-02c6-4e8d-b819-08aa2c231a2e</guid>
+      <itunes:duration>1170</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>77</itunes:episode>
+      <podcast:episode>77</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 26 Jun 2026 17:16:58 +0000</pubDate>
+    </item>
   </channel>
 </rss>
