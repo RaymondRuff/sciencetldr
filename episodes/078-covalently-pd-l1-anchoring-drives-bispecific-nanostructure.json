@@ -1,0 +1,35 @@
+{
+  "guid": "c1874c92-3fdf-4b28-8238-fc20fc0077ce",
+  "title": "Episode 78: Covalently PD‐L1 Anchoring Drives Bispecific Nanostructure Assembly for Spatial Control of T Cell Recruitment and Activation",
+  "itunes_title": "Covalently PD‐L1 Anchoring Drives Bispecific Nanostructure Assembly for Spatial Control of T Cell Recruitment and Activation",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**Paper:** [Covalently PD‐L1 Anchoring Drives Bispecific Nanostructure Assembly for Spatial Control of T Cell Recruitment and Activation](https://doi.org/10.1002/anie.5894316)\n\n**Authors:** Fengzhen Zhang, Yuhan Dong, Kailu Liu, Hui Hu, et al.\n\n**Journal:** Angewandte Chemie International Edition, 2025\n\n**Why it matters:** Rather than passively blocking tumor immune checkpoints, this work shows it is possible to chemically hijack a tumor's own surface machinery to build synthetic nanostructures that simultaneously relieve immune suppression and actively recruit and activate T cells.\n\n**Summary**\n\nCurrent immune checkpoint therapies that block the PD-1/PD-L1 axis — the suppressive signaling pathway tumors use to exhaust T cells — benefit only around 20% of patients. Blocking the pathway removes an inhibitory signal but does not actively stimulate T cells to attack, a distinction the authors liken to releasing a parking brake without pressing the accelerator. This paper introduces a two-step \"localized oxidation–covalent assembly\" strategy designed to do both at once.\n\nThe first component, the P1 probe, is a conjugate of a PD-L1-targeting peptide (Kd ≈ 4.5 µM) and the enzyme galactose oxidase (GAO). Once the probe transiently binds PD-L1, GAO oxidizes the C6 hydroxyl groups on PD-L1's N-linked glycans, converting them to aldehydes. Specificity was confirmed using a glycosylation-deficient PD-L1 mutant (4NQ) and the inhibitor tunicamycin, both of which sharply reduced oxidation. These aldehyde groups serve as covalent anchors for the second component: a hydrazide-functionalized self-assembling peptide (HSP) incorporating an anti-CD3 sequence. Covalent attachment of HSP to the oxidized membrane dramatically lowers its critical aggregation concentration (CAC) from 38.26 µM to 2.18 µM, driving rapid β-sheet and π–π stacking assembly into stable artificial topological nanostructures (ATNs) directly on the tumor surface.\n\nThe resulting ATNs act as membrane-anchored bispecific T cell engagers (BiTEs): they block PD-1/PD-L1 interaction while projecting anti-CD3 sequences outward to recruit and activate passing T cells. In vivo in MC38 tumor-bearing mice, this achieved 62.6% tumor inhibition, with increased intratumoral PD-1⁺ T cells and interferon-γ secretion. Efficacy also translated to patient-derived lung cancer organoids. A key limitation the authors acknowledge is the potential for off-target glycan oxidation by the GAO enzyme in a systemic context, which will require tumor-microenvironment-responsive activation strategies in future iterations.\n\n**Three takeaways**\n\n1. Covalent anchoring via PD-L1 glycan oxidation drops the peptide CAC nearly 18-fold (38.26 µM → 2.18 µM), triggering localized self-assembly of ATNs specifically on PD-L1-overexpressing tumor cells rather than on bystander tissue.\n2. ATN-treated co-cultures showed 2.61-fold higher tumor cell killing versus non-assembling controls, alongside a doubling of interferon-γ secretion and a peak in CD69 expression at ~8 hours — demonstrating genuine T cell activation rather than mere recruitment.\n3. The covalent assembly strategy significantly outperformed a non-covalent analogue under mildly acidic, physiologically dynamic conditions, and this stability advantage translated to 62.6% tumor volume inhibition in vivo and efficacy in patient-derived lung cancer organoids.\n\n**Read the source:** https://doi.org/10.1002/anie.5894316",
+  "pub_date": "Mon, 06 Jul 2026 23:01:59 +0000",
+  "duration_seconds": 1300,
+  "episode_number": 78,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "078-covalently-pd-l1-anchoring-drives-bispecific-nanostructure.mp3",
+  "enclosure_length_bytes": 15612198,
+  "source_metadata": {
+    "title": "Covalently PD‐L1 Anchoring Drives Bispecific Nanostructure Assembly for Spatial Control of T Cell Recruitment and Activation",
+    "doi": "10.1002/anie.5894316",
+    "authors": [
+      "Fengzhen Zhang",
+      "Yuhan Dong",
+      "Kailu Liu",
+      "Hui Hu",
+      "Huimin Chang",
+      "Jianli Zuo",
+      "Xuedan Ma",
+      "Jie Xu",
+      "Yongjun Dang",
+      "Xiaobo Wang",
+      "Hongwen Liang"
+    ],
+    "journal": "Angewandte Chemie International Edition",
+    "abstract": "ABSTRACT\n                  Immune checkpoint blockades have shown great potential in cancer therapy. However, achieving efficient recruitment and activation of T cells while blocking immune suppression remains a critical challenge. Current strategies mainly focus on the blockade of the PD‐1/PD‐L1 axis, with limited attention to reprogramming immune functions on the tumor cell surface. Here, we report a “localized oxidation‐covalent assembly” strategy that achieves precise modification of PD‐L1 on the cell surface through glycan oxidation, thereby harnessing bioorthogonal reactions to induce the in situ construction of artificial topological nanostructures (ATNs), which subsequently augment T cell‐mediated antitumor immunity. ATNs not only block the PD‐1/PD‐L1 axis to relieve immune suppression but also recruit and activate T cells through transmembrane bridging interactions, mimicking bispecific T cell engagers (BiTEs) and markedly enhancing antitumor immune responses. Mechanistic studies revealed that N‐glycosylation sites are critical for probe‐mediated aldehyde modification of PD‐L1. We further demonstrated that the ATNs achieve spatially precise T cell recruitment and activation via PD‐L1‐dependent localization, enabling programmable immune regulation. Overall, this approach not only underscores the potential of glycan oxidation‐driven self‐assembly in immune modulation but also provides a versatile chemical biology tool for the precise reprogramming of immune checkpoint functions.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1002/anie.5894316"
+  },
+  "source_issue": 25
+}
