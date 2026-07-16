@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Fri, 05 Jun 2026 22:10:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 17:52:43 +0000</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -756,20 +756,6 @@
       <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
-      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
-      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
-      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
-      <itunes:duration>837</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>52</itunes:episode>
-      <podcast:episode>52</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
       <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
       <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
@@ -782,6 +768,20 @@
       <podcast:episode>52</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
+      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
+      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
+      <itunes:duration>837</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
@@ -1640,6 +1640,50 @@ The resulting ATNs act as membrane-anchored bispecific T cell engagers (BiTEs): 
       <podcast:episode>78</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 06 Jul 2026 23:01:59 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 79: Trending — Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study]]></title>
+      <itunes:title><![CDATA[Trending — Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study]]></itunes:title>
+      <description><![CDATA[**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.
+
+**Paper:** [Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study](https://doi.org/10.1371/journal.pone.0344552)
+
+**Authors:** Bethany Stanley, Clare S. Allely, Jenna Charlton, Christopher Gillberg, et al.
+
+**Journal:** PLOS One, 2024
+
+**Why it matters:** A single timing metric — whether a mother vocalizes back within one second — independently predicts her child's risk of ADHD or disruptive behavior disorder at age seven, suggesting that the rhythmic architecture of early caregiver–infant interaction may be a useful, objective clinical marker.
+
+---
+
+**Summary**
+
+This case-control study asks whether the timing of vocal exchanges between mothers and 12-month-old infants — measured as the probability of responding within a defined window — predicts later psychiatric diagnosis. The researchers drew on the Avon Longitudinal Study of Parents and Children (ALSPAC), a UK population cohort enrolling pregnant women in the early 1990s, and analyzed VHS video recordings of 158 mother-infant dyads interacting over a picture book in a clinic setting. At age seven, those same children were assessed using the Development and Wellbeing Assessment (DAWBA), a structured tool that synthesizes parent and teacher reports to generate DSM-IV psychiatric classifications. The final sample comprised 103 neurotypical controls and 55 cases spanning disruptive behavior disorders (DBD), ADHD, autism spectrum (pervasive developmental disorder), and emotional disorders.
+
+To identify optimal response thresholds, the team used survival analysis — specifically Kaplan-Meier curves — to map the distribution of silence duration following each vocalization across a sliding 0.5–10 second window. The most statistically stable thresholds emerged at one second for maternal responses and eight seconds for infant responses, reflecting the large gap in cognitive and motor processing speed between a fully developed adult and a one-year-old. Predictive modeling then used Firth's penalized logistic regression, a method that corrects for bias from small subgroup sizes, to test whether these timing probabilities forecast diagnosis six-and-a-half years later.
+
+Only the maternal measure proved predictive. After adjusting for maternal age, birth weight, maternal depression, and socioeconomic status, a 10% increase in the probability of the mother responding within one second was associated with a 17% decrease in the odds of any psychiatric diagnosis — an effect concentrated in ADHD and DBD. Neither timing metric predicted autism spectrum or emotional disorders, though the autism subgroup contained only six children, making the null result essentially uninterpretable due to insufficient statistical power. A key limitation across all findings is that degraded 1990s audio prevented any analysis of speech content, pitch, or motherese — so every vocalization was coded as a binary event regardless of its emotional quality.
+
+---
+
+**Three takeaways**
+
+1. A 10% increase in the probability of a maternal vocal response within one second was associated with a 17% reduction in the odds of any psychiatric diagnosis at age seven, an effect that survived adjustment for maternal depression, socioeconomic status, birth weight, and maternal age.
+2. The predictive signal was specific to ADHD and disruptive behavior disorders; neither maternal nor infant timing metrics predicted pervasive developmental disorder or emotional disorders in this cohort.
+3. The infant's eight-second response probability carried essentially no predictive weight for later psychiatric outcomes — the diagnostic information resided entirely on the caregiver side of the interaction.
+
+---
+
+**Read the source:** https://doi.org/10.1371/journal.pone.0344552]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-079</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/079-probability-of-a-timely-vocal-response-in-mother-infant.mp3" length="15618828" type="audio/mpeg"/>
+      <guid isPermaLink="false">bfa06920-f5ce-4412-8843-ebd7638e6421</guid>
+      <itunes:duration>1301</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>79</itunes:episode>
+      <podcast:episode>79</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Thu, 16 Jul 2026 15:23:38 +0000</pubDate>
     </item>
   </channel>
 </rss>
