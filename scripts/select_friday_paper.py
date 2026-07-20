@@ -190,6 +190,9 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    if not args.dry_run:
+        github_issue.ensure_auth()
+
     seen = already_seen_dois()
     print(f"[select-friday] {len(seen)} DOIs already published or pending")
 

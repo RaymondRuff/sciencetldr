@@ -152,6 +152,7 @@ def render_issue_body(paper: dict, pdf_url: str | None, source: str) -> str:
 
 
 def main() -> None:
+    github_issue.ensure_auth()
     source_label = os.environ.get("SELECTION_SOURCE", "monday-digest")
     digest_path = latest_digest()
     print(f"[select-monday] using digest: {digest_path.name}")
