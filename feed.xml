@@ -1685,5 +1685,49 @@ Only the maternal measure proved predictive. After adjusting for maternal age, b
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Thu, 16 Jul 2026 15:23:38 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 80: Trending — Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata]]></title>
+      <itunes:title><![CDATA[Trending — Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata]]></itunes:title>
+      <description><![CDATA[**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.
+
+**Paper:** [Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata](https://doi.org/10.1073/pnas.2536089123)
+
+**Authors:** Bernt Bratsberg, Anders M. Fjell, Ole J. Rogeberg, Kristine B. Walhovd
+
+**Journal:** Proceedings of the National Academy of Sciences, 2025
+
+**Why it matters:** The apparent plateau and reversal of rising IQ scores in wealthy nations may be a statistical artifact of averaging across socioeconomic groups whose cognitive trajectories diverged sharply — with educational expansion temporarily masking an earlier-onset, broader decline.
+
+---
+
+**Summary**
+
+The Flynn effect — the well-documented rise of roughly three IQ points per decade throughout the 20th century — has recently stalled or reversed in several high-income countries. This paper asks whether that reversal is actually a uniform population trend, or whether it looks uniform only because researchers have been averaging across socioeconomic groups with very different trajectories. Using compulsory military conscription cognitive tests linked to administrative records for 579,379 Norwegian men born across 25 cohorts (1967–1991), the authors stratified results by paternal income rank — chosen over combined household income because rapid growth in women's labor force participation made maternal earnings an unstable proxy across those specific decades.
+
+The stratified picture dismantles the single-trend narrative. Sons of fathers in the top income percentiles peaked in cognitive scores in the late 1960s birth cohorts and declined from there, while sons of low-income fathers kept gaining and didn't peak until the mid-1970s cohorts — nearly a decade later. During the intervening years, the rising scores at the bottom of the income distribution mathematically cancelled the falling scores at the top, producing a deceptively flat national average. The mechanism the authors identify is educational expansion: using a generalized additive change-on-change model controlling for birth weight, gestational age, height at conscription, and parental education, each additional year of schooling at conscription age correlated with approximately 4.2 IQ points — consistent with quasi-experimental estimates from other literature. Once Norway's 1994 high school reform and earlier expansions effectively saturated secondary school attendance across all income groups, this compensatory effect disappeared, and a broad underlying decline became visible everywhere.
+
+A key limitation is that cognitive data were only available at conscription age (~18–19), not in early childhood, meaning reverse causality — that higher-ability children simply stayed in school longer — cannot be entirely ruled out, a point the authors openly acknowledge.
+
+---
+
+**Three takeaways**
+
+1. The reversal of the Flynn effect is not simultaneous across the population: high-SES groups peaked and began declining up to a decade earlier than low-SES groups, producing a masking effect in national averages.
+2. Educational expansion accounts for a substantial share of this SES-stratified divergence, with each additional year of schooling associated with roughly 4.2 IQ points — an effect that remained after controlling for birth weight, height, and parental education.
+3. Once upper-secondary school completion plateaued across all income strata following Norway's 1994 reform, the compensatory gains vanished and cognitive scores declined across the full socioeconomic distribution, most steeply among higher-income groups.
+
+---
+
+**Read the source:** https://doi.org/10.1073/pnas.2536089123]]></description>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-080</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/080-educational-expansion-and-the-hidden-reversal-of-the-flynn.mp3" length="10840264" type="audio/mpeg"/>
+      <guid isPermaLink="false">cd4c4bc4-164a-4a3a-8460-dc6cb65c9590</guid>
+      <itunes:duration>903</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>80</itunes:episode>
+      <podcast:episode>80</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 22 Jul 2026 22:11:54 +0000</pubDate>
+    </item>
   </channel>
 </rss>
