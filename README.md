@@ -6,9 +6,26 @@ Automation pipeline for the [Science TLDR](https://raymondruff.github.io/science
 
 - **Mondays:** runs a literature digest across PubMed, bioRxiv, and the web; emails it to a coworker list; picks the top-DICE-scored paper and opens a GitHub Issue with the PDF and prompt ready for [NotebookLM](https://notebooklm.google.com).
 - **Fridays:** picks the top trending paper on PubMed (any field) and opens a similar Issue.
-- **On MP3 upload:** when an MP3 is dropped into [`inbox/`](inbox/), the publish workflow normalizes the audio, generates show notes, updates [`feed.xml`](feed.xml), and GitHub Pages auto-deploys.
+- **On a new Issue:** the generate-episode workflow fetches the paper's full text, has Claude write and then fact-check a two-host script, synthesizes it with Gemini multi-speaker TTS, and opens a **review PR** carrying the finished audio.
+- **On merging that PR:** the MP3 lands in [`inbox/`](inbox/) and the publish workflow normalizes the audio, generates show notes, updates [`feed.xml`](feed.xml), and GitHub Pages auto-deploys.
+- **After publishing:** the memory workflow distils the episode into a card under [`memory/cards/`](memory/) and updates [`memory/threads.md`](memory/threads.md), so later episodes can draw accurate connections across the back catalogue.
 
-The only manual step each week is generating the audio in NotebookLM (~2 clicks, ~5 min total per week).
+The only weekly step is listening to the draft and merging the PR. Audio generation replaced the manual NotebookLM flow; see [the episode generation notes](#episode-generation) below.
+
+## Episode generation
+
+| Piece | Where |
+|---|---|
+| Host characters, register rules, structure | [`prompts/host_dialogue.md`](prompts/host_dialogue.md) |
+| Full-text acquisition (local PDF → Europe PMC → OA PDF → publisher HTML) | [`scripts/paper_text.py`](scripts/paper_text.py) |
+| Script writing + verification pass | [`scripts/generate_script.py`](scripts/generate_script.py) |
+| Speech synthesis (Gemini multi-speaker) | [`scripts/tts_dialogue.py`](scripts/tts_dialogue.py) |
+| Cross-episode memory | [`scripts/memory.py`](scripts/memory.py) |
+| Orchestration + review PR | [`scripts/generate_episode.py`](scripts/generate_episode.py) |
+
+**Issue labels drive the state machine:** `podcast-pending` (eligible) → `needs-pdf` (no reachable full text — drop a PDF at `inbox/pdfs/issue-NN.pdf`) → `episode-in-review` (draft PR open) → closed on publish. A failed run gets `generation-failed`; remove the label to retry.
+
+Publishers often refuse scripted downloads even for open-access papers, which is what `needs-pdf` exists for.
 
 ## Feed
 

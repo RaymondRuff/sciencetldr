@@ -425,8 +425,16 @@ def publish_one(src: Path, metadata: dict, issue: dict | None) -> dict:
     duration = mp3_duration_seconds(final_mp3)
     length_bytes = final_mp3.stat().st_size
 
-    print("  • transcribing episode")
-    transcript = transcribe_audio(src)
+    sidecar = src.with_suffix(".transcript.txt")
+    if sidecar.exists():
+        # Generated episodes ship the verified script as an exact transcript,
+        # so there is nothing for ASR to add — and nothing for it to get wrong.
+        print("  • using script transcript from inbox (skipping Whisper)")
+        transcript = sidecar.read_text(encoding="utf-8")
+        sidecar.unlink()
+    else:
+        print("  • transcribing episode")
+        transcript = transcribe_audio(src)
     if transcript:
         (EPISODES_DIR / f"{base_name}.transcript.txt").write_text(
             transcript, encoding="utf-8"

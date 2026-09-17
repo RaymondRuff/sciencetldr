@@ -1,0 +1,70 @@
+name: generate-episode
+
+# Turns podcast-pending Issues into review PRs carrying a finished episode.
+# Merging the PR drops the mp3 into inbox/, which fires the publish workflow.
+
+on:
+  issues:
+    types: [opened, labeled]
+  push:
+    branches: [main]
+    paths:
+      - 'inbox/pdfs/**.pdf'
+  schedule:
+    # Daily sweep at 14:00 UTC — catches anything the event triggers missed and
+    # picks up Issues unblocked by a PDF drop.
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: 'Issue number to generate (blank = sweep all eligible)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: generate-episode
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    # On `issues` events, only act on the pending label.
+    if: >-
+      github.event_name != 'issues' ||
+      contains(join(github.event.issue.labels.*.name, ','), 'podcast-pending')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Generate episode draft(s)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          MAX_EPISODES_PER_RUN: ${{ vars.MAX_EPISODES_PER_RUN || '3' }}
+        run: |
+          if [ -n "${{ inputs.issue }}" ]; then
+            uv run python scripts/generate_episode.py --issue "${{ inputs.issue }}"
+          else
+            uv run python scripts/generate_episode.py
+          fi
