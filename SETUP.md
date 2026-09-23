@@ -63,6 +63,13 @@ gives cleaner attribution.
 | `DIGEST_RECIPIENTS` | comma-separated coworker emails, e.g. `alice@lab.edu,bob@lab.edu` |
 | `NCBI_API_KEY` | from step 2 (optional but recommended) |
 | `GH_PAT` | from step 2 (optional; falls back to `GITHUB_TOKEN`) |
+| `GEMINI_API_KEY` | from [Google AI Studio](https://aistudio.google.com/apikey) — required for episode audio |
+
+Optional repository **variable** (Settings → Secrets and variables → Actions → Variables):
+
+| Name | Value |
+|---|---|
+| `MAX_EPISODES_PER_RUN` | how many drafts one sweep may generate (default `3`) |
 
 ---
 
@@ -207,6 +214,21 @@ Run the new feed in parallel for at least one week. Then:
 **Do not delete the rss.com listing.** Leave it live indefinitely with the redirect tag. Some podcast apps refresh feed indexes only every several months.
 
 Monitor for 30 days — check that the new feed's listener count grows and that no support emails arrive about missing episodes.
+
+---
+
+## 9. Back-catalogue memory backfill (one-time, ~10 min)
+
+Before the first generated episode, build the memory the hosts draw on:
+
+**Actions → memory → Run workflow** (with "Rewrite threads.md" checked).
+
+This writes one card per published episode into `memory/cards/` and composes
+`memory/threads.md`. It runs Claude once per episode, so expect a one-time cost
+of a few dollars; afterwards each new episode adds a single card.
+
+Review `memory/threads.md` afterwards — it is the show's editorial memory and is
+meant to be hand-edited when you disagree with it.
 
 ---
 
