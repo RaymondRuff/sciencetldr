@@ -1,0 +1,38 @@
+{
+  "episode_number": 12,
+  "title": "Coordinated inheritance of extrachromosomal DNAs in cancer cells",
+  "doi": "10.1038/s41586-024-07861-8",
+  "journal": "Nature",
+  "source": "Science TLDR podcast episode 12 show notes",
+  "one_line": "Shows that distinct extrachromosomal DNA (ecDNA) species in cancer cells are inherited together during mitosis rather than randomly, driven by intermolecular interactions and transcription.",
+  "key_claims": [
+    "Distinct ecDNA species co-segregate non-randomly into daughter cells at mitosis, producing correlated inheritance rather than independent assortment.",
+    "Co-segregation is mediated by physical intermolecular interactions between ecDNA species, notably within ecDNA hubs.",
+    "Active transcription at the onset of mitosis facilitates ecDNA co-segregation.",
+    "Coordinated inheritance supports oncogene co-amplification and co-selection, including specialised 'enhancer-only' ecDNAs that carry regulatory elements but no oncogene and act in trans.",
+    "Coordinated inheritance shapes responses to targeted therapy, with ecDNA integration into chromosomes noted as a route to escape drug pressure and co-inheritance."
+  ],
+  "limitations": [
+    "Show notes report no specific quantitative measurements of co-segregation frequency or effect sizes.",
+    "Precise molecular mechanism linking transcription to co-segregation (specific protein factors) is not identified.",
+    "Whether coordinated inheritance extends to other extrachromosomal elements such as viral episomes or biomolecular condensates was not tested.",
+    "Interactions beyond pairs of ecDNA species (higher-order co-assortment) were not resolved.",
+    "Long-term consequences of ecDNA co-inheritance under continuous versus intermittent drug exposure were not established."
+  ],
+  "open_questions": [
+    "Identify the transcription-associated factors that tether ecDNA species together at mitosis and test whether their loss randomises segregation.",
+    "Test whether simultaneously targeting co-segregating oncogene pairs prevents resistance better than single-agent therapy.",
+    "Determine whether chromosomal integration of ecDNA is a reproducible escape route under sustained drug pressure.",
+    "Quantify the contribution of coordinated inheritance to intratumoural heterogeneity and cancer evolution in vivo."
+  ],
+  "tags": [
+    "ecdna",
+    "cancer-genomics",
+    "oncogene-amplification",
+    "mitotic-segregation",
+    "transcription-regulation",
+    "enhancer-biology",
+    "drug-resistance",
+    "tumour-heterogeneity"
+  ]
+}

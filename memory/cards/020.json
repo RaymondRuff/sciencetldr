@@ -1,0 +1,38 @@
+{
+  "episode_number": 20,
+  "title": "Prior vaccination prevents overactivation of innate immune responses during COVID-19 breakthrough infection",
+  "doi": "10.1126/scitranslmed.adq1086",
+  "journal": "Science Translational Medicine",
+  "source": "Science TLDR podcast episode 20 show notes",
+  "one_line": "Single-cell RNA sequencing and mass cytometry of blood from vaccinated controls, unvaccinated COVID-19 patients, and vaccinated breakthrough patients during the Delta wave showed that prior vaccination dampens innate immune overactivation.",
+  "key_claims": [
+    "Breakthrough infections in vaccinated people showed less inflammatory activation of monocytes and reduced monocyte migration potential than primary infections in unvaccinated people.",
+    "NK cells proliferated less and responded in a more controlled way during breakthrough infection while retaining protective function.",
+    "Prior vaccination broadly prevented overactivation of the innate immune compartment, offering a mechanism for reduced disease severity in vaccinated individuals.",
+    "Sex-specific differences were observed, with females showing stronger innate immune activation during breakthrough infection and distinct immune regulation patterns versus males.",
+    "Comparisons were drawn across three groups: healthy vaccinated controls, unvaccinated COVID-19 patients, and vaccinated COVID-19 patients, sampled April-December 2021."
+  ],
+  "limitations": [
+    "Restricted to the Delta variant period (April-December 2021), so findings may not generalise to later variants.",
+    "Authors note the need for longitudinal studies; the design appears largely cross-sectional.",
+    "Other vaccine types were not examined and remain a stated future research direction.",
+    "Sex-specific immune mechanisms were observed but not mechanistically explained.",
+    "Show notes report no cohort sizes, effect sizes, or statistical values."
+  ],
+  "open_questions": [
+    "Do longitudinal sampling studies confirm that dampened innate activation precedes rather than follows milder clinical course?",
+    "Does the same innate-damping effect hold for other vaccine platforms and for Omicron-era variants?",
+    "What mechanism drives the stronger innate activation seen in females, and does it alter outcomes or treatment response?"
+  ],
+  "tags": [
+    "covid-19",
+    "vaccination",
+    "innate-immunity",
+    "single-cell-rnaseq",
+    "mass-cytometry",
+    "nk-cells",
+    "monocytes",
+    "sex-differences",
+    "breakthrough-infection"
+  ]
+}

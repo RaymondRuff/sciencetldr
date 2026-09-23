@@ -1,0 +1,41 @@
+{
+  "episode_number": 61,
+  "title": "Improving mitochondria and ER stability helps eliminate upper motor neuron degeneration that occurs due to mSOD1 toxicity and TDP‐43 pathology",
+  "doi": "10.1002/ctm2.336",
+  "journal": "Clinical and Translational Medicine",
+  "source": "crossref",
+  "one_line": "Using UCHL1-eGFP reporter crosses to visualise diseased upper motor neurons in vivo, the authors show that mSOD1 toxicity and TDP-43 pathology converge on mitochondrial/ER destruction, and that oral NU-9 restores organelle integrity and halts UMN degeneration.",
+  "key_claims": [
+    "Electron microscopy showed loss of mitochondrial cristae, expanded/fractured ER cisternae detached from ribosomes, and apical dendrite vacuolisation in diseased UMNs from both mSOD1 and TDP-43 models, and the same pattern appeared in postmortem human ALS Betz cells.",
+    "NU-9, from a >50,000-compound screen in PC12 cells, has 94% oral bioavailability, crosses the blood-brain barrier, no hERG inhibition, and a NOAEL of 100 mg/kg.",
+    "Oral gavage NU-9 (20 or 100 mg/kg/day, postnatal day 60 to day 120) raised the proportion of structurally healthy mitochondria in mSOD1 UMNs from ~10% (vehicle) to 86%, reassembled ER cisternae with attached ribosomes, and cleared apical dendrite vacuoles.",
+    "Treated disease mice had UMN counts virtually identical to wild-type controls and significantly improved hanging wire test performance; immunocytochemistry showed reduced misfolded SOD1 levels.",
+    "An earlier preliminary checkpoint noted 13% lifespan extension in mSOD1 mice at 20 mg/kg, but the core study used cellular rescue rather than survival as its endpoint."
+  ],
+  "limitations": [
+    "NU-9 gave no protection to lower motor neurons in the lumbar spinal cord, which degenerated at the same rate as untreated controls.",
+    "All efficacy data are from transgenic mouse models; human evidence is limited to postmortem ultrastructural comparison.",
+    "Treatment window was fixed (P60–P120) with outcomes assessed at end stage, so durability and later-onset dosing were not tested.",
+    "Motor function was assessed by a single behavioural assay (hanging wire test).",
+    "Mechanism by which NU-9 stabilises mitochondria and ER is not resolved beyond reduced mSOD1 levels."
+  ],
+  "open_questions": [
+    "Does combining NU-9 with a lower-motor-neuron-directed agent preserve the whole motor circuit and extend function?",
+    "Would NU-9 rescue UMNs if treatment begins after substantial degeneration, and is the effect sustained beyond day 120?",
+    "Does the shared organelle-failure signature make NU-9 useful in other neurodegenerative diseases with ER/mitochondrial collapse?",
+    "What is NU-9's direct molecular target that restores cristae and ER cisternae?"
+  ],
+  "tags": [
+    "neurodegeneration",
+    "als",
+    "upper-motor-neuron",
+    "mitochondria",
+    "er-stress",
+    "tdp-43",
+    "sod1",
+    "small-molecule",
+    "mouse-model",
+    "pharmacokinetics",
+    "electron-microscopy"
+  ]
+}

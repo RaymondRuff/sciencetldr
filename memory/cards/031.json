@@ -1,0 +1,37 @@
+{
+  "episode_number": 31,
+  "title": "The end of the genetic paradigm of cancer",
+  "doi": "10.1371/journal.pbio.3003052",
+  "journal": "PLOS Biology",
+  "source": "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3003052",
+  "one_line": "A theory/essay piece arguing that the somatic mutation theory (the 'genetic paradigm') of cancer is not supported by accumulated evidence and should give way to tissue-organisational and cell-state explanations.",
+  "key_claims": [
+    "The authors argue that decades of cancer genome sequencing have not delivered the predicted causal account of carcinogenesis, undermining the somatic mutation theory as a general explanation.",
+    "They point to widespread 'oncogenic' driver mutations found in histologically normal, non-cancerous tissue as evidence that mutation alone is insufficient for cancer.",
+    "They highlight cancers with few or no identifiable driver mutations, and carcinogens that act without mutating DNA, as anomalies the genetic paradigm cannot absorb.",
+    "They argue that reversible, non-genetic changes in cell state and tissue organisation (including development-like and gene-regulatory-network attractor dynamics) better account for initiation, progression and occasional reversal of malignancy.",
+    "They frame the shift as a Kuhnian paradigm change, arguing that continued patching of the mutation theory with auxiliary hypotheses signals its exhaustion rather than its robustness."
+  ],
+  "limitations": [
+    "This is a conceptual/perspective essay, not new experimental data; no primary measurements or statistics are generated.",
+    "The proposed alternative framework is argued rather than tested head-to-head against the somatic mutation theory in a predictive experiment.",
+    "Evidence cited is selected to illustrate anomalies and is not a systematic review of the cancer genomics literature.",
+    "Clinical successes of mutation-targeted therapies are acknowledged as a challenge the argument must accommodate rather than fully resolved.",
+    "No operational criteria are given for how a tissue-organisation or cell-state model would be falsified."
+  ],
+  "open_questions": [
+    "What prospective experiment would distinguish mutation-driven from cell-state/tissue-organisation-driven carcinogenesis in the same tissue?",
+    "Can malignant phenotypes be durably reversed by manipulating cell state alone while driver mutations remain intact?",
+    "Why do some mutation-targeted therapies work well if mutations are not the causal driver?",
+    "What quantitative framework would predict which normal tissues carrying driver mutations progress to cancer and which do not?"
+  ],
+  "tags": [
+    "cancer-biology",
+    "somatic-mutation-theory",
+    "tissue-organisation-field-theory",
+    "cell-state",
+    "paradigm-critique",
+    "cancer-genomics",
+    "perspective-essay"
+  ]
+}

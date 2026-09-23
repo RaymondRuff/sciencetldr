@@ -1,0 +1,38 @@
+{
+  "episode_number": 9,
+  "title": "Engineered allogeneic T cells decoupling T-cell-receptor and CD3 signalling enhance the antitumour activity of bispecific antibodies",
+  "doi": "10.1038/s41551-024-01255-x",
+  "journal": "Nature Biomedical Engineering",
+  "source": "Kapetanovic et al., show notes as published",
+  "one_line": "Mutating a conserved FGxGT motif in the TCR alpha chain uncouples antigen recognition from CD3 signalling, yielding allogeneic 'AED' T cells that ignore their native antigen but can still be redirected by bispecific antibodies such as blinatumomab.",
+  "key_claims": [
+    "Mutation of the conserved FGxGT motif in the TCR alpha constant region disrupts transmission of antigen recognition into downstream CD3 activation while leaving the receptor otherwise intact.",
+    "In vitro, AED T cells showed reduced proliferation, cytokine release and cytotoxicity against their native (allo)antigen.",
+    "AED T cells retained normal activation and tumour killing when engaged via CD3 by blinatumomab in the presence of CD19+ tumour cells.",
+    "In a mouse model, AED T cells plus blinatumomab eliminated CD19+ tumours without signs of alloreactivity, whereas control allogeneic T cells showed alloreactivity.",
+    "The approach is positioned as an enabler of off-the-shelf allogeneic T cell products combined with bispecific antibodies, avoiding reliance on compromised patient T cells."
+  ],
+  "limitations": [
+    "No quantitative values (proliferation, cytokine, killing magnitudes) reported in the available material.",
+    "Host-versus-graft rejection of the donor AED T cells was not addressed.",
+    "Demonstration limited to blinatumomab/CD19 in a mouse model; other bispecific antibodies and tumour types untested.",
+    "Long-term safety, persistence and efficacy in humans not evaluated.",
+    "Residual antigen responsiveness and whether the FGxGT mutation is the optimal decoupling edit were not resolved."
+  ],
+  "open_questions": [
+    "Does the AED design prevent GvHD in a human clinical trial while preserving biAb-driven efficacy?",
+    "How durable is the decoupling — can AED T cells regain alloreactive signalling over time or under strong stimulation?",
+    "Does the approach generalise across other bispecific antibody formats and solid tumour targets?",
+    "Can AED T cells be protected from host immune rejection to allow persistence?"
+  ],
+  "tags": [
+    "allogeneic-t-cells",
+    "bispecific-antibodies",
+    "cd3-signalling",
+    "tcr-engineering",
+    "gvhd",
+    "off-the-shelf-cell-therapy",
+    "cd19",
+    "blinatumomab"
+  ]
+}

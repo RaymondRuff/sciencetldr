@@ -1,0 +1,36 @@
+{
+  "episode_number": 25,
+  "title": "Efficacy and Safety of Obinutuzumab in Active Lupus Nephritis",
+  "doi": "10.1056/NEJMoa2410965",
+  "journal": "New England Journal of Medicine",
+  "source": "Science TLDR podcast episode 25 show notes",
+  "one_line": "A phase 3 randomised placebo-controlled trial in 271 adults showed that adding the anti-CD20 antibody obinutuzumab to standard therapy improved complete renal response in active lupus nephritis at week 76.",
+  "key_claims": [
+    "Complete renal response at week 76 was 46.4% with obinutuzumab vs 33.1% with placebo, a 13.4 percentage-point difference (p=0.02).",
+    "Treatment failure as an intercurrent event was lower with obinutuzumab (3.7% vs 17.6%).",
+    "Complete response with prednisone at or below 7.5 mg/day was 42.7% vs 30.9%, and UPCR <0.8 was reached by 55.5% vs 41.9%.",
+    "Death or renal events occurred in 18.9% of obinutuzumab patients vs 35.6% of placebo patients.",
+    "Serious adverse events were more frequent with obinutuzumab (32.4% vs 18.2%), mainly infections including COVID-19; excluding COVID-19, serious infections were 11% vs 7.6%, and there were 4 deaths (3 obinutuzumab, 1 placebo)."
+  ],
+  "limitations": [
+    "The COVID-19 pandemic confounded safety outcomes, with the trial starting before widespread vaccination.",
+    "Follow-up was limited to 76 weeks, leaving long-term renal and safety outcomes unknown.",
+    "All patients received mycophenolate mofetil plus prednisone, so results do not generalise to other background regimens.",
+    "No biomarker or subgroup analysis identifying which patients benefit most is reported in the notes."
+  ],
+  "open_questions": [
+    "Does the renal response advantage persist and translate into preserved kidney function beyond 76 weeks?",
+    "How much of the excess serious infection risk disappears in a fully COVID-vaccinated population?",
+    "Which patients should be selected for B-cell depletion, and can biomarkers predict response?",
+    "Is obinutuzumab additive or superior when combined with or compared to other lupus nephritis therapies?"
+  ],
+  "tags": [
+    "lupus-nephritis",
+    "b-cell-depletion",
+    "anti-cd20",
+    "phase-3-trial",
+    "autoimmunity",
+    "safety-signal",
+    "monoclonal-antibody"
+  ]
+}

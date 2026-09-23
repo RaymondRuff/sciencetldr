@@ -1,0 +1,40 @@
+{
+  "episode_number": 66,
+  "title": "The political polarization of health outcomes in the USA",
+  "doi": "10.1038/s41562-026-02474-9",
+  "journal": "Nature Human Behaviour",
+  "source": "friday-reddit",
+  "one_line": "Using individual-level Add Health biomarker data, CDC death records and a 2024 opinion survey, Elder and O'Brian show conservative Americans' health and mortality diverged from liberals' during the 2010s-2020s, only half explained by demographic sorting.",
+  "key_claims": [
+    "In Add Health Wave 4 (2008-2009) equivalence testing showed no significant comorbidity difference across the political spectrum, but by Wave 5 (2016-2018) the most conservative respondents had a significantly worse comorbidity index (0.305), a gap of about one-third of a standard deviation.",
+    "The comorbidity index combined five objectively measured in-home biomarkers: BMI, lipids, HbA1c, blood pressure and C-reactive protein.",
+    "Kitagawa-Oaxaca-Blinder decomposition attributed roughly half the widening gap to demographic/socioeconomic sorting (education, income, insurance gains in the liberal coalition), outweighing conservatives' relative gains in marriage and religiosity.",
+    "Linking the cohort to the National Death Index (2020-2022), very conservative respondents were 1.144 percentage points more likely to die of internal causes than very liberal respondents; the gap persisted after excluding COVID-19 deaths and with county fixed effects.",
+    "The 2024 CHIP 50 survey (n > 21,000) found right-leaning respondents reported lower trust in primary care and ER physicians, lower willingness to seek care for an angina-like chest pain vignette, and, among the 38% with chronic illness, more doubt about the safety and effectiveness of their own medications (Beliefs about Medicines Questionnaire)."
+  ],
+  "limitations": [
+    "Roughly half of the widening comorbidity gap remains unexplained by observable characteristics in the decomposition.",
+    "The medical-trust mechanism is supported only by cross-sectional 2024 opinion data, not linked to the same individuals' biomarkers or deaths, so it is consistency evidence rather than causal.",
+    "The cohort is narrow in age (born roughly 1977-1982, in their early-to-mid 40s during mortality follow-up), where deaths are rare, limiting generalisability to other age groups.",
+    "Political ideology is self-reported and can change over time, making it hard to separate individual-level deterioration from coalition membership turnover.",
+    "County fixed effects address local jurisdiction but cannot rule out unmeasured individual-level confounders such as occupation or health behaviours not captured."
+  ],
+  "open_questions": [
+    "Does declining medical trust prospectively predict worse biomarkers and mortality within the same individuals, rather than being inferred from a separate survey?",
+    "Would an intervention that restores clinical trust or increases care-seeking among conservative patients close any of the unexplained mortality gap?",
+    "What accounts for the unexplained half of the comorbidity divergence beyond income, education, marriage and religiosity?",
+    "Does the same divergence appear in other age cohorts and in more recent waves of mortality data?"
+  ],
+  "tags": [
+    "political-polarization",
+    "social-determinants-of-health",
+    "longitudinal-cohort",
+    "mortality",
+    "biomarkers",
+    "medical-trust",
+    "health-disparities",
+    "decomposition-analysis",
+    "survey-data",
+    "covid-19"
+  ]
+}

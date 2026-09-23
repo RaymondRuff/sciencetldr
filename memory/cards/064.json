@@ -1,0 +1,38 @@
+{
+  "episode_number": 64,
+  "title": "Climate-driven depopulation and adaptation realities in America’s coastal ground zero",
+  "doi": "10.1038/s41893-026-01820-z",
+  "journal": "Nature Sustainability",
+  "source": "friday-reddit",
+  "one_line": "A multi-disciplinary perspective combining last-interglacial shoreline field evidence, delta archaeology and demographic data to argue the central US Gulf Coast is committed to metres of relative sea-level rise and must plan managed relocation rather than static defence.",
+  "key_claims": [
+    "The last interglacial (~125,000 years ago, ~0.5–1.5 °C above pre-industrial) shoreline was located at Ponchitula Ridge ~50 km north of New Orleans, now at ~3.1 m elevation; after correcting for Baton Rouge fault zone subsidence, LIG relative sea level was ~+7.5 m.",
+    "That baseline implies a committed future relative sea-level rise of 3–7 m and shoreline migration up to 100 km inland, making long-term static coastal defence physically impossible.",
+    "Archaeological evidence shows Native American communities tracked deltaic lobe avulsion (St Bernard to Lafourche sub-delta) and built shell-midden platforms on natural levees, surviving via adaptive mobility that modern land tenure, mortgages and zoning have replaced with a 'socio-ecological trap'.",
+    "Outmigration follows a 'pulse-retreat' pattern punctuated by hurricanes Katrina, Rita, Laura and Delta: Orleans Parish has lost ~25% of population since 2000 and Cameron Parish more than half; New Orleans plateaued at ~80% of pre-Katrina baseline.",
+    "Louisiana cancelled the $3 billion Mid-Barataria sediment diversion (July 2025) and a second diversion (October 2025), removing the only biophysically viable large-scale land-building tool and compressing the window for orderly relocation to Pleistocene terraces north of Lake Pontchartrain."
+  ],
+  "limitations": [
+    "Authors acknowledge the timeline for the committed sea-level rise is uncertain; the geological record establishes physical capacity, not a delivery date.",
+    "LIG warming was driven by slow Milankovitch orbital forcing, an imperfect analogue for rapid modern greenhouse forcing.",
+    "The RSL reconstruction depends on assumed time-averaged subsidence/fault-motion rates for a single paleo-shoreline site.",
+    "Migration is multi-causal (labour, cost of living, insurance, social networks), so attributing depopulation to climate alone is not demonstrated.",
+    "Projections such as 75% wetland loss and ~15,000 km² submergence by 2070 are modelled, not observed."
+  ],
+  "open_questions": [
+    "What is the actual rate and timing of ice-sheet contribution, i.e. when would 3–7 m of RSL be delivered?",
+    "Would retained sediment diversions measurably extend the land-loss timeline enough to enable multi-generational managed relocation?",
+    "Can a Kiruna-style planned relocation (~6,000 residents, 30-year timeline) scale to hundreds of thousands of coastal Louisiana residents?",
+    "What empirically distinguishes Florida's continued growth from Louisiana's retreat, and at what insurance-market threshold does Florida flip?"
+  ],
+  "tags": [
+    "sea-level-rise",
+    "managed-retreat",
+    "paleoclimate",
+    "coastal-geomorphology",
+    "demography",
+    "climate-adaptation-policy",
+    "archaeology",
+    "insurance-markets"
+  ]
+}

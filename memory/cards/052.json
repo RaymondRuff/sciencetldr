@@ -1,0 +1,26 @@
+{
+  "episode_number": 52,
+  "title": "Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition",
+  "doi": "10.1021/acs.biochem.5c00274",
+  "journal": "Biochemistry",
+  "source": "Show notes contained only the DOI link; no abstract or numerical detail was published with the episode.",
+  "one_line": "A study of conformational flexibility (hinge plasticity) in intact monoclonal antibodies and how that flexibility relates to antigen recognition.",
+  "key_claims": [
+    "The show notes provide no extractable quantitative claims; only the DOI to the Biochemistry paper was published, so no numbers can be recorded here."
+  ],
+  "limitations": [
+    "No abstract, figures, or methods detail accompanied the episode, so the authors' own stated limitations are unknown from this source."
+  ],
+  "open_questions": [
+    "What experimental technique (e.g. structural or biophysical) was used to resolve hinge motions in intact IgG, and at what resolution?",
+    "Does measured hinge plasticity quantitatively predict antigen binding or avidity across a panel of antibodies?",
+    "Pull the full text to backfill the key numbers before citing this episode in later discussions."
+  ],
+  "tags": [
+    "antibody-structure",
+    "hinge-flexibility",
+    "conformational-dynamics",
+    "antigen-binding",
+    "monoclonal-antibody"
+  ]
+}

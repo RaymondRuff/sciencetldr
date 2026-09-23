@@ -1,0 +1,37 @@
+{
+  "episode_number": 33,
+  "title": "Immune checkpoint TIM-3 regulates microglia and Alzheimer's disease",
+  "doi": "10.1038/s41586-025-08852-z",
+  "journal": "Nature",
+  "source": "https://doi.org/10.1038/s41586-025-08852-z",
+  "one_line": "The authors show that the immune checkpoint receptor TIM-3 (HAVCR2), whose gene carries an Alzheimer's-associated polymorphism, is induced on aged/homeostatic microglia and restrains their phagocytic clearance of amyloid-beta, with microglia-specific deletion reducing plaque burden and improving cognition in 5xFAD mice.",
+  "key_claims": [
+    "HAVCR2, encoding TIM-3, harbours a polymorphism associated with late-onset Alzheimer's disease, linking an immune checkpoint to AD genetics.",
+    "TIM-3 expression is upregulated on microglia with ageing and in the Alzheimer's disease brain, particularly in homeostatic rather than disease-associated microglial states.",
+    "Microglia-specific deletion of Havcr2 in the 5xFAD amyloidosis model increased microglial phagocytosis and uptake/clearance of amyloid-beta.",
+    "Havcr2 deletion reduced amyloid plaque burden and improved cognitive/behavioural performance in 5xFAD mice.",
+    "Loss of TIM-3 shifted microglial transcriptional programmes away from the homeostatic signature toward a phagocytic/disease-associated state, suggesting TIM-3 acts as a brake on protective microglial responses."
+  ],
+  "limitations": [
+    "Findings rest on mouse amyloidosis models (5xFAD), which do not reproduce the full tau and neurodegenerative pathology of human Alzheimer's disease.",
+    "The human evidence is genetic association plus expression data, not a demonstration that the HAVCR2 variant alters microglial TIM-3 function in patients.",
+    "Whether blocking TIM-3 therapeutically (rather than genetic deletion from development) confers the same benefit, and at what disease stage, was not established.",
+    "Risks of removing an inhibitory checkpoint in the CNS — chronic inflammation, off-target immune activation, or effects on peripheral immunity — were not fully characterised."
+  ],
+  "open_questions": [
+    "Does pharmacological anti-TIM-3 blockade in aged or established-pathology models reproduce the genetic deletion phenotype without inflammatory toxicity?",
+    "Do human carriers of the AD-associated HAVCR2 variant show altered microglial TIM-3 levels or amyloid clearance in vivo?",
+    "Which ligand–receptor interaction (e.g. phosphatidylserine or other TIM-3 ligands on damaged neurons/plaques) mediates the phagocytic brake?",
+    "Does TIM-3 loss affect tau pathology and neurodegeneration, not just amyloid plaque burden?"
+  ],
+  "tags": [
+    "immune-checkpoint",
+    "tim-3",
+    "microglia",
+    "neuroinflammation",
+    "alzheimers",
+    "phagocytosis",
+    "mouse-model",
+    "gwas-variant"
+  ]
+}

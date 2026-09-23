@@ -1,0 +1,40 @@
+{
+  "episode_number": 68,
+  "title": "The lived experience of rejection sensitivity in ADHD - A qualitative exploration",
+  "doi": "10.1371/journal.pone.0314669",
+  "journal": "PLOS One",
+  "source": "friday-reddit",
+  "one_line": "Focus-group interviews with five undergraduates with formal ADHD diagnoses were thematically analysed to characterise the lived experience of rejection sensitivity, yielding three themes: withdrawal, masking, and bodily sensations.",
+  "key_claims": [
+    "Withdrawal: anticipated rather than confirmed rejection drove preemptive avoidance of friendships, family events, relationships and career opportunities, including deliberately submitting university work late or below standard despite an automatic 10% grade penalty.",
+    "Masking: participants projected a 'mask of toughness' to avoid being labelled needy, which led peers to deliver harsher criticism and produced dissociation, with participants describing themselves as outside observers of their own conversations.",
+    "Bodily sensations: perceived rejection triggered chest/heart 'pinch', throat closing, nausea, paralysis and a spreading internal heat likened to a chemical hand warmer, which the authors characterise as sympathetic fight-or-flight activation.",
+    "Participants described profound impacts on mental wellbeing (anxiety, despair, embarrassment) and on social function, career opportunities and daily life, using words like friendless, lonely and unlovable.",
+    "Contextual framing: emotional dysregulation is estimated to affect up to 70% of adults with ADHD yet is excluded from mainstream diagnostic criteria, which prioritise observable externalising behaviours."
+  ],
+  "limitations": [
+    "Only five participants were interviewed, a very small sample even for qualitative work, so findings are not generalisable.",
+    "Two participants also had an autism spectrum diagnosis and one had dyslexia, making ADHD-specific mechanisms impossible to isolate from co-occurring neurodivergent traits.",
+    "Qualitative focus-group design with one open-ended prompt yields narrative themes, not quantified effects or causal mechanisms.",
+    "Participants were all undergraduate students, a narrow demographic and setting.",
+    "Sensitization theory and the fight-or-flight interpretation are explanatory framings discussed by the authors, not directly measured physiological or neural data."
+  ],
+  "open_questions": [
+    "Do the three themes replicate in large, quantitative, carefully screened ADHD cohorts without co-occurring autism?",
+    "Can physiological measurement (e.g. cortisol, heart rate) confirm that rejection episodes are functionally identical to a fight-or-flight or anxiety attack response?",
+    "How can clinicians differentiate ADHD-related rejection sensitivity from comorbid anxiety, BPD or bipolar disorder given overlapping presentations?",
+    "Does early accepting, low-criticism environment for neurodivergent children prevent sensitization to rejection cues, as the sensitization theory would predict?"
+  ],
+  "tags": [
+    "adhd",
+    "rejection-sensitivity",
+    "emotional-dysregulation",
+    "qualitative-research",
+    "thematic-analysis",
+    "masking",
+    "neurodivergence",
+    "small-sample",
+    "diagnostic-criteria",
+    "psychosomatic"
+  ]
+}

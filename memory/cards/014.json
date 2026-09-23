@@ -1,0 +1,37 @@
+{
+  "episode_number": 14,
+  "title": "Autonomous mobile robots for exploratory synthetic chemistry",
+  "doi": "10.1038/s41586-024-08173-7",
+  "journal": "Nature",
+  "source": "Science TLDR podcast episode 14 show notes",
+  "one_line": "A modular platform in which mobile robots shuttle samples between a Chemspeed ISynth synthesizer, UPLC-MS, benchtop NMR and a photoreactor, using a heuristic decision algorithm to run exploratory synthesis autonomously.",
+  "key_claims": [
+    "The authors distinguish automated (human-decided) from autonomous (machine-decided) experimentation and argue automated analysis plus decision-making is what enables true autonomy.",
+    "Mobile robots link physically separated, unmodified commercial instruments, so existing lab equipment can be integrated without redesign.",
+    "A customizable, application-agnostic heuristic algorithm reads orthogonal UPLC-MS and 1H NMR data to select successful reactions, check reproducibility and direct subsequent steps.",
+    "Orthogonal UPLC-MS plus 1H NMR characterization mimics human workflows and mitigates the blind spots of any single analytical technique.",
+    "The platform is demonstrated on three distinct problems: multi-step structural diversification with medicinal-chemistry relevance, supramolecular cage/helicate discovery with host-guest binding assessment, and photocatalytic reaction screening."
+  ],
+  "limitations": [
+    "Demonstrations are laboratory-scale; scaling to industrial settings is stated as future work.",
+    "Characterization relies on benchtop NMR, with high-field automated NMR noted as a needed addition for complex molecules.",
+    "Decision-making is heuristic rather than closed-loop optimization or literature/AI-informed.",
+    "Unexpected reactions or analytical results outside pre-defined criteria are not reliably handled.",
+    "No quantitative definition of 'novelty' or 'importance' exists to guide autonomous exploratory choices."
+  ],
+  "open_questions": [
+    "Can the heuristic system discover a genuinely unanticipated compound or reaction class that human chemists had not pre-scoped, verified by full independent characterization?",
+    "Would swapping heuristics for closed-loop/AI-driven algorithms measurably improve hit rate per experiment on the same chemical spaces?",
+    "How much human intervention was actually required per campaign, and what is the right division of labour between robot and expert?"
+  ],
+  "tags": [
+    "autonomous-experimentation",
+    "lab-robotics",
+    "synthetic-chemistry",
+    "analytical-orthogonality",
+    "decision-algorithms",
+    "supramolecular-chemistry",
+    "photocatalysis",
+    "self-driving-labs"
+  ]
+}

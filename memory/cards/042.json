@@ -1,0 +1,34 @@
+{
+  "episode_number": 42,
+  "title": "Soil and cherry bacterial communities predict flavor on coffee farms",
+  "doi": "10.1038/s41598-025-03665-6",
+  "journal": "Scientific Reports",
+  "source": "https://doi.org/10.1038/s41598-025-03665-6",
+  "one_line": "A farm-scale survey linking soil and coffee cherry bacterial community composition to sensory cup-quality scores, reporting that microbiome profiles are associated with (and predictive of) coffee flavor outcomes.",
+  "key_claims": [
+    "Bacterial community composition differs between soil and coffee cherry compartments on working farms.",
+    "Variation in cherry- and soil-associated bacterial taxa is associated with differences in sensory flavor/cup-quality scores.",
+    "Microbiome features carry enough signal to predict flavor-related outcomes above baseline, per the authors' modeling.",
+    "Farm/site identity and environment structure the microbial communities that accompany flavor differences."
+  ],
+  "limitations": [
+    "Observational survey design; associations between microbiome and flavor do not establish that microbes cause flavor differences.",
+    "Sensory scores are subjective panel outputs and may confound with agronomic, genetic, and processing variables not fully controlled.",
+    "Numeric effect sizes, sample counts and model accuracies were not available in the material supplied for this card.",
+    "Findings are tied to the sampled farms/regions and may not generalize to other origins or processing methods."
+  ],
+  "open_questions": [
+    "Do controlled inoculation or microbiome-manipulation trials change cup scores in otherwise identical lots?",
+    "Does the predictive model hold on held-out farms, seasons, and origins?",
+    "Which specific taxa or metabolic pathways generate the flavor-active compounds, versus merely co-occurring with them?"
+  ],
+  "tags": [
+    "microbiome",
+    "soil-ecology",
+    "food-science",
+    "predictive-modeling",
+    "agriculture",
+    "16s-sequencing",
+    "observational-study"
+  ]
+}

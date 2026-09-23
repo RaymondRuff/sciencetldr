@@ -1,0 +1,35 @@
+{
+  "episode_number": 57,
+  "title": "Spatially organized inflammatory myeloid-CD8+ T cell aggregates linked to Merkel-cell Polyomavirus driven Reorganization of the Tumor Microenvironment",
+  "doi": "10.1101/2025.06.06.657162",
+  "journal": "bioRxiv (preprint)",
+  "source": "https://doi.org/10.1101/2025.06.06.657162",
+  "one_line": "A spatial profiling study of Merkel cell carcinoma reporting that Merkel-cell polyomavirus status is associated with a reorganized tumor microenvironment containing spatially structured inflammatory myeloid–CD8+ T cell aggregates.",
+  "key_claims": [
+    "Merkel cell carcinomas segregate by Merkel-cell polyomavirus (MCPyV) status into distinct tumor microenvironment architectures.",
+    "Virus-associated tumors show spatially organized aggregates pairing inflammatory myeloid cells with CD8+ T cells rather than diffuse immune infiltration.",
+    "The authors argue that spatial organization, not immune cell abundance alone, characterizes the MCPyV-driven immune landscape.",
+    "Show notes provide only the DOI; no specific effect sizes, cohort sizes, or statistics were supplied in the episode material."
+  ],
+  "limitations": [
+    "Preprint, not yet peer reviewed at the time of the episode.",
+    "No quantitative results, cohort size, or platform details were available in the supplied material, so claims here are titular rather than numeric.",
+    "Association between MCPyV status and aggregate formation is observational; causal 'driving' of reorganization is not demonstrated by spatial profiling alone.",
+    "No reported link to clinical outcome or immune checkpoint blockade response in the material provided."
+  ],
+  "open_questions": [
+    "Do the myeloid–CD8+ aggregates predict response to PD-1/PD-L1 blockade in Merkel cell carcinoma?",
+    "Is MCPyV antigen expression causally required for aggregate formation, testable in virus-positive versus virus-negative models?",
+    "Are the CD8+ T cells within aggregates MCPyV-antigen-specific and functional, or exhausted bystanders?",
+    "Which myeloid subset and chemokine axis nucleates the aggregates, and can it be therapeutically induced in virus-negative tumors?"
+  ],
+  "tags": [
+    "tumor-microenvironment",
+    "spatial-transcriptomics",
+    "cd8-t-cells",
+    "myeloid-cells",
+    "viral-oncogenesis",
+    "merkel-cell-carcinoma",
+    "preprint"
+  ]
+}

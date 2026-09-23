@@ -1,0 +1,37 @@
+{
+  "episode_number": 17,
+  "title": "Learning the language of antibody hypervariability",
+  "doi": "10.1073/pnas.2418918121",
+  "journal": "PNAS",
+  "source": "Science TLDR podcast show notes",
+  "one_line": "AbMAP is a transfer-learning framework that adapts general protein language models to antibody hypervariable regions (CDRs) via in silico mutation-based contrastive augmentation and multitask structure/function supervision.",
+  "key_claims": [
+    "Focusing representations on CDRs while inheriting knowledge from foundational protein language models outperforms both general-purpose and antibody-only models.",
+    "In optimizing SARS-CoV-2-binding antibodies, AbMAP-guided designs achieved an 82% hit rate.",
+    "Designed variants showed up to 22-fold increases in binding affinity, and the model predicted both strong and weak binders.",
+    "Applied to B-cell receptor repertoires, AbMAP revealed structural/functional convergence across individuals, with repertoires more similar in function than in sequence.",
+    "Therapeutic antibodies cluster in specific regions of AbMAP's representation space, and the framework is model-agnostic so it can adopt future PLMs."
+  ],
+  "limitations": [
+    "Balancing framework-region versus hypervariable-region contributions to the representation remains unresolved.",
+    "Contrastive augmentation via in silico mutagenesis carries a computational efficiency cost.",
+    "Validation centred on SARS-CoV-2 antibody optimization rather than diverse target classes.",
+    "Not demonstrated at the scale of industrial antibody development pipelines.",
+    "Show notes report hit rate and fold-affinity gains without the number of designs tested or baseline comparators."
+  ],
+  "open_questions": [
+    "Prospective head-to-head design campaigns against established computational and experimental affinity-maturation methods on multiple antigens.",
+    "Whether AbMAP gains persist when built on newer, larger protein language models.",
+    "Whether functional convergence seen in repertoire space predicts shared antigen specificity experimentally.",
+    "Whether representation-space proximity to therapeutic antibodies predicts developability or clinical success."
+  ],
+  "tags": [
+    "protein-language-models",
+    "antibody-engineering",
+    "transfer-learning",
+    "cdr-hypervariability",
+    "affinity-maturation",
+    "repertoire-analysis",
+    "machine-learning-design"
+  ]
+}

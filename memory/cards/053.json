@@ -1,0 +1,33 @@
+{
+  "episode_number": 53,
+  "title": "A genetic common factor underlying self-reported math ability and highest math class taken",
+  "doi": "10.1038/s41380-025-03237-0",
+  "journal": "Molecular Psychiatry",
+  "source": "Show notes link to https://doi.org/10.1038/s41380-025-03237-0; no further detail provided in the episode notes.",
+  "one_line": "A genome-wide study of self-reported math ability and highest math class taken argues the two measures share a single underlying genetic common factor.",
+  "key_claims": [
+    "Self-reported math ability and highest math class taken are genetically correlated strongly enough to be modelled as one latent common factor rather than two distinct traits.",
+    "Common genetic variation contributes measurably to individual differences in both math phenotypes, supporting a polygenic architecture.",
+    "The math common factor overlaps genetically with broader cognitive and educational attainment traits.",
+    "Treating the two self-report items as indicators of one factor increases statistical power to detect associated loci compared with analysing each separately."
+  ],
+  "limitations": [
+    "No specific effect sizes, sample sizes, SNP-heritability estimates or loci counts were available in the episode notes, so all claims here are directional rather than quantitative.",
+    "Both phenotypes are self-reported and coarse, and highest math class taken reflects educational opportunity and curriculum structure as well as ability.",
+    "Genetic associations are correlational within the sampled population and do not establish causal biological pathways to math skill.",
+    "Findings from predominantly European-ancestry cohorts typically transfer poorly across ancestries, a standard constraint on GWAS of this type."
+  ],
+  "open_questions": [
+    "Does the common factor's polygenic score predict objectively measured math performance out of sample, beyond general cognitive ability and educational attainment?",
+    "Would within-family (sibling) analyses retain the association, separating direct genetic effects from population stratification and family environment?",
+    "Do the same loci load on the common factor in non-European-ancestry cohorts?"
+  ],
+  "tags": [
+    "behaviour-genetics",
+    "gwas",
+    "cognitive-ability",
+    "genetic-correlation",
+    "self-report-phenotypes",
+    "polygenic-score"
+  ]
+}

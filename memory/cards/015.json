@@ -1,0 +1,35 @@
+{
+  "episode_number": 15,
+  "title": "Recombinant venom proteins in insect seminal fluid reduce female lifespan",
+  "doi": "10.1038/s41467-024-54863-1",
+  "journal": "Nature Communications",
+  "source": "Science TLDR podcast show notes",
+  "one_line": "Engineered Drosophila males expressing venom proteins in their accessory glands transfer them in seminal fluid and shorten the lifespan of mated females, a proof of concept for a same-generation 'Toxic Male Technique' of genetic biocontrol.",
+  "key_claims": [
+    "Of 7 venom proteins tested in Drosophila melanogaster, two shortened mated female lifespan: Γ-CNTX-Pn1a (spider) by 37% and δ-AITX-Avd2a (sea anemone) by 64%.",
+    "Effect strength increased with higher male:female ratios in mating assays.",
+    "Modelling of Aedes aegypti control programs predicted TMT gives 40–60% greater reduction in blood feeding than current genetic biocontrol methods.",
+    "Modelled effectiveness rose with higher release ratios, higher female remating rates, and lower density-dependent mortality.",
+    "Selected venoms target insect ion channels, with the authors reporting no effect on mammals/vertebrates, and the system is self-limiting without continued releases."
+  ],
+  "limitations": [
+    "Proof of concept is only in Drosophila melanogaster; no demonstration in target pest or vector species such as Aedes aegypti.",
+    "Mosquito impact estimates come from computer simulation, not experiments.",
+    "Venom expression levels and conditional (inducible) expression systems are not yet optimised or built.",
+    "Integration with existing sterilisation methods remains untested.",
+    "Long-term ecological impacts, resistance evolution, cost at scale, and regulatory pathway are unresolved."
+  ],
+  "open_questions": [
+    "Does venom expression in male accessory glands reduce female lifespan and blood feeding in Aedes aegypti under cage and field conditions?",
+    "Can conditional expression keep engineered males fit and mating-competitive enough for mass release?",
+    "How quickly would resistance to venom-targeted insect ion channels arise in wild populations?"
+  ],
+  "tags": [
+    "genetic-biocontrol",
+    "insect-vectors",
+    "venom-proteins",
+    "drosophila",
+    "mathematical-modelling",
+    "population-suppression"
+  ]
+}

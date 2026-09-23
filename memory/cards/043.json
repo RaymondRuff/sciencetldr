@@ -1,0 +1,28 @@
+{
+  "episode_number": 43,
+  "title": "Lying increases trust in science",
+  "doi": "10.1007/s11186-025-09635-1",
+  "journal": "Theory and Society",
+  "source": "Show notes (DOI link only; no abstract or figures supplied)",
+  "one_line": "A sociological theory paper arguing that certain forms of misrepresentation or simplification in the public communication of science can, counterintuitively, raise public trust in science.",
+  "key_claims": [
+    "The episode's framing is that lying — in the sense of overstating certainty or smoothing over messiness — can increase rather than erode trust in science.",
+    "No supporting numbers, effect sizes, or study samples were available in the material provided for this card."
+  ],
+  "limitations": [
+    "The show notes contained only a DOI, so no methods, data, or author-stated limitations could be verified for this card.",
+    "As a Theory and Society piece, the argument is likely conceptual rather than an experimental test of trust outcomes, but this could not be confirmed from the supplied material."
+  ],
+  "open_questions": [
+    "What empirical design (e.g. randomised message experiments varying stated certainty) would test whether overclaiming raises measured trust?",
+    "Does any trust gain persist after audiences learn the simplification was inaccurate?",
+    "Which actors and communication contexts does the argument apply to — individual scientists, institutions, or journalists?"
+  ],
+  "tags": [
+    "science-communication",
+    "public-trust",
+    "sociology-of-science",
+    "research-integrity",
+    "theory-paper"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "episode_number": 69,
+  "title": "Novel bispecific T-cell engagers overcoming acquired EGFR resistance",
+  "doi": "10.1080/19420862.2026.2674236",
+  "journal": "mAbs",
+  "source": "monday-digest",
+  "one_line": "Phage-display-derived anti-EGFR antibody H10 binds an epitope shifted from the cetuximab site, retains affinity for ECD escape variants, and as a 2+1 EGFR x CD3 T-cell engager kills cetuximab-resistant and KRAS-mutant tumor cells.",
+  "key_claims": [
+    "From 17 initial phage-display hits, lead A7 was affinity-matured by VL shuffling to H10, improving KD from 32 nM to 4.17 nM (~8-fold).",
+    "Epitope mapping by competitive binding showed H10 binds a site overlapping but spatially shifted from cetuximab, retaining high affinity for V441D, S464L, G465R and S492R variants (failing only on the rare Q43D5P), while cetuximab binding was abolished.",
+    "H10 inhibited EGF-induced EGFR phosphorylation, abolished ERK phosphorylation, and inhibited proliferation of wild-type EGFR cells comparably to cetuximab.",
+    "A 2+1 (two EGFR, one CD3) TCE outperformed 1+1 on SW620 cells expressing ~1,000 EGFR/cell via avidity, versus ~200,000 receptors/cell on high-expressing lines.",
+    "H10-based TCEs killed S492R, G465R and KRAS-mutant tumor cells in co-culture where cetuximab-based TCEs failed, and gave significant tumor growth inhibition in an EGFR-expressing CT-26 syngeneic mouse model."
+  ],
+  "limitations": [
+    "Authors acknowledge on-target/off-tumor risk: healthy skin, liver and GI epithelium express ~40,000-100,000 EGFR per cell, with cytokine release syndrome a systemic hazard (>50% CRS in a phase 2 trial of another EGFR TCE).",
+    "In vivo work required a surrogate molecule with a mouse-specific CD3 binder because the human CD3 arm does not cross-react, so the clinical candidate itself was not tested in animals.",
+    "Efficacy against escape variants was shown in engineered target cells rather than patient-derived resistant tumors.",
+    "Proposed protease-activatable masking to confine activity to the tumor is discussion-stage only, not experimentally demonstrated here.",
+    "H10 did not bind the rare Q43D5P variant, leaving one escape route uncovered."
+  ],
+  "open_questions": [
+    "Does a masked, conditionally activated H10 TCE preserve anti-tumor potency while sparing EGFR-high normal epithelium in a cross-reactive model?",
+    "Will 2+1 avidity-driven killing at ~1,000 receptors/cell also drive toxicity on normal cells expressing 40,000-100,000 receptors?",
+    "Can efficacy be confirmed in patient-derived cetuximab-resistant colorectal or head-and-neck tumors with human T cells?",
+    "Does sustained TCE pressure select for EGFR antigen loss, and what fallback target would cover that escape?"
+  ],
+  "tags": [
+    "bispecific-t-cell-engager",
+    "egfr",
+    "cd3-engager",
+    "resistance-mutations",
+    "avidity",
+    "format-comparison",
+    "phage-display",
+    "affinity-maturation",
+    "on-target-off-tumor",
+    "protease-masking",
+    "syngeneic-model"
+  ]
+}

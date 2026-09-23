@@ -1,0 +1,39 @@
+{
+  "episode_number": 75,
+  "title": "Trending — A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone",
+  "doi": "10.1038/s41586-026-10546-z",
+  "journal": "Nature",
+  "source": "friday-reddit",
+  "one_line": "A 2023 crewed-submersible survey of the Diamantina Zone (4,616–7,001 m, SE Indian Ocean) documented 485 whale sites — 5 active whale falls and 476 fossil cetaceans — spread over ~1,200 km of seafloor, with strontium dating pushing whale-fall deposition back to at least 5.26 Ma.",
+  "key_claims": [
+    "Five modern whale-fall communities were found in the sulfur-philic stage, the deepest at 6,789 m, far beyond the previous ~4,200 m record, with organism densities up to 2,840 individuals per square metre dominated by Osedax bone-boring worms, chemosynthetic bivalves and brittle stars.",
+    "Strontium isotope dating of 33 fossil specimens gave ages from 120,000 years to 5.26 million years, indicating continuous whale-fall deposition since the early Pliocene.",
+    "The fossil assemblage is dominated by deep-diving beaked whales (Ziphiidae), including extant species and a newly described extinct species, Pterocetus diamantinae (oldest specimen).",
+    "Authors propose a 'super corridor': an estimated ~8 whale falls per square kilometre across 1,200 km provides stepping stones for larval dispersal between falls and onward to vents and seeps, supported by shared gastropod and squat lobster taxa.",
+    "Preservation is attributed to ultra-low sedimentation (<0.5 cm per 1,000 years), ferromanganese oxide coating, and pachyosteosclerotic beaked whale rostra resisting boring and dissolution."
+  ],
+  "limitations": [
+    "Only a single chemosynthetic bivalve (genus Southwardia per the episode) could be confidently matched to existing sequence databases; most fauna remain undescribed.",
+    "Ages derive from strontium isotope ratios in bone mineral matched to a seawater curve rather than direct radiometric dating of the carcasses.",
+    "The proposed lethal-dive mechanism rests on modelled ~3,000 m maximum safe beaked whale dive depth plus trench topography, not on direct observation of mortality events.",
+    "The super corridor is an inference from fall density and shared taxa; no larval dispersal or connectivity was directly measured.",
+    "Only a subset of fossils (33 dated, ~43 recovered per the discussion) was analysed out of 476 recorded sites, and only one trench region was surveyed."
+  ],
+  "open_questions": [
+    "Do population-genetic or larval-tracking data confirm connectivity between adjacent whale falls and with nearby vent and seep systems?",
+    "Are comparable ultra-deep organic-fall accumulations present in other under-mapped hadal trenches, or is the Diamantina Zone unique?",
+    "Can tagging or carcass observations confirm that fatal over-deep foraging dives, rather than other mortality, generate the beaked whale concentration?",
+    "What morphological or molecular series can the fossil archive yield to reconstruct beaked whale evolution across the 5.26-Myr record?"
+  ],
+  "tags": [
+    "deep-sea-ecology",
+    "whale-fall",
+    "chemosynthesis",
+    "hadal-zone",
+    "taphonomy",
+    "strontium-isotope-dating",
+    "biogeography",
+    "cetacean-evolution",
+    "new-species"
+  ]
+}

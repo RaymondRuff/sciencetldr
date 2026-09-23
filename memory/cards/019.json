@@ -1,0 +1,37 @@
+{
+  "episode_number": 19,
+  "title": "Accelerated enzyme engineering by machine-learning guided cell-free expression",
+  "doi": "10.1038/s41467-024-55399-0",
+  "journal": "Nature Communications",
+  "source": "Science TLDR podcast show notes",
+  "one_line": "The authors built a cell-free pipeline coupling DNA assembly, protein expression and activity screening with machine learning to engineer amide synthetase (McbA) variants for multiple pharmaceutical amide products in about a week per campaign.",
+  "key_claims": [
+    "Cell-free DNA assembly, expression and activity assay removes cloning steps, taking DNA design to activity data in hours rather than weeks.",
+    "Augmented ridge regression models trained on single-mutation data plus evolutionary predictions successfully predicted beneficial higher-order mutants while running on a standard CPU.",
+    "Nine specialised McbA variants were engineered with 1.6- to 42-fold activity improvements over wild type.",
+    "The campaign generated 2,856 enzyme variants tested across 12,584 reactions, with six pharmaceutical products optimised in parallel.",
+    "Moclobemide synthesis reached 96% conversion (42-fold improvement), scaled to milligram quantities, with stereo- and regioselectivity and enzyme stability maintained."
+  ],
+  "limitations": [
+    "Demonstrated on a single enzyme scaffold (McbA) and one reaction class (amide synthesis), not across other enzyme classes.",
+    "Screening throughput remains a bottleneck, especially for products needing complex analytical detection.",
+    "Simple linear (ridge regression) models may not capture complex or epistatic fitness landscapes.",
+    "Predictions used activity data only; kinetics and stability were not incorporated into the models.",
+    "Scale shown was milligram, not industrially relevant conditions."
+  ],
+  "open_questions": [
+    "Does the single-mutation-to-higher-order ML strategy transfer to other enzyme classes and reaction types with different fitness landscapes?",
+    "Would richer models or added kinetic/stability data improve hit rates over augmented ridge regression?",
+    "Can higher-throughput or selection-based readouts remove the screening bottleneck for hard-to-detect products?",
+    "How do the engineered variants perform at industrial scale and under process conditions?"
+  ],
+  "tags": [
+    "enzyme-engineering",
+    "machine-learning-guided-design",
+    "cell-free-expression",
+    "directed-evolution",
+    "biocatalysis",
+    "specificity-screening",
+    "high-throughput-screening"
+  ]
+}

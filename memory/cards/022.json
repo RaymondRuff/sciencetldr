@@ -1,0 +1,42 @@
+{
+  "episode_number": 22,
+  "title": "Second-generation anti-amyloid monoclonal antibodies for Alzheimer's disease: current landscape and future perspectives",
+  "doi": "10.1186/s40035-025-00465-w",
+  "journal": "Translational Neurodegeneration",
+  "source": "Show notes as published (review article)",
+  "one_line": "A review of second-generation anti-amyloid-beta monoclonal antibodies (aducanumab, lecanemab, donanemab, gantenerumab), their epitopes, trial outcomes, ARIA safety issues, and next-generation delivery strategies.",
+  "key_claims": [
+    "Three second-generation anti-amyloid antibodies have FDA approval — aducanumab, lecanemab and donanemab — with lecanemab having received traditional (not just accelerated) approval, which the authors treat as validation of the amyloid cascade hypothesis.",
+    "Each antibody targets a distinct Aβ species and epitope: aducanumab plaques (aa 3–7), lecanemab protofibrils (aa 1–16 and 21–29), donanemab N-terminal pyroglutamate Aβ, gantenerumab fibrils (aa 3–11 and 18–27).",
+    "Lecanemab's ClarityAD trial showed slowing of cognitive decline and effects on both amyloid-beta and phosphorylated tau levels; aducanumab showed dose-dependent amyloid reduction.",
+    "Donanemab's Trailblazer-ALZ trials showed significant amyloid reduction; accelerated approval was initially denied for limited patient data, with later trials more positive.",
+    "Gantenerumab gave mixed results — early trials reduced amyloid but the larger Graduate I/II trials showed no significant cognitive improvement, possibly attributable to dosing and delivery.",
+    "ARIA (edema ARIA-E, hemorrhage ARIA-H) is the dominant safety liability and is linked to complement cascade and Fc-receptor-mediated signalling; poor blood-brain barrier penetration forces high doses that raise ARIA risk."
+  ],
+  "limitations": [
+    "A narrative review, not new experimental or trial data; no head-to-head comparison between antibodies is presented.",
+    "Cognitive benefit is described as slowing of decline, not reversal, and amyloid clearance does not consistently translate to clinical benefit (gantenerumab).",
+    "Donanemab's evidence base was initially limited by small patient numbers at the time of accelerated approval review.",
+    "Blood-brain barrier restriction of antibody entry remains unsolved, constraining the therapeutic window.",
+    "Future strategies (ADCs, targeted protein degradation, α Aβ-Gas6 fusion, miRNA and blood-based biomarkers) are proposals or early-stage, not clinically validated."
+  ],
+  "open_questions": [
+    "Do combination or personalised biomarker-guided regimens produce clinically meaningful benefit beyond amyloid clearance alone?",
+    "Can BBB-crossing formats (ADCs, fusion proteins, degraders) deliver equivalent amyloid clearance at doses that avoid ARIA?",
+    "What mechanistic intervention on complement/FcR signalling would decouple ARIA from efficacy?",
+    "Would earlier intervention guided by blood-based or microRNA biomarkers change outcomes in pre-symptomatic patients?",
+    "Why did gantenerumab fail in Graduate I/II — dosing/delivery, or the fibril epitope itself?"
+  ],
+  "tags": [
+    "alzheimers",
+    "amyloid-beta",
+    "monoclonal-antibody",
+    "epitope-targeting",
+    "safety-toxicity",
+    "blood-brain-barrier",
+    "biomarkers",
+    "antibody-drug-conjugate",
+    "targeted-protein-degradation",
+    "clinical-trials"
+  ]
+}

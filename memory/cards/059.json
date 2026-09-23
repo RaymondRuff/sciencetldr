@@ -1,0 +1,33 @@
+{
+  "episode_number": 59,
+  "title": "A trispecific antibody engaging T cells with tumour and myeloid cells augments antitumour immunity",
+  "doi": "10.1038/s41551-025-01569-4",
+  "journal": "Nature Biomedical Engineering",
+  "source": "https://doi.org/10.1038/s41551-025-01569-4",
+  "one_line": "The authors built a trispecific antibody that simultaneously binds a tumour antigen, CD3 on T cells and a myeloid-cell target, showing that recruiting myeloid cells into the T-cell/tumour synapse augments antitumour immunity beyond a conventional bispecific T-cell engager.",
+  "key_claims": [
+    "A single trispecific molecule can bridge three cell types — tumour, T cell and myeloid cell — rather than the two engaged by standard CD3 bispecifics.",
+    "Adding the myeloid-engaging arm improved antitumour activity relative to the matched bispecific T-cell engager control.",
+    "Myeloid-cell engagement is presented as a co-stimulatory/supportive mechanism that enhances T-cell-mediated tumour killing in the tumour microenvironment.",
+    "The design is proposed as a general format for overcoming myeloid-driven immunosuppression in solid tumours."
+  ],
+  "limitations": [
+    "Show notes provide only the DOI, so specific antigen targets, affinities, formats and quantitative efficacy values are not captured here.",
+    "Effects demonstrated in preclinical models; no clinical data.",
+    "Trispecific engagement of myeloid cells raises cytokine-release and on-target/off-tumour safety questions not resolved by the episode material."
+  ],
+  "open_questions": [
+    "Which arm's affinity dominates the therapeutic window, and does attenuating the CD3 arm preserve the myeloid benefit?",
+    "Does the trispecific outperform the bispecific in immunocompetent models with a fully human-like myeloid compartment?",
+    "What is the cytokine-release profile relative to the matched bispecific at equi-efficacious doses?"
+  ],
+  "tags": [
+    "trispecific-antibody",
+    "t-cell-engager",
+    "cd3-affinity",
+    "myeloid-cells",
+    "tumour-microenvironment",
+    "antibody-engineering",
+    "preclinical-efficacy"
+  ]
+}

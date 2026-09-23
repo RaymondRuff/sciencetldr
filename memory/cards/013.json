@@ -1,0 +1,38 @@
+{
+  "episode_number": 13,
+  "title": "A mechanism for hypoxia-induced inflammatory cell death in cancer",
+  "doi": "10.1038/s41586-024-08136-y",
+  "journal": "Nature",
+  "source": "Science TLDR podcast episode 13 show notes",
+  "one_line": "Defines a PTP1B-RNF213-CYLD/SPATA2 pathway that drives NF-kB activation, NLRP3 inflammasome induction and pyroptotic death of hypoxic cancer cells.",
+  "key_claims": [
+    "PTP1B inhibition activates the E3 ligase RNF213, with ABL1/2-mediated tyrosine phosphorylation at Tyr-1275 controlling RNF213 oligomerization and RZ domain activation.",
+    "The RNF213 RZ domain ubiquitylates CYLD and SPATA2, negative regulators of NF-kB, driving their degradation, while the RING domain negatively regulates RZ activity.",
+    "CYLD/SPATA2 loss activates NF-kB and induces the NLRP3 inflammasome, which together with hypoxia-induced ER stress triggers pyroptosis.",
+    "Pyroptosis, marked by GSDMD and inflammatory caspase activity, is the primary death mode in hypoxic PTP1B-deficient cancer cells, distinct from apoptosis, necroptosis and ferroptosis.",
+    "Xenograft experiments deleting or mutating PTP1B, CYLD, NLRP3 and RNF213 validated the pathway's effect on tumour growth, nominating PTP1B, CYLD/SPATA2 and NLRP3 as therapeutic targets."
+  ],
+  "limitations": [
+    "Full substrate specificity of the RNF213 RING versus RZ domains, and their interplay, was not characterized.",
+    "The pathway's role in normal tissues under hypoxia was not examined.",
+    "The mechanism of LUBAC contribution to CYLD/SPATA2 degradation and its relation to RZ activity remains unresolved.",
+    "In vivo evidence rests on xenograft models rather than immunocompetent or autochthonous tumour settings.",
+    "No targeted therapeutic agent against the pathway was developed or tested."
+  ],
+  "open_questions": [
+    "Do PTP1B inhibitors, CYLD/SPATA2-targeting agents or NLRP3 antagonists shrink hypoxic tumours in immunocompetent models?",
+    "Does mutating RNF213 Tyr-1275 alone abolish pyroptosis in vivo, isolating the phosphorylation step as causal?",
+    "Does this pathway explain RNF213's established role in Moyamoya disease and other inflammatory/autoimmune conditions?"
+  ],
+  "tags": [
+    "hypoxia",
+    "tumour-microenvironment",
+    "pyroptosis",
+    "inflammasome",
+    "ubiquitin-ligase",
+    "nf-kb",
+    "cell-death",
+    "xenograft-models",
+    "target-identification"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "episode_number": 23,
+  "title": "Deep learning enhances the prediction of HLA class I-presented CD8+ T cell epitopes in foreign pathogens",
+  "doi": "10.1038/s42256-024-00971-y",
+  "journal": "Nature Machine Intelligence",
+  "source": "Science TLDR podcast show notes",
+  "one_line": "Introduces MUNIS, a bimodal deep learning model trained on over 650,000 HLA class I ligands that predicts peptide-HLAI binding and antigen processing to nominate CD8+ T cell epitopes, validated experimentally on Epstein-Barr virus.",
+  "key_claims": [
+    "MUNIS uses a two-part architecture, one component predicting peptide binding to HLAI molecules and one modelling antigen processing, trained on more than 650,000 HLAI ligands.",
+    "MUNIS outperforms existing epitope prediction tools in cross-validation benchmarks.",
+    "Applied to Epstein-Barr virus, MUNIS recovered known epitopes and identified novel ones confirmed in laboratory experiments.",
+    "MUNIS-predicted EBV epitopes elicited both effector and memory CD8+ T cell responses.",
+    "MUNIS predictions performed comparably to experimental peptide-HLA stability assays."
+  ],
+  "limitations": [
+    "Prediction of immunogenicity, as distinct from presentation, remains imperfect.",
+    "Coverage is restricted to a subset of HLA variants, limiting applicability across diverse populations.",
+    "The model lacks sufficient T cell receptor data to fully connect presentation to T cell recognition.",
+    "Experimental validation was demonstrated in a single pathogen context (EBV) rather than across many pathogens."
+  ],
+  "open_questions": [
+    "Does adding paired TCR repertoire data to MUNIS convert presentation prediction into reliable immunogenicity prediction?",
+    "Can performance be sustained on HLA alleles under-represented in the 650,000-ligand training set?",
+    "Would prospective testing against an emerging pathogen confirm the claimed pandemic-preparedness utility?"
+  ],
+  "tags": [
+    "epitope-prediction",
+    "deep-learning",
+    "hla-class-i",
+    "antigen-processing",
+    "cd8-t-cells",
+    "vaccine-design",
+    "experimental-validation"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "episode_number": 60,
+  "title": "A trophoblast glycoprotein specific 5T4-Vδ2 bispecific T cell engager recruits Vγ9Vδ2-T cells for tumor-selective cytotoxicity across solid malignancies",
+  "doi": "10.1016/j.clim.2026.110707",
+  "journal": "Clinical Immunology",
+  "source": "crossref",
+  "one_line": "The authors built a VHH-based bispecific engager linking the oncofetal antigen 5T4 to the Vδ2 TCR, showing Vγ9Vδ2-T cell-mediated killing of solid tumor models without cytotoxicity against healthy 5T4-expressing tissue.",
+  "key_claims": [
+    "High-affinity 5T4-specific VHHs fused to a Vδ2 TCR-specific VHH generated a bsTCE that triggered Vγ9Vδ2-T cell activation, proinflammatory cytokine production, and target cell lysis.",
+    "5T4 was expressed in the majority of evaluated solid malignancies, supporting it as a broad-spectrum target with sparse healthy adult tissue expression.",
+    "Anti-tumor activity was demonstrated in both 2D and 3D patient-derived preclinical tumor models.",
+    "Against healthy 5T4-expressing tissue, the bsTCE did not trigger Vγ9Vδ2-T cell cytotoxicity, indicating tumor-preferential activity.",
+    "The authors frame Vγ9Vδ2-T cell engagement as a way to combine potent anti-tumor activity with reduced on-target off-tumor toxicity relative to αβ T cell engagers."
+  ],
+  "limitations": [
+    "All findings are preclinical; no clinical data are presented.",
+    "Whether tumor-preferential activity holds within the immunosuppressive in vivo human tumor microenvironment remains untested (authors' caveat).",
+    "No specific affinity, EC50, or expression-frequency numbers are given in the available abstract/show notes.",
+    "Healthy tissue testing was limited to selected 5T4-expressing tissues rather than a comprehensive tissue cross-reactivity panel as described.",
+    "Mechanistic basis of the observed tumor-vs-healthy discrimination is asserted as intrinsic to Vγ9Vδ2-T cells rather than dissected."
+  ],
+  "open_questions": [
+    "Does the bsTCE show efficacy and an acceptable safety margin in vivo and ultimately in a first-in-human trial?",
+    "What mechanism (stress-ligand sensing, phosphoantigen state) drives the lack of killing of 5T4-positive healthy cells, and can it be broken by inflammation?",
+    "How does the 5T4-Vδ2 engager compare head-to-head with a matched 5T4-CD3 engager for potency and healthy-tissue toxicity?"
+  ],
+  "tags": [
+    "bispecific-t-cell-engager",
+    "gamma-delta-t-cells",
+    "vhh-nanobody",
+    "solid-tumors",
+    "on-target-off-tumor",
+    "tumor-antigen-selection",
+    "patient-derived-models"
+  ]
+}

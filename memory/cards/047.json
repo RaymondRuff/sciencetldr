@@ -1,0 +1,31 @@
+{
+  "episode_number": 47,
+  "title": "Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement",
+  "doi": "10.1016/j.celrep.2025.115965",
+  "journal": "Cell Reports",
+  "source": "https://doi.org/10.1016/j.celrep.2025.115965",
+  "one_line": "Structural determination of bispecific antibody-antigen complexes showing that rearrangement of antibody domains upon dual antigen engagement underlies enhanced activity.",
+  "key_claims": [
+    "Structures of bispecific antibodies bound to their antigens were solved, revealing the geometry of simultaneous dual-target engagement.",
+    "Domain rearrangement within the bispecific format, rather than affinity changes alone, is proposed to account for activity enhancement.",
+    "Format and domain arrangement are presented as engineerable determinants of bispecific antibody potency.",
+    "The show notes provide only the DOI; no supporting numerical values were available in the episode material."
+  ],
+  "limitations": [
+    "No quantitative data (affinities, resolutions, potency values) were available from the episode material, so claims are recorded qualitatively only.",
+    "Structural snapshots of complexes do not by themselves demonstrate the causal link between domain rearrangement and functional activity in cells or in vivo.",
+    "Authors' own stated limitations were not captured in the published show notes."
+  ],
+  "open_questions": [
+    "Do engineered variants that lock or block the observed domain rearrangement lose the activity enhancement, isolating rearrangement as the causal mechanism?",
+    "Does the rearrangement-activity relationship generalise across other bispecific formats and target pairs?",
+    "How does domain rearrangement translate into cell-based potency and in vivo efficacy?"
+  ],
+  "tags": [
+    "bispecific-antibody",
+    "structural-biology",
+    "antibody-engineering",
+    "domain-architecture",
+    "mechanism-of-action"
+  ]
+}

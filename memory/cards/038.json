@@ -1,0 +1,32 @@
+{
+  "episode_number": 38,
+  "title": "Cross-tissue multicellular coordination and its rewiring in cancer",
+  "doi": "10.1038/s41586-025-09053-4",
+  "journal": "Nature",
+  "source": "Show notes (doi only); no abstract or transcript detail provided",
+  "one_line": "The authors analyse cell-type composition and states across multiple tissues to identify coordinated multicellular programmes that span organs, and show how this coordination is rewired in cancer.",
+  "key_claims": [
+    "Multicellular coordination — coherent co-variation of cell types and states — is detectable across tissues rather than only within a single tissue.",
+    "Some coordination programmes are shared across organs, suggesting cross-tissue axes of tissue organisation.",
+    "In cancer, these coordination patterns are altered ('rewired') relative to non-malignant tissue.",
+    "No supporting effect sizes, cohort sizes, or statistics were available in the material supplied for this card."
+  ],
+  "limitations": [
+    "The show notes contained only a DOI, so specific datasets, sample numbers, and quantitative results could not be recorded here.",
+    "Coordination inferred from compositional/expression co-variation is associative and does not establish causal cell-cell interaction.",
+    "Authors' own stated limitations were not available in the supplied material."
+  ],
+  "open_questions": [
+    "What are the actual cohort sizes, tissues, and modalities underlying the cross-tissue coordination claim?",
+    "Do perturbation experiments confirm that coordinated cell-type modules are mechanistically linked rather than co-varying with shared confounders such as age, sex, or sampling?",
+    "Does cancer-associated rewiring precede or follow malignant transformation, and does it predict outcome?"
+  ],
+  "tags": [
+    "multicellular-programs",
+    "cross-tissue-atlas",
+    "tumor-microenvironment",
+    "single-cell-transcriptomics",
+    "cell-state-coordination",
+    "cancer-biology"
+  ]
+}

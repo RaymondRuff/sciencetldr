@@ -1,0 +1,39 @@
+{
+  "episode_number": 32,
+  "title": "A natural experiment on the effect of herpes zoster vaccination on dementia",
+  "doi": "10.1038/s41586-025-08800-x",
+  "journal": "Nature",
+  "source": "Show notes (DOI only); episode discussion of Eyting et al., Nature 2025",
+  "one_line": "Uses Wales's date-of-birth eligibility cutoff for the live zoster vaccine (Zostavax) as a natural experiment, comparing adults born just before versus just after 2 September 1933 to estimate the causal effect of vaccination on later dementia diagnoses.",
+  "key_claims": [
+    "The birthdate cutoff created an abrupt, near-arbitrary jump in vaccine uptake between people differing in age by only weeks, supporting a regression-discontinuity causal design rather than a correlational comparison.",
+    "Eligibility for zoster vaccination reduced the probability of a new dementia diagnosis over a roughly 7-year follow-up, reported as about a 20% relative reduction among those who received the vaccine.",
+    "The protective association was larger in women than in men.",
+    "The discontinuity appeared for dementia but not for other tested health outcomes, arguing against generic healthy-vaccinee or health-seeking-behaviour confounding.",
+    "Findings are consistent with a hypothesis that suppressing varicella-zoster virus reactivation, or non-specific immune effects of a live vaccine, influences dementia risk."
+  ],
+  "limitations": [
+    "Observational natural experiment on electronic health records, not a randomised trial, so residual confounding and diagnostic-coding error cannot be fully excluded.",
+    "Estimates are local to people born near the cutoff (around age 79-80 at eligibility) and may not generalise to other ages or populations.",
+    "Follow-up of about 7 years may be too short to capture longer-term effects or delayed diagnoses.",
+    "Dementia ascertainment relies on recorded diagnoses, which undercount and delay true onset.",
+    "The study concerns the live attenuated vaccine (Zostavax); it does not test the now widely used recombinant vaccine, and the mechanism was not directly interrogated."
+  ],
+  "open_questions": [
+    "A randomised controlled trial of zoster vaccination with dementia incidence as a prespecified endpoint.",
+    "Does the recombinant subunit vaccine (Shingrix) produce the same effect, which would distinguish viral suppression from live-vaccine immune effects?",
+    "What explains the larger effect in women?",
+    "Do biomarkers (amyloid, tau, neuroinflammation) or VZV reactivation markers change after vaccination?",
+    "Does the effect persist or grow beyond 7 years of follow-up?"
+  ],
+  "tags": [
+    "natural-experiment",
+    "regression-discontinuity",
+    "vaccination",
+    "dementia",
+    "herpes-zoster",
+    "causal-inference",
+    "epidemiology",
+    "real-world-evidence"
+  ]
+}

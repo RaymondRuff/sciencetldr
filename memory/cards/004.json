@@ -1,0 +1,38 @@
+{
+  "episode_number": 4,
+  "title": "ITPRIPL1 binds CD3ε to impede T cell activation and enable tumor immune evasion",
+  "doi": "",
+  "journal": "",
+  "source": "Science TLDR podcast episode 4 show notes",
+  "one_line": "Identifies ITPRIPL1, a testis-enriched protein overexpressed in tumors, as a ligand for CD3ε that blunts T cell activation, and shows a neutralizing antibody restores T cell function and slows tumor growth.",
+  "key_claims": [
+    "ITPRIPL1 binds CD3ε directly and inhibits downstream TCR signaling, impeding T cell activation and effector function.",
+    "ITPRIPL1 is normally enriched in the testes but overexpressed across human cancers, notably in tumors with low or absent PD-L1.",
+    "ITPRIPL1 knockout mice show increased T cell infiltration in the testes, implicating the protein in testicular immune privilege.",
+    "A neutralizing anti-ITPRIPL1 antibody reverses T cell suppression in vitro and inhibits tumor growth in vivo with greater T cell infiltration into the tumor microenvironment.",
+    "High ITPRIPL1 expression in human tumor samples tracks with low CD8+ T cell infiltration and worse patient survival."
+  ],
+  "limitations": [
+    "The ITPRIPL1 versus PD-L1 expression relationship was not confirmed at the protein level.",
+    "The molecular mechanism of ITPRIPL1-mediated T cell suppression downstream of CD3ε remains incompletely defined.",
+    "Efficacy and safety of anti-ITPRIPL1 therapy in patients has not been tested.",
+    "Survival and infiltration associations in human samples are correlative, not causal.",
+    "No quantitative effect sizes for antibody-driven tumor control are given in the show notes."
+  ],
+  "open_questions": [
+    "Does blocking the ITPRIPL1–CD3ε interface specifically (e.g. binding-deficient mutants) account for the antitumor effect, separating it from other antibody mechanisms?",
+    "Does anti-ITPRIPL1 add benefit on top of PD-1/PD-L1 blockade, especially in PD-L1-low tumors?",
+    "What is the structural basis of ITPRIPL1 engagement with CD3ε and does it compete with normal TCR signaling components?",
+    "Does systemic ITPRIPL1 blockade cause autoimmunity in immune-privileged sites such as the testes?"
+  ],
+  "tags": [
+    "immune-checkpoint",
+    "cd3-epsilon",
+    "tumor-immune-evasion",
+    "neutralizing-antibody",
+    "t-cell-activation",
+    "pd-l1",
+    "biomarker-correlation",
+    "immune-privilege"
+  ]
+}

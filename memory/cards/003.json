@@ -1,0 +1,38 @@
+{
+  "episode_number": 3,
+  "title": "Neutrophil profiling illuminates anti-tumor antigen-presenting potency",
+  "doi": "",
+  "journal": "",
+  "source": "Science TLDR podcast show notes",
+  "one_line": "Single-cell profiling of tumor-infiltrating neutrophils defined 10 neutrophil states and identified an HLA-DR+ antigen-presenting state, driven by leucine metabolism, that can present tumor neoantigens and activate T cells.",
+  "key_claims": [
+    "Ten distinct neutrophil states were identified within the tumor microenvironment, one of them an antigen-presenting state marked by HLA-DR expression.",
+    "HLA-DR+ neutrophils present tumor neoantigens and activate T cell responses, positioning them as alternative antigen-presenting cells.",
+    "Leucine metabolism activates the antigen-presenting program in neutrophils, suggesting a metabolic switch that could be targeted therapeutically.",
+    "Neutrophils are proposed as attractive APCs because of their abundance, rapid response, phagocytic capacity and short lifespan.",
+    "HLA-DR+ neutrophils can also activate T cells in an antigen-independent manner."
+  ],
+  "limitations": [
+    "Relatively small sample size; findings need validation in larger cohorts.",
+    "Potential adverse effects of a leucine-rich diet were not investigated.",
+    "Mechanism of antigen-independent T cell activation by HLA-DR+ neutrophils remains unexplained.",
+    "No clinical translation shown; leucine delivery methods remain undefined.",
+    "No specific effect sizes or quantitative outcomes reported in the show notes."
+  ],
+  "open_questions": [
+    "Can neutrophils be deliberately reprogrammed into the HLA-DR+ antigen-presenting state in vivo, and does this improve tumor control?",
+    "Is leucine supplementation safe and effective in preclinical and clinical settings?",
+    "What mechanism underlies antigen-independent T cell activation by HLA-DR+ neutrophils?",
+    "Do the 10 neutrophil states replicate across larger, independent patient cohorts and tumor types?"
+  ],
+  "tags": [
+    "neutrophils",
+    "antigen-presentation",
+    "tumor-microenvironment",
+    "single-cell-profiling",
+    "immunometabolism",
+    "cancer-immunotherapy",
+    "t-cell-activation",
+    "neoantigen"
+  ]
+}

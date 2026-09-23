@@ -1,0 +1,39 @@
+{
+  "episode_number": 67,
+  "title": "Deep peptide recognition profiling decodes TCR specificity and enables disease-associated antigen discovery",
+  "doi": "10.1038/s41587-026-03128-x",
+  "journal": "Nature Biotechnology",
+  "source": "monday-digest",
+  "one_line": "Combines ~10^9-member yeast-displayed peptide libraries with fine-tuned protein language models to build deep peptide recognition profiles (PRPs) for 21 HLA-B*27:05-restricted patient TCRs, then uses them to predict T cell activation and discover candidate autoantigens.",
+  "key_claims": [
+    "High-throughput yeast display of ~1 billion 9-mer peptides (anchors fixed: arginine at P2, proline at P8) generated deep PRPs for 21 TCRs from ankylosing spondylitis and acute anterior uveitis patients, which recognize peptides almost exclusively via CDR3\\u03b2.",
+    "pLMs (transformer encoder plus CNN feature fusion) fine-tuned on PRPs outperformed AlphaFold3 and tFold-TCR at predicting T cell activation.",
+    "Functional clustering of TCRs by Jensen-Shannon divergence of PRPs was largely independent of sequence metrics (CDR3\\u03b2 edit distance, TCRdist), so sequence-dissimilar TCRs can share convergent ligand preferences.",
+    "Proteome-wide model screening nominated a PSG5-derived peptide as a candidate autoantigen, validated in vitro by CD69 upregulation on CD8+ T cells from HLA-B27-positive patients.",
+    "Leave-one-out cross-validation showed generalization to held-out TCRs correlates with PRP functional distance, not sequence similarity; a Mahalanobis distance in the model embedding space flags out-of-distribution TCRs as a confidence metric."
+  ],
+  "limitations": [
+    "Fixing P2 arginine and P8 proline anchors yields a reductionist library that does not fully represent the natural peptide repertoire.",
+    "Authors acknowledge the alpha chain modulates response magnitude, so a CDR3\\u03b2-centric model may not generalize to other HLA contexts.",
+    "PSG5 validation is in vitro activation-marker readout only; no in vivo evidence that it drives disease pathogenesis.",
+    "Only 21 patient-derived TCRs within a single HLA allele (B*27:05) were profiled.",
+    "Model comparisons to AlphaFold3/tFold-TCR were in silico benchmarks, not prospective experimental head-to-head."
+  ],
+  "open_questions": [
+    "Does PSG5-reactive T cell recognition actually drive spinal or ocular inflammation in vivo in HLA-B27 patients?",
+    "Does the platform generalize when alpha chains are varied or to other HLA alleles with less anchor-dominated grooves?",
+    "Would unconstrained (non-fixed-anchor) libraries reveal recognition modes missed by the P2/P8-fixed design?",
+    "Can Mahalanobis-guided selection of functionally distant TCRs be shown prospectively to improve model coverage per experiment?"
+  ],
+  "tags": [
+    "tcr-specificity",
+    "yeast-display",
+    "protein-language-models",
+    "antigen-discovery",
+    "autoimmunity",
+    "hla-b27",
+    "specificity-screening",
+    "model-uncertainty",
+    "structure-prediction-benchmark"
+  ]
+}

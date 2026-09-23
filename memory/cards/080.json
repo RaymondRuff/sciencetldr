@@ -1,0 +1,37 @@
+{
+  "episode_number": 80,
+  "title": "Trending — Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata",
+  "doi": "10.1073/pnas.2536089123",
+  "journal": "Proceedings of the National Academy of Sciences",
+  "source": "friday-reddit",
+  "one_line": "Using conscription cognitive tests linked to administrative registries for 579,379 Norwegian men across 25 birth cohorts (1967–1991), the authors show the Flynn effect reversed earlier in high-SES strata and was temporarily masked in lower strata by educational expansion.",
+  "key_claims": [
+    "Sons of high-income fathers peaked in cognitive scores in late-1960s birth cohorts, while low-income strata peaked around mid-1970s cohorts — roughly a decade later — with smaller postpeak declines.",
+    "Opposing trends across income strata mathematically cancelled in the national average, producing a deceptively flat trend and hiding an earlier-onset population decline.",
+    "In a generalized additive change-on-change model within paternal-income percentiles, each additional year of schooling at conscription age was associated with about 4.2 IQ points, in line with quasi-experimental estimates (~1–5 points/year).",
+    "Adding years of education raised deviance explained from 6.4% (cohort and SES rank only) to 22.1%.",
+    "After Norway's 1994 high school reform and earlier expansions saturated upper-secondary attendance, the compensatory effect vanished and scores declined across all strata, most steeply among higher-income groups."
+  ],
+  "limitations": [
+    "Cognitive data exist only at conscription age (~18–19), not early childhood, so reverse causality (higher-ability youths staying in school longer) cannot be fully excluded — acknowledged by the authors.",
+    "Sample is Norwegian men only, from conscription cohorts born 1967–1991, limiting generalisability to women and other countries.",
+    "SES was proxied by paternal income rank alone because rising female labour force participation made maternal/household income an unstable measure across these decades.",
+    "Confounder control relied on proxies — birth weight, gestational age, height at conscription, parental education — rather than direct measures of nutrition or prenatal environment.",
+    "The data identify that a broad decline is occurring but cannot identify its cause; affected subtests (math reasoning, word similarities) are schooling-sensitive crystallized abilities."
+  ],
+  "open_questions": [
+    "Would childhood baseline cognitive measures linked to later schooling resolve the reverse-causality ambiguity in the ~4.2 points/year estimate?",
+    "Do the same SES-staggered peaks appear in other countries and in women, or is the pattern specific to Norway's education expansion timeline?",
+    "Does the post-plateau decline reflect real cognitive change or declining relevance of a decades-old military test to current learning environments?",
+    "What non-educational societal levers, if any, could reverse the decline now that secondary schooling is saturated?"
+  ],
+  "tags": [
+    "flynn-effect",
+    "cognitive-testing",
+    "socioeconomic-stratification",
+    "population-cohort-study",
+    "education-policy",
+    "registry-linkage",
+    "observational-causality"
+  ]
+}

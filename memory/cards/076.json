@@ -1,0 +1,43 @@
+{
+  "episode_number": 76,
+  "title": "Combination therapy with a novel CD2-targeted costimulatory bispecific antibody overcomes limitations of CD3 T cell engager treatment for solid tumors",
+  "doi": "10.1080/19420862.2026.2684378",
+  "journal": "mAbs",
+  "source": "monday-digest",
+  "one_line": "Evotech built a non-blocking, Fc-silenced HER2xCD2 costimulatory bispecific that, dosed alongside a sub-efficacious EpCAMxCD3 TCE (solitomab), restores tumour killing with far less cytokine release than a CD28-based equivalent.",
+  "key_claims": [
+    "The CD2 arm is a positive allosteric modulator: rather than blocking CD58 (as clinical-stage siplizumab does), it increases CD2-CD58 binding more than two-fold while supplying artificial costimulation.",
+    "Adding HER2xCD2 to a 2-5 pM sub-efficacious dose of the EpCAMxCD3 TCE restored T cell activation and improved killing ~10-fold in vitro.",
+    "In humanized B2M NOG mice with established BT-474 clone 5 HER2+ tumours, 10 ug/kg TCE alone gave complete remission in 1 of 9 mice versus 8 of 9 with HER2xCD2 co-treatment.",
+    "Against CRISPR-Cas9 CD58-knockout tumour cells (a documented escape route), the combination boosted TCE killing efficacy 25-35-fold by physically bridging T cell and tumour.",
+    "At matched killing, HER2xCD2 raised IL-6, TNF and IL-2 only up to 2-fold (interferon gamma up to 9-fold) versus up to 200-fold (interferon gamma 84-fold) for a HER2xCD28 bispecific, and CD2 also engaged CD28-negative CD8 T cells that the CD28 bispecific could not."
+  ],
+  "limitations": [
+    "Efficacy demonstrated only in a humanized xenograft model lacking human stroma, chemokine gradients and pre-existing immune memory, so clinical translation is unproven.",
+    "This is a proof-of-concept HER2xCD2 molecule paired with solitomab, a TCE that was itself discontinued clinically; no clinical or patient data are presented.",
+    "Toxicity read-out is in vitro cytokine release, not in vivo CRS or on-target/off-tumour safety in a system with normal HER2-expressing tissue.",
+    "Whether amplifying endogenous CD2-CD58 binding rather than blocking it risks loss of pharmacological control was not directly tested.",
+    "No dose-ranging or durability/resistance follow-up beyond the reported complete remissions."
+  ],
+  "open_questions": [
+    "Does independent dosing of the CD2 costimulator preserve efficacy at TCE doses low enough to avoid dose-limiting toxicity in patients?",
+    "Would the cytokine advantage over CD28 costimulation hold in an in vivo CRS-competent model or first-in-human study?",
+    "Can the modular two-drug concept be generalised to other tumour antigens and TCE pairs, including mismatched antigen combinations?",
+    "How much of the benefit comes from CD2 costimulation versus simple physical bridging, as suggested by the CD58-knockout result?"
+  ],
+  "tags": [
+    "t-cell-engager",
+    "cd3-engager",
+    "costimulation",
+    "cd2",
+    "cd28",
+    "bispecific-antibody",
+    "solid-tumors",
+    "cytokine-release",
+    "tumor-escape",
+    "her2",
+    "epcam",
+    "humanized-mouse-model",
+    "fc-silencing"
+  ]
+}

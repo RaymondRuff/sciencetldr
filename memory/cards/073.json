@@ -1,0 +1,39 @@
+{
+  "episode_number": 73,
+  "title": "Trending — Work from Home and Disability Employment",
+  "doi": "10.1257/aeri.20240538",
+  "journal": "American Economic Review: Insights",
+  "source": "friday-reddit",
+  "one_line": "Using occupation-level variation in post-pandemic remote work, the authors estimate that the fourfold rise in work from home causally drove most of the 14% surge in full-time employment for people with physical disabilities in the US.",
+  "key_claims": [
+    "A 1 percentage point rise in within-occupation WFH increases full-time employment for physically disabled workers by 1.0%, rising to 1.3% when instrumented with the pre-pandemic Dingel–Neiman remote-feasibility index.",
+    "The post-pandemic WFH increase explains 68–85% of the rise in full-time employment for this group, with WFH going from 7% of full workdays pre-COVID to 28% by 2023 while disabled full-time employment rose ~14% (2019–2024) against flat non-disabled employment.",
+    "Triple-difference wage estimates show relative wages for disabled workers in high-WFH occupations fell 4.2% versus non-disabled peers, consistent with an outward labor supply shift rather than a demand shock.",
+    "Effects are concentrated in full-time work with no net part-time effect, consistent with part-timers scaling up hours as commuting and workplace-access frictions disappeared; full-time is 78% of disability employment.",
+    "International comparison: Australia, Canada, France and Spain saw disability employment gains averaging ~10% above non-disabled from 2019–2022, while the UK — with generous furlough schemes freezing labor reallocation — was the exception."
+  ],
+  "limitations": [
+    "Analysis drops the cognitive disability category entirely (which grew by over a million people, ~6M to >7M) to avoid compositional bias, so findings speak only to the five physical categories.",
+    "WFH exposure is measured from non-disabled workers within occupations, an indirect proxy chosen to block reverse causality rather than a direct measure of disabled workers' remote access.",
+    "Identification rests on across-occupation comparisons (86 occupational codes) with controls for non-disability employment growth; residual occupation-specific shocks correlated with WFH cannot be fully excluded.",
+    "Wage evidence is indirect inference about supply versus demand from relative price movements, not direct observation of who entered the labor market or why.",
+    "CPS self-reported disability status and pandemic-era survey disruptions may introduce measurement error not addressed in the show's account."
+  ],
+  "open_questions": [
+    "Do worker-level panel data confirm that entrants came from the 'not in the labor force' category specifically because remote work removed commuting or accessibility barriers?",
+    "Does the employment gain persist or reverse as firms mandate return-to-office, which would be a clean natural test of the causal claim?",
+    "Would individual-level accommodation data show that universal flexible-work defaults outperform ADA-style targeted accommodations, as the episode speculates?",
+    "Does the 4.2% relative wage decline reflect new entrants with lower prior experience rather than a pure supply shift?"
+  ],
+  "tags": [
+    "economics",
+    "labor-economics",
+    "work-from-home",
+    "disability-employment",
+    "causal-inference",
+    "instrumental-variables",
+    "difference-in-differences",
+    "policy",
+    "covid-19"
+  ]
+}

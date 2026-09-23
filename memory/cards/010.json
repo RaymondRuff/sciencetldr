@@ -1,0 +1,37 @@
+{
+  "episode_number": 10,
+  "title": "Probiotic neoantigen delivery vectors for precision cancer immunotherapy",
+  "doi": "10.1038/s41586-024-08033-4",
+  "journal": "Nature",
+  "source": "Redenti et al., show notes for Science TLDR episode 10",
+  "one_line": "Engineered E. coli Nissle 1917 was rebuilt as an in situ neoantigen vaccine vector that controls or eradicates tumours in mouse colorectal cancer and melanoma models.",
+  "key_claims": [
+    "Removing cryptic plasmids and Lon/OmpT proteases substantially increased neoantigen expression inside the bacteria.",
+    "Increasing phagocytosis susceptibility and expressing listeriolysin O improved neoantigen uptake and cytosolic delivery, enabling MHC class I presentation by antigen-presenting cells.",
+    "The engineered vaccine elicited potent T cell responses and controlled or eradicated tumours in primary and metastatic models.",
+    "Intravenous administration was effective, avoiding the need for direct intratumoural injection.",
+    "Systemic anti-tumour immunity cleared distant untreated tumours, and the engineered strain showed reduced blood persistence and minimal side effects versus wild-type E. coli."
+  ],
+  "limitations": [
+    "All efficacy data are from mouse models; no human clinical safety or efficacy data.",
+    "Neoantigen prediction and selection criteria were not optimised for maximal immunogenicity.",
+    "Durability of anti-tumour immunity and recurrence risk were not assessed.",
+    "Only colorectal cancer and melanoma models were tested; broader tumour applicability unknown.",
+    "Long-term impact on the gut microbiome and scalable clinical manufacturing were not addressed."
+  ],
+  "open_questions": [
+    "Do engineered probiotic neoantigen vectors show safety and objective responses in human clinical trials?",
+    "Does combination with checkpoint inhibitors or adoptive cell therapy synergise with the vaccine?",
+    "How long does the induced systemic immunity persist, and does it prevent recurrence?",
+    "Which neoantigen selection algorithm maximises immunogenicity in this delivery format?"
+  ],
+  "tags": [
+    "cancer-vaccine",
+    "neoantigen",
+    "bacterial-therapy",
+    "antigen-presentation",
+    "mouse-models",
+    "systemic-immunity",
+    "immunotherapy"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "episode_number": 21,
+  "title": "Scratching promotes allergic inflammation and host defense via neurogenic mast cell activation",
+  "doi": "10.1126/science.adn9390",
+  "journal": "Science",
+  "source": "Science TLDR podcast episode 21 show notes",
+  "one_line": "Using mouse models of allergic contact dermatitis and skin infection, the authors show that scratching activates nociceptors to release substance P, which triggers mast cells via MrgprB2, driving both damaging allergic inflammation and protective antibacterial defense.",
+  "key_claims": [
+    "Scratching-induced mechanical activation of skin nociceptors causes release of the neuropeptide substance P.",
+    "Substance P activates mast cells through the receptor MrgprB2, releasing histamine, TNF and other inflammatory mediators.",
+    "Mast cell–derived TNF recruits neutrophils, amplifying the allergic skin inflammatory response to scratching.",
+    "The same neurogenic inflammation pathway confers protection against Staphylococcus aureus skin infection, offering an evolutionary rationale for scratching.",
+    "Scratching alters skin microbiome composition, and the pathway provides a molecular account of the self-perpetuating itch–scratch cycle.",
+    "Substance P, MrgprB2 and neurogenic inflammation are proposed as therapeutic targets that might spare the antibacterial benefit."
+  ],
+  "limitations": [
+    "Mechanistic work rests on mouse receptor MrgprB2; translation to the human ortholog MRGPRX2 is not demonstrated in the notes.",
+    "No therapeutic intervention was tested in patients with atopic dermatitis or other allergic skin disease.",
+    "The trade-off between harmful allergic inflammation and beneficial host defense is inferred from separate models rather than a single setting.",
+    "Durability and functional consequence of the microbiome shifts after scratching are not established."
+  ],
+  "open_questions": [
+    "Does blocking MRGPRX2 or substance P signalling in humans reduce scratch-driven dermatitis without increasing skin infection risk?",
+    "Can the allergic and antibacterial arms of the pathway be pharmacologically separated downstream of mast cell activation?",
+    "Are scratch-induced microbiome changes causal for infection protection or a bystander effect?"
+  ],
+  "tags": [
+    "neuroimmunology",
+    "mast-cells",
+    "itch",
+    "allergic-inflammation",
+    "host-defense",
+    "skin-microbiome",
+    "gpcr-signalling",
+    "mouse-model"
+  ]
+}

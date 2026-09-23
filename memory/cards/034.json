@@ -1,0 +1,39 @@
+{
+  "episode_number": 34,
+  "title": "Adversarial testing of global neuronal workspace and integrated information theories of consciousness",
+  "doi": "10.1038/s41586-025-08888-1",
+  "journal": "Nature",
+  "source": "https://www.nature.com/articles/s41586-025-08888-1",
+  "one_line": "A preregistered adversarial collaboration (the Cogitate consortium) tested theory-derived predictions of Global Neuronal Workspace Theory (GNWT) and Integrated Information Theory (IIT) in the same participants using fMRI, MEG and intracranial EEG while people viewed conscious stimuli (faces, objects, letters, false fonts) varying in duration, task relevance and category.",
+  "key_claims": [
+    "Conscious content could be decoded from posterior cortex, and the content-specific activity was sustained over stimulus duration, consistent with IIT's emphasis on posterior 'hot zone' involvement.",
+    "Prefrontal cortex carried decodable information about stimulus category but did not show the sustained content-specific maintenance nor the clear stimulus-offset 'ignition' that GNWT predicts.",
+    "IIT's prediction of sustained posterior synchronization/connectivity between category-selective and early visual areas across the stimulus period was not supported.",
+    "Both theories were partially challenged: neither set of preregistered predictions passed in full, and the authors argue the results require revision rather than confirmation of either framework.",
+    "Using identical stimuli, tasks and preregistered analyses across three recording modalities and multiple independent labs, with theory proponents agreeing to predictions in advance, allowed falsifiable head-to-head comparison."
+  ],
+  "limitations": [
+    "The paradigms test a limited slice of each theory; neither theory is wholly refuted by failure of specific derived predictions, as the authors acknowledge.",
+    "Null results (e.g. absent prefrontal ignition, absent sustained posterior synchrony) can reflect measurement sensitivity or coverage limits, especially for iEEG electrode placement determined by clinical need.",
+    "No-report or fully passive conditions and manipulations of conscious versus unconscious perception were constrained by the chosen design, limiting inference about awareness per se versus stimulus processing.",
+    "iEEG samples come from epilepsy patients, and sample sizes per modality are far smaller than the combined participant pool.",
+    "Theory proponents' predictions were operationalised by consensus, so failures may reflect the chosen operationalisation rather than the core theory."
+  ],
+  "open_questions": [
+    "Would prefrontal ignition appear with paradigms optimised for report, task demands or stronger perceptual transitions, as GNWT proponents may argue?",
+    "Can higher-sensitivity or denser prefrontal and posterior recordings detect the sustained signatures that were absent here?",
+    "How would each theory be formally revised, and what new preregistered predictions would distinguish the revised versions?",
+    "Do the same results hold under no-report paradigms and for conscious versus unconscious contrasts rather than content decoding?"
+  ],
+  "tags": [
+    "consciousness",
+    "adversarial-collaboration",
+    "preregistration",
+    "neuroimaging",
+    "ieeg",
+    "meg",
+    "fmri",
+    "decoding",
+    "theory-testing"
+  ]
+}

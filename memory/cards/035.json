@@ -1,0 +1,36 @@
+{
+  "episode_number": 35,
+  "title": "Patient-Specific In Vivo Gene Editing to Treat a Rare Genetic Disease",
+  "doi": "10.1056/NEJMoa2504747",
+  "journal": "New England Journal of Medicine",
+  "source": "Show notes (DOI only); episode discussion",
+  "one_line": "A bespoke, patient-specific in vivo base-editing therapy was designed, manufactured and dosed in an infant with severe CPS1 deficiency, a rare urea-cycle disorder.",
+  "key_claims": [
+    "The team built an N-of-1 lipid nanoparticle-delivered base editor targeting the patient's own CPS1 variant and moved from diagnosis to dosing within months.",
+    "The infant received sequential escalating doses in vivo, with the therapy directed to hepatocytes as the relevant target tissue.",
+    "Post-dosing the patient tolerated increased dietary protein and required less nitrogen-scavenger medication, consistent with partial metabolic correction.",
+    "No serious treatment-related adverse events attributable to the editing agent were reported over the short follow-up.",
+    "The authors present the case as a template for rapid, individualized in vivo gene-editing therapies for ultra-rare variants."
+  ],
+  "limitations": [
+    "A single patient with short follow-up, so efficacy and durability cannot be established.",
+    "On-target editing efficiency in liver could not be directly measured in the living patient.",
+    "Clinical improvement is confounded by concurrent standard metabolic management and normal infant growth/development.",
+    "Long-term safety, including off-target editing and immune responses to the delivery vehicle, remains unknown.",
+    "The regulatory and manufacturing path used may not generalize or scale to other patients or centers."
+  ],
+  "open_questions": [
+    "Does the metabolic benefit persist as the child grows and liver mass turns over?",
+    "What is the actual per-allele editing efficiency achieved in hepatocytes, and is redosing needed?",
+    "Can the bespoke design-to-dose pipeline be reproduced for other variants and diseases within a comparable timeline and cost?"
+  ],
+  "tags": [
+    "gene-editing",
+    "base-editing",
+    "in-vivo-delivery",
+    "lipid-nanoparticle",
+    "n-of-1",
+    "rare-disease",
+    "clinical-case"
+  ]
+}

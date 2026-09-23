@@ -1,0 +1,35 @@
+{
+  "episode_number": 27,
+  "title": "AlphaFold prediction of structural ensembles of disordered proteins",
+  "doi": "10.1038/s41467-025-56572-9",
+  "journal": "Nature Communications",
+  "source": "Science TLDR podcast episode 27 show notes",
+  "one_line": "The authors introduce AlphaFold-Metainference, which uses AlphaFold-derived inter-residue distance predictions as restraints in physics-based molecular simulations to generate structural ensembles of intrinsically disordered proteins.",
+  "key_claims": [
+    "AlphaFold distance predictions, despite training on folded proteins, carry usable information about disordered protein conformational ensembles.",
+    "Metainference simulations sample conformations consistent with AlphaFold distance maps, yielding ensembles rather than single structures.",
+    "Ensembles were validated against SAXS experimental data for 11 different disordered proteins.",
+    "Ensembles were further validated against detailed simulations of two neurodegeneration-associated proteins, Abeta and alpha-synuclein."
+  ],
+  "limitations": [
+    "AlphaFold distance predictions extend only to about 22 angstroms, so longer-range contacts can be missed.",
+    "The 22 angstrom ceiling is especially limiting for very extended disordered regions.",
+    "Complete characterisation may still require integration with additional experimental techniques.",
+    "Validation rests on SAXS (a low-resolution ensemble-averaged observable) and on comparison to other simulations rather than direct high-resolution structures."
+  ],
+  "open_questions": [
+    "Does the method reproduce residue-level observables (e.g. NMR chemical shifts, PREs, FRET distances) beyond ensemble-averaged SAXS?",
+    "Can the 22 angstrom prediction limit be overcome to capture long-range contacts in highly extended IDRs?",
+    "Why does a model trained on folded structures encode information about disordered ensembles, and does this reflect general principles of protein behaviour?",
+    "Do the predicted ensembles support actionable drug-discovery hypotheses for Abeta or alpha-synuclein?"
+  ],
+  "tags": [
+    "alphafold",
+    "intrinsically-disordered-proteins",
+    "structure-prediction",
+    "molecular-dynamics",
+    "conformational-ensembles",
+    "saxs",
+    "neurodegeneration"
+  ]
+}

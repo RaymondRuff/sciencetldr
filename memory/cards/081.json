@@ -1,0 +1,39 @@
+{
+  "episode_number": 81,
+  "title": "A blinded, prospective benchmark of in silico antibody discovery anchored to experimental affinity and developability",
+  "doi": "10.1038/s41587-026-03238-6",
+  "journal": "Nature Biotechnology",
+  "source": "monday-digest",
+  "one_line": "AIntibody, a CASP-style blinded prospective challenge, experimentally tested 511 AI-designed or -predicted antibodies from 29 organizations against SARS-CoV-2 RBD across three tasks (in silico affinity maturation, HCDR3-cluster affinity ranking, out-of-library CDR design) with SPR/KinExA affinity and a five-assay developability panel.",
+  "key_claims": [
+    "In silico affinity maturation with fixed HCDR3 and framework worked well: the top entry (Arika) reached 95 pM SPR-validated affinity, ~2,000-fold over the parental antibody, with clean developability.",
+    "A non-ML positional consensus from sequencing abundance (Probiogen) placed third at 540 pM with a perfect composite developability score of 0, matching the consensus sequence exactly across all six CDRs and beating most neural networks.",
+    "Cluster-ranking (Challenge 2) failed: except for one group (Washington University), only 9.8–13.8% of AI submissions beat the most-abundant-clone heuristic versus ~39% for random picking, with cluster 28F especially bad for developability.",
+    "Challenge 3's top-affinity design (Zincor, FTESM protein language model) hit 2.9 pM but outright failed the HIC assay, passing only because the composite score threshold (≤3 across five assays) let affinity offset a fatal liability.",
+    "'Out-of-library' winners were conservative: HCDR3 Levenshtein distance of zero from training sequences with only one-to-five residue edits in surrounding loops, i.e. interpolation rather than novel sequence exploration."
+  ],
+  "limitations": [
+    "Authors acknowledge participants received far deeper target-specific sequencing data than a typical early-stage discovery campaign, so results are an upper bound on current capability.",
+    "Only one antigen (SARS-CoV-2 RBD), the most data-rich target available, was tested; generalization to novel or poorly characterized antigens is unshown.",
+    "Successes did not transfer across tasks — no single model or architecture class won more than one challenge, and cross-task generalization was not demonstrated.",
+    "Composite developability scoring permitted hard per-assay failures, so reported developability passes do not guarantee manufacturable molecules.",
+    "No functional or in vivo data (neutralization, PK, immunogenicity) was reported beyond affinity and biophysical assays."
+  ],
+  "open_questions": [
+    "Would the same models retain any advantage on a data-poor, novel antigen without deep pre-supplied selection sequencing?",
+    "Would strict per-assay go/no-go developability gating, rather than a composite score, change the ranking of Challenge 3 entries?",
+    "Can any model produce genuinely novel HCDR3 loops (non-zero Levenshtein distance from training data) that bind tightly and remain developable?",
+    "Is the Challenge 2 failure truly due to localized epistasis within HCDR3 clusters, and can cluster-specific retraining fix it?"
+  ],
+  "tags": [
+    "antibody-design",
+    "ai-protein-design",
+    "blinded-benchmark",
+    "affinity-maturation",
+    "developability",
+    "protein-language-models",
+    "specificity-screening",
+    "hcdr3",
+    "spr"
+  ]
+}

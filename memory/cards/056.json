@@ -1,0 +1,38 @@
+{
+  "episode_number": 56,
+  "title": "SARS-CoV-2 mRNA vaccines sensitize tumours to immune checkpoint blockade",
+  "doi": "10.1038/s41586-025-09655-y",
+  "journal": "Nature",
+  "source": "https://doi.org/10.1038/s41586-025-09655-y",
+  "one_line": "Combines mouse tumour experiments with a retrospective analysis of cancer patients on immune checkpoint blockade to argue that non-tumour-specific SARS-CoV-2 mRNA vaccination acts as a systemic immune stimulant that sensitises tumours to anti-PD-1/PD-L1 therapy.",
+  "key_claims": [
+    "An off-the-shelf mRNA vaccine with no tumour antigen improved responses to checkpoint blockade in mouse tumour models, indicating the effect is adjuvant-like rather than antigen-specific.",
+    "The proposed mechanism is systemic type I interferon-driven innate activation that increases intratumoural antigen presentation and PD-L1 expression, converting immunologically 'cold' tumours into checkpoint-responsive ones.",
+    "In a retrospective patient cohort, receipt of a SARS-CoV-2 mRNA vaccine close to the start of checkpoint inhibitor therapy was associated with longer overall survival compared with unvaccinated patients on the same therapy.",
+    "The benefit was reported in tumour types where checkpoint blockade alone often fails, supporting sensitisation rather than simple additive effect.",
+    "The authors frame this as a rationale for cheap, widely available mRNA formulations as universal ICB adjuvants, independent of patient-specific neoantigen design."
+  ],
+  "limitations": [
+    "The human evidence is retrospective and observational, so vaccinated patients may differ systematically from unvaccinated ones (healthier, better access to care) despite adjustment.",
+    "No prospective randomised trial tested vaccination timing, dose, or formulation against checkpoint blockade alone.",
+    "Mouse tumour models may overstate the magnitude of interferon-driven sensitisation seen in humans.",
+    "Mechanistic attribution to type I interferon and PD-L1 induction was largely inferred from preclinical systems rather than demonstrated in the patient cohort.",
+    "Duration of the sensitised window, and whether repeated vaccination sustains or exhausts it, was not established."
+  ],
+  "open_questions": [
+    "A prospective randomised trial of mRNA vaccination timed to checkpoint inhibitor initiation, with overall survival as the endpoint, would settle the central claim.",
+    "Does the effect require the lipid nanoparticle/mRNA platform specifically, or would any strong systemic innate stimulus work equally well?",
+    "Do paired pre/post tumour biopsies in vaccinated patients show the predicted interferon signature and PD-L1 induction?",
+    "What is the optimal interval between vaccination and checkpoint blockade, and does chronic or repeated dosing blunt the benefit?"
+  ],
+  "tags": [
+    "mrna-vaccine",
+    "checkpoint-blockade",
+    "pd-l1",
+    "type-i-interferon",
+    "tumour-immunology",
+    "retrospective-cohort",
+    "immune-adjuvant",
+    "mouse-models"
+  ]
+}

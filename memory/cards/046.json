@@ -1,0 +1,34 @@
+{
+  "episode_number": 46,
+  "title": "Navigating protein landscapes with a machine-learned transferable coarse-grained model",
+  "doi": "10.1038/s41557-025-01874-0",
+  "journal": "Nature Chemistry",
+  "source": "https://doi.org/10.1038/s41557-025-01874-0",
+  "one_line": "The authors train a machine-learned, transferable coarse-grained force field for proteins (CGSchNet-type) that reproduces folded structures, folding free-energy landscapes and dynamics across proteins it was not trained on.",
+  "key_claims": [
+    "A single transferable coarse-grained model, learned from all-atom simulation data via force matching, generalises across multiple proteins rather than being fitted per-system.",
+    "The coarse-grained model recovers native folded structures and folding/unfolding free-energy landscapes for fast-folding proteins.",
+    "Coarse-graining plus the learned potential gives large speed-ups over all-atom molecular dynamics, allowing sampling of landscapes that are expensive at atomistic resolution.",
+    "The model is reported to transfer to proteins outside the training set, including capturing effects of mutations and disordered/partially folded states."
+  ],
+  "limitations": [
+    "Performance depends on the quality and coverage of the all-atom reference simulations used for force matching; systems unlike the training set are less certain.",
+    "Coarse-grained representation discards side-chain and solvent detail, so atomistic-level mechanistic interpretation is limited.",
+    "Benchmarks emphasise small, fast-folding proteins; large multi-domain or complex assemblies are not established.",
+    "Coarse-grained dynamics are not directly comparable to physical timescales, complicating kinetic claims.",
+    "Specific numerical accuracy figures were not captured in the episode notes."
+  ],
+  "open_questions": [
+    "Blind prospective tests on proteins and folds entirely absent from the training distribution, scored against experiment.",
+    "Whether the model reproduces experimentally measured folding thermodynamics and kinetics, not just all-atom reference data.",
+    "Extension to protein complexes, ligand binding and intrinsically disordered ensembles validated against NMR/SAXS observables."
+  ],
+  "tags": [
+    "machine-learning-force-field",
+    "coarse-grained-simulation",
+    "protein-folding",
+    "molecular-dynamics",
+    "transferability",
+    "free-energy-landscape"
+  ]
+}

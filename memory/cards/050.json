@@ -1,0 +1,32 @@
+{
+  "episode_number": 50,
+  "title": "Cancer-induced nerve injury promotes resistance to anti-PD-1 therapy",
+  "doi": "10.1038/s41586-025-09370-8",
+  "journal": "Nature",
+  "source": "https://doi.org/10.1038/s41586-025-09370-8",
+  "one_line": "The paper reports that nerve injury caused by tumour invasion drives resistance to anti-PD-1 checkpoint blockade, linking cancer neuroscience to immunotherapy failure.",
+  "key_claims": [
+    "Cancer-induced injury to peripheral nerves within or near the tumour is associated with reduced response to anti-PD-1 therapy.",
+    "The authors frame nerve injury, rather than nerve presence alone, as the feature that promotes an immunotherapy-resistant state.",
+    "Targeting the nerve-injury axis is proposed as a route to restore checkpoint blockade sensitivity.",
+    "No specific effect sizes, cohort sizes, or model details were provided in the episode's show notes."
+  ],
+  "limitations": [
+    "The show notes contain only the DOI, so the specific tumour types, models, and quantitative results underlying the claims are not recorded here.",
+    "Authors' own stated limitations were not captured in the available material.",
+    "Whether the nerve-injury-to-resistance link is causal in humans versus correlative in patient samples is not established from the material given."
+  ],
+  "open_questions": [
+    "Does experimentally preventing or reversing cancer-induced nerve injury restore anti-PD-1 response in vivo?",
+    "Is a nerve-injury signature predictive of checkpoint blockade outcome in independent patient cohorts?",
+    "Which immune cell populations mediate the resistance downstream of the injured nerve?"
+  ],
+  "tags": [
+    "checkpoint-blockade",
+    "anti-pd-1",
+    "resistance-mechanism",
+    "cancer-neuroscience",
+    "tumour-microenvironment",
+    "immunotherapy"
+  ]
+}

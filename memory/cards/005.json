@@ -1,0 +1,37 @@
+{
+  "episode_number": 5,
+  "title": "Circadian tumor infiltration and function of CD8+ T cells dictate immunotherapy efficacy",
+  "doi": "",
+  "journal": "",
+  "source": "PMID: 38723627",
+  "one_line": "Mouse melanoma work showing that tumor-infiltrating leukocyte numbers and CD8+ T cell phenotype oscillate across the day under endothelial-clock control, so evening-timed CAR T and anti-PD-1 dosing works better.",
+  "key_claims": [
+    "Tumor-infiltrating leukocyte numbers in mouse melanoma oscillate diurnally, peaking in the evening.",
+    "The rhythm is driven by the circadian clock in tumor endothelial cells via rhythmic ICAM-1 adhesion molecule expression.",
+    "TIL phenotype as well as number oscillates, with a more anti-tumorigenic profile in the evening and PD-1 on CD8+ T cells peaking in the morning, trough in the evening.",
+    "Timed CAR T-cell and anti-PD-1 administration in mice was more effective given in the evening, matching peak infiltration and favorable phenotype.",
+    "In human melanoma samples TIL number and exhausted:non-exhausted CD8+ ratio varied by time of day (favorable state predicted in the morning), and higher expression of the mouse evening T cell signature correlated with better checkpoint blockade response."
+  ],
+  "limitations": [
+    "Work centers on melanoma models, so generalization to other tumor types is untested (authors' stated limitation).",
+    "Molecular mechanisms behind the observed oscillations remain incompletely defined (authors' stated limitation).",
+    "Optimal human dosing time is inferred from correlative samples and signatures, not from a prospective randomized trial.",
+    "Mouse evening optimum versus human morning prediction reflects species phase differences that are not directly validated clinically.",
+    "Circadian regulation of non-CD8 immune populations in the tumor microenvironment is not resolved."
+  ],
+  "open_questions": [
+    "Do prospective randomized chronotherapy trials of anti-PD-1 or CAR T show an outcome benefit from time-of-day dosing in humans?",
+    "Does endothelial clock or ICAM-1 disruption abolish both the infiltration rhythm and the timing-dependent therapy benefit?",
+    "Do the same rhythms hold in non-melanoma tumors and in patients with disrupted or shifted circadian phase?"
+  ],
+  "tags": [
+    "circadian-biology",
+    "tumor-immunology",
+    "cd8-t-cells",
+    "checkpoint-blockade",
+    "car-t",
+    "melanoma",
+    "chronotherapy",
+    "tumor-microenvironment"
+  ]
+}

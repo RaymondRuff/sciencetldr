@@ -1,0 +1,35 @@
+{
+  "episode_number": 40,
+  "title": "3 Papers on Antibody Tumor Penetration and Clearance",
+  "doi": "10.1016/j.addr.2008.04.012; 10.1016/j.ymthe.2022.04.013; 10.1080/19420862.2015.1111497",
+  "journal": "Advanced Drug Delivery Reviews; Molecular Therapy; mAbs",
+  "source": "Show notes (three-paper episode)",
+  "one_line": "A three-paper survey of how antibody format and size govern tumor penetration, tissue distribution, and clearance, spanning a classic review, a single-domain antibody-drug conjugate study, and a fragment biodistribution study.",
+  "key_claims": [
+    "Thurber et al. (Adv Drug Deliv Rev) frame antibody tumor penetration as a competition between transport into tumor tissue and loss via systemic clearance plus antigen-mediated (binding-site barrier) clearance.",
+    "A highly stable human single-domain antibody-drug conjugate showed superior tumor penetration and treatment of solid tumors relative to conventional larger formats (Mol Ther).",
+    "Li et al. (mAbs) report that molecular size is a principal determinant of antibody fragment tissue distribution, with different fragment sizes giving distinct biodistribution profiles.",
+    "Together the papers support a size-versus-residence-time tradeoff: smaller formats penetrate tumors better but are cleared faster, while full-length IgG persists but distributes unevenly."
+  ],
+  "limitations": [
+    "Show notes give no quantitative results, so specific penetration depths, clearance rates, or efficacy numbers are not recorded here.",
+    "The Thurber paper is a review/modeling piece rather than new experimental data.",
+    "Single-domain ADC results are from preclinical solid tumor models; clinical translation is not demonstrated.",
+    "Fragment biodistribution conclusions may be antigen- and model-specific and were not tested across all formats."
+  ],
+  "open_questions": [
+    "Do head-to-head comparisons in the same tumor model show that improved penetration of small formats translates into better efficacy despite faster clearance?",
+    "Can half-life extension be added to small formats without reintroducing the penetration penalty of full-size IgG?",
+    "How much of observed distribution differences is size versus affinity and antigen-mediated clearance?"
+  ],
+  "tags": [
+    "tumor-penetration",
+    "antibody-format",
+    "pharmacokinetics",
+    "biodistribution",
+    "single-domain-antibody",
+    "adc",
+    "binding-site-barrier",
+    "clearance"
+  ]
+}

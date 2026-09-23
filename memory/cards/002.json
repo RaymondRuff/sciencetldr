@@ -1,0 +1,38 @@
+{
+  "episode_number": 2,
+  "title": "Immunoinformatics Approach to Design a Chimeric CD70-Peptide Vaccine against Renal Cell Carcinoma",
+  "doi": "",
+  "journal": "",
+  "source": "Science TLDR podcast episode show notes",
+  "one_line": "A fully in silico immunoinformatics pipeline was used to design multiepitope chimeric vaccine constructs from CD70 epitopes fused to a cell-penetrating peptide and full-length TNF-α as adjuvant for renal cell carcinoma.",
+  "key_claims": [
+    "Multiple immunogenic CD70 epitopes (CD70 is overexpressed in RCC) were predicted and filtered for antigenicity, non-allergenicity and non-toxicity.",
+    "Final constructs combined CD70 CD8+ and CD4+ T cell epitopes with a cell-penetrating peptide and the complete TNF-α sequence as adjuvant.",
+    "Docking predicted strong binding affinity of the constructs to the TNF receptor, argued to support uptake by antigen-presenting cells.",
+    "Molecular dynamics simulations indicated the vaccine–receptor complex is stable; in silico cloning with codon optimisation predicted high expression in E. coli.",
+    "Immune simulation predicted B cell activation, T cell proliferation and IFN-γ and IL-2 production."
+  ],
+  "limitations": [
+    "Entirely computational: no in vitro or in vivo validation of immunogenicity was performed (authors call for this).",
+    "No safety or efficacy assessment in preclinical or clinical settings.",
+    "Delivery method not optimised and potential side effects uninvestigated.",
+    "Binding, stability and immune responses are predictions from modelling tools, not measured data.",
+    "Show notes report no quantitative affinity, stability or expression values."
+  ],
+  "open_questions": [
+    "Does the construct, when expressed and administered, elicit CD70-specific CD8+ and CD4+ T cell responses in animal models?",
+    "Does predicted TNF-receptor binding translate to real antigen-presenting cell uptake and activation?",
+    "Is targeting CD70 tolerable given its expression on normal activated immune cells?"
+  ],
+  "tags": [
+    "immunoinformatics",
+    "in-silico-design",
+    "cancer-vaccine",
+    "multiepitope-vaccine",
+    "cd70",
+    "renal-cell-carcinoma",
+    "molecular-dynamics",
+    "epitope-prediction",
+    "adjuvant"
+  ]
+}

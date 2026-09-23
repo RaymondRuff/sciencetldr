@@ -1,0 +1,36 @@
+{
+  "episode_number": 6,
+  "title": "Osr2 functions as a biomechanical checkpoint to aggravate CD8+ T cell exhaustion in tumor",
+  "doi": "",
+  "journal": "",
+  "source": "Show notes as published (Science TLDR episode 6)",
+  "one_line": "Identifies the transcription factor Osr2 as a Piezo1-dependent, mechanically induced driver of CD8+ T cell exhaustion in stiff tumor microenvironments.",
+  "key_claims": [
+    "Stiffer, collagen-rich tumor regions contain a higher proportion of exhausted CD8+ T cells, and mechanical stress applied via stiff matrices or a cell-stretching device worsens exhaustion.",
+    "The mechanosensitive ion channel Piezo1 is required, since Piezo1-deficient T cells show reduced exhaustion under mechanical stress.",
+    "Osr2 is induced specifically in activated T cells under mechanical stress via a Piezo1 to calcium influx to CaMKII to CREB signalling cascade.",
+    "Osr2 is chiefly expressed in highly exhausted PD-1+ TIM-3+ T cells, and its overexpression alone drives exhaustion without mechanical stress.",
+    "Osr2 acts as a transcriptional repressor recruiting HDAC3 to silence effector genes; T cell-specific Osr2 deletion improves tumor control."
+  ],
+  "limitations": [
+    "Roles of other mechanosensitive ion channels and parallel signalling pathways were not investigated (authors' stated limitation).",
+    "Potential off-target effects of therapeutically targeting the Piezo1-Osr2 axis were not assessed (authors' stated limitation).",
+    "No clinical trial data on safety or efficacy of Osr2-targeted therapy in human patients (authors' stated limitation).",
+    "Show notes report no quantitative effect sizes for stiffness, exhaustion fractions, or tumor growth differences.",
+    "Interaction between mechanical cues and established checkpoints PD-1/TIM-3 is raised as discussion rather than demonstrated causally."
+  ],
+  "open_questions": [
+    "Does pharmacological or genetic Osr2 blockade combined with tumor stiffness reduction improve responses beyond PD-1 blockade in vivo?",
+    "Is Osr2 induction in human tumor-infiltrating CD8+ T cells quantitatively correlated with measured regional tissue stiffness?",
+    "Which Osr2/HDAC3 target genes are individually necessary for the exhaustion phenotype?"
+  ],
+  "tags": [
+    "t-cell-exhaustion",
+    "tumor-microenvironment",
+    "mechanotransduction",
+    "piezo1",
+    "transcriptional-repression",
+    "cancer-immunotherapy",
+    "cd8-t-cells"
+  ]
+}

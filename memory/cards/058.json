@@ -1,0 +1,34 @@
+{
+  "episode_number": 58,
+  "title": "Language models cannot reliably distinguish belief from knowledge and fact",
+  "doi": "10.1038/s42256-025-01113-8",
+  "journal": "Nature Machine Intelligence",
+  "source": "https://doi.org/10.1038/s42256-025-01113-8",
+  "one_line": "A benchmark study probing whether large language models can separate first-person belief, third-person belief, knowledge and fact, finding they systematically fail on false first-person beliefs.",
+  "key_claims": [
+    "Across a large set of true/false statements framed as beliefs, knowledge claims or bare facts, LLMs handled third-person attributions far better than first-person false beliefs.",
+    "Models frequently refused to acknowledge that a speaker holds a belief the model judges false, instead correcting the statement rather than attributing the belief.",
+    "Models do not consistently apply the factive nature of knowledge (that knowing entails truth), treating knowledge and belief inconsistently across prompts.",
+    "Newer/more recent model releases performed better on some conditions but did not eliminate the first-person false-belief gap.",
+    "Authors argue these failures matter for high-stakes epistemic settings such as medicine, law and journalism, where distinguishing what someone believes from what is true is essential."
+  ],
+  "limitations": [
+    "Findings are benchmark-based on templated statements, which may not reflect behaviour in open-ended conversation.",
+    "Results are tied to specific model versions and prompting strategies available at the time of testing.",
+    "The benchmark probes surface outputs, not internal representations, so it cannot establish whether models lack an epistemic distinction or merely fail to express it.",
+    "Coverage of languages, domains and belief types is limited relative to real-world epistemic discourse."
+  ],
+  "open_questions": [
+    "Would fine-tuning or targeted instruction on epistemic attribution close the first-person false-belief gap, or is it architectural?",
+    "Do internal probes reveal a belief/knowledge distinction that the output layer fails to surface?",
+    "Does the failure degrade performance on downstream tasks such as clinical or legal note interpretation?"
+  ],
+  "tags": [
+    "large-language-models",
+    "benchmarking",
+    "epistemology",
+    "theory-of-mind",
+    "evaluation",
+    "ai-safety"
+  ]
+}

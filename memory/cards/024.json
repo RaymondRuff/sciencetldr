@@ -1,0 +1,39 @@
+{
+  "episode_number": 24,
+  "title": "Triple knockdown of CD11a, CD49d, and PSGL1 in T cells reduces CAR-T cell toxicity but preserves activity against solid tumors in mice",
+  "doi": "10.1126/scitranslmed.adl6432",
+  "journal": "Science Translational Medicine",
+  "source": "Science TLDR podcast episode show notes",
+  "one_line": "shRNA knockdown of three T cell trafficking/adhesion molecules (CD11a, CD49d, PSGL1) in EpCAM-targeted CAR-T cells reduced on-target, off-tumor toxicity in mice while preserving anti-tumor activity.",
+  "key_claims": [
+    "Simultaneous silencing of CD11a, CD49d, and PSGL1 — genes governing T cell extravasation through blood vessel walls into tissues — markedly reduced CAR-T damage to normal EpCAM-expressing tissues.",
+    "Triple-knockdown CAR-T cells retained cancer cell killing against EpCAM-positive solid tumors despite impaired tissue infiltration.",
+    "Knockdown cells showed reduced tonic signaling and less exhaustion, with enhanced memory formation and better persistence.",
+    "Findings were supported using shRNA knockdown plus CRISPR-Cas9 knockout, flow cytometry, immunostaining, and mouse tumor models.",
+    "The strategy is proposed as a way to widen the usable CAR target space to antigens like EpCAM that are shared with healthy epithelium."
+  ],
+  "limitations": [
+    "In vivo results were less striking than the in vitro findings, and the reasons for that gap were not resolved.",
+    "Effects of the tumor microenvironment on the modified cells were not fully characterized.",
+    "The approach was not validated across other CAR targets beyond EpCAM.",
+    "Work was confined to mouse models; no human/clinical data.",
+    "Cost and accessibility of the engineered product remain unaddressed."
+  ],
+  "open_questions": [
+    "Does trafficking-molecule knockdown preserve efficacy for other on-target/off-tumor-prone antigens such as HER2?",
+    "What mechanism explains the weaker in vivo versus in vitro separation of tumor killing from normal-tissue toxicity?",
+    "Can CAR-T cells still enter tumors efficiently long-term if adhesion molecules are silenced rather than transiently suppressed?"
+  ],
+  "tags": [
+    "car-t",
+    "solid-tumors",
+    "on-target-off-tumor",
+    "epcam",
+    "t-cell-trafficking",
+    "shrna-knockdown",
+    "crispr",
+    "tonic-signaling",
+    "t-cell-exhaustion",
+    "mouse-models"
+  ]
+}

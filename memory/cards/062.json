@@ -1,0 +1,39 @@
+{
+  "episode_number": 62,
+  "title": "Impact of high-power short-duration atrial fibrillation ablation technique on the incidence of silent cerebral embolism: a prospective randomized controlled study",
+  "doi": "10.1186/s12916-023-03180-3",
+  "journal": "BMC Medicine",
+  "source": "crossref",
+  "one_line": "A 100-patient 1:1 randomized trial testing whether high-power short-duration (50 W) AF ablation with the 56-hole Smart Touch Surround Flow catheter reduces silent cerebral embolism versus conventional 30-35 W Smart Touch ablation, assessed by 1 mm high-resolution diffusion-weighted MRI.",
+  "key_claims": [
+    "New silent cerebral embolism occurred in 22/50 (44%) of HPSD patients versus 20/50 (40%) of conventional patients (p = 0.685), with no difference in average lesion number (p = 0.751), maximum lesion diameter (p = 0.405), or total lesion volume per patient (p = 0.669).",
+    "Post-procedural hDWI detected 106 new lesions across 42/100 patients (42%); per the episode, 92% were in the telencephalon and 8% in the cerebellum, with 50% <3 mm, 49% 3-10 mm and only one lesion >10 mm.",
+    "Multivariable regression identified persistent AF and CHA2DS2-VASc score as the independent determinants of SCE, while catheter type and ablation duration were not predictive.",
+    "MoCA scores did not differ between patients with and without SCE immediately post-procedure (p = 0.572) or at 3-month follow-up (p = 0.743).",
+    "The HPSD/STSF arm was procedurally faster and used less irrigation fluid, confirming the technique delivered its intended efficiency benefit (episode framing of the paper's procedural data)."
+  ],
+  "limitations": [
+    "Authors explicitly note the small sample size of 100 patients, which may be underpowered to detect modest between-group differences.",
+    "Median patient age 63, 60% male, 59% paroxysmal AF — a single-cohort population enrolled June 2020-September 2021, limiting generalisability.",
+    "Additional ablation lesions beyond pulmonary vein isolation were left to operator discretion, introducing procedural heterogeneity.",
+    "Imaging follow-up was only 24-72 h post-ablation; lesion resolution and later imaging were not assessed in this trial.",
+    "Cognitive follow-up stopped at 3 months, so long-term or cumulative cognitive effects of repeated micro-embolism were not tested.",
+    "The mechanistic account of stagnant left-atrial flow overwhelming catheter cooling, and of microglial/collateral-circulation lesion clearance within 2-4 weeks, was narrative interpretation rather than measured in this study."
+  ],
+  "open_questions": [
+    "Would a larger, adequately powered trial detect a real but modest SCE reduction from HPSD/STSF that this 100-patient study could not?",
+    "Does serial MRI confirm that these sub-10 mm lesions resolve rather than persist, and do repeated ablations accumulate damage?",
+    "Would longer cognitive follow-up beyond 3 months, with tests more sensitive than MoCA, reveal subtle decline in SCE-positive patients?",
+    "Can pre-procedural modification of left-atrial blood flow or anticoagulation strategy reduce SCE more effectively than catheter design?"
+  ],
+  "tags": [
+    "randomized-controlled-trial",
+    "atrial-fibrillation",
+    "catheter-ablation",
+    "silent-cerebral-embolism",
+    "diffusion-weighted-mri",
+    "cognitive-outcomes",
+    "device-comparison",
+    "risk-stratification"
+  ]
+}

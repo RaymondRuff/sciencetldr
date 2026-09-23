@@ -1,0 +1,41 @@
+{
+  "episode_number": 71,
+  "title": "MAGE-A4/MAGE-A8-targeted TCR-based bispecific T cell engager in recurrent and/or refractory solid tumors: a phase 1 trial",
+  "doi": "10.1038/s41591-026-04455-x",
+  "journal": "Nature Medicine",
+  "source": "monday-digest",
+  "one_line": "Phase 1 first-in-human basket trial of IMA401, a half-life-extended TCR-based bispecific engager (TCER) against an HLA-A*02:01-presented MAGE-A4/MAGE-A8 peptide with a deliberately low-affinity CD3 arm, in 61 heavily pretreated solid tumor patients.",
+  "key_claims": [
+    "MTD was not reached per protocol across a 0.0066–2.5 mg dose range; RP2D was set at 1–2 mg biweekly, enabled by a silenced Fc giving ~15.4–17.5 day half-life.",
+    "Confirmed ORR was 14% (8/56) in the overall efficacy-evaluable population including subtherapeutic starting doses, and 20% (8/41) at RP2D across 15 indications (post hoc).",
+    "In the largest RP2D subgroup, head and neck cancer, ORR was 29% (4/14) with 64% disease control and median duration of response 8.8 months; one melanoma patient had ongoing PFS >33.9 months.",
+    "Safety: TRAEs in 89% of patients, CRS 38% (grades 1–2 only), transient lymphopenia 33%, neutropenia 31%, zero ICANS; 3/7 patients at 2.5 mg had DLT grade 4 neutropenia, and no further DLTs occurred in the RP2D range after 8 mg dexamethasone premedication plus step dosing.",
+    "Pembrolizumab combination showed no additive toxicity versus monotherapy, with objective responses including patients who had progressed on prior checkpoint inhibitors."
+  ],
+  "limitations": [
+    "Single-arm phase 1 prespecified interim analysis with no comparator; RP2D-specific ORR was a post hoc analysis.",
+    "Small and highly heterogeneous subgroups (e.g., 14 head and neck patients, 7 patients at 2.5 mg) limit precision of response and toxicity estimates.",
+    "Therapy is restricted to HLA-A*02:01-positive, MAGE-A4/A8-expressing patients, narrowing generalizability.",
+    "One possibly treatment-related death (pneumonia with neutropenia) occurred at 2.5 mg without dexamethasone premedication and was confounded by rapidly progressing lung metastases.",
+    "Mechanistic claims about the low-affinity CD3 arm avoiding peripheral T-cell sink and exhaustion are design rationale, not directly demonstrated clinical endpoints in the reported data."
+  ],
+  "open_questions": [
+    "Does a randomized trial at the 1–2 mg RP2D, particularly in head and neck cancer, confirm the response rate and show survival benefit?",
+    "Is the pembrolizumab combination additive over IMA401 monotherapy in checkpoint-refractory patients, or are responses attributable to IMA401 alone?",
+    "Do pharmacodynamic data confirm reduced peripheral T-cell sequestration and better tumor penetration versus a high-affinity CD3 comparator?",
+    "What drives escape in non-responders — HLA loss, antigen downregulation, or T-cell exhaustion within the tumor?",
+    "Can the same TCER architecture against other intracellular antigens (e.g., PRAME with IMA402) and other HLA alleles reproduce this safety and efficacy profile?"
+  ],
+  "tags": [
+    "tcr-mimic",
+    "cd3-affinity",
+    "bispecific-engager",
+    "solid-tumors",
+    "phase-1-trial",
+    "cancer-testis-antigen",
+    "hla-restriction",
+    "cytokine-release-syndrome",
+    "half-life-extension",
+    "checkpoint-combination"
+  ]
+}

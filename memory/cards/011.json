@@ -1,0 +1,35 @@
+{
+  "episode_number": 11,
+  "title": "Decomposing causality into its synergistic, unique, and redundant components",
+  "doi": "10.1098/rsta.2021.0150",
+  "journal": "Philosophical Transactions of the Royal Society A",
+  "source": "Show notes as published (Science TLDR episode 11)",
+  "one_line": "Introduces SURD, an information-theoretic framework that decomposes causal influence on a target variable's future into redundant, unique, and synergistic components plus a 'causality leak' term for unobserved influences.",
+  "key_claims": [
+    "SURD quantifies causality as information gain about a target variable's future from observing the past of candidate source variables, using Shannon entropy and mutual information.",
+    "Causality is decomposed into redundant (information shared by multiple sources), unique (information from a single source), and synergistic (information only available from sources jointly) contributions.",
+    "A 'causality leak' term measures the share of the target's future information not explained by observed variables, flagging hidden or unobserved drivers.",
+    "SURD distinguishes causality from correlation and mere statistical association, and correctly identifies mediator, confounder, and collider structures, including redundant versus synergistic colliders.",
+    "Normalising the decomposed components allows relative importance of causal pathways to be compared."
+  ],
+  "limitations": [
+    "Computational cost is a stated concern for large datasets and high-dimensional systems.",
+    "The show notes report no specific quantitative benchmark results, datasets, or accuracy numbers.",
+    "Theoretical foundations and formal connections to other causality frameworks are acknowledged as needing further development.",
+    "Capturing higher-order synergistic interactions beyond pairwise effects is listed as unresolved.",
+    "No demonstrated application in applied domains such as climate, neuroscience, or economics is reported in the notes."
+  ],
+  "open_questions": [
+    "Can SURD recover known ground-truth causal structures in benchmark systems with nonlinearity, stochasticity, and hidden variables more accurately than existing causal inference methods?",
+    "How does estimation quality degrade with sample size and dimensionality, given the reliance on mutual information estimates?",
+    "Does the causality leak term reliably discriminate genuine hidden confounders from estimation error?"
+  ],
+  "tags": [
+    "causal-inference",
+    "information-theory",
+    "synergy-redundancy",
+    "complex-systems",
+    "methods-framework",
+    "hidden-variables"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "episode_number": 70,
+  "title": "Language Modeling Materializes a World Model of Protein Biology",
+  "doi": "",
+  "journal": "White paper — Biohub / Evolutionary Scale (preprint)",
+  "source": "https://biohub.ai/papers/esm_protein.pdf",
+  "one_line": "Scaling masked protein language modeling to 2.8 billion mostly metagenomic sequences and 6B parameters (ESM Cambrian), plus a recurrent single-sequence folding module (ESMFold 2) and sparse-autoencoder interpretability, is argued to yield an internally organized, causally predictive 'world model' of protein biology.",
+  "key_claims": [
+    "Training corpus grew from ~50M sequences (ESM2) to ~2.8B metagenomic-heavy sequences (JGI, MGnify; hydrothermal vents, permafrost, hypersaline lakes), giving log-linear compute-vs-precision gains in long-range tertiary contact prediction with no plateau up to 6B parameters.",
+    "Layer analysis shows function and structure are decoupled: enzyme-commission organization peaks around layers 50–60 while fine-grained 3D structural information peaks in final layers, and identical catalytic function is recognized across different CATH fold topologies.",
+    "ESMFold 2 predicts atomic coordinates from single-sequence representations using a stabilized recurrent module that loops pairwise state through shared weights up to 48 times with a contractive map, reaching state-of-the-art FoldBench results, notably DockQ on antibody–antigen complexes; MSAs are an optional input used mainly to cover language-model uncertainty.",
+    "Generative design produced single-chain variable fragments binding clinically relevant targets including PD-L1 at nanomolar affinity.",
+    "Sparse autoencoders on ESMC layer 60 yield interpretable features (secondary structure, taxonomy, MitoCarta pathways); max-pooled SAE 'barcodes' beat FoldSeek and MMseqs2 for remote homology retrieval below 30% sequence identity, and clustered >2M unannotated proteins plus NMF-based pathway assignment to uncharacterized sequences.",
+    "Reported scale: ~6.8 billion proteins mapped and 1.1 billion structures predicted."
+  ],
+  "limitations": [
+    "White paper / preprint without peer review or a DOI, as presented here.",
+    "'World model' versus sophisticated memorization is argued indirectly (layer decoupling, unsupervised clustering) rather than by causal intervention on model internals.",
+    "Interpretability results risk pareidolia — SAE feature-to-pathway mappings are human-assigned post hoc, only partly mitigated by the unannotated-protein and NMF validations.",
+    "Generative binder results are reported as nanomolar affinity but no functional, structural, or in vivo therapeutic validation is described.",
+    "No error bars, hit rates, or failure-mode analysis are given for design campaigns, and scaling was not tested beyond 6B parameters."
+  ],
+  "open_questions": [
+    "Do causal interventions (ablating or steering specific SAE features) change structure and function predictions as the 'world model' claim implies?",
+    "Does contact-prediction scaling continue past 6B parameters, and where does the log-linear trend actually break?",
+    "How does ESMFold 2 perform on truly de novo and orphan sequences with no evolutionary neighbors, where MSA baselines cannot be run at all?",
+    "Do the SAE-derived pathway assignments for uncharacterized proteins hold up under experimental validation?",
+    "What fraction of designed binders reach nanomolar affinity, and how do they behave in cells versus in silico?"
+  ],
+  "tags": [
+    "protein-language-model",
+    "scaling-laws",
+    "structure-prediction",
+    "mechanistic-interpretability",
+    "sparse-autoencoders",
+    "generative-protein-design",
+    "remote-homology",
+    "antibody-antigen",
+    "metagenomics",
+    "single-sequence-folding"
+  ]
+}

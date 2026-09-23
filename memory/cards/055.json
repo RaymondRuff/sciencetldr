@@ -1,0 +1,31 @@
+{
+  "episode_number": 55,
+  "title": "Guidelines for Early Food Introduction and Patterns of Food Allergy",
+  "doi": "10.1542/peds.2024-070516",
+  "journal": "Pediatrics",
+  "source": "Show notes list only the DOI; no abstract text or figures were provided with the episode.",
+  "one_line": "A Pediatrics study examining how changes in infant feeding guidelines toward early allergenic food introduction relate to observed patterns of food allergy in children.",
+  "key_claims": [
+    "The episode's source material provides only the DOI, so no specific effect sizes, prevalence figures, or confidence intervals from the paper can be recorded here.",
+    "Central framing: guideline shifts away from delayed allergen introduction toward early introduction are the exposure of interest, with childhood food allergy patterns as the outcome."
+  ],
+  "limitations": [
+    "No numerical results, cohort size, or statistical methods were available in the supplied material, so the strength of the reported association cannot be assessed from this card.",
+    "Population-level guideline-change studies of this design generally cannot establish that guideline adoption caused changes in allergy rates, since secular trends and diagnostic practice shifts co-occur.",
+    "Authors' own stated limitations were not included in the material provided."
+  ],
+  "open_questions": [
+    "What were the actual measured allergy rates before and after the guideline change, and over what time window?",
+    "Was individual-level adherence to early introduction measured, or only guideline era as a proxy?",
+    "Would a randomised or quasi-experimental design separate guideline effects from changing diagnostic and ascertainment practices?",
+    "Do the patterns differ by specific allergen (peanut, egg, milk) and by baseline infant risk category?"
+  ],
+  "tags": [
+    "food-allergy",
+    "clinical-guidelines",
+    "pediatrics",
+    "early-life-exposure",
+    "epidemiology",
+    "prevention"
+  ]
+}

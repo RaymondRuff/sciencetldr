@@ -1,0 +1,38 @@
+{
+  "episode_number": 7,
+  "title": "In vivo dendritic cell reprogramming for cancer immunotherapy",
+  "doi": "10.1126/science.adn9083",
+  "journal": "Science",
+  "source": "Science TLDR podcast episode 7 show notes",
+  "one_line": "Forced expression of the transcription factors PU.1, IRF8 and BATF3 (PIB) reprograms tumor cells in vivo into type 1 conventional dendritic-like cells, converting the tumor itself into an antigen-presenting vaccine.",
+  "key_claims": [
+    "PIB overexpression reprograms tumor cells into cDC1-like cells in vivo and induces systemic antitumor immunity in mouse melanoma models.",
+    "Reprogrammed tumors remodel the microenvironment, recruiting and expanding polyclonal cytotoxic T cells and forming tertiary lymphoid structure-like aggregates, with CD4+ T cells acting as critical effectors.",
+    "Mice cleared by in vivo reprogramming are protected on tumor re-challenge, indicating long-term systemic immunological memory.",
+    "Reprogramming to immunogenic dendritic-like cells also occurs in human tumor spheroids and xenografts, independent of immunosuppression.",
+    "Adenoviral delivery of PIB in situ elicits potent antitumor responses even at low doses, and combined with immune checkpoint blockade produces complete tumor regression with durable memory."
+  ],
+  "limitations": [
+    "The relative contribution of partially versus fully reprogrammed cells to the antitumor response was not resolved.",
+    "Long-term safety and efficacy in humans were not addressed; efficacy data are from mouse models and human spheroid/xenograft systems.",
+    "Delivery method and reprogramming efficiency still require optimization for clinical application.",
+    "No specific efficiency, dose or survival numbers are reported in the available material."
+  ],
+  "open_questions": [
+    "Does adenoviral PIB delivery reprogram tumors and drive T cell responses in patients, in a first-in-human trial?",
+    "Would selective depletion or lineage tracing of fully versus partially reprogrammed cells show which population drives tumor rejection?",
+    "Is TLS formation in reprogrammed tumors a validated predictive biomarker of response?",
+    "Does combining in vivo cDC1 reprogramming with adoptive T cell therapy or agonistic CD40 antibodies add benefit over ICB combination?"
+  ],
+  "tags": [
+    "cancer-immunotherapy",
+    "dendritic-cells",
+    "in-vivo-reprogramming",
+    "transcription-factors",
+    "adenoviral-delivery",
+    "checkpoint-blockade",
+    "tumor-microenvironment",
+    "mouse-models",
+    "cd4-t-cells"
+  ]
+}

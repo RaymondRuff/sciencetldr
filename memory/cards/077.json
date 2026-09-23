@@ -1,0 +1,37 @@
+{
+  "episode_number": 77,
+  "title": "Trending — People prefer to negotiate with women, even when outcomes are identical and gender is unknown",
+  "doi": "10.1073/pnas.2523202123",
+  "journal": "Proceedings of the National Academy of Sciences",
+  "source": "friday-reddit",
+  "one_line": "Across MBA-classroom and anonymous online negotiations with over 2,000 participants, counterparts reported higher subjective value (trust, rapport, desire to negotiate again) with women while economic outcomes were identical.",
+  "key_claims": [
+    "In archival face-to-face MBA negotiation data (>2,000 observations, 230+ students), women generated significantly higher subjective value with no difference in distributive or integrative economic outcomes.",
+    "The preference persisted in anonymous text-chat negotiations (>1,000 dyads, paid $0.83/point) where third-party observers guessed negotiator gender correctly only 43% of the time — worse than chance.",
+    "An NLP model (Vanderbilt AI negotiation lab, 12 behavioral codes) found women more likely to make multi-issue offers and accept offers, while men more often provided information; serial mediation linked these behaviors to subjective value without economic cost.",
+    "Observers rated women higher on both warmth and competence, contradicting the stereotype content model's assumed trade-off; preference for women counterparts held even in competitive zero-sum negotiations (13-item subjective value inventory, Study 4).",
+    "A Monte Carlo simulation using observed re-engagement rates (94.4% for women vs 91.9% for men) projected women accumulating ~44–56% more negotiation opportunities, e.g. ~$178,000 over ~18 negotiations vs ~$123,000 over ~12 for men."
+  ],
+  "limitations": [
+    "Authors note all studies used low-ambiguity settings where negotiating was explicitly sanctioned; prior work (Bowles et al. 2005) shows women penalised when appropriateness of negotiating is ambiguous.",
+    "Career earnings gap is a simulation, not observed longitudinal data.",
+    "Settings are MBA coursework and an online resource-allocation game, not real workplace negotiations.",
+    "Behavioral coding depends on an AI classifier's 12-category scheme, which may miss other mechanisms.",
+    "Risk of 'unmitigated communion' (relationship concern destroying economic value) was avoided here but not tested across contexts."
+  ],
+  "open_questions": [
+    "Does the subjective-value advantage survive in high-ambiguity, real-stakes workplace negotiations where women face documented penalties?",
+    "Would randomly assigning the identified behaviors (multi-issue offers, strategic acceptance) to men reproduce the subjective-value gain, proving behavior rather than gender is causal?",
+    "Do the simulated compounding opportunity gains appear in actual longitudinal career data?"
+  ],
+  "tags": [
+    "negotiation",
+    "gender-differences",
+    "subjective-value",
+    "anonymised-experiment",
+    "nlp-text-analysis",
+    "monte-carlo-simulation",
+    "social-psychology",
+    "stereotype-content"
+  ]
+}

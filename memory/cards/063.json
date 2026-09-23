@@ -1,0 +1,41 @@
+{
+  "episode_number": 63,
+  "title": "Engineering of acidic pH-responsive anti-CD3 binding antibodies",
+  "doi": "10.1080/19420862.2026.2658902",
+  "journal": "mAbs",
+  "source": "monday-digest",
+  "one_line": "Roche engineered pH-switchable anti-CD3 arms from the parental 40G5C antibody via phage display, finding that non-contact CDRL3 mutations confer acidic-pH-selective CD3 binding and T-cell activation.",
+  "key_claims": [
+    "A phage library of hundreds of trillions of variants, panned for binding at pH 6.0 and washed at pH 7.4, yielded only 1-2% of binding clones with genuine pH-responsive behavior.",
+    "The dominant hits were CDRL3 mutations T89LD (Thr->Asp) and Q90LE (Gln->Glu), neither of which directly contacts the CD3 antigen; a deliberate interface histidine variant (I93LH) failed to create a switch alone.",
+    "Constant-pH molecular dynamics identified two allosteric mechanisms: electrostatic rigidification of CDR loops for Q90LE (loops become floppy at pH 7.4) and a ~2-degree VH/VL domain tilt for T89LD at neutral pH.",
+    "Q90LE showed a 789-fold binding affinity difference between pH 6.5 and pH 7.4, with selective T-cell activation read out as CD69 upregulation in Jurkat cells and primary human PBMCs.",
+    "Combining Q90LE with affinity-enhancing histidine mutations in the variable domains gave clone P1AK5F7-19, restoring parental-level potency at pH 6.5 while retaining reduced binding/activation at pH 7.4."
+  ],
+  "limitations": [
+    "The initial engineered pH-switch variants were measurably less potent than parental 40G5C, requiring higher concentrations for equivalent T-cell activation at acidic pH.",
+    "Evidence is in vitro only — binding assays, CpHMD simulations, Jurkat cells and primary PBMCs — with no in vivo tumor model or pharmacokinetic data reported.",
+    "Mechanistic claims (loop rigidification, 2-degree VH/VL tilt) rest on computational simulation rather than experimental structures at both pH values.",
+    "Work is on the CD3 arm alone; no data on a complete bispecific T-cell engager with a tumor-antigen arm.",
+    "The assumed tumor pH of 6.5-6.8 versus systemic 7.4 is treated as a fixed design premise, not measured in the study."
+  ],
+  "open_questions": [
+    "Does a full bispecific engager carrying P1AK5F7-19 reduce on-target off-tumor toxicity while preserving efficacy in an in vivo model?",
+    "Is the pH window in real human tumors consistently acidic enough, and heterogeneous enough spatially, to drive selective activation?",
+    "Would co-administration of tumor-metabolism or pH-normalizing agents inactivate the switch, as raised in the episode's closing thought?",
+    "Can the allosteric CDRL3 design principle transfer to other antibody scaffolds and targets beyond CD3?",
+    "Do the CpHMD-predicted conformational changes hold up against pH-resolved structural data?"
+  ],
+  "tags": [
+    "tcr-engager",
+    "cd3-affinity",
+    "ph-switch",
+    "tumor-microenvironment",
+    "antibody-engineering",
+    "phage-display",
+    "molecular-dynamics",
+    "allostery",
+    "on-target-off-tumor",
+    "specificity-screening"
+  ]
+}

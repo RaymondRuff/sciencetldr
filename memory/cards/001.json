@@ -1,0 +1,34 @@
+{
+  "episode_number": 1,
+  "title": "Sequence clustering confounds AlphaFold2",
+  "doi": "",
+  "journal": "",
+  "source": "Science TLDR podcast episode 1 show notes (Schafer et al.)",
+  "one_line": "A critical re-evaluation of AF-cluster, the MSA-sequence-clustering method for predicting metamorphic protein conformations with AlphaFold2, arguing its successes are not better than random MSA subsampling.",
+  "key_claims": [
+    "AF-cluster's predictions of alternative conformations for metamorphic proteins are no more accurate than random MSA sampling.",
+    "AF-cluster misidentifies non-metamorphic proteins as metamorphic and predicts erroneous alternative conformations.",
+    "Confidence scores reported for AF-cluster-predicted structures are inconsistent/discrepant with the predicted conformations.",
+    "CF-random, which runs ColabFold on randomly subsampled MSAs, is proposed as a more reliable and computationally cheaper alternative.",
+    "The authors argue for rigorous validation, complementary experimental/computational approaches, and methodological transparency in fold-switching prediction."
+  ],
+  "limitations": [
+    "No specific accuracy numbers, benchmark set sizes, or confidence-score values are reported in the material provided.",
+    "The comparison is limited to AF-cluster versus random MSA subsampling within AlphaFold2/ColabFold; other conformational sampling methods are not assessed here.",
+    "CF-random is presented as an alternative but no quantitative validation against experimental structures is given in the summary."
+  ],
+  "open_questions": [
+    "A blinded benchmark on a curated set of experimentally confirmed fold-switching and non-fold-switching proteins comparing AF-cluster, CF-random, and random subsampling.",
+    "Whether any MSA-manipulation strategy can distinguish genuine metamorphic proteins from single-fold proteins with a calibrated confidence metric.",
+    "Experimental validation (e.g. NMR or cryo-EM) of conformations predicted only by CF-random and not by AF-cluster."
+  ],
+  "tags": [
+    "alphafold2",
+    "protein-structure-prediction",
+    "metamorphic-proteins",
+    "msa-subsampling",
+    "method-validation",
+    "reproducibility",
+    "conformational-ensembles"
+  ]
+}

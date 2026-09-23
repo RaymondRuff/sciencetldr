@@ -1,0 +1,34 @@
+{
+  "episode_number": 41,
+  "title": "What Is It Like to Be a Bat?",
+  "doi": "",
+  "journal": "The Philosophical Review",
+  "source": "https://www.jstor.org/stable/2183914",
+  "one_line": "Thomas Nagel's classic philosophy paper argues that consciousness is essentially subjective — there is 'something it is like' to be an organism — and that this subjective character resists any objective, physicalist reduction.",
+  "key_claims": [
+    "An organism is conscious if and only if there is something it is like to be that organism, from its own point of view.",
+    "Bat echolocation is used as the central example: it is a form of perception unlike anything humans possess, so we cannot form a conception of what bat experience is like from our own imaginative resources.",
+    "Objective reduction in science works by moving away from the subjective viewpoint, but with consciousness the subjective point of view is precisely the phenomenon to be explained, so that strategy fails.",
+    "Current physicalist theories are not so much false as unintelligible, because we lack any account of how subjective experience could be an objective physical process.",
+    "An 'objective phenomenology' — describing experience in terms not dependent on sharing the experiencer's point of view — is proposed as a speculative way forward."
+  ],
+  "limitations": [
+    "The argument is conceptual rather than empirical; no experimental evidence on bats or neural correlates is presented.",
+    "Nagel explicitly does not claim physicalism is false, only that we currently have no idea how it could be true.",
+    "The paper offers no worked-out method for the proposed objective phenomenology.",
+    "The scope of which creatures have experience is left undetermined."
+  ],
+  "open_questions": [
+    "What would a genuinely objective description of subjective experience look like in practice?",
+    "Could a scientific account ever explain why a given physical process has a particular subjective character?",
+    "How far down the phylogenetic scale does 'something it is like' extend?"
+  ],
+  "tags": [
+    "philosophy-of-mind",
+    "consciousness",
+    "subjective-experience",
+    "reductionism",
+    "physicalism",
+    "classic-paper"
+  ]
+}

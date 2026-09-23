@@ -1,0 +1,31 @@
+{
+  "episode_number": 30,
+  "title": "Embodied large language models enable robots to complete complex tasks in unpredictable environments",
+  "doi": "",
+  "journal": "Nature Machine Intelligence",
+  "source": "https://www.nature.com/articles/s42256-025-01005-x",
+  "one_line": "The authors embed a large language model into a robot's perception-action loop so that it can plan, execute and re-plan complex manipulation tasks in environments that change unpredictably.",
+  "key_claims": [
+    "Embodying an LLM within a robot control stack lets natural-language task descriptions be decomposed into executable action sequences without task-specific programming.",
+    "Closing the loop between sensing and the LLM allows the robot to detect failures or environmental changes mid-task and re-plan rather than abort.",
+    "The approach is claimed to generalise across complex, multi-step tasks in unpredictable settings rather than only in scripted demonstrations.",
+    "No specific quantitative results were given in the episode material available for this card."
+  ],
+  "limitations": [
+    "The show notes contain only the article link, so reported success rates, task counts and baselines could not be verified for this card.",
+    "LLM-based planners inherit the underlying model's failure modes, including plausible but physically invalid action proposals.",
+    "Demonstrations in robotics papers of this type are typically limited to a bounded set of objects and environments, so transfer beyond the tested setting is unshown."
+  ],
+  "open_questions": [
+    "What are the quantitative success rates versus a non-LLM classical planner on the same tasks and perturbations?",
+    "How does performance degrade as environmental unpredictability increases beyond the tested perturbations?",
+    "Does the system recover from perception errors, or only from changes it can correctly observe?"
+  ],
+  "tags": [
+    "robotics",
+    "large-language-models",
+    "embodied-ai",
+    "task-planning",
+    "closed-loop-control"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "episode_number": 79,
+  "title": "Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study",
+  "doi": "10.1371/journal.pone.0344552",
+  "journal": "PLOS One",
+  "source": "friday-reddit",
+  "one_line": "Using ALSPAC video recordings of 158 mother-infant dyads at 12 months, the authors measured the probability of vocal responses within data-derived time windows and tested whether these predicted psychiatric diagnosis at age seven.",
+  "key_claims": [
+    "Survival analysis (Kaplan-Meier over a 0.5-10 second sliding window) identified 1 second as the optimal maternal response threshold and 8 seconds as the optimal infant threshold.",
+    "A 10% increase in the probability of a maternal vocal response within 1 second was associated with a 17% decrease in the odds of any psychiatric diagnosis at age seven.",
+    "The maternal association was concentrated in ADHD and disruptive behaviour disorders and survived adjustment for maternal age, birth weight, maternal depression and socioeconomic status.",
+    "The infant 8-second response probability was generally not predictive of later psychiatric diagnosis.",
+    "Of 158 children assessed by the DAWBA at ~7 years, 103 were controls and 55 were cases (33 disruptive behaviour disorder, 16 ADHD, 25 emotional disorder, 6 pervasive developmental disorder)."
+  ],
+  "limitations": [
+    "Degraded 1990s VHS audio prevented analysis of speech content, pitch contours or infant-directed speech, so each vocalisation was coded as a binary sound event regardless of emotional quality.",
+    "Only six children had a pervasive developmental disorder diagnosis, leaving the null autism result essentially uninterpretable for lack of power.",
+    "Neither timing metric predicted autism spectrum or emotional disorders, contradicting a wider literature on reduced vocal interaction in autistic toddlers.",
+    "Observation was a short book-sharing session in an artificial clinic room, not naturalistic home interaction.",
+    "Case-control design with covariate adjustment cannot establish that maternal response latency causes later diagnosis."
+  ],
+  "open_questions": [
+    "Would continuous naturalistic home audio recording over weeks reproduce the 1-second maternal effect outside a clinic setting?",
+    "Does response latency retain predictive weight once pitch, motherese and linguistic content are measured and controlled?",
+    "Is the maternal timing effect causal, i.e. does intervening to speed caregiver responses reduce later ADHD/DBD incidence?",
+    "Would an adequately powered autism subgroup reveal a contingency signal that this cohort of six could not detect?"
+  ],
+  "tags": [
+    "developmental-psychology",
+    "parent-child-interaction",
+    "temporal-contingency",
+    "adhd",
+    "case-control",
+    "longitudinal-cohort",
+    "early-biomarkers",
+    "survival-analysis",
+    "statistical-power"
+  ]
+}

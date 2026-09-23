@@ -1,0 +1,33 @@
+{
+  "episode_number": 48,
+  "title": "Single-Chain Fab Chain-Exchange (scFab-PACE) converts targeted prodrugs into functional T cell engagers on tumor cells",
+  "doi": "10.1016/j.jbc.2025.110490",
+  "journal": "Journal of Biological Chemistry",
+  "source": "https://doi.org/10.1016/j.jbc.2025.110490",
+  "one_line": "The authors describe scFab-PACE, a protein-assembly strategy in which two inactive single-chain Fab prodrug modules exchange chains on the tumor cell surface to assemble an active T cell engager only where the target antigen is present.",
+  "key_claims": [
+    "Individual scFab prodrug components are functionally inert until chain exchange occurs, providing a conditional activation mechanism for T cell engagers.",
+    "Chain exchange is driven by co-localization on antigen-positive tumor cells, so assembly of the bispecific engager is target-dependent.",
+    "The assembled product engages CD3 and mediates T cell-dependent killing of tumor cells in vitro, whereas the separate prodrug components do not.",
+    "Selectivity for antigen-positive over antigen-negative cells is presented as the key advantage of the split-prodrug format over conventional T cell engagers."
+  ],
+  "limitations": [
+    "Show notes provide only the DOI; specific affinities, potency values, antigen targets, and effector-to-target ratios were not captured in this card.",
+    "Evidence is primarily cell-based; durable in vivo efficacy, pharmacokinetics of the separate modules, and safety margins are not established here.",
+    "Spontaneous chain exchange in circulation or in antigen-negative tissue is a plausible failure mode that would need explicit quantification."
+  ],
+  "open_questions": [
+    "What fraction of engager assembly occurs off-target in vivo, measured by antigen-negative tissue exposure versus tumor exposure?",
+    "Does the split-prodrug format widen the therapeutic window relative to a matched conventional T cell engager in a head-to-head animal study?",
+    "How do the pharmacokinetics and tumor penetration of two separately dosed modules compare with a single molecule?"
+  ],
+  "tags": [
+    "t-cell-engager",
+    "bispecific-antibody",
+    "prodrug",
+    "conditional-activation",
+    "cd3-engagement",
+    "protein-engineering",
+    "tumor-selectivity"
+  ]
+}

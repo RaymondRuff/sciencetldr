@@ -1,0 +1,36 @@
+{
+  "episode_number": 29,
+  "title": "Sequencing by Expansion (SBX) – a novel, high-throughput single-molecule sequencing technology",
+  "doi": "10.1101/2025.02.19.639056",
+  "journal": "bioRxiv (preprint)",
+  "source": "https://www.biorxiv.org/content/10.1101/2025.02.19.639056v1",
+  "one_line": "A preprint from the Roche/Stratos team describing Sequencing by Expansion, in which a DNA template is copied into a much longer surrogate polymer (an 'Xpandomer') whose bulky reporters are then read electrically as they translocate a nanopore on a CMOS sensor array.",
+  "key_claims": [
+    "Template DNA is enzymatically copied using X-NTP nucleotide analogues, then chemically expanded so that each original base is represented by a spatially separated reporter along a single surrogate molecule.",
+    "Expansion stretches the base-to-base spacing far beyond native DNA, which the authors argue removes the crowding that limits signal resolution when native DNA is passed through a nanopore.",
+    "Reading is done as a single-molecule electrical measurement of the Xpandomer through nanopores on a high-density CMOS sensor chip, giving a platform the authors position as massively parallel and high-throughput.",
+    "Because the sequencing step reads a synthetic polymer rather than the DNA itself, base-calling signal is decoupled from native DNA chemistry and modification state.",
+    "The authors present the method as a general platform intended for short- and long-read applications on the same chemistry."
+  ],
+  "limitations": [
+    "As a preprint, the work had not been peer reviewed at the time of the episode.",
+    "Accuracy, throughput and cost figures come from the developers' own platform rather than independent benchmarking against established sequencers.",
+    "Performance on difficult contexts (homopolymers, repeats, modified bases, low-input or degraded samples) is not established by third parties.",
+    "The chemistry requires specialised X-NTP analogues and a proprietary sensor chip, so reproducibility outside the originating group is untested.",
+    "Real-world application data (clinical samples, whole-genome assemblies from external labs) were not available."
+  ],
+  "open_questions": [
+    "Independent head-to-head benchmarking of raw read accuracy, read length distribution and error profile against Illumina, PacBio and ONT on the same reference samples.",
+    "Whether the expansion/copy step introduces sequence-dependent bias or dropout across GC-extreme and repetitive regions.",
+    "Whether epigenetic modifications can be detected, given that the Xpandomer is a synthetic surrogate rather than the native strand.",
+    "Whether the CMOS nanopore array's stated throughput holds at production scale and at what per-genome cost."
+  ],
+  "tags": [
+    "sequencing-technology",
+    "nanopore",
+    "single-molecule",
+    "preprint",
+    "platform-benchmarking",
+    "genomics"
+  ]
+}

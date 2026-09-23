@@ -1,0 +1,35 @@
+{
+  "episode_number": 36,
+  "title": "Deep-learning-based single-domain and multidomain protein structure prediction with D-I-TASSER",
+  "doi": "10.1038/s41587-025-02654-4",
+  "journal": "Nature Biotechnology",
+  "source": "https://doi.org/10.1038/s41587-025-02654-4",
+  "one_line": "Zhang-lab pipeline D-I-TASSER combines deep-learning contact/distance restraints with I-TASSER-style threading and replica-exchange Monte Carlo folding, plus explicit domain splitting and domain assembly, to predict both single-domain and multidomain protein structures.",
+  "key_claims": [
+    "Integrating multiple deep-learning spatial restraints into iterative threading-assembly simulations yields more accurate models than either the deep-learning predictors or the fragment-assembly pipeline alone on benchmark test sets.",
+    "Explicit domain boundary detection followed by individual domain modelling and domain assembly improves full-chain accuracy of multidomain proteins relative to whole-chain modelling.",
+    "The method was validated in blind CASP community assessment, where the automated D-I-TASSER server ranked among the top-performing structure prediction servers.",
+    "The authors applied the pipeline at proteome scale to human proteins, reporting structural models and domain-level annotations for sequences lacking experimental structures."
+  ],
+  "limitations": [
+    "Podcast notes give only the DOI, so specific TM-score/GDT numbers, dataset sizes and baselines cannot be quoted here without checking the paper.",
+    "Physics-based replica-exchange simulation plus threading is far more compute-intensive per target than a single end-to-end network forward pass.",
+    "Accuracy still depends on MSA depth and on availability of useful structural templates, so orphan and fast-evolving sequences remain hard.",
+    "Domain assembly accuracy is bounded by correct domain boundary prediction; boundary errors propagate to the full-chain model.",
+    "Static single-conformation predictions say nothing about alternative states, complexes or ligand-bound forms."
+  ],
+  "open_questions": [
+    "Head-to-head comparison with AlphaFold2/AlphaFold3-class predictors on a strictly held-out multidomain set, reporting full-chain and inter-domain accuracy separately.",
+    "How much of the gain comes from threading templates versus the deep-learning restraints, tested by ablation.",
+    "Whether improved inter-domain orientation accuracy translates into better downstream use, e.g. docking or function annotation.",
+    "Performance on targets with shallow MSAs and no homologous templates."
+  ],
+  "tags": [
+    "protein-structure-prediction",
+    "deep-learning",
+    "multidomain-assembly",
+    "threading",
+    "casp-benchmarking",
+    "proteome-scale-modelling"
+  ]
+}

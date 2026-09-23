@@ -1,0 +1,35 @@
+{
+  "episode_number": 54,
+  "title": "Improving dual targeting selectivity in T-cell engagers via synapse-gated and affinity-tuned trispecific antibody design",
+  "doi": "10.1080/19420862.2025.2570748",
+  "journal": "mAbs",
+  "source": "https://doi.org/10.1080/19420862.2025.2570748",
+  "one_line": "The authors engineer trispecific T-cell engagers that require co-engagement of two tumour antigens plus CD3, using affinity tuning and synapse-gated design to improve selectivity for dual-antigen-positive cells over single-antigen-positive normal tissue.",
+  "key_claims": [
+    "Dual tumour-antigen targeting combined with CD3 engagement in a single trispecific format can increase killing selectivity for double-positive cells relative to conventional bispecific T-cell engagers.",
+    "Selectivity is claimed to depend on affinity tuning of the individual binding arms, with lower-affinity arms relying on avidity from co-engagement to reach a killing threshold.",
+    "A 'synapse-gated' geometry/format is claimed to contribute to selectivity independently of raw affinity, implying format design is a separate lever from binding strength.",
+    "No specific quantitative values (affinities, EC50s, selectivity windows) were captured in the episode notes, so numbers should be pulled from the paper before citing."
+  ],
+  "limitations": [
+    "The episode notes contain only the DOI, so no in-paper numbers, cell lines, or model systems were recorded here.",
+    "Selectivity gains of this type are typically shown in vitro on engineered antigen-density panels; in vivo and normal-tissue safety evidence is not documented in the notes.",
+    "Affinity-tuned engagers can trade selectivity for potency, and the magnitude of that trade-off is not captured here.",
+    "Manufacturability, stability, and pharmacokinetics of the trispecific format are not recorded."
+  ],
+  "open_questions": [
+    "Does the synapse-gated trispecific spare single-antigen-positive primary human normal cells at doses that clear double-positive tumour in vivo?",
+    "How narrow is the antigen-density window over which selectivity holds, and does antigen loss or downregulation collapse it?",
+    "Can the selectivity benefit be separated cleanly from simple affinity attenuation by testing matched-affinity non-gated controls?"
+  ],
+  "tags": [
+    "t-cell-engager",
+    "trispecific",
+    "dual-targeting",
+    "affinity-tuning",
+    "specificity-screening",
+    "cd3-affinity",
+    "antibody-engineering",
+    "tumour-selectivity"
+  ]
+}

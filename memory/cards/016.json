@@ -1,0 +1,37 @@
+{
+  "episode_number": 16,
+  "title": "System vaccinology analysis of predictors and mechanisms of antibody response durability to multiple vaccines in humans",
+  "doi": "10.1038/s41590-024-02036-z",
+  "journal": "Nature Immunology",
+  "source": "Show notes as published",
+  "one_line": "A systems-vaccinology study identifying a day-7 platelet/megakaryocyte-derived blood transcriptional signature that predicts antibody response durability across multiple vaccines, and a megakaryocyte-dependent mechanism supporting bone marrow plasma cell survival.",
+  "key_claims": [
+    "A day-7 post-vaccination blood transcriptional signature, dominated by platelet-derived transcripts and cell adhesion genes, predicts the longevity of antibody responses.",
+    "The signature generalised across six different vaccines in seven independent clinical trials, including COVID-19 mRNA, malaria, meningococcal and pneumococcal vaccines.",
+    "Megakaryocytes support plasma cell survival in bone marrow via direct integrin-mediated cell contact plus APRIL and the MIF-CD74 axis.",
+    "TPO (thrombopoietin) activation of megakaryocytes enhanced antibody durability, suggesting a route to improve vaccine-induced immunity.",
+    "The AS03-adjuvanted H5N1 vaccine served as the primary discovery model system."
+  ],
+  "limitations": [
+    "TPO enhancement of durability was not tested in human vaccination; timing, dosing and safety of platelet manipulation remain unaddressed.",
+    "The full nature of megakaryocyte-plasma cell interactions is not completely resolved.",
+    "Whether platelets themselves (as opposed to megakaryocytes) contribute to the immune response was not established.",
+    "Effects across different antibody response types/isotypes were not delineated.",
+    "Measurement of antibody durability is not standardised across the trials analysed."
+  ],
+  "open_questions": [
+    "Does TPO administration around vaccination prolong antibody titres in a controlled human trial?",
+    "Can the day-7 platelet signature prospectively assign individuals to durable versus waning responses in a new cohort?",
+    "Which integrin and survival-factor pairs are strictly required for megakaryocyte-supported plasma cell survival in vivo?"
+  ],
+  "tags": [
+    "systems-vaccinology",
+    "antibody-durability",
+    "predictive-biomarker",
+    "transcriptional-signature",
+    "plasma-cell-survival",
+    "bone-marrow-niche",
+    "adjuvant",
+    "platelets"
+  ]
+}

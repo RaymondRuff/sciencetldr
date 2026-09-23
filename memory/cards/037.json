@@ -1,0 +1,38 @@
+{
+  "episode_number": 37,
+  "title": "Glioblastoma-instructed astrocytes suppress tumour-specific T cell immunity",
+  "doi": "10.1038/s41586-025-08997-x",
+  "journal": "Nature",
+  "source": "https://doi.org/10.1038/s41586-025-08997-x",
+  "one_line": "Using mouse glioblastoma models plus single-cell and spatial profiling of human and mouse tumours, the authors show that glioblastoma reprogrammes tumour-associated astrocytes into an immunoregulatory state that blunts tumour-specific CD8 and CD4 T cell responses.",
+  "key_claims": [
+    "Glioblastoma-derived signals instruct astrocytes in and around the tumour to adopt a distinct transcriptional programme, identified in both mouse models and human glioblastoma samples.",
+    "These glioblastoma-instructed astrocytes act on tumour-specific T cells, limiting their effector function and contributing to the immunosuppressive glioblastoma microenvironment.",
+    "Astrocyte-intrinsic perturbation of the identified pathway in mice restores tumour-specific T cell immunity and improves control of tumour growth.",
+    "Signatures of the immunoregulatory astrocyte state are detectable in human glioblastoma tissue, supporting translational relevance.",
+    "The work positions astrocytes, rather than only myeloid cells, as an actionable node of immune evasion in glioblastoma."
+  ],
+  "limitations": [
+    "Core mechanistic and therapeutic experiments rest on mouse glioblastoma models, which do not reproduce the full mutational and microenvironmental heterogeneity of human disease.",
+    "Human evidence is largely associative (transcriptional and spatial signatures) rather than functional perturbation in patient tissue.",
+    "Specific molecular mediators, effect sizes and survival numbers could not be verified from the show notes alone and should be checked against the paper before citing.",
+    "Durability of the T cell restoration and whether it synergises with checkpoint blockade or cell therapy is not established here.",
+    "Astrocyte-targeted intervention strategies raise unaddressed questions about CNS toxicity and off-tumour effects on normal astrocyte function."
+  ],
+  "open_questions": [
+    "Does selective, drug-based targeting of the astrocyte programme in immunocompetent orthotopic models reproduce the genetic perturbation benefit?",
+    "Can the astrocyte signature in patient biopsies predict response to immunotherapy in a prospective cohort?",
+    "Which single ligand-receptor axis is necessary and sufficient for astrocyte-mediated T cell suppression in human tissue?",
+    "Does combining astrocyte reprogramming with CAR-T or checkpoint blockade yield additive tumour control?"
+  ],
+  "tags": [
+    "glioblastoma",
+    "tumour-microenvironment",
+    "astrocytes",
+    "t-cell-exhaustion",
+    "immune-evasion",
+    "single-cell-profiling",
+    "cns-immunology",
+    "mouse-models"
+  ]
+}

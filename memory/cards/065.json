@@ -1,0 +1,40 @@
+{
+  "episode_number": 65,
+  "title": "Enable CAR T cell immunotherapy in glioblastoma by modifying its microenvironment via oncolytic adenovirus encoding bispecific T cell engager",
+  "doi": "10.1016/j.omton.2026.201201",
+  "journal": "Molecular Therapy Oncology",
+  "source": "crossref",
+  "one_line": "An oncolytic adenovirus (Ad5-\\u039424-RGD) engineered to secrete an IL-13R\\u03b12xCD3 BiTE was injected intratumorally and followed by systemic EGFR/EGFRvIII dual-targeted CAR T cells, producing superior tumor control in a subcutaneous U87 glioblastoma xenograft.",
+  "key_claims": [
+    "OV-BiTE increased T cell recruitment to GBM in vitro and in vivo, with transwell assays showing significantly more T cells crossing the barrier than virus-alone or untreated controls.",
+    "In 3D GBM-BBB spheroids containing astrocytes, endothelial cells and pericytes, OV-BiTE downregulated the endothelial junction proteins Claudin-5, Occludin and ZO-1, increasing permeability and CAR T infiltration and cytotoxicity.",
+    "Intratumoral OV-BiTE followed three days later by intravenous combined EGFR + EGFRvIII CAR T cells reduced tumors more than OV-BiTE plus either CAR T alone, tracked by luminescence imaging over 31 days in tumors established for 20 days.",
+    "Explanted combination-group tumors showed reduced cellularity with necrotic/apoptotic debris, decreased IL-13R\\u03b12-expressing cells, and deep human CD3+ T cell infiltration into the tumor core.",
+    "Combination treatment upregulated TNF-\\u03b1, perforin and granzyme B in co-culture ELISpot assays; mice received a conservative single IV dose of 5\\u00d710^6 CAR T cells with no body weight loss or overt toxicity signs."
+  ],
+  "limitations": [
+    "All in vivo efficacy and safety data come from a subcutaneous flank xenograft, not an intracranial orthotopic model \\u2014 a limitation the authors explicitly acknowledge.",
+    "A flank tumor has no physiological blood-brain barrier, glial network or CSF dynamics, so true BBB traversal was not tested in vivo.",
+    "Neuroinflammation and cerebral edema risk from deliberately downregulating Claudin-5/Occludin/ZO-1 in cerebral vasculature remains untested.",
+    "Xenograft model in immunodeficient mice cannot assess host antiviral clearance or endogenous immune contributions.",
+    "Manufacturing scalability of a custom viral vector plus autologous dual-targeted CAR T cells was not addressed experimentally."
+  ],
+  "open_questions": [
+    "Does the OV-BiTE plus dual CAR T regimen control tumors in an intracranial orthotopic, immunocompetent GBM model without cerebral edema or neurotoxicity?",
+    "Is the tight-junction downregulation transient and reversible, and what is the magnitude of BBB opening in real cerebral vasculature?",
+    "Would allogeneic off-the-shelf dual-targeted CAR T cells retain the observed synergy and remove the manufacturing delay?",
+    "Does the multi-antigen crossfire actually prevent antigen escape on long-term follow-up or recurrence?"
+  ],
+  "tags": [
+    "car-t",
+    "oncolytic-virus",
+    "bispecific-t-cell-engager",
+    "cd3-engager",
+    "glioblastoma",
+    "tumor-microenvironment",
+    "blood-brain-barrier",
+    "antigen-escape",
+    "combination-therapy",
+    "xenograft-model"
+  ]
+}

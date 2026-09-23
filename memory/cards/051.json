@@ -1,0 +1,32 @@
+{
+  "episode_number": 51,
+  "title": "Glycan shielding enables TCR-sufficient allogeneic CAR-T therapy",
+  "doi": "10.1016/j.cell.2025.07.046",
+  "journal": "Cell",
+  "source": "https://doi.org/10.1016/j.cell.2025.07.046",
+  "one_line": "The episode covers a Cell paper proposing that engineered glycan shielding of donor cells allows allogeneic CAR-T products to retain their endogenous TCR rather than requiring TCR knockout.",
+  "key_claims": [
+    "Glycan shielding is presented as an engineering strategy to protect allogeneic CAR-T cells from host immune rejection.",
+    "The approach is claimed to be 'TCR-sufficient', i.e. the endogenous TCR does not need to be deleted to avoid graft-versus-host complications in the allogeneic setting.",
+    "No specific quantitative results were available in the supplied show notes; numbers must be read from the source paper."
+  ],
+  "limitations": [
+    "The show notes contain only a DOI, so no effect sizes, model systems, or control comparisons could be recorded here.",
+    "Whether glycan shielding durably prevents host rejection over long time courses, and in immunocompetent large-animal or human settings, is not established from the material provided.",
+    "Retaining the endogenous TCR raises GvHD and alloreactivity questions that the available material does not quantify."
+  ],
+  "open_questions": [
+    "Head-to-head comparison of glycan-shielded TCR-intact allogeneic CAR-T versus TCR-knockout allogeneic CAR-T for persistence, GvHD incidence, and antitumour efficacy in a fully allogeneic immunocompetent model.",
+    "Does the glycan shield persist through repeated antigen encounter and cell division, or is it diluted or remodelled in vivo?",
+    "Clinical translation: can shielded products be manufactured from unmatched donors at scale without additional gene edits?"
+  ],
+  "tags": [
+    "car-t",
+    "allogeneic-cell-therapy",
+    "cell-engineering",
+    "glycoengineering",
+    "tcr",
+    "immune-evasion",
+    "gvhd"
+  ]
+}

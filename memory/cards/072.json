@@ -1,0 +1,35 @@
+{
+  "episode_number": 72,
+  "title": "From free speech advocates to critics: The Trump administration’s new rhetoric promotes support for censorship among Trump voters",
+  "doi": "10.1073/pnas.2532084123",
+  "journal": "Proceedings of the National Academy of Sciences",
+  "source": "friday-reddit",
+  "one_line": "A preregistered survey experiment with 13,305 quota-matched US adults (October 2025) tested how exposure to real anti-speech quotes from Trump and his allies, following Charlie Kirk's assassination, shifted support for government censorship of the out-party.",
+  "key_claims": [
+    "Trump voters exposed to the explicit anti-speech rhetoric significantly increased support for government censorship of out-party media and individuals (β = 0.35, described as roughly one in three respondents shifting toward neutrality or acceptance).",
+    "Non-Trump voters (Harris voters, third-party voters, non-voters) showed a backlash effect, becoming significantly more protective of out-party speech after the same exposure.",
+    "Effects were equivalent whether quotes were attributed to Trump/allies by name or to a generic 'prominent politician' — no statistically significant interaction with attribution.",
+    "Researcher-generated pro-speech quotes matched in style produced no significant effect in either group, suggesting norm violation rather than norm confirmation drives attitude change.",
+    "Authors frame the shift as 'democratic neutrality' — norm erosion via people ceasing to actively defend the norm rather than embracing authoritarianism."
+  ],
+  "limitations": [
+    "Captures a short-term attitudinal snapshot; whether repeated exposure produces durable opinion change is untested (authors' stated caveat).",
+    "Outcome is self-reported survey attitudes, not measured behaviour; real-world examples cited (Jimmy Kimmel suspension, employee terminations) are contextual, not experimental outcomes.",
+    "Single-country, single-moment design tied to one unusual triggering event, limiting generalisation to other elites or norms.",
+    "Control condition pro-speech quotes were researcher-generated rather than real elite statements, so stimuli were not fully matched in authenticity."
+  ],
+  "open_questions": [
+    "Does sustained, repeated exposure to anti-speech elite rhetoric consolidate the observed shift into durable attitude change, or does it decay within news cycles?",
+    "Do the measured attitude shifts predict actual behaviour, such as supporting or tolerating concrete censorship actions?",
+    "Would the same rhetoric from an out-party elite produce mirror-image effects, testing whether the mechanism is partisan cue-taking rather than content?"
+  ],
+  "tags": [
+    "political-psychology",
+    "elite-cues",
+    "free-speech",
+    "survey-experiment",
+    "preregistration",
+    "partisanship",
+    "democratic-norms"
+  ]
+}

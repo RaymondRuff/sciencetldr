@@ -1,0 +1,35 @@
+{
+  "episode_number": 28,
+  "title": "CD33–CD123 IF-THEN Gating Reduces Toxicity while Enhancing the Specificity and Memory Phenotype of AML-Targeting CAR-T Cells",
+  "doi": "10.1158/2643-3230.BCD-23-0258",
+  "journal": "Blood Cancer Discovery",
+  "source": "Show notes (DOI only); no abstract text supplied",
+  "one_line": "Engineered AML-targeting CAR-T cells with an IF-THEN (synNotch-style) logic gate requiring CD33 to license anti-CD123 CAR expression, aiming to spare single-antigen-positive normal tissue.",
+  "key_claims": [
+    "The authors report that CD33-driven IF-THEN gating restricts CAR-T killing to CD33+CD123+ AML cells rather than cells expressing either antigen alone.",
+    "Gated CAR-T cells are claimed to show reduced on-target/off-tumor toxicity relative to constitutive anti-CD123 CAR-T cells.",
+    "Logic gating is reported to enrich a memory phenotype in the CAR-T product, consistent with reduced tonic/constitutive signaling.",
+    "No specific quantitative values were available in the material provided for this episode."
+  ],
+  "limitations": [
+    "No numerical data, effector:target ratios, or animal-model details were provided in the show notes, so the magnitude of every claimed effect is unverified here.",
+    "Antigen-escape risk from CD33-low or CD123-low AML subclones under gating pressure is not addressed in the supplied material.",
+    "Whether gating kinetics (priming delay before CAR induction) limit control of fast-growing disease is not documented here.",
+    "Authors' own stated limitations could not be captured from the available material."
+  ],
+  "open_questions": [
+    "A head-to-head in vivo comparison of gated versus constitutive CAR-T against patient-derived AML with quantified normal hematopoietic-progenitor sparing would settle the toxicity claim.",
+    "Long-term follow-up assessing outgrowth of CD33-negative AML clones after gated CAR-T therapy.",
+    "Whether the observed memory enrichment is caused by reduced tonic signaling or by the gating construct itself, testable with tonic-signaling-matched controls."
+  ],
+  "tags": [
+    "car-t",
+    "logic-gating",
+    "aml",
+    "cd33",
+    "cd123",
+    "on-target-off-tumor",
+    "t-cell-memory",
+    "specificity-screening"
+  ]
+}

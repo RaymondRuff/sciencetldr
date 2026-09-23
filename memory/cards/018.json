@@ -1,0 +1,37 @@
+{
+  "episode_number": 18,
+  "title": "Discovery of a new class of cell-penetrating peptides by novel phage display platform",
+  "doi": "10.1038/s41598-024-64405-w",
+  "journal": "Scientific Reports",
+  "source": "Science TLDR podcast show notes",
+  "one_line": "Authors built a phage display selection (NNJA) that engineers a lysosomal cathepsin substrate into phage protein PIII so only phage escaping to the cytoplasm survive, yielding a new class of non-cationic cell-penetrating peptides.",
+  "key_claims": [
+    "The cathepsin-cleavable PIII counter-selection eliminates lysosome-trapped phage, so selection outputs peptides optimised for cytoplasmic rather than endo-lysosomal delivery.",
+    "The discovered CPPs are nine amino acids long and lack the positive-charge clusters typical of classical CPPs.",
+    "Sequence enrichment showed methionine/leucine at position 1, serine/threonine at position 2, and proline in the middle and at the C-terminus.",
+    "The peptides delivered siRNA (with significant gene knockdown), antibodies, proteins and reporter molecules, with cytoplasmic localisation confirmed by confocal microscopy across multiple cell types.",
+    "Uptake was efficient without significant toxicity and comparable or superior to traditional CPPs such as TAT."
+  ],
+  "limitations": [
+    "Work is cell-culture based; no in vivo validation, stability or pharmacokinetic data reported.",
+    "Mechanism of cell entry and endosomal escape is not resolved.",
+    "Tissue selectivity is only proposed as an adaptation of the platform, not demonstrated.",
+    "Cargo size limits were not defined.",
+    "Scale-up of peptide synthesis and cargo conjugation remains untested."
+  ],
+  "open_questions": [
+    "Does an NNJA-derived peptide achieve cytoplasmic cargo delivery and target knockdown in vivo with acceptable pharmacokinetics?",
+    "What mechanism (receptor, endosomal escape route) distinguishes these non-cationic 9-mers from cationic CPPs?",
+    "Can the selection be re-run in different cell types to yield genuinely tissue-selective CPPs?",
+    "What is the maximum cargo size and conjugation chemistry compatible with cytoplasmic delivery?"
+  ],
+  "tags": [
+    "phage-display",
+    "cell-penetrating-peptides",
+    "intracellular-delivery",
+    "endosomal-escape",
+    "sirna-delivery",
+    "peptide-engineering",
+    "counter-selection"
+  ]
+}

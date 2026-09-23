@@ -1,0 +1,31 @@
+{
+  "episode_number": 49,
+  "title": "AlphaEarth Foundations: An embedding field model for accurate and efficient global mapping from sparse label data",
+  "doi": "",
+  "journal": "arXiv preprint",
+  "source": "arXiv:2507.22291v1",
+  "one_line": "Introduces AlphaEarth Foundations, a geospatial foundation model that produces a global 'embedding field' — compact per-location, per-year learned representations — enabling accurate mapping from sparse labels.",
+  "key_claims": [
+    "The model produces embedding fields that summarise multi-source Earth observation data into compact per-pixel representations usable directly as features for downstream mapping tasks.",
+    "The authors claim accurate mapping is possible from sparse label data, reducing the need for large task-specific labelled datasets.",
+    "The approach is framed as efficient and global in coverage, supporting many downstream applications without retraining a bespoke model per task."
+  ],
+  "limitations": [
+    "The show notes provide only the arXiv identifier; specific benchmark numbers, baselines and evaluation protocols were not captured in this card and should be checked against the preprint.",
+    "As a preprint, the work had not passed peer review at the time of the episode.",
+    "Performance on label-scarce regions, rare classes, and temporal generalisation beyond the training years is not established from the available material."
+  ],
+  "open_questions": [
+    "Independent head-to-head benchmarking of embedding-field features against task-specific supervised models across several mapping tasks and geographies.",
+    "Quantifying how performance degrades as the number of labels shrinks, to test the central 'sparse label' claim.",
+    "Assessing whether embeddings encode biases or artefacts from the underlying sensor sources that propagate into downstream maps."
+  ],
+  "tags": [
+    "foundation-model",
+    "remote-sensing",
+    "representation-learning",
+    "sparse-labels",
+    "geospatial-mapping",
+    "preprint"
+  ]
+}

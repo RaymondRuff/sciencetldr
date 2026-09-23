@@ -1,0 +1,41 @@
+{
+  "episode_number": 74,
+  "title": "Discovery of TCR-like antibodies to the KRAS G12D neoantigen via in silico-in vitro workflow",
+  "doi": "10.1016/j.ymthe.2026.05.032",
+  "journal": "Molecular Therapy",
+  "source": "monday-digest",
+  "one_line": "A hybrid ProteinMPNN-guided design plus yeast-display selection workflow produced TCR-like antibodies specific for the KRAS G12D 10-mer presented on HLA-C*08:02, reformatted into CAR-T and bispecific T-cell engager formats.",
+  "key_claims": [
+    "Constrained CDR loop-tip redesign by ProteinMPNN on docked human variable fragments yielded nine top designs that seeded a yeast surface-display library, giving initial hit C8K10D at KD ~1.36 µM.",
+    "Affinity maturation improved binding ~70-fold to 17.4 nM (variant C8K10D5), and solubility engineering (variants DQE, DE) removed hydrophobic aggregation patches, raising yield and further improving affinity to 2.38 nM.",
+    "Negative selection against non-pulsed cells and cells pulsed with a SARS-CoV-2 peptide removed cross-reactive clones (variants C8K10D51, NAGF18); phage-display specificity profiling showed no human off-target reactivity and in silico analysis predicted low immunogenicity.",
+    "X-ray crystallography at 4.5 Å showed the antibody reaches into the peptide groove and contacts the mutant aspartate at position 3 and lysine at position 7, discriminating against G12V and G12C.",
+    "The same targeting head as CAR-T or as a bispecific SCDB engager drove dose-dependent, selective killing of KRAS G12D-positive cells with no detectable killing of wild-type KRAS cells."
+  ],
+  "limitations": [
+    "All cytotoxicity data are cell-based in vitro assays; in vivo efficacy and safety were not demonstrated.",
+    "AlphaFold2 failed to accurately predict the binding interface, so computational design alone could not validate the structure.",
+    "Crystallographic resolution was limited to 4.5 Å.",
+    "Targeting is restricted to the HLA-C*08:02 allele, limiting the eligible patient population.",
+    "Early lead showed weak binding to cells displaying a SARS-CoV-2 peptide, indicating affinity maturation can introduce off-target risk that required extra sorting."
+  ],
+  "open_questions": [
+    "Does either format show efficacy and tolerable safety in vivo in KRAS G12D tumor models?",
+    "Will peptide-level selectivity hold against a full endogenous peptidome rather than pulsed-peptide and phage-display panels?",
+    "Is the workflow generalizable to other neoantigen/HLA allele pairs beyond KRAS G12D/HLA-C*08:02?",
+    "Would higher-resolution structures explain why solubility substitutions also increased affinity?"
+  ],
+  "tags": [
+    "tcr-mimic",
+    "peptide-mhc",
+    "kras-g12d",
+    "neoantigen",
+    "protein-design",
+    "yeast-display",
+    "affinity-maturation",
+    "specificity-screening",
+    "car-t",
+    "bispecific-engager",
+    "developability"
+  ]
+}

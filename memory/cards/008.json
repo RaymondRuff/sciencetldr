@@ -1,0 +1,37 @@
+{
+  "episode_number": 8,
+  "title": "The hallmarks of cancer immune evasion",
+  "doi": "10.1016/j.ccell.2024.09.010",
+  "journal": "Cancer Cell",
+  "source": "Galassi C, Chan TA, Vitale I, Galluzzi L — review",
+  "one_line": "A review proposing a 'Three Cs' framework — Camouflage, Coercion, Cytoprotection — to organise the mechanisms by which cancer cells evade immune control and the therapies aimed at each.",
+  "key_claims": [
+    "Camouflage covers evasion of detection: MHC class I and B2M/TAP1-2 downregulation, epigenetic silencing of antigen processing genes, impaired chemoattraction (ATP, ANXA1, CXCL10, CCL2), defective CALR-dependent ICD phagocytosis, and physical exclusion by CAFs, TAMs or TANs via TGFβ1 or NETs.",
+    "Coercion covers active immunosuppression: immune checkpoint ligands (PD-L1, HLA-E, CD47), defective PRR/DAMP/type I IFN signalling including CGAS-STING and viral mimicry, anti-inflammatory cytokine skewing (CCL2, TGFβ1, CXCL8, IL33 over IFNs and IL1B), and metabolic reshaping of the TME.",
+    "Metabolic coercion works both by nutrient depletion (glucose, glutamine, methionine) and by release of immunosuppressive metabolites (adenosine, kynurenine, lactate, TCA byproducts, PGE2).",
+    "Cytoprotection covers resistance to killing: altered immunological synapse formation, defective death signalling (CASP8 mutations, FAS downregulation, impaired TNF/IFNG signalling), and compensatory autophagy.",
+    "Clinically, approved agents (PD-1/PD-L1, CTLA-4, LAG-3 ICIs, CAR T cells, bispecifics, cytokines) and investigational ones (TIM-3, TIGIT, VISTA, NKG2A, CD47 blockade; metabolic modulators; STING agonists; PRMT5/KDM1A and epigenetic modifiers) can be mapped onto the Three Cs."
+  ],
+  "limitations": [
+    "Authors note some immune evasion mechanisms do not fit neatly into the Three Cs categories.",
+    "Intratumoral heterogeneity means different tumor regions may rely on different 'Cs', complicating single-target strategies.",
+    "Metabolic-pathway therapies currently lack sufficient specificity and efficacy.",
+    "Predictive biomarkers beyond PD-L1 expression are largely missing for the newer immunotherapy classes.",
+    "As a conceptual review, it presents no new primary data or head-to-head validation of the framework."
+  ],
+  "open_questions": [
+    "Which of the three 'Cs' dominates as the driver of resistance in a given tumor, and does targeting the dominant one outperform combination approaches?",
+    "Can spatially resolved profiling show that distinct tumor regions use distinct evasion programs, and does that predict therapy failure?",
+    "Do biomarkers beyond PD-L1 reliably select patients for checkpoint, metabolic or STING-directed agents?"
+  ],
+  "tags": [
+    "cancer-immunology",
+    "immune-evasion",
+    "tumor-microenvironment",
+    "checkpoint-blockade",
+    "antigen-presentation",
+    "metabolic-immunosuppression",
+    "review",
+    "biomarkers"
+  ]
+}

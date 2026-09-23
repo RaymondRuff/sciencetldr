@@ -1,0 +1,40 @@
+{
+  "episode_number": 78,
+  "title": "Covalently PD‐L1 Anchoring Drives Bispecific Nanostructure Assembly for Spatial Control of T Cell Recruitment and Activation",
+  "doi": "10.1002/anie.5894316",
+  "journal": "Angewandte Chemie International Edition",
+  "source": "monday-digest",
+  "one_line": "A two-component chemistry system oxidizes PD-L1's N-glycans on tumor cells to covalently nucleate self-assembling anti-CD3 peptide nanostructures that act as membrane-anchored BiTE mimics.",
+  "key_claims": [
+    "The P1 probe (PD-L1-binding peptide, Kd ≈ 4.5 µM, conjugated to galactose oxidase) oxidizes C6 hydroxyls on PD-L1 N-glycans to aldehydes; oxidation was sharply reduced with the glycosylation-deficient 4NQ mutant (4 Asn→Gln), free galactose competition, and tunicamycin.",
+    "Covalent hydrazide–aldehyde anchoring of the self-assembling peptide (HSP) drops its critical aggregation concentration from 38.26 µM to 2.18 µM, driving β-sheet and π–π stacked artificial topological nanostructure (ATN) formation on the tumor surface.",
+    "In MDA-MB-231/primary T cell co-cultures, ATNs gave 2.61-fold higher tumor killing than non-assembling controls, roughly doubled IFN-γ secretion, and CD69 peaked at ~8 h; HCS imaging showed directional T cell migration and clustering at treated tumor cells.",
+    "In MC38 tumor-bearing mice (intratumoral P1, intravenous HSP), treatment achieved 62.6% tumor inhibition with increased intratumoral PD-1+ T cells and IFN-γ.",
+    "The covalent version outperformed a non-covalent analogue under mildly acidic, dynamic conditions, and efficacy extended to patient-derived lung cancer organoids (012T, 014T) with T cell infiltration."
+  ],
+  "limitations": [
+    "Authors acknowledge risk of non-specific off-target glycan oxidation by galactose oxidase in a systemic context; TME-responsive activation is proposed for future work.",
+    "The PD-L1 targeting peptide has only micromolar affinity (4.5 µM), relying on covalent capture rather than high-affinity binding for retention.",
+    "In vivo delivery required local intratumoral administration of the P1 probe, not full systemic dosing.",
+    "No reported toxicity/biodistribution data in healthy tissues within the described material.",
+    "Anti-CD3 engagement bypasses antigen specificity, so on-target/off-tumor T cell activation if ATNs form elsewhere is untested."
+  ],
+  "open_questions": [
+    "Does fully systemic administration of both components preserve tumor-restricted assembly and avoid healthy-tissue glycan oxidation?",
+    "Would a pH- or light/ultrasound-caged galactose oxidase deliver the same efficacy with a measurable safety margin?",
+    "How does ATN-mediated killing compare head-to-head with a conventional PD-L1 antibody plus a clinical BiTE?",
+    "Is efficacy dependent on PD-L1 expression level, and what threshold of surface PD-L1 is needed for assembly?"
+  ],
+  "tags": [
+    "bispecific-t-cell-engager",
+    "pd-l1",
+    "cd3-engagement",
+    "bioorthogonal-chemistry",
+    "self-assembly",
+    "tumor-targeting",
+    "in-vivo-efficacy",
+    "organoid-model",
+    "specificity-screening",
+    "checkpoint-blockade"
+  ]
+}
