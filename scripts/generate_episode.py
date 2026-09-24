@@ -83,7 +83,19 @@ def remove_label(number: int, label: str) -> None:
     )
 
 
+def issue_labels(issue: dict) -> set[str]:
+    return {
+        label["name"] if isinstance(label, dict) else label
+        for label in issue.get("labels", [])
+    }
+
+
 def eligible_issues(explicit: int | None) -> list[dict]:
+    """Issues worth attempting, oldest first.
+
+    Not capped here: the cap in main() counts drafts actually produced, so an
+    Issue that turns out to need a PDF doesn't use up the run.
+    """
     issues = github_issue.list_pending_issues()
     if explicit is not None:
         chosen = [i for i in issues if i["number"] == explicit]
@@ -93,10 +105,7 @@ def eligible_issues(explicit: int | None) -> list[dict]:
 
     ready = []
     for issue in issues:
-        labels = {
-            label["name"] if isinstance(label, dict) else label
-            for label in issue.get("labels", [])
-        }
+        labels = issue_labels(issue)
         if labels & SKIP_LABELS:
             continue
         meta = github_issue.parse_metadata(issue["body"]) or {}
@@ -105,7 +114,7 @@ def eligible_issues(explicit: int | None) -> list[dict]:
         ):
             continue  # still waiting on the human
         ready.append(issue)
-    return ready[:MAX_PER_RUN]
+    return ready
 
 
 def current_branch() -> str:
@@ -197,7 +206,8 @@ The full script is in `{files[-1].relative_to(ROOT).as_posix()}` in this PR.
     return url
 
 
-def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> None:
+def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> bool:
+    """Attempt one Issue. Returns True if a draft (or dry-run script) was produced."""
     number = issue["number"]
     metadata = github_issue.parse_metadata(issue["body"]) or {}
     title = metadata.get("title") or issue["title"]
@@ -209,7 +219,9 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> None:
     )
     if not resolved:
         print("  [episode] no full text reachable; asking for a manual PDF")
-        if not dry_run:
+        # Only ask once: a needs-pdf Issue is re-attempted only after a PDF
+        # lands, and an unreadable PDF shouldn't earn a second identical comment.
+        if not dry_run and LABEL_NEEDS_PDF not in issue_labels(issue):
             add_label(number, LABEL_NEEDS_PDF)
             github_issue.comment(
                 number,
@@ -219,7 +231,7 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> None:
                     pdf_dir="https://github.com/RaymondRuff/sciencetldr/tree/main/inbox/pdfs",
                 ),
             )
-        return
+        return False
     full_text, provenance = resolved
 
     context = memory.memory_context()
@@ -256,7 +268,7 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> None:
 
     if dry_run:
         print(f"  [episode] dry run — wrote {script_md.relative_to(ROOT)}")
-        return
+        return True
 
     INBOX.mkdir(parents=True, exist_ok=True)
     wav_path = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / f"{stem}.wav"
@@ -291,6 +303,7 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> None:
         "Listen to the audio in the PR, then merge to publish or close to discard.",
     )
     print(f"  [episode] review PR: {url}")
+    return True
 
 
 def main() -> None:
@@ -308,13 +321,16 @@ def main() -> None:
     if not issues:
         print("No eligible podcast-pending issues.")
         return
-    print(f"{len(issues)} issue(s) to process (cap {MAX_PER_RUN}/run)")
+    print(f"{len(issues)} eligible issue(s); will produce at most {MAX_PER_RUN} draft(s)")
 
     client = anthropic.Anthropic()
-    failures = 0
+    drafts = failures = 0
     for issue in issues:
+        if drafts >= MAX_PER_RUN:
+            break
         try:
-            process(issue, client, dry_run=args.dry_run)
+            if process(issue, client, dry_run=args.dry_run):
+                drafts += 1
         except Exception as exc:  # noqa: BLE001 - one bad paper shouldn't stop the sweep
             failures += 1
             print(f"  [episode] FAILED on #{issue['number']}: {exc}")
@@ -325,6 +341,7 @@ def main() -> None:
                     f"Episode generation failed:\n\n```\n{exc}\n```\n\n"
                     "Remove the `generation-failed` label to retry.",
                 )
+    print(f"\n{drafts} draft(s) produced, {failures} failure(s)")
     if failures:
         sys.exit(f"{failures} issue(s) failed")
 
