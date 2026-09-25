@@ -1,10 +1,10 @@
 Nadia: Hello and welcome to Science TLDR. I'm Nadia.
 
-Theo: And I'm Theo. And today we are very far from our usual beat.
+Theo: And I'm Theo. And today's paper is a bit of a detective story.
 
-Nadia: We are. This is a short paper in Communications Health, titled "Substantial under-detection of human rabies cases in the United States." D-O-I 10.1038/s44528-026-00031-4. And the one-sentence version is: the authors use organ donors who turned out to have rabies as a kind of accidental random sample of the dead, and back out how many rabies deaths the US surveillance system is missing.
+Nadia: It is. This is a short paper in Communications Health, titled "Substantial under-detection of human rabies cases in the United States." D-O-I 10.1038/s44528-026-00031-4. And the one-sentence version is: the authors use organ donors who turned out to have rabies as a kind of accidental random sample of the dead, and back out how many rabies deaths the US surveillance system is missing.
 
-Theo: So why is a protein engineering podcast doing rabies epidemiology?
+Theo: So why is this one worth ten minutes?
 
 Nadia: Because the inferential move is the whole paper. There's essentially no new data here — four numbers and a ratio. Which means the argument is completely exposed. That's rarer than it should be.
 

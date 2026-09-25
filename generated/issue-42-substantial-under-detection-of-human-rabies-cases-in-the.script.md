@@ -1,23 +1,24 @@
 # Substantial under-detection of human rabies cases in the United States
 
 **DOI:** 10.1038/s44528-026-00031-4  
-**Length:** 10663 chars (~10.1 min)
+**Length:** 10635 chars (~10.0 min)
 
 ## Corrections made by the verification pass
 
 - Claim strength: Nadia said the authors' estimate 'shows under-detection can also occur' in wildlife-risk countries; the paper says it 'highlights that under-detection ... could also occur' — softened to match.
 - Claim strength: the feedback-loop line asserted that under-detection 'produces' an underappreciation of transmission; the paper states it 'may both result from and contribute to' that underappreciation — reworded to the authors' hedged formulation.
 - Length: draft ran 11,039 spoken characters against a 10,200–10,800 window; trimmed setup and framing turns (opening banter, restatement of the encephalitis-series proposal, secondary commentary) while leaving all numbers, assumptions and limitations intact. Numbers (2.4/yr, n=3, 239,251 donors, 68,266,224 deaths, 856, 213–2,220, 34.2, 8.5–88.8, 7%, 22%, 36.6, 14-fold, weeks-to-one-year incubation) all check out against the paper, and the episode 32, 73 and 80 references match the memory cards.
+- Show framing (hand edit after review): removed two lines presenting Science TLDR as a protein engineering show visiting an unusual field; re-voiced.
 
 ---
 
 **Nadia:** Hello and welcome to Science TLDR. I'm Nadia.
 
-**Theo:** And I'm Theo. And today we are very far from our usual beat.
+**Theo:** And I'm Theo. And today's paper is a bit of a detective story.
 
-**Nadia:** We are. This is a short paper in Communications Health, titled "Substantial under-detection of human rabies cases in the United States." D-O-I 10.1038/s44528-026-00031-4. And the one-sentence version is: the authors use organ donors who turned out to have rabies as a kind of accidental random sample of the dead, and back out how many rabies deaths the US surveillance system is missing.
+**Nadia:** It is. This is a short paper in Communications Health, titled "Substantial under-detection of human rabies cases in the United States." D-O-I 10.1038/s44528-026-00031-4. And the one-sentence version is: the authors use organ donors who turned out to have rabies as a kind of accidental random sample of the dead, and back out how many rabies deaths the US surveillance system is missing.
 
-**Theo:** So why is a protein engineering podcast doing rabies epidemiology?
+**Theo:** So why is this one worth ten minutes?
 
 **Nadia:** Because the inferential move is the whole paper. There's essentially no new data here — four numbers and a ratio. Which means the argument is completely exposed. That's rarer than it should be.
 
