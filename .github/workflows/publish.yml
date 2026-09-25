@@ -13,6 +13,7 @@ on:
 permissions:
   contents: write
   issues: write
+  actions: write   # to dispatch the memory workflow
 
 jobs:
   publish:
@@ -59,3 +60,12 @@ jobs:
           fi
           git commit -m "publish: new episode(s) [skip ci]"
           git push
+
+      # `[skip ci]` above suppresses every push-triggered workflow, including
+      # the memory update that watches episodes/*.json — so start it
+      # explicitly. A workflow_dispatch from GITHUB_TOKEN does start a run
+      # (unlike a push from it). With no new episode it builds nothing.
+      - name: Update show memory
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run memory.yml --ref main
