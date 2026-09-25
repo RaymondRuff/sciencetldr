@@ -5,8 +5,8 @@ results, the methods and the authors' own limitations paragraph. This module
 tries, in order:
 
   1. A PDF supplied by hand (issue-NN.pdf, or any PDF whose name contains the
-     DOI suffix): first one emailed in and saved to $PDF_DROP_DIR by
-     pdf_mailbox.py, then one committed to `inbox/pdfs/`.
+     DOI suffix): first one emailed in and saved to the runner's temp
+     directory by pdf_mailbox.py, then one committed to `inbox/pdfs/`.
   2. Europe PMC full text XML, for anything in the PMC open-access subset.
   3. The open-access PDF URL recorded on the Issue.
   4. The publisher's HTML landing page.
@@ -18,7 +18,6 @@ fall back to asking for a manual PDF drop rather than treating it as an error.
 from __future__ import annotations
 
 import io
-import os
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -54,11 +53,9 @@ def pdf_dirs() -> list[tuple[Path, str]]:
     which is where paywalled PDFs belong. `inbox/pdfs/` in the repo is public
     and suits only openly licensed papers.
     """
-    dirs = []
-    drop = os.environ.get("PDF_DROP_DIR")
-    if drop:
-        dirs.append((Path(drop), "emailed-pdf"))
-    dirs.append((PDF_INBOX, "repo-pdf"))
+    import pdf_mailbox  # stdlib-only; imported here to keep this module's deps light
+
+    dirs = [(pdf_mailbox.drop_dir(), "emailed-pdf"), (PDF_INBOX, "repo-pdf")]
     return [(d, label) for d, label in dirs if d.is_dir()]
 
 

@@ -50,7 +50,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       POLL: ${{ github.event.schedule == '*/30 * * * *' }}
-      PDF_DROP_DIR: ${{ runner.temp }}/tldr-pdfs
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
       PDF_SENDER_ALLOWLIST: ${{ secrets.PDF_SENDER_ALLOWLIST }}
