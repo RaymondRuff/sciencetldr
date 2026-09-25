@@ -13,8 +13,15 @@ Issue label states:
   episode-in-review      a draft PR is open
   generation-failed      the run errored; needs a look before retrying
 
-A PDF emailed back in reply to a request is generated straight away and does not
-count against MAX_EPISODES_PER_RUN — replying is an explicit request.
+MAX_EPISODES_PER_RUN caps *attempts* — every Issue that reaches the paid model
+calls counts, whether it succeeds or fails — so one run can never spend more
+than that many episodes' worth. Issues that only need a PDF cost nothing and
+don't count. A PDF emailed back in reply to a request is generated straight
+away outside the cap — replying is an explicit request.
+
+The run stops outright on errors that will affect every Issue (the Anthropic
+spend limit, bad credentials), and refuses to start if the GitHub token can't
+open the review PR, rather than discovering that after paying for a script.
 
 Usage:
   python scripts/generate_episode.py                 # sweep eligible issues
@@ -58,6 +65,12 @@ LABEL_FAILED = "generation-failed"
 
 SKIP_LABELS = {LABEL_IN_REVIEW, LABEL_FAILED}
 MAX_PER_RUN = int(os.environ.get("MAX_EPISODES_PER_RUN", "3"))
+BASE_BRANCH = "main"
+
+# Outcomes of process(); failures raise instead.
+DRAFTED = "drafted"
+NEEDS_PDF = "needs-pdf"
+DEFERRED = "deferred"  # a source was rate-limited or down; try again next run
 
 NEEDS_PDF_COMMENT = """No open-access full text could be reached for this paper \
 automatically{reason}.
@@ -108,8 +121,8 @@ def eligible_issues(
 ) -> list[dict]:
     """Issues worth attempting: those with an emailed PDF first, then oldest first.
 
-    Not capped here: the cap in main() counts drafts actually produced, so an
-    Issue that turns out to need a PDF doesn't use up the run.
+    Not capped here: the cap in main() counts paid attempts, so an Issue that
+    turns out to need a PDF doesn't use up the run.
     """
     if explicit is not None:
         chosen = [i for i in issues if i["number"] == explicit]
@@ -185,23 +198,40 @@ def request_missing_pdfs(issues: list[dict]) -> None:
             continue
         meta = github_issue.parse_metadata(issue["body"]) or {}
         if LABEL_NEEDS_PDF not in labels:
-            if paper_text.resolve(
-                doi=meta.get("doi") or "",
-                pdf_url=meta.get("pdf_url") or "",
-                issue_number=issue["number"],
-            ):
-                continue
+            try:
+                if paper_text.resolve(
+                    doi=meta.get("doi") or "",
+                    pdf_url=meta.get("pdf_url") or "",
+                    issue_number=issue["number"],
+                ):
+                    continue
+            except paper_text.TransientFetchError:
+                continue  # can't tell yet whether it's open; ask next run
         print(f"[episode] #{issue['number']}: no full text; requesting a PDF")
         request_pdf(issue, meta)
 
 
-def current_branch() -> str:
-    return subprocess.run(
-        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+def can_open_prs() -> bool:
+    """Check, before spending anything, that GH_TOKEN may create pull requests.
+
+    Posts a PR with a head branch that cannot exist: a token with the
+    permission gets 422 (validation failed), one without gets 403. Nothing is
+    created either way.
+    """
+    repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
+    result = subprocess.run(
+        [
+            "gh", "api", "-X", "POST", f"repos/{repo}/pulls",
+            "-f", "title=permission probe",
+            "-f", f"base={BASE_BRANCH}",
+            "-f", "head=sciencetldr-permission-probe-does-not-exist",
+        ],
         capture_output=True,
         text=True,
-        check=True,
-    ).stdout.strip()
+        encoding="utf-8",
+    )
+    output = (result.stdout + result.stderr).lower()
+    return "http 422" in output or "validation failed" in output
 
 
 def open_review_pr(
@@ -217,9 +247,36 @@ def open_review_pr(
     number = issue["number"]
     slug = slugify(metadata.get("title", "episode"), max_length=50, word_boundary=True)
     branch = f"episode/issue-{number}-{slug}"
-    base = current_branch()
 
     subprocess.run(["git", "checkout", "-b", branch], check=True)
+    try:
+        return _commit_push_and_open(
+            branch=branch,
+            number=number,
+            metadata=metadata,
+            files=files,
+            turns=turns,
+            changes=changes,
+            duration_s=duration_s,
+            provenance=provenance,
+        )
+    finally:
+        # Always return to the base branch — otherwise a failure here leaves
+        # the next episode's branch stacked on top of this one.
+        subprocess.run(["git", "checkout", BASE_BRANCH], check=True)
+
+
+def _commit_push_and_open(
+    *,
+    branch: str,
+    number: int,
+    metadata: dict,
+    files: list[Path],
+    turns: list[dict],
+    changes: list[str],
+    duration_s: float,
+    provenance: str,
+) -> str:
     subprocess.run(["git", "add", *[str(f) for f in files]], check=True)
     subprocess.run(
         [
@@ -270,7 +327,7 @@ The full script is in `{files[-1].relative_to(ROOT).as_posix()}` in this PR.
             "pr",
             "create",
             "--base",
-            base,
+            BASE_BRANCH,
             "--head",
             branch,
             "--title",
@@ -279,30 +336,46 @@ The full script is in `{files[-1].relative_to(ROOT).as_posix()}` in this PR.
             body,
         ]
     ).strip().splitlines()[-1]
-
-    subprocess.run(["git", "checkout", base], check=True)
     return url
 
 
-def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> bool:
-    """Attempt one Issue. Returns True if a draft (or dry-run script) was produced."""
+def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
+    """Attempt one Issue.
+
+    Returns NEEDS_PDF when no full text was reachable (nothing was spent), or
+    DRAFTED once a draft (or dry-run script) exists. Anything else raises.
+    """
+    subprocess.run(["git", "checkout", "-q", BASE_BRANCH], check=True)
     number = issue["number"]
     metadata = github_issue.parse_metadata(issue["body"]) or {}
     title = metadata.get("title") or issue["title"]
     doi = metadata.get("doi") or ""
     print(f"\n[episode] Issue #{number}: {title[:70]}")
 
-    resolved = paper_text.resolve(
-        doi=doi, pdf_url=metadata.get("pdf_url") or "", issue_number=number
-    )
+    try:
+        resolved = paper_text.resolve(
+            doi=doi, pdf_url=metadata.get("pdf_url") or "", issue_number=number
+        )
+    except paper_text.TransientFetchError as exc:
+        print(f"  [episode] full text temporarily unreachable; retrying next run ({exc})")
+        return DEFERRED
     if not resolved:
         print("  [episode] no full text reachable; requesting a PDF")
         if not dry_run:
             request_pdf(issue, metadata)
-        return False
+        return NEEDS_PDF
     full_text, provenance = resolved
+    full_text = generate_script.prepare_paper_text(full_text)
 
-    context = memory.memory_context()
+    context = memory.memory_context(
+        " ".join(
+            [
+                title,
+                metadata.get("digest_excerpt") or "",
+                full_text[:4000],
+            ]
+        )
+    )
     turns = generate_script.draft(
         client, paper_text=full_text, metadata=metadata, memory=context
     )
@@ -336,7 +409,7 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> bool:
 
     if dry_run:
         print(f"  [episode] dry run — wrote {script_md.relative_to(ROOT)}")
-        return True
+        return DRAFTED
 
     INBOX.mkdir(parents=True, exist_ok=True)
     wav_path = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / f"{stem}.wav"
@@ -372,7 +445,16 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> bool:
         "Listen to the audio in the PR, then merge to publish or close to discard.",
     )
     print(f"  [episode] review PR: {url}")
-    return True
+    return DRAFTED
+
+
+def is_run_fatal(exc: Exception) -> bool:
+    """Errors that will hit every remaining Issue too, so the run should stop."""
+    if isinstance(exc, (anthropic.AuthenticationError, anthropic.PermissionDeniedError)):
+        return True
+    if isinstance(exc, anthropic.BadRequestError) and "usage limit" in str(exc).lower():
+        return True
+    return False
 
 
 def main() -> None:
@@ -399,24 +481,38 @@ def main() -> None:
 
     print(
         f"{len(issues)} eligible issue(s), {len(emailed)} with an emailed PDF; "
-        f"at most {MAX_PER_RUN} other draft(s) this run"
+        f"at most {MAX_PER_RUN} other paid attempt(s) this run"
     )
 
+    if issues and not args.dry_run and not can_open_prs():
+        sys.exit(
+            "GH_TOKEN cannot create pull requests, so no draft could be delivered. "
+            "Stopping before any paid calls. Give the GH_PAT token "
+            "'Pull requests: Read and write' on this repository."
+        )
+
     client = anthropic.Anthropic() if issues else None
-    drafts = failures = 0
+    attempts = drafts = failures = 0
     for issue in issues:
         number = issue["number"]
         from_email = number in emailed
-        # Emailed PDFs are deliberate requests and don't count against the cap.
-        if not from_email and drafts >= MAX_PER_RUN:
+        # Emailed PDFs are deliberate requests and sit outside the cap.
+        if not from_email and attempts >= MAX_PER_RUN:
             continue
+        fatal = False
         try:
-            if process(issue, client, dry_run=args.dry_run) and not from_email:
+            outcome = process(issue, client, dry_run=args.dry_run)
+            if outcome == DRAFTED and not from_email:
+                attempts += 1
+            if outcome == DRAFTED:
                 drafts += 1
         except Exception as exc:  # noqa: BLE001 - one bad paper shouldn't stop the sweep
             failures += 1
+            if not from_email:
+                attempts += 1  # a failure still spent money; it counts
+            fatal = is_run_fatal(exc)
             print(f"  [episode] FAILED on #{number}: {exc}")
-            if not args.dry_run:
+            if not args.dry_run and not fatal:
                 add_label(number, LABEL_FAILED)
                 retry = (
                     "Reply to the PDF-request email again to retry."
@@ -429,11 +525,16 @@ def main() -> None:
                 )
         finally:
             # Consume the reply whether or not the episode succeeded, so a
-            # failing PDF can't re-trigger (and re-bill) every poll.
-            if from_email and not args.dry_run:
+            # failing PDF can't re-trigger (and re-bill) every poll — except on
+            # a run-wide failure, which says nothing about this PDF.
+            if from_email and not args.dry_run and not fatal:
                 pdf_mailbox.mark_processed(number)
+        if fatal:
+            print("\n[episode] stopping: this error will affect every remaining issue")
+            break
 
-    for number in set(emailed) - {i["number"] for i in issues}:
+    unprocessed = set(emailed) - {i["number"] for i in issues}
+    for number in unprocessed:
         print(f"[mailbox] #{number}: PDF received but Issue isn't eligible; consuming reply")
         if not args.dry_run:
             pdf_mailbox.mark_processed(number)
@@ -441,7 +542,7 @@ def main() -> None:
     if not args.mailbox_only and args.issue is None and not args.dry_run:
         request_missing_pdfs(github_issue.list_pending_issues())
 
-    print(f"\n{drafts} draft(s) produced, {failures} failure(s)")
+    print(f"\n{drafts} draft(s) produced, {attempts} paid attempt(s), {failures} failure(s)")
     if failures:
         sys.exit(f"{failures} issue(s) failed")
 

@@ -9,12 +9,14 @@ Two passes:
      changes it made. That list goes in the review PR so a human can see what
      the check caught.
 
-The paper text is the largest input and is identical across both passes, so it
-sits behind a cache breakpoint.
+Both passes share one cached prefix — the show prompt as the system message,
+then the paper, then the memory — so the verify pass reads it from cache rather
+than paying to process it again. Only the final instruction block differs.
 """
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import anthropic
@@ -29,6 +31,9 @@ TARGET_MAX_CHARS = 10_800
 # Measured across the existing back catalogue and confirmed on the Gemini 2.5
 # multi-speaker voices: ~1,060 spoken characters per minute.
 CHARS_PER_MINUTE = 1060
+# Output includes adaptive thinking. The verify pass on a 205k-char paper hit a
+# 32k ceiling and the whole attempt was lost; streaming makes 64k safe.
+MAX_OUTPUT_TOKENS = 64_000
 
 TURNS_SCHEMA = {
     "type": "object",
@@ -64,10 +69,11 @@ VERIFIED_SCHEMA = {
     "additionalProperties": False,
 }
 
-VERIFY_SYSTEM = """You are fact-checking a draft episode script for the science \
-podcast "Science TLDR" against the paper it covers. The audience are working \
-scientists, several of whom work on exactly these molecules, so an overstated \
-or unsupported claim is the most costly error possible.
+VERIFY_INSTRUCTIONS = """This time you are not writing the episode: you are \
+fact-checking a draft script, written to the show prompt above, against the \
+paper it covers. The audience are working scientists, several of whom work on \
+exactly these molecules, so an overstated or unsupported claim is the most \
+costly error possible.
 
 Check, in this order:
 
@@ -108,20 +114,55 @@ def estimated_minutes(turns: list[dict]) -> float:
     return total_chars(turns) / CHARS_PER_MINUTE
 
 
-def _paper_block(paper_text: str, metadata: dict) -> list[dict]:
-    """Paper first and cached: it is the same across the draft and verify passes."""
-    return [
+# Papers arrive with reference lists, supplementary tables and publisher
+# boilerplate; past this length the extra text costs money without improving
+# the script. 120k chars is ~30k tokens — room for any main text we've seen.
+MAX_PAPER_CHARS = 120_000
+REFERENCES_RE = re.compile(
+    r"\n\s*(References|REFERENCES|Bibliography|Literature Cited)\s*\n"
+)
+
+
+def prepare_paper_text(text: str) -> str:
+    """Drop the reference list and cap the length, logging what was cut."""
+    original = len(text)
+    # Only treat a References heading as the tail if it's in the back half —
+    # an early match is more likely a table of contents or a figure label.
+    matches = [m for m in REFERENCES_RE.finditer(text) if m.start() > len(text) * 0.5]
+    if matches:
+        text = text[: matches[-1].start()]
+    if len(text) > MAX_PAPER_CHARS:
+        text = text[:MAX_PAPER_CHARS]
+    if len(text) < original:
+        print(f"  [script] paper text trimmed {original:,} -> {len(text):,} chars")
+    return text
+
+
+def _shared_prefix(paper_text: str, metadata: dict, memory: str) -> list[dict]:
+    """The cached prefix both passes share: paper, then memory.
+
+    Both passes also use the same system prompt, so the verify pass reads this
+    whole prefix from cache instead of paying to process it a second time.
+    Caching is a prefix match — keep anything that differs between the two
+    passes after these blocks.
+    """
+    blocks = [
         {
             "type": "text",
             "text": (
                 "Paper metadata (JSON):\n"
-                + json.dumps(metadata, indent=2, ensure_ascii=False)
+                + json.dumps(metadata, indent=2, ensure_ascii=False, sort_keys=True)
                 + "\n\nFull text of the paper:\n"
                 + paper_text
             ),
             "cache_control": {"type": "ephemeral"},
         }
     ]
+    if memory:
+        blocks.append(
+            {"type": "text", "text": memory, "cache_control": {"type": "ephemeral"}}
+        )
+    return blocks
 
 
 def draft(
@@ -131,10 +172,7 @@ def draft(
     metadata: dict,
     memory: str,
 ) -> list[dict]:
-    system = claude.cached_system(host_prompt())
-    content = _paper_block(paper_text, metadata)
-    if memory:
-        content.append({"type": "text", "text": memory})
+    content = _shared_prefix(paper_text, metadata, memory)
     content.append(
         {
             "type": "text",
@@ -146,7 +184,12 @@ def draft(
         }
     )
     result = claude.structured(
-        client, system=system, user=content, schema=TURNS_SCHEMA, effort="high"
+        client,
+        system=claude.cached_system(host_prompt()),
+        user=content,
+        schema=TURNS_SCHEMA,
+        effort="high",
+        max_tokens=MAX_OUTPUT_TOKENS,
     )
     turns = result["turns"]
     print(
@@ -164,14 +207,13 @@ def verify(
     metadata: dict,
     memory: str,
 ) -> tuple[list[dict], list[str]]:
-    content = _paper_block(paper_text, metadata)
-    if memory:
-        content.append({"type": "text", "text": memory})
+    content = _shared_prefix(paper_text, metadata, memory)
     content.append(
         {
             "type": "text",
             "text": (
-                "Draft script to check (JSON):\n"
+                VERIFY_INSTRUCTIONS
+                + "\n\nDraft script to check (JSON):\n"
                 + json.dumps({"turns": turns}, indent=2, ensure_ascii=False)
                 + f"\n\nThe draft is {total_chars(turns)} characters of spoken "
                 f"text; the target window is {TARGET_MIN_CHARS}-{TARGET_MAX_CHARS}."
@@ -180,10 +222,11 @@ def verify(
     )
     result = claude.structured(
         client,
-        system=claude.cached_system(VERIFY_SYSTEM),
+        system=claude.cached_system(host_prompt()),
         user=content,
         schema=VERIFIED_SCHEMA,
         effort="high",
+        max_tokens=MAX_OUTPUT_TOKENS,
     )
     checked, changes = result["turns"], result["changes"]
     print(

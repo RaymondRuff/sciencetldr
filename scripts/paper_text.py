@@ -46,6 +46,28 @@ def _clean(text: str) -> str:
     return text.strip()
 
 
+class TransientFetchError(RuntimeError):
+    """No full text was found, but at least one source failed only temporarily.
+
+    A rate limit or server error says nothing about whether the paper is open,
+    so the caller should retry on a later run rather than ask for a PDF.
+    """
+
+
+_transient: list[str] = []
+
+
+def _record(exc: Exception) -> None:
+    """Remember failures that might succeed on a later run."""
+    status = getattr(getattr(exc, "response", None), "status_code", None)
+    if (
+        isinstance(exc, (requests.Timeout, requests.ConnectionError))
+        or status == 429
+        or (status is not None and status >= 500)
+    ):
+        _transient.append(f"{type(exc).__name__}: {exc}")
+
+
 def pdf_dirs() -> list[tuple[Path, str]]:
     """Where a manually supplied PDF may be: (directory, provenance label).
 
@@ -123,6 +145,7 @@ def from_europe_pmc(doi: str) -> Optional[tuple[str, str]]:
             return None
         return text, f"europepmc:{pmcid}"
     except Exception as exc:  # noqa: BLE001
+        _record(exc)
         print(f"  [paper] Europe PMC lookup failed: {exc}")
         return None
 
@@ -136,6 +159,7 @@ def from_pdf_url(pdf_url: str) -> Optional[tuple[str, str]]:
         )
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001 - 403 from publishers is routine
+        _record(exc)
         print(f"  [paper] PDF download failed: {exc}")
         return None
     text = pdf_bytes_to_text(resp.content)
@@ -157,6 +181,7 @@ def from_publisher_html(doi: str) -> Optional[tuple[str, str]]:
         )
         resp.raise_for_status()
     except Exception as exc:  # noqa: BLE001
+        _record(exc)
         print(f"  [paper] publisher HTML fetch failed: {exc}")
         return None
     soup = BeautifulSoup(resp.text, "lxml")
@@ -175,7 +200,12 @@ def from_publisher_html(doi: str) -> Optional[tuple[str, str]]:
 def resolve(
     *, doi: str = "", pdf_url: str = "", issue_number: int | None = None
 ) -> Optional[tuple[str, str]]:
-    """Return (full_text, provenance) or None if no full text is reachable."""
+    """Return (full_text, provenance), or None if no full text is reachable.
+
+    Raises TransientFetchError if nothing was found but a source failed with a
+    rate limit, server error or timeout — worth retrying, not a missing PDF.
+    """
+    _transient.clear()
     for attempt in (
         lambda: from_local_pdf(doi, issue_number),
         lambda: from_europe_pmc(doi),
@@ -187,4 +217,6 @@ def resolve(
             text, source = result
             print(f"  [paper] full text via {source} ({len(text)} chars)")
             return text, source
+    if _transient:
+        raise TransientFetchError("; ".join(_transient))
     return None
