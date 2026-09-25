@@ -64,6 +64,8 @@ gives cleaner attribution.
 | `NCBI_API_KEY` | from step 2 (optional but recommended) |
 | `GH_PAT` | from step 2 (optional; falls back to `GITHUB_TOKEN`) |
 | `GEMINI_API_KEY` | from [Google AI Studio](https://aistudio.google.com/apikey) — required for episode audio |
+| `PDF_REQUEST_TO` | your personal email — where PDF requests are sent, and a sender whose PDF replies are accepted |
+| `PDF_SENDER_ALLOWLIST` | optional: extra comma-separated addresses allowed to reply with PDFs |
 
 Optional repository **variable** (Settings → Secrets and variables → Actions → Variables):
 

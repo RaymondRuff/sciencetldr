@@ -23,9 +23,9 @@ The only weekly step is listening to the draft and merging the PR. Audio generat
 | Cross-episode memory | [`scripts/memory.py`](scripts/memory.py) |
 | Orchestration + review PR | [`scripts/generate_episode.py`](scripts/generate_episode.py) |
 
-**Issue labels drive the state machine:** `podcast-pending` (eligible) → `needs-pdf` (no reachable full text — drop a PDF at `inbox/pdfs/issue-NN.pdf`) → `episode-in-review` (draft PR open) → closed on publish. A failed run gets `generation-failed`; remove the label to retry.
+**Issue labels drive the state machine:** `podcast-pending` (eligible) → `needs-pdf` + `pdf-requested` (no reachable full text; a request was emailed) → `episode-in-review` (draft PR open) → closed on publish. A failed run gets `generation-failed`; remove the label to retry.
 
-Publishers often refuse scripted downloads even for open-access papers, which is what `needs-pdf` exists for.
+**Papers without open full text are handled by email.** Publishers often refuse scripted downloads even for open-access papers, and paywalled PDFs must not be committed to this public repository. So when no full text is reachable, the workflow emails a request from the podcast account; **reply with the PDF attached** and a mailbox check every 30 minutes ([`scripts/pdf_mailbox.py`](scripts/pdf_mailbox.py)) picks it up and generates the episode. Only allow-listed senders whose mail passes Gmail's authentication checks are accepted, and the PDF never leaves the mailbox and the build runner.
 
 ## Feed
 

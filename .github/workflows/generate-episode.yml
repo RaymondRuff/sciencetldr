@@ -2,6 +2,13 @@ name: generate-episode
 
 # Turns podcast-pending Issues into review PRs carrying a finished episode.
 # Merging the PR drops the mp3 into inbox/, which fires the publish workflow.
+#
+# Two schedules:
+#   - daily: the full sweep (one draft per run by default, plus emailing PDF
+#     requests for any Issue whose full text can't be reached)
+#   - every 30 min: a mailbox check for PDFs you've emailed back. It uses only
+#     the standard library and stops before installing anything if the inbox
+#     has nothing new, so a quiet poll costs seconds.
 
 on:
   issues:
@@ -11,9 +18,8 @@ on:
     paths:
       - 'inbox/pdfs/**.pdf'
   schedule:
-    # Daily sweep at 14:00 UTC — catches anything the event triggers missed and
-    # picks up Issues unblocked by a PDF drop.
-    - cron: '0 14 * * *'
+    - cron: '0 14 * * *'      # full sweep
+    - cron: '*/30 * * * *'    # mailbox poll
   workflow_dispatch:
     inputs:
       issue:
@@ -42,6 +48,12 @@ jobs:
       (github.event.action == 'labeled' &&
         github.event.label.name == 'podcast-pending')
     runs-on: ubuntu-latest
+    env:
+      POLL: ${{ github.event.schedule == '*/30 * * * *' }}
+      PDF_DROP_DIR: ${{ runner.temp }}/tldr-pdfs
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
+      PDF_SENDER_ALLOWLIST: ${{ secrets.PDF_SENDER_ALLOWLIST }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,18 +61,26 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
+      - name: Check mailbox for emailed PDFs
+        id: mailbox
+        run: python3 scripts/pdf_mailbox.py check
+
       - name: Install ffmpeg
+        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
       - name: Install uv
+        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
 
       - name: Sync dependencies
+        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         run: uv sync
 
       - name: Generate episode draft(s)
+        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -68,7 +88,9 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           MAX_EPISODES_PER_RUN: ${{ vars.MAX_EPISODES_PER_RUN || '3' }}
         run: |
-          if [ -n "${{ inputs.issue }}" ]; then
+          if [ "$POLL" = "true" ]; then
+            uv run python scripts/generate_episode.py --mailbox-only
+          elif [ -n "${{ inputs.issue }}" ]; then
             uv run python scripts/generate_episode.py --issue "${{ inputs.issue }}"
           else
             uv run python scripts/generate_episode.py

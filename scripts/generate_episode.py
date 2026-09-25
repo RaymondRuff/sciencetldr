@@ -8,14 +8,19 @@ button and nothing reaches the feed unreviewed.
 
 Issue label states:
   podcast-pending        eligible (set by the Monday/Friday selection scripts)
-  needs-pdf              no full text reachable; waiting on a manual PDF drop
+  needs-pdf              no full text reachable; waiting on a PDF
+  pdf-requested          a PDF request has been emailed (see pdf_mailbox.py)
   episode-in-review      a draft PR is open
   generation-failed      the run errored; needs a look before retrying
 
+A PDF emailed back in reply to a request is generated straight away and does not
+count against MAX_EPISODES_PER_RUN — replying is an explicit request.
+
 Usage:
-  python scripts/generate_episode.py            # sweep eligible issues
-  python scripts/generate_episode.py --issue 45 # one specific issue
-  python scripts/generate_episode.py --dry-run  # script only, no audio, no PR
+  python scripts/generate_episode.py                 # sweep eligible issues
+  python scripts/generate_episode.py --issue 45      # one specific issue
+  python scripts/generate_episode.py --mailbox-only  # only emailed-PDF issues
+  python scripts/generate_episode.py --dry-run       # script only, no audio, no PR
 """
 from __future__ import annotations
 
@@ -38,6 +43,7 @@ import generate_script
 import github_issue
 import memory
 import paper_text
+import pdf_mailbox
 import tts_dialogue
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -46,6 +52,7 @@ GENERATED = ROOT / "generated"
 
 LABEL_PENDING = "podcast-pending"
 LABEL_NEEDS_PDF = "needs-pdf"
+LABEL_PDF_REQUESTED = "pdf-requested"
 LABEL_IN_REVIEW = "episode-in-review"
 LABEL_FAILED = "generation-failed"
 
@@ -55,12 +62,18 @@ MAX_PER_RUN = int(os.environ.get("MAX_EPISODES_PER_RUN", "3"))
 NEEDS_PDF_COMMENT = """No open-access full text could be reached for this paper \
 automatically{reason}.
 
-To unblock it, download the PDF and commit it as \
-[`inbox/pdfs/issue-{number}.pdf`]({pdf_dir}). The generator picks it up within a \
-few minutes and this label clears itself.
+{how}
 
 Publishers often refuse scripted downloads even for open-access articles, so \
 this step can be needed even when the Issue lists a PDF link."""
+
+HOW_EMAIL = """A request has been emailed. **Reply to that email with the PDF \
+attached** and the episode generates within about half an hour. The PDF stays \
+in the mailbox and is never committed to this public repository."""
+
+HOW_COMMIT = """To unblock it, reply to a PDF-request email if one arrives, or — \
+only for openly licensed papers, since this repository is public — commit the \
+PDF as [`inbox/pdfs/issue-{number}.pdf`]({pdf_dir})."""
 
 
 def gh(args: list[str]) -> str:
@@ -90,22 +103,30 @@ def issue_labels(issue: dict) -> set[str]:
     }
 
 
-def eligible_issues(explicit: int | None) -> list[dict]:
-    """Issues worth attempting, oldest first.
+def eligible_issues(
+    issues: list[dict], explicit: int | None, emailed: set[int]
+) -> list[dict]:
+    """Issues worth attempting: those with an emailed PDF first, then oldest first.
 
     Not capped here: the cap in main() counts drafts actually produced, so an
     Issue that turns out to need a PDF doesn't use up the run.
     """
-    issues = github_issue.list_pending_issues()
     if explicit is not None:
         chosen = [i for i in issues if i["number"] == explicit]
         if not chosen:
             raise SystemExit(f"Issue #{explicit} is not an open {LABEL_PENDING} issue")
         return chosen
 
-    ready = []
+    with_pdf, rest = [], []
     for issue in issues:
         labels = issue_labels(issue)
+        if LABEL_IN_REVIEW in labels:
+            continue
+        if issue["number"] in emailed:
+            # A PDF reply is an explicit request to generate — including a
+            # retry after a failure, so it overrides generation-failed.
+            with_pdf.append(issue)
+            continue
         if labels & SKIP_LABELS:
             continue
         meta = github_issue.parse_metadata(issue["body"]) or {}
@@ -113,8 +134,65 @@ def eligible_issues(explicit: int | None) -> list[dict]:
             meta.get("doi", ""), issue["number"]
         ):
             continue  # still waiting on the human
-        ready.append(issue)
-    return ready
+        rest.append(issue)
+    return with_pdf + rest
+
+
+def request_pdf(issue: dict, metadata: dict) -> None:
+    """Mark an Issue as waiting on a PDF and ask for one — each step only once."""
+    number = issue["number"]
+    labels = issue_labels(issue)
+    title = metadata.get("title") or issue["title"]
+
+    emailed = LABEL_PDF_REQUESTED in labels
+    if not emailed:
+        emailed = pdf_mailbox.request(
+            number,
+            title=title,
+            doi=metadata.get("doi") or "",
+            journal=metadata.get("journal") or "",
+        )
+        if emailed:
+            add_label(number, LABEL_PDF_REQUESTED)
+
+    if LABEL_NEEDS_PDF not in labels:
+        add_label(number, LABEL_NEEDS_PDF)
+        how = HOW_EMAIL if emailed else HOW_COMMIT.format(
+            number=number,
+            pdf_dir="https://github.com/RaymondRuff/sciencetldr/tree/main/inbox/pdfs",
+        )
+        github_issue.comment(
+            number,
+            NEEDS_PDF_COMMENT.format(
+                reason=" (the publisher refused the download)"
+                if metadata.get("pdf_url")
+                else "",
+                how=how,
+            ),
+        )
+
+
+def request_missing_pdfs(issues: list[dict]) -> None:
+    """Ask for PDFs up front, so replies can arrive before an Issue's turn.
+
+    Checks full-text availability only (HTTP, no model calls). Covers Issues the
+    sweep didn't reach this run, and Issues marked needs-pdf before emailing
+    existed.
+    """
+    for issue in issues:
+        labels = issue_labels(issue)
+        if labels & {LABEL_IN_REVIEW, LABEL_PDF_REQUESTED}:
+            continue
+        meta = github_issue.parse_metadata(issue["body"]) or {}
+        if LABEL_NEEDS_PDF not in labels:
+            if paper_text.resolve(
+                doi=meta.get("doi") or "",
+                pdf_url=meta.get("pdf_url") or "",
+                issue_number=issue["number"],
+            ):
+                continue
+        print(f"[episode] #{issue['number']}: no full text; requesting a PDF")
+        request_pdf(issue, meta)
 
 
 def current_branch() -> str:
@@ -218,19 +296,9 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> bool:
         doi=doi, pdf_url=metadata.get("pdf_url") or "", issue_number=number
     )
     if not resolved:
-        print("  [episode] no full text reachable; asking for a manual PDF")
-        # Only ask once: a needs-pdf Issue is re-attempted only after a PDF
-        # lands, and an unreadable PDF shouldn't earn a second identical comment.
-        if not dry_run and LABEL_NEEDS_PDF not in issue_labels(issue):
-            add_label(number, LABEL_NEEDS_PDF)
-            github_issue.comment(
-                number,
-                NEEDS_PDF_COMMENT.format(
-                    number=number,
-                    reason=" (the publisher refused the download)" if metadata.get("pdf_url") else "",
-                    pdf_dir="https://github.com/RaymondRuff/sciencetldr/tree/main/inbox/pdfs",
-                ),
-            )
+        print("  [episode] no full text reachable; requesting a PDF")
+        if not dry_run:
+            request_pdf(issue, metadata)
         return False
     full_text, provenance = resolved
 
@@ -292,7 +360,8 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> bool:
         duration_s=duration,
         provenance=provenance,
     )
-    remove_label(number, LABEL_NEEDS_PDF)
+    for stale in (LABEL_NEEDS_PDF, LABEL_PDF_REQUESTED, LABEL_FAILED):
+        remove_label(number, stale)
     add_label(number, LABEL_IN_REVIEW)
     github_issue.comment(
         number,
@@ -310,6 +379,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--issue", type=int, help="process one specific Issue number")
     parser.add_argument(
+        "--mailbox-only",
+        action="store_true",
+        help="only generate Issues whose PDF arrived by email (the frequent poll)",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="write the script but skip synthesis, commits and the PR",
@@ -317,30 +391,56 @@ def main() -> None:
     args = parser.parse_args()
 
     github_issue.ensure_auth()
-    issues = eligible_issues(args.issue)
-    if not issues:
-        print("No eligible podcast-pending issues.")
-        return
-    print(f"{len(issues)} eligible issue(s); will produce at most {MAX_PER_RUN} draft(s)")
+    emailed = pdf_mailbox.received()
+    all_pending = github_issue.list_pending_issues()
+    issues = eligible_issues(all_pending, args.issue, set(emailed))
+    if args.mailbox_only:
+        issues = [i for i in issues if i["number"] in emailed]
 
-    client = anthropic.Anthropic()
+    print(
+        f"{len(issues)} eligible issue(s), {len(emailed)} with an emailed PDF; "
+        f"at most {MAX_PER_RUN} other draft(s) this run"
+    )
+
+    client = anthropic.Anthropic() if issues else None
     drafts = failures = 0
     for issue in issues:
-        if drafts >= MAX_PER_RUN:
-            break
+        number = issue["number"]
+        from_email = number in emailed
+        # Emailed PDFs are deliberate requests and don't count against the cap.
+        if not from_email and drafts >= MAX_PER_RUN:
+            continue
         try:
-            if process(issue, client, dry_run=args.dry_run):
+            if process(issue, client, dry_run=args.dry_run) and not from_email:
                 drafts += 1
         except Exception as exc:  # noqa: BLE001 - one bad paper shouldn't stop the sweep
             failures += 1
-            print(f"  [episode] FAILED on #{issue['number']}: {exc}")
+            print(f"  [episode] FAILED on #{number}: {exc}")
             if not args.dry_run:
-                add_label(issue["number"], LABEL_FAILED)
-                github_issue.comment(
-                    issue["number"],
-                    f"Episode generation failed:\n\n```\n{exc}\n```\n\n"
-                    "Remove the `generation-failed` label to retry.",
+                add_label(number, LABEL_FAILED)
+                retry = (
+                    "Reply to the PDF-request email again to retry."
+                    if from_email
+                    else "Remove the `generation-failed` label to retry."
                 )
+                github_issue.comment(
+                    number,
+                    f"Episode generation failed:\n\n```\n{exc}\n```\n\n{retry}",
+                )
+        finally:
+            # Consume the reply whether or not the episode succeeded, so a
+            # failing PDF can't re-trigger (and re-bill) every poll.
+            if from_email and not args.dry_run:
+                pdf_mailbox.mark_processed(number)
+
+    for number in set(emailed) - {i["number"] for i in issues}:
+        print(f"[mailbox] #{number}: PDF received but Issue isn't eligible; consuming reply")
+        if not args.dry_run:
+            pdf_mailbox.mark_processed(number)
+
+    if not args.mailbox_only and args.issue is None and not args.dry_run:
+        request_missing_pdfs(github_issue.list_pending_issues())
+
     print(f"\n{drafts} draft(s) produced, {failures} failure(s)")
     if failures:
         sys.exit(f"{failures} issue(s) failed")
