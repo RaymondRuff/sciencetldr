@@ -4,8 +4,9 @@ Abstracts are not enough: the skeptical content of an episode lives in the
 results, the methods and the authors' own limitations paragraph. This module
 tries, in order:
 
-  1. A PDF the user dropped in `inbox/pdfs/` (issue-NN.pdf, or any PDF whose
-     name contains the DOI suffix) — the manual escape hatch.
+  1. A PDF supplied by hand (issue-NN.pdf, or any PDF whose name contains the
+     DOI suffix): first one emailed in and saved to $PDF_DROP_DIR by
+     pdf_mailbox.py, then one committed to `inbox/pdfs/`.
   2. Europe PMC full text XML, for anything in the PMC open-access subset.
   3. The open-access PDF URL recorded on the Issue.
   4. The publisher's HTML landing page.
@@ -17,6 +18,7 @@ fall back to asking for a manual PDF drop rather than treating it as an error.
 from __future__ import annotations
 
 import io
+import os
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -45,23 +47,37 @@ def _clean(text: str) -> str:
     return text.strip()
 
 
+def pdf_dirs() -> list[tuple[Path, str]]:
+    """Where a manually supplied PDF may be: (directory, provenance label).
+
+    The emailed-PDF drop directory comes first — it lives only on the runner,
+    which is where paywalled PDFs belong. `inbox/pdfs/` in the repo is public
+    and suits only openly licensed papers.
+    """
+    dirs = []
+    drop = os.environ.get("PDF_DROP_DIR")
+    if drop:
+        dirs.append((Path(drop), "emailed-pdf"))
+    dirs.append((PDF_INBOX, "repo-pdf"))
+    return [(d, label) for d, label in dirs if d.is_dir()]
+
+
 def from_local_pdf(doi: str, issue_number: int | None) -> Optional[tuple[str, str]]:
-    """Text from a PDF in inbox/pdfs/, if one matching this paper is there."""
-    if not PDF_INBOX.is_dir():
-        return None
-    candidates: list[Path] = []
-    if issue_number is not None:
-        candidates += list(PDF_INBOX.glob(f"issue-{issue_number}.pdf"))
-        candidates += list(PDF_INBOX.glob(f"issue-{issue_number:03d}.pdf"))
-    if doi:
-        suffix = doi.rsplit("/", 1)[-1].lower()
-        candidates += [
-            p for p in PDF_INBOX.glob("*.pdf") if suffix and suffix in p.name.lower()
-        ]
-    for path in candidates:
-        text = pdf_bytes_to_text(path.read_bytes())
-        if text and len(text) >= MIN_USEFUL_CHARS:
-            return text, f"local-pdf:{path.name}"
+    """Text from a supplied PDF matching this paper, if there is one."""
+    suffix = doi.rsplit("/", 1)[-1].lower() if doi else ""
+    for directory, label in pdf_dirs():
+        candidates: list[Path] = []
+        if issue_number is not None:
+            candidates += list(directory.glob(f"issue-{issue_number}.pdf"))
+            candidates += list(directory.glob(f"issue-{issue_number:03d}.pdf"))
+        if suffix:
+            candidates += [
+                p for p in directory.glob("*.pdf") if suffix in p.name.lower()
+            ]
+        for path in candidates:
+            text = pdf_bytes_to_text(path.read_bytes())
+            if text and len(text) >= MIN_USEFUL_CHARS:
+                return text, f"{label}:{path.name}"
     return None
 
 
