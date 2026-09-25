@@ -111,6 +111,12 @@ def extract_comment(audio_path: Path) -> str | None:
                     text = tags[key].text
                     if text:
                         return str(text[0])
+            # ffmpeg's `-metadata comment=` lands in a user-defined text frame
+            # rather than COMM; read it too, or such a file silently falls
+            # through to pairing with the oldest pending Issue.
+            for key in ("TXXX:comment", "TXXX:COMMENT"):
+                if key in tags and tags[key].text:
+                    return str(tags[key].text[0])
         elif suffix in (".m4a", ".mp4a"):
             mp4 = MP4(audio_path)
             if not mp4.tags:

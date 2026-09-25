@@ -18,6 +18,7 @@ import wave
 from pathlib import Path
 
 from google import genai
+from mutagen.id3 import COMM, ID3
 
 # Fixed per host so the show stays recognisable episode to episode.
 # Kore reads firm and measured (Nadia, who explains); Achird reads friendly and
@@ -117,12 +118,16 @@ def to_mp3(wav_path: Path, mp3_path: Path, *, doi: str = "", title: str = "") ->
     to pull canonical metadata from CrossRef, so the tag is what links this
     episode back to its paper.
     """
-    comment = f"DOI: {doi}" if doi else ""
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav_path)]
     if title:
         cmd += ["-metadata", f"title={title}"]
-    if comment:
-        cmd += ["-metadata", f"comment={comment}"]
     cmd += ["-b:a", "128k", "-ac", "1", str(mp3_path)]
     subprocess.run(cmd, check=True)
+    if doi:
+        # Not via ffmpeg's `-metadata comment=`: for mp3 it writes a TXXX frame,
+        # which publish_episode (reading COMM, as media players do) never saw —
+        # the episode would have been paired with the oldest pending Issue.
+        tags = ID3(mp3_path)
+        tags.setall("COMM", [COMM(encoding=3, lang="eng", desc="", text=[f"DOI: {doi}"])])
+        tags.save(mp3_path)
     print(f"  [tts] encoded {mp3_path.name} ({mp3_path.stat().st_size / 1e6:.1f} MB)")
