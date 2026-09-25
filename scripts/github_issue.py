@@ -60,7 +60,9 @@ class GhError(subprocess.CalledProcessError):
 
 
 def _run(args: list[str]) -> str:
-    result = subprocess.run(args, capture_output=True, text=True)
+    # gh emits UTF-8 (issue titles carry emoji); don't let a Windows locale
+    # codepage decide how to read it.
+    result = subprocess.run(args, capture_output=True, text=True, encoding="utf-8")
     if result.returncode != 0:
         raise GhError(result.returncode, args, output=result.stdout, stderr=result.stderr)
     return result.stdout
@@ -121,7 +123,7 @@ def list_pending_issues() -> list[dict]:
         "gh", "issue", "list",
         "--state", "open",
         "--label", PENDING_LABEL,
-        "--json", "number,title,body,createdAt",
+        "--json", "number,title,body,createdAt,labels",
         "--limit", "50",
     ])
     issues = json.loads(out)

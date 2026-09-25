@@ -32,10 +32,15 @@ concurrency:
 
 jobs:
   generate:
-    # On `issues` events, only act on the pending label.
+    # On `issues` events, react only to a new pending Issue — never to the
+    # pipeline's own labels (needs-pdf, episode-in-review, ...), each of which
+    # would otherwise start another run and cascade through the queue.
     if: >-
       github.event_name != 'issues' ||
-      contains(join(github.event.issue.labels.*.name, ','), 'podcast-pending')
+      (github.event.action == 'opened' &&
+        contains(join(github.event.issue.labels.*.name, ','), 'podcast-pending')) ||
+      (github.event.action == 'labeled' &&
+        github.event.label.name == 'podcast-pending')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
