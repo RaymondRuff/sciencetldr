@@ -1,0 +1,37 @@
+{
+  "episode_number": 82,
+  "title": "Trending — Substantial under-detection of human rabies cases in the United States",
+  "doi": "10.1038/s44528-026-00031-4",
+  "journal": "Communications Health",
+  "source": "friday-reddit (r/science top-trending pick)",
+  "one_line": "The authors treat deceased organ donors who turned out to have undiagnosed rabies as an accidental sample of the dead, and scale three such donors up to estimate that US surveillance confirms only ~7% of human rabies deaths.",
+  "key_claims": [
+    "Three of 239,251 US deceased donors in 2000–2024 died of undiagnosed rabies; scaled against 68,266,224 total US deaths this gives 856 undiagnosed rabies deaths (95% CI 213–2,220), i.e. 34.2/year (8.5–88.8).",
+    "Against 2.4 confirmed cases per year (2000–2024, incl. Puerto Rico), only ~7% of cases were confirmed (2.4/36.6); even the optimistic CI bound implies only ~22% detection.",
+    "Four undiagnosed rabies-infected deceased donors since 1978 (1978, 2004, 2011, 2024) caused six recipient deaths across the three earlier events; the 2024 donor was diagnosed only after a kidney recipient fell ill in February 2025.",
+    "The authors state the load-bearing assumption explicitly — donors carry average national rabies risk — and quantify falsification: donors would need ~14-fold elevated rabies risk for current counts to reflect complete surveillance.",
+    "They recommend public risk awareness, in-depth exposure histories, use of geographic/occupational/socioeconomic risk factors independent of stated exposure, and including rabies in the differential for unexplained fatal encephalitis."
+  ],
+  "limitations": [
+    "Deceased donors are not a random sample of the dead — brain death from encephalitis plausibly enriches the donor pool for rabies, and the paper does not test this.",
+    "The entire numerator is n = 3 events, so the tenfold-wide CI reflects Poisson noise alone.",
+    "The 95% CI does not incorporate uncertainty in the donor-selection assumption, so true uncertainty is wider than stated.",
+    "Authors note rabies risk and probability of becoming a donor may both be associated with geographical, occupational and socioeconomic factors, which could bias in either direction.",
+    "The self-reinforcing under-detection loop is offered as a hypothesis with mechanism, not as a measured effect; authors also note mechanisms differ from canine-rabies-endemic settings."
+  ],
+  "open_questions": [
+    "A systematic retrospective series of unexplained fatal encephalitis deaths in the US tested for rabies with a validated assay and defined denominator would give a detection rate directly.",
+    "Direct estimation of whether deceased donors are enriched for rabies (the 14-fold bar) relative to all decedents.",
+    "Whether transplant networks adopt routine rabies screening of donors with unexplained encephalitic death."
+  ],
+  "tags": [
+    "rabies",
+    "surveillance-undercount",
+    "organ-transplant",
+    "observational-inference",
+    "selection-bias",
+    "small-n",
+    "poisson-uncertainty",
+    "public-health"
+  ]
+}

@@ -66,13 +66,14 @@ Resolution: Ep 56 needs a prospective randomised trial of vaccination timed to I
 ## What counts as causal evidence outside the lab
 Several episodes lean on design rather than randomisation; the recurring question is when that is enough.
 
-- Eps 32, 73 and 80 are the strong cases: a birthdate discontinuity with the effect appearing for dementia and not other outcomes (32), occupation-level WFH exposure instrumented with the pre-pandemic Dingel–Neiman index giving ~4.2… sorry, a 1.3% employment gain per point of WFH and 68–85% of the disability employment rise (73), and registry-linked conscription scores revealing SES-staggered Flynn reversals that cancelled in the national mean (80).
+- Eps 32, 73 and 80 are the strong cases: a birthdate discontinuity with the effect appearing for dementia and not other outcomes (32), occupation-level WFH exposure instrumented with the pre-pandemic Dingel–Neiman index giving a 1.3% employment gain per point of WFH and 68–85% of the disability employment rise (73), and registry-linked conscription scores revealing SES-staggered Flynn reversals that cancelled in the national mean (80).
 - Eps 66 and 79 show the limits: half the conservative–liberal comorbidity divergence is unexplained by observable sorting, and the trust mechanism comes from a separate 2024 survey, not the same individuals (66); a 1-second maternal vocal response window predicts later ADHD/DBD in 158 dyads, but with six autism cases and degraded VHS audio (79).
 - Eps 42 and 55 are observational designs where the causal question is untested — soil and cherry microbiome predicting coffee flavour without inoculation trials (42), and guideline-era exposure standing in for individual adherence to early allergen introduction (55).
+- Ep 82 is the extreme of inference from a found sample: three undiagnosed rabies deaths among 239,251 deceased organ donors scale to ~34 US rabies deaths a year and ~7% surveillance detection — but the whole numerator is n = 3, the CI (213–2,220 deaths) captures only Poisson noise, and the load-bearing assumption is that donors carry average national risk. Its virtue is stating the falsification bar numerically (donors would need ~14-fold elevated rabies risk), which Eps 42, 55 and 66 never do.
 - Eps 72 and 77 randomise the exposure instead: preregistered elite-rhetoric quotes shifting Trump voters toward censorship support while non-Trump voters backlashed (72), and anonymised text negotiations where observers guessed gender at 43% — worse than chance — yet women still generated higher subjective value (77).
 - Ep 11's SURD framework, with its redundant/unique/synergistic decomposition and "causality leak" term, is the methodological backbone the show keeps reaching for, though it had no applied-domain demonstration in the notes.
 
-Watch for: whether Ep 73's effect reverses under return-to-office mandates — that would be a clean natural test of the causal claim.
+Watch for: whether Ep 73's effect reverses under return-to-office mandates, and whether Ep 82's estimate survives its own proposed direct test — a defined-denominator retrospective series of unexplained fatal encephalitis deaths assayed for rabies.
 
 ## Machines that decide, not just compute
 Where is the line between automation and autonomy, and does crossing it help?
