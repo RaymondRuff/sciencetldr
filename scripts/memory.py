@@ -99,7 +99,7 @@ accurate and compact.
 Write markdown with one `##` section per thread. Each section:
 - One sentence stating the open question the thread is about.
 - 2-5 bullets, each citing the episodes that bear on it by number and what they \
-added. Cite only episode numbers present in the cards you are given.
+added. Cite only episode numbers present in the cards or index you are given.
 - A closing line: what would resolve the thread, or what to watch for.
 
 Six to ten threads total. Prefer threads spanning three or more episodes. Drop \
@@ -233,10 +233,11 @@ def build_card(client: anthropic.Anthropic, episode_path: Path) -> dict:
     return card
 
 
-def cmd_build() -> int:
+def cmd_build() -> list[dict]:
+    """Write cards for episodes that lack one; return the new cards."""
     CARDS_DIR.mkdir(parents=True, exist_ok=True)
     client = anthropic.Anthropic()
-    written = 0
+    written: list[dict] = []
     for path in episode_files():
         try:
             number = json.loads(path.read_text(encoding="utf-8"))["episode_number"]
@@ -251,27 +252,51 @@ def cmd_build() -> int:
         target.write_text(
             json.dumps(card, indent=2, ensure_ascii=False), encoding="utf-8"
         )
-        written += 1
-    print(f"[memory] wrote {written} new card(s)")
+        written.append(card)
+    print(f"[memory] wrote {len(written)} new card(s)")
     return written
 
 
-def cmd_threads() -> None:
+def cmd_threads(new_cards: list[dict] | None = None) -> None:
+    """Rewrite threads.md.
+
+    With new_cards and an existing threads.md, revise incrementally: send only
+    the new cards, the current threads, and a one-line index of every episode
+    (so bullets can still cite anything). Re-sending all ~80 full cards costs
+    ~54k input tokens per publish for no benefit. Without new_cards, rebuild
+    from every card — the one-time backfill and the manual full refresh.
+    """
     cards = load_cards()
     if not cards:
         print("[memory] no cards yet; nothing to thread")
         return
     client = anthropic.Anthropic()
     existing = load_threads()
-    parts = [
-        "Episode cards (one JSON object per line):\n"
-        + "\n".join(json.dumps(c, ensure_ascii=False) for c in cards)
-    ]
-    if existing.strip():
-        parts.append(
-            "The current threads.md, which you are revising rather than "
-            "replacing wholesale:\n" + existing
+    incremental = bool(new_cards) and bool(existing.strip())
+    if incremental:
+        index = "\n".join(
+            f"{c.get('episode_number')}: {c.get('title', '')} — {c.get('one_line', '')}"
+            for c in cards
         )
+        parts = [
+            "Index of every episode (number: title — summary):\n" + index,
+            "New episode card(s) to fold in (one JSON object per line):\n"
+            + "\n".join(json.dumps(c, ensure_ascii=False) for c in new_cards),
+            "The current threads.md. Revise it to incorporate the new "
+            "episode(s): extend a thread they bear on, or add one if they open "
+            "a genuinely recurring question. Leave the rest as it is unless the "
+            "new evidence changes it:\n" + existing,
+        ]
+    else:
+        parts = [
+            "Episode cards (one JSON object per line):\n"
+            + "\n".join(json.dumps(c, ensure_ascii=False) for c in cards)
+        ]
+        if existing.strip():
+            parts.append(
+                "The current threads.md, which you are revising rather than "
+                "replacing wholesale:\n" + existing
+            )
     parts.append("Write the updated threads.md.")
     MEMORY_DIR.mkdir(parents=True, exist_ok=True)
     THREADS_PATH.write_text(
@@ -285,7 +310,8 @@ def cmd_threads() -> None:
         + "\n",
         encoding="utf-8",
     )
-    print(f"[memory] wrote {THREADS_PATH.relative_to(ROOT)} from {len(cards)} cards")
+    how = f"{len(new_cards)} new card(s), incremental" if incremental else f"all {len(cards)} cards"
+    print(f"[memory] wrote {THREADS_PATH.name} ({how})")
 
 
 def main() -> None:
@@ -295,8 +321,9 @@ def main() -> None:
     elif command == "threads":
         cmd_threads()
     elif command == "update":
-        if cmd_build():
-            cmd_threads()
+        new_cards = cmd_build()
+        if new_cards:
+            cmd_threads(new_cards)
         else:
             print("[memory] no new episodes; threads unchanged")
     else:
