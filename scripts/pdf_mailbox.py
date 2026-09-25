@@ -18,8 +18,9 @@ Deliberately standard-library only: the workflow runs `check` before installing
 dependencies, so a poll that finds nothing costs seconds.
 
 Usage:
-  python scripts/pdf_mailbox.py check    # save waiting PDFs to $PDF_DROP_DIR;
-                                         # writes found=true|false to $GITHUB_OUTPUT
+  python scripts/pdf_mailbox.py check    # save waiting PDFs to $RUNNER_TEMP/tldr-pdfs
+                                         # (or $PDF_DROP_DIR); writes found=true|false
+                                         # to $GITHUB_OUTPUT
 """
 from __future__ import annotations
 
