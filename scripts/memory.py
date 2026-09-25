@@ -15,6 +15,7 @@ Usage:
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -130,17 +131,58 @@ def load_threads() -> str:
     return THREADS_PATH.read_text(encoding="utf-8") if THREADS_PATH.exists() else ""
 
 
-def memory_context(limit: int | None = None) -> str:
-    """Cards plus threads, formatted for a script-generation prompt."""
+STOPWORDS = frozenset(
+    """the and for with from that this into their than then have been were
+    which while about after under over between within across using based
+    study analysis effect effects role human cells cell patients""".split()
+)
+FULL_CARDS = 8
+
+
+def _terms(text: str) -> set[str]:
+    return {
+        w
+        for w in re.findall(r"[a-z0-9][a-z0-9\-]{3,}", text.lower())
+        if w not in STOPWORDS
+    }
+
+
+def _relevance(card: dict, query: set[str]) -> int:
+    tags = {t.lower() for t in card.get("tags", [])}
+    tag_terms = set().union(*(_terms(t) for t in tags)) if tags else set()
+    text_terms = _terms(f"{card.get('title', '')} {card.get('one_line', '')}")
+    # Tags are curated to be reusable across episodes, so they count double.
+    return 2 * len(tag_terms & query) + len(text_terms & query)
+
+
+def memory_context(query_text: str = "", full_cards: int = FULL_CARDS) -> str:
+    """Memory for a script-generation prompt, sized to what the paper needs.
+
+    Sending every card in full costs ~54k input tokens per call and is almost
+    all irrelevant to any one paper. Instead: a one-line index of every episode
+    (so no callback target is lost), full cards only for the episodes that share
+    the most terms with this paper, and the running threads.
+    """
     cards = load_cards()
-    if limit:
-        cards = cards[-limit:]
     parts = []
     if cards:
-        lines = [json.dumps(card, ensure_ascii=False) for card in cards]
+        query = _terms(query_text)
+        ranked = sorted(cards, key=lambda c: _relevance(c, query), reverse=True)
+        chosen = [c for c in ranked[:full_cards] if _relevance(c, query) > 0]
+        chosen_numbers = {c.get("episode_number") for c in chosen}
+
+        index = [
+            f"{c.get('episode_number')}: {c.get('title', '')} — {c.get('one_line', '')}"
+            for c in cards
+            if c.get("episode_number") not in chosen_numbers
+        ]
         parts.append(
-            "Past episodes (one JSON card per line — you may only reference "
-            "episodes that appear here):\n" + "\n".join(lines)
+            "Past episodes. You may only reference episodes listed here, by the "
+            "number shown. The most relevant ones are given as full cards; the "
+            "rest as a one-line index.\n\nFull cards:\n"
+            + "\n".join(json.dumps(c, ensure_ascii=False) for c in chosen)
+            + "\n\nIndex of the other episodes:\n"
+            + "\n".join(index)
         )
     threads = load_threads()
     if threads.strip():
