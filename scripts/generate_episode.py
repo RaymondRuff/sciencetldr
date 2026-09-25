@@ -294,6 +294,10 @@ def _commit_push_and_open(
     subprocess.run(["git", "push", "-u", "origin", branch], check=True)
 
     chars = generate_script.total_chars(turns)
+    # Never put a GitHub closing keyword ("closes #N", "fixes #N", ...) in this
+    # body. Merging would close the Issue before the publish run, which only
+    # pairs audio with *open* Issues — the episode would lose its series
+    # branding and the Issue would never get its "Published as" comment.
     body = f"""Draft episode for #{number} — **review by listening, then merge to publish**.
 
 | | |
@@ -305,7 +309,8 @@ def _commit_push_and_open(
 | Voices | Nadia = Kore, Theo = Achird ({tts_dialogue.MODEL}) |
 
 Merging this PR puts the mp3 in `inbox/`, which triggers the publish workflow:
-it normalizes the audio, writes show notes, updates `feed.xml` and closes #{number}.
+it normalizes the audio, writes show notes, updates `feed.xml`, and then marks the
+Issue done.
 Closing this PR without merging discards the draft.
 
 ### Verification pass
