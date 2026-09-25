@@ -71,9 +71,9 @@ VERIFIED_SCHEMA = {
 
 VERIFY_INSTRUCTIONS = """This time you are not writing the episode: you are \
 fact-checking a draft script, written to the show prompt above, against the \
-paper it covers. The audience are working scientists, several of whom work on \
-exactly these molecules, so an overstated or unsupported claim is the most \
-costly error possible.
+paper it covers. The audience are working scientists from many fields, \
+including specialists in this paper's field, so an overstated or unsupported \
+claim is the most costly error possible.
 
 Check, in this order:
 
@@ -91,7 +91,11 @@ game-changer, paradigm shift, transformative, "changes everything", and any \
 leap from preclinical data to patient benefit. Enthusiasm may attach to a \
 specific methodological choice, never to magnitude.
 5. **Attribution.** Claims belonging to the authors must be attributed to them.
-6. **Length.** Keep the total spoken characters inside the stated window, \
+6. **Show framing.** Science TLDR is a general science podcast. Remove any line \
+that ties the show to one field or treats the paper's field as unusual for the \
+show ("our usual beat", "a protein podcast covering...", "outside our lane"), \
+and any line where the hosts cast themselves as specialists of one discipline.
+7. **Length.** Keep the total spoken characters inside the stated window, \
 trimming setup and framing rather than evidence or limitations.
 
 Preserve the hosts' voices, the disfluencies, and the structure. Change only \
