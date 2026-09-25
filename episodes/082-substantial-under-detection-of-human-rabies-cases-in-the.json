@@ -1,0 +1,26 @@
+{
+  "guid": "0e5c706f-54c9-4719-8dbf-9054271bbb99",
+  "title": "Episode 82: Trending — Substantial under-detection of human rabies cases in the United States",
+  "itunes_title": "Trending — Substantial under-detection of human rabies cases in the United States",
+  "description": "**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.\n\n**Paper:** [Substantial under-detection of human rabies cases in the United States](https://doi.org/10.1038/s44528-026-00031-4)\n\n**Authors:** Younjung Kim, Christl A. Donnelly\n\n**Journal:** Communications Health, 2026\n\n**Why it matters:** If the estimate holds, confirmed human rabies deaths in the US represent only a small fraction of true deaths — with implications for clinical diagnosis, transplant screening, and public health surveillance.\n\n**Summary**\n\nSince 1978, four deceased organ donors in the US have turned out to have undiagnosed rabies, transmitting the virus to transplant recipients. The authors treat this as an accidental sampling frame: if three such donors appeared in the 2000–2024 window (the fourth event belongs to that period), and deceased donors numbered 239,251 out of roughly 68.3 million total US deaths, then scaling by that ratio implies approximately 856 undiagnosed rabies deaths over 25 years — a central estimate of 34.2 per year against 2.4 confirmed annually, suggesting only about 7% of cases were detected. Even the lower bound of the 95% confidence interval (213 deaths, ~8.5/year) implies roughly 22% detection — meaning the best-case scenario still leaves four in five deaths unconfirmed.\n\nThe inferential architecture is deliberately minimal: four numbers and a ratio. The authors are explicit about the load-bearing assumption — that deceased donors experienced average national rabies risk. They quantify exactly what would falsify the result: donors would need a 14-fold elevated rabies risk relative to all decedents for confirmed surveillance to be consistent with complete detection. That enrichment is not implausible, since rabies encephalitis can produce the brain-death presentation typical of organ donors, but the paper does not test it. Separately, the 95% confidence interval is wide (213–2,220) because it reflects Poisson uncertainty on just three events; it does not capture uncertainty in the donor-selection assumption itself, so true uncertainty is wider than stated.\n\nThe authors propose four responses: improve public awareness, take detailed exposure histories, account for geographic and occupational risk factors independently of a stated exposure history, and include rabies in the differential diagnosis for unexplained fatal encephalitis. A retrospective series of unexplained encephalitis deaths systematically tested for rabies would provide more direct evidence — and is notably absent from the existing literature.\n\n**Three takeaways**\n\n1. Scaling three undiagnosed-rabies deceased donors against 239,251 total donors and 68.3 million US deaths yields a central estimate of 856 undiagnosed rabies deaths from 2000–2024, or ~34 per year — roughly 14 times the confirmed annual count of 2.4.\n2. The authors quantify the threshold that would negate the finding: deceased donors would need approximately 14-fold elevated rabies risk relative to the general decedent population for current confirmed case counts to reflect complete surveillance.\n3. The 95% CI of 213–2,220 captures only Poisson noise on three events; donor-selection bias — the larger uncertainty — is not incorporated, making the interval an underestimate of true uncertainty.\n\n**Read the source:** https://doi.org/10.1038/s44528-026-00031-4",
+  "pub_date": "Fri, 25 Sep 2026 03:25:44 +0000",
+  "duration_seconds": 651,
+  "episode_number": 82,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "082-substantial-under-detection-of-human-rabies-cases-in-the.mp3",
+  "enclosure_length_bytes": 7821538,
+  "source_metadata": {
+    "title": "Substantial under-detection of human rabies cases in the United States",
+    "doi": "10.1038/s44528-026-00031-4",
+    "authors": [
+      "Younjung Kim",
+      "Christl A. Donnelly"
+    ],
+    "journal": "Communications Health",
+    "abstract": "Based on multiple instances of human-to-human rabies transmission via organ or tissue transplantation from initially undiagnosed rabies-infected donors, we estimate 856 (213-2220) human rabies deaths in the United States (US) from 2000 to 2024, meaning that only around 7% of human rabies deaths in the US were confirmed during this period.",
+    "source": "friday-reddit",
+    "source_url": "https://doi.org/10.1038/s44528-026-00031-4"
+  },
+  "source_issue": 42
+}
