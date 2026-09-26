@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Tue, 05 Aug 2025 07:10:07 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 26 Sep 2026 17:05:07 +0000</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -703,21 +703,6 @@
       <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
-      <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
-      <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
-      <content:encoded><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-sliding-window-interaction-grammar-swing-a-generalized.mp3" length="16072339" type="audio/mpeg"/>
-      <guid isPermaLink="false">9201969d-0f95-4f0e-9bc1-c21da915fa14</guid>
-      <itunes:duration>1004</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>46</itunes:episode>
-      <podcast:episode>46</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
       <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
       <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
@@ -731,6 +716,21 @@
       <podcast:episode>46</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
+      <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
+      <content:encoded><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-sliding-window-interaction-grammar-swing-a-generalized.mp3" length="16072339" type="audio/mpeg"/>
+      <guid isPermaLink="false">9201969d-0f95-4f0e-9bc1-c21da915fa14</guid>
+      <itunes:duration>1004</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
@@ -808,21 +808,6 @@
       <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
-      <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
-      <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
-      <content:encoded><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-the-impact-of-cd3-affinity-attenuation-on-t-cell-engaging.mp3" length="16364075" type="audio/mpeg"/>
-      <guid isPermaLink="false">ef6b64ae-650d-4e35-bfbd-88e0168f0b2c</guid>
-      <itunes:duration>1022</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>52</itunes:episode>
-      <podcast:episode>52</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
       <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
       <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
@@ -836,6 +821,21 @@
       <podcast:episode>52</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
+      <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
+      <content:encoded><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-the-impact-of-cd3-affinity-attenuation-on-t-cell-engaging.mp3" length="16364075" type="audio/mpeg"/>
+      <guid isPermaLink="false">ef6b64ae-650d-4e35-bfbd-88e0168f0b2c</guid>
+      <itunes:duration>1022</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
@@ -1996,7 +1996,7 @@
 <p><em>Communications Health, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1038/s44528-026-00031-4">10.1038/s44528-026-00031-4</a></p>
 <p><strong>Question:</strong> Using rare transplant-transmitted rabies events as a proxy sample of undiagnosed deaths, how many US rabies deaths does official surveillance actually miss?</p>
-<p><strong>Answer:</strong> Scaling 3 undiagnosed rabies deaths among 239,251 deceased organ donors (2000–2024) to all US deaths yields an estimated 856 (213–2220) undiagnosed cases, versus 2.4/year confirmed — roughly 7% detection, assuming donors carry average population rabies risk.</p>
+<p><strong>Answer:</strong> Scaling 3 undiagnosed rabies deaths among 239,251 deceased organ donors (2000–2024) to all US deaths implies about 34 rabies deaths a year (856 over 25 years; 95% CI 213–2220) against 2.4 confirmed a year — roughly 7% detection, assuming donors carry average population rabies risk.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
 <li>Three of 239,251 deceased donors died of undiagnosed rabies, scaling to 856 total (34.2/year) versus 2.4/year confirmed.</li>
@@ -2008,7 +2008,7 @@
 <p><em>Communications Health, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1038/s44528-026-00031-4">10.1038/s44528-026-00031-4</a></p>
 <p><strong>Question:</strong> Using rare transplant-transmitted rabies events as a proxy sample of undiagnosed deaths, how many US rabies deaths does official surveillance actually miss?</p>
-<p><strong>Answer:</strong> Scaling 3 undiagnosed rabies deaths among 239,251 deceased organ donors (2000–2024) to all US deaths yields an estimated 856 (213–2220) undiagnosed cases, versus 2.4/year confirmed — roughly 7% detection, assuming donors carry average population rabies risk.</p>
+<p><strong>Answer:</strong> Scaling 3 undiagnosed rabies deaths among 239,251 deceased organ donors (2000–2024) to all US deaths implies about 34 rabies deaths a year (856 over 25 years; 95% CI 213–2220) against 2.4 confirmed a year — roughly 7% detection, assuming donors carry average population rabies risk.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
 <li>Three of 239,251 deceased donors died of undiagnosed rabies, scaling to 856 total (34.2/year) versus 2.4/year confirmed.</li>
@@ -2033,7 +2033,7 @@
 <p><em>mAbs, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1080/19420862.2026.2731282">10.1080/19420862.2026.2731282</a></p>
 <p><strong>Question:</strong> Can building proteome-wide off-target counter-screening into TCR-mimic antibody discovery yield more specific WT1-targeting bispecifics than published comparators?</p>
-<p><strong>Answer:</strong> Their lead antibody showed tighter peptide-contact footprints and fewer predicted proteome off-targets than benchmarks ESK1/11D06, with clean bispecific killing in WT1+/A2+ tumor lines. But comparator conditions were disadvantaged, and a WT1-negative control line was not tested.</p>
+<p><strong>Answer:</strong> Their lead antibody showed tighter peptide-contact footprints and fewer predicted proteome off-targets than benchmarks ESK1/11D06, with clean bispecific killing in WT1+/A2+ tumor lines. But the comparators may have been disadvantaged by the assay format, and a WT1-negative control line was not tested.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
 <li>13 of 26 and 14 of 26 candidates that passed clean SPR against irrelevant peptides still bound homologous off-target peptides on cells.</li>
@@ -2045,7 +2045,7 @@
 <p><em>mAbs, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1080/19420862.2026.2731282">10.1080/19420862.2026.2731282</a></p>
 <p><strong>Question:</strong> Can building proteome-wide off-target counter-screening into TCR-mimic antibody discovery yield more specific WT1-targeting bispecifics than published comparators?</p>
-<p><strong>Answer:</strong> Their lead antibody showed tighter peptide-contact footprints and fewer predicted proteome off-targets than benchmarks ESK1/11D06, with clean bispecific killing in WT1+/A2+ tumor lines. But comparator conditions were disadvantaged, and a WT1-negative control line was not tested.</p>
+<p><strong>Answer:</strong> Their lead antibody showed tighter peptide-contact footprints and fewer predicted proteome off-targets than benchmarks ESK1/11D06, with clean bispecific killing in WT1+/A2+ tumor lines. But the comparators may have been disadvantaged by the assay format, and a WT1-negative control line was not tested.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
 <li>13 of 26 and 14 of 26 candidates that passed clean SPR against irrelevant peptides still bound homologous off-target peptides on cells.</li>
