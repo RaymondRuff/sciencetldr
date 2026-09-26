@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Sat, 26 Sep 2026 17:05:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 Aug 2025 07:10:07 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -703,21 +703,6 @@
       <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
-      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
-      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
-      <content:encoded><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
-      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
-      <itunes:duration>934</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>46</itunes:episode>
-      <podcast:episode>46</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
       <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
       <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
@@ -731,6 +716,21 @@
       <podcast:episode>46</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
+      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
+      <content:encoded><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
+      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
+      <itunes:duration>934</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
@@ -808,21 +808,6 @@
       <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
-      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
-      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
-      <content:encoded><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
-      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
-      <itunes:duration>837</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>52</itunes:episode>
-      <podcast:episode>52</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
       <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
       <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
@@ -836,6 +821,21 @@
       <podcast:episode>52</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
+      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
+      <content:encoded><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
+      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
+      <itunes:duration>837</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
@@ -1992,37 +1992,29 @@
       <title><![CDATA[Episode 82: Trending — Substantial under-detection of human rabies cases in the United States]]></title>
       <itunes:title><![CDATA[Trending — Substantial under-detection of human rabies cases in the United States]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
-<p><strong>Paper:</strong> <a href="https://doi.org/10.1038/s44528-026-00031-4">Substantial under-detection of human rabies cases in the United States</a></p>
-<p><strong>Authors:</strong> Younjung Kim, Christl A. Donnelly</p>
-<p><strong>Journal:</strong> Communications Health, 2026</p>
-<p><strong>Why it matters:</strong> If the estimate holds, confirmed human rabies deaths in the US represent only a small fraction of true deaths — with implications for clinical diagnosis, transplant screening, and public health surveillance.</p>
-<p><strong>Summary</strong></p>
-<p>Since 1978, four deceased organ donors in the US have turned out to have undiagnosed rabies, transmitting the virus to transplant recipients. The authors treat this as an accidental sampling frame: if three such donors appeared in the 2000–2024 window (the fourth event belongs to that period), and deceased donors numbered 239,251 out of roughly 68.3 million total US deaths, then scaling by that ratio implies approximately 856 undiagnosed rabies deaths over 25 years — a central estimate of 34.2 per year against 2.4 confirmed annually, suggesting only about 7% of cases were detected. Even the lower bound of the 95% confidence interval (213 deaths, ~8.5/year) implies roughly 22% detection — meaning the best-case scenario still leaves four in five deaths unconfirmed.</p>
-<p>The inferential architecture is deliberately minimal: four numbers and a ratio. The authors are explicit about the load-bearing assumption — that deceased donors experienced average national rabies risk. They quantify exactly what would falsify the result: donors would need a 14-fold elevated rabies risk relative to all decedents for confirmed surveillance to be consistent with complete detection. That enrichment is not implausible, since rabies encephalitis can produce the brain-death presentation typical of organ donors, but the paper does not test it. Separately, the 95% confidence interval is wide (213–2,220) because it reflects Poisson uncertainty on just three events; it does not capture uncertainty in the donor-selection assumption itself, so true uncertainty is wider than stated.</p>
-<p>The authors propose four responses: improve public awareness, take detailed exposure histories, account for geographic and occupational risk factors independently of a stated exposure history, and include rabies in the differential diagnosis for unexplained fatal encephalitis. A retrospective series of unexplained encephalitis deaths systematically tested for rabies would provide more direct evidence — and is notably absent from the existing literature.</p>
+<p><strong><a href="https://doi.org/10.1038/s44528-026-00031-4">Substantial under-detection of human rabies cases in the United States</a></strong></p>
+<p><em>Communications Health, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s44528-026-00031-4">10.1038/s44528-026-00031-4</a></p>
+<p><strong>Question:</strong> Using rabies-infected organ donors as an accidental sample of US deaths, how many human rabies deaths does routine surveillance actually miss?</p>
+<p><strong>Answer:</strong> Three of 239,251 deceased donors (2000–2024) died of undiagnosed rabies; scaling that ratio to all US deaths yields ~856 estimated undiagnosed rabies deaths (95% CI 213–2220), versus 2.4 confirmed per year — suggesting only ~7% detection. The estimate rests entirely on assuming donors carry average national rabies risk, an assumption the authors themselves show would be undermined by only a 14-fold risk elevation among donors.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>Scaling three undiagnosed-rabies deceased donors against 239,251 total donors and 68.3 million US deaths yields a central estimate of 856 undiagnosed rabies deaths from 2000–2024, or ~34 per year — roughly 14 times the confirmed annual count of 2.4.</li>
-<li>The authors quantify the threshold that would negate the finding: deceased donors would need approximately 14-fold elevated rabies risk relative to the general decedent population for current confirmed case counts to reflect complete surveillance.</li>
-<li>The 95% CI of 213–2,220 captures only Poisson noise on three events; donor-selection bias — the larger uncertainty — is not incorporated, making the interval an underestimate of true uncertainty.</li>
-</ol>
-<p><strong>Read the source:</strong> https://doi.org/10.1038/s44528-026-00031-4</p>]]></description>
+<li>Three of 239,251 deceased donors died of undiagnosed rabies; scaled to 68 million US deaths, that implies ~34.2 undiagnosed rabies deaths/year against 2.4 confirmed.</li>
+<li>The whole estimate hinges on donors having average national rabies risk; the authors calculate that a 14-fold higher donor risk would erase the discrepancy.</li>
+<li>The 213–2220 confidence interval reflects only Poisson noise from three events, not the larger uncertainty from donor-selection bias.</li>
+</ol>]]></description>
       <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
-<p><strong>Paper:</strong> <a href="https://doi.org/10.1038/s44528-026-00031-4">Substantial under-detection of human rabies cases in the United States</a></p>
-<p><strong>Authors:</strong> Younjung Kim, Christl A. Donnelly</p>
-<p><strong>Journal:</strong> Communications Health, 2026</p>
-<p><strong>Why it matters:</strong> If the estimate holds, confirmed human rabies deaths in the US represent only a small fraction of true deaths — with implications for clinical diagnosis, transplant screening, and public health surveillance.</p>
-<p><strong>Summary</strong></p>
-<p>Since 1978, four deceased organ donors in the US have turned out to have undiagnosed rabies, transmitting the virus to transplant recipients. The authors treat this as an accidental sampling frame: if three such donors appeared in the 2000–2024 window (the fourth event belongs to that period), and deceased donors numbered 239,251 out of roughly 68.3 million total US deaths, then scaling by that ratio implies approximately 856 undiagnosed rabies deaths over 25 years — a central estimate of 34.2 per year against 2.4 confirmed annually, suggesting only about 7% of cases were detected. Even the lower bound of the 95% confidence interval (213 deaths, ~8.5/year) implies roughly 22% detection — meaning the best-case scenario still leaves four in five deaths unconfirmed.</p>
-<p>The inferential architecture is deliberately minimal: four numbers and a ratio. The authors are explicit about the load-bearing assumption — that deceased donors experienced average national rabies risk. They quantify exactly what would falsify the result: donors would need a 14-fold elevated rabies risk relative to all decedents for confirmed surveillance to be consistent with complete detection. That enrichment is not implausible, since rabies encephalitis can produce the brain-death presentation typical of organ donors, but the paper does not test it. Separately, the 95% confidence interval is wide (213–2,220) because it reflects Poisson uncertainty on just three events; it does not capture uncertainty in the donor-selection assumption itself, so true uncertainty is wider than stated.</p>
-<p>The authors propose four responses: improve public awareness, take detailed exposure histories, account for geographic and occupational risk factors independently of a stated exposure history, and include rabies in the differential diagnosis for unexplained fatal encephalitis. A retrospective series of unexplained encephalitis deaths systematically tested for rabies would provide more direct evidence — and is notably absent from the existing literature.</p>
+<p><strong><a href="https://doi.org/10.1038/s44528-026-00031-4">Substantial under-detection of human rabies cases in the United States</a></strong></p>
+<p><em>Communications Health, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s44528-026-00031-4">10.1038/s44528-026-00031-4</a></p>
+<p><strong>Question:</strong> Using rabies-infected organ donors as an accidental sample of US deaths, how many human rabies deaths does routine surveillance actually miss?</p>
+<p><strong>Answer:</strong> Three of 239,251 deceased donors (2000–2024) died of undiagnosed rabies; scaling that ratio to all US deaths yields ~856 estimated undiagnosed rabies deaths (95% CI 213–2220), versus 2.4 confirmed per year — suggesting only ~7% detection. The estimate rests entirely on assuming donors carry average national rabies risk, an assumption the authors themselves show would be undermined by only a 14-fold risk elevation among donors.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>Scaling three undiagnosed-rabies deceased donors against 239,251 total donors and 68.3 million US deaths yields a central estimate of 856 undiagnosed rabies deaths from 2000–2024, or ~34 per year — roughly 14 times the confirmed annual count of 2.4.</li>
-<li>The authors quantify the threshold that would negate the finding: deceased donors would need approximately 14-fold elevated rabies risk relative to the general decedent population for current confirmed case counts to reflect complete surveillance.</li>
-<li>The 95% CI of 213–2,220 captures only Poisson noise on three events; donor-selection bias — the larger uncertainty — is not incorporated, making the interval an underestimate of true uncertainty.</li>
-</ol>
-<p><strong>Read the source:</strong> https://doi.org/10.1038/s44528-026-00031-4</p>]]></content:encoded>
+<li>Three of 239,251 deceased donors died of undiagnosed rabies; scaled to 68 million US deaths, that implies ~34.2 undiagnosed rabies deaths/year against 2.4 confirmed.</li>
+<li>The whole estimate hinges on donors having average national rabies risk; the authors calculate that a 14-fold higher donor risk would erase the discrepancy.</li>
+<li>The 213–2220 confidence interval reflects only Poisson noise from three events, not the larger uncertainty from donor-selection bias.</li>
+</ol>]]></content:encoded>
       <link>https://raymondruff.github.io/sciencetldr/#episode-082</link>
       <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/082-substantial-under-detection-of-human-rabies-cases-in-the.mp3" length="7821538" type="audio/mpeg"/>
       <guid isPermaLink="false">0e5c706f-54c9-4719-8dbf-9054271bbb99</guid>
@@ -2037,35 +2029,29 @@
       <title><![CDATA[Episode 83: Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex]]></title>
       <itunes:title><![CDATA[Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex]]></itunes:title>
       <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
-<p><strong>Paper:</strong> <a href="https://doi.org/10.1080/19420862.2026.2731282">Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex</a></p>
-<p><strong>Authors:</strong> Jennifer Watkins-Yoon, Wei-Cheng Lu, Elyse M. Petrunak, et al.</p>
-<p><strong>Journal:</strong> mAbs, 2026</p>
-<p><strong>Why it matters:</strong> TCR-mimic antibodies open intracellular tumor antigens like WT1 to antibody-based therapy, but the entire class has a history of clinically dangerous off-target killing, so how specificity is screened matters as much as the target itself.</p>
-<p><strong>Summary</strong></p>
-<p>This paper, from Alloy Therapeutics with MD Anderson and Immunitrack, describes an end-to-end discovery platform for TCR-mimic (TCRm) antibodies — antibodies that read a short peptide sitting in the HLA groove the way a T-cell receptor would, allowing them to target intracellular antigens invisible to conventional antibodies. Using WT1 (peptide RMFPNAPYL on HLA-A*0201) as a proof-of-concept target, the team immunized transgenic mice with refolded peptide-HLA monomers, sorted single B cells with paired positive/negative tetramer staining, ran parallel phage display, and counter-screened hits against both a mixed-peptide pool and, critically, a proteome-wide mutational scanning assay (X-Scan) that maps exactly which peptide positions each antibody's paratope depends on.</p>
-<p>The headline finding is that early-stage specificity data was misleading: of 26 antibodies that showed clean SPR binding against an irrelevant peptide pool, roughly half bound one or both of two known homologous off-target peptides (M13L, PIGQ) when tested on cells (T2 pulsing). The X-Scan footprinting separated antibodies into distinct classes — the lead candidate, ATX-TCRm-06, depended on five peptide positions, versus published comparators ESK1 and 11D06, which tolerated substitutions broadly and, for ESK1, were driven mainly by a single residue, consistent with that molecule's known clinical cross-reactivity history. Engineered into CD3-bispecific formats, the lead antibodies drove dose-dependent, peptide-specific T-cell killing of pulsed and endogenously WT1-expressing lines, with isotype controls showing no killing. The key limitation the authors themselves flag: no WT1-negative, HLA-A2-positive target was tested in the primary CD8 T-cell killing assay, leaving open whether killing could occur at antibody occupancies too low to register as binding — precisely the failure mode this antibody class has suffered before.</p>
+<p><strong><a href="https://doi.org/10.1080/19420862.2026.2731282">Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex</a></strong></p>
+<p><em>mAbs, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1080/19420862.2026.2731282">10.1080/19420862.2026.2731282</a></p>
+<p><strong>Question:</strong> Can an integrated discovery platform — transgenic mice, single B-cell and phage screening, plus a proteome-wide off-target counter-screen — generate WT1-specific TCR-mimic antibodies with better specificity than published comparators?</p>
+<p><strong>Answer:</strong> Their lead antibodies show tighter interaction footprints and fewer predicted proteome off-targets than benchmarks ESK1 and 11D06, and bispecifics built from them kill WT1+/HLA-A2+ cell lines with a matched non-binding control staying silent. But the critical WT1-negative/HLA-A2-positive killing control is missing, and the proteome cross-reactivity predictions are computational, not experimentally confirmed.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>About half of 26 SPR-validated, "specific" anti-WT1 TCRm antibodies bound a homologous off-target peptide-HLA complex on cells, showing that clean SPR data against unrelated peptides does not establish specificity.</li>
-<li>X-Scan mutational footprinting distinguished antibodies with narrow (5-residue) versus broad peptide-contact dependence, and this footprint correlated with fewer predicted proteome off-target hits for the platform's lead candidates versus published comparators ESK1 and 11D06.</li>
-<li>Bispecific CD3-engager formats of the lead antibody killed WT1-pulsed and endogenous WT1-expressing, HLA-A2-positive tumor cells in a dose-dependent, peptide-specific manner, but cytotoxicity against a WT1-negative/HLA-A2-positive control was not tested.</li>
-</ol>
-<p><strong>Read the source:</strong> https://doi.org/10.1080/19420862.2026.2731282</p>]]></description>
+<li>Half the 26 candidate antibodies that passed clean SPR screening against irrelevant peptide-HLA still bound a homologous off-target peptide (M13L, PIGQ) when tested on cells — 13/26 and 14/26 respectively.</li>
+<li>X-Scan mutational footprinting is more mechanistically informative than proteome-hit lists: lead ATX-TCRm-06 reads 5 contact residues versus ESK1's apparent reliance on essentially one.</li>
+<li>Bispecific killing data is clean under the controls run (isotype bispecific, peptide titration), but the authors themselves flag that the WT1-negative, HLA-A2-positive killing control is still outstanding.</li>
+</ol>]]></description>
       <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
-<p><strong>Paper:</strong> <a href="https://doi.org/10.1080/19420862.2026.2731282">Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex</a></p>
-<p><strong>Authors:</strong> Jennifer Watkins-Yoon, Wei-Cheng Lu, Elyse M. Petrunak, et al.</p>
-<p><strong>Journal:</strong> mAbs, 2026</p>
-<p><strong>Why it matters:</strong> TCR-mimic antibodies open intracellular tumor antigens like WT1 to antibody-based therapy, but the entire class has a history of clinically dangerous off-target killing, so how specificity is screened matters as much as the target itself.</p>
-<p><strong>Summary</strong></p>
-<p>This paper, from Alloy Therapeutics with MD Anderson and Immunitrack, describes an end-to-end discovery platform for TCR-mimic (TCRm) antibodies — antibodies that read a short peptide sitting in the HLA groove the way a T-cell receptor would, allowing them to target intracellular antigens invisible to conventional antibodies. Using WT1 (peptide RMFPNAPYL on HLA-A*0201) as a proof-of-concept target, the team immunized transgenic mice with refolded peptide-HLA monomers, sorted single B cells with paired positive/negative tetramer staining, ran parallel phage display, and counter-screened hits against both a mixed-peptide pool and, critically, a proteome-wide mutational scanning assay (X-Scan) that maps exactly which peptide positions each antibody's paratope depends on.</p>
-<p>The headline finding is that early-stage specificity data was misleading: of 26 antibodies that showed clean SPR binding against an irrelevant peptide pool, roughly half bound one or both of two known homologous off-target peptides (M13L, PIGQ) when tested on cells (T2 pulsing). The X-Scan footprinting separated antibodies into distinct classes — the lead candidate, ATX-TCRm-06, depended on five peptide positions, versus published comparators ESK1 and 11D06, which tolerated substitutions broadly and, for ESK1, were driven mainly by a single residue, consistent with that molecule's known clinical cross-reactivity history. Engineered into CD3-bispecific formats, the lead antibodies drove dose-dependent, peptide-specific T-cell killing of pulsed and endogenously WT1-expressing lines, with isotype controls showing no killing. The key limitation the authors themselves flag: no WT1-negative, HLA-A2-positive target was tested in the primary CD8 T-cell killing assay, leaving open whether killing could occur at antibody occupancies too low to register as binding — precisely the failure mode this antibody class has suffered before.</p>
+<p><strong><a href="https://doi.org/10.1080/19420862.2026.2731282">Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex</a></strong></p>
+<p><em>mAbs, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1080/19420862.2026.2731282">10.1080/19420862.2026.2731282</a></p>
+<p><strong>Question:</strong> Can an integrated discovery platform — transgenic mice, single B-cell and phage screening, plus a proteome-wide off-target counter-screen — generate WT1-specific TCR-mimic antibodies with better specificity than published comparators?</p>
+<p><strong>Answer:</strong> Their lead antibodies show tighter interaction footprints and fewer predicted proteome off-targets than benchmarks ESK1 and 11D06, and bispecifics built from them kill WT1+/HLA-A2+ cell lines with a matched non-binding control staying silent. But the critical WT1-negative/HLA-A2-positive killing control is missing, and the proteome cross-reactivity predictions are computational, not experimentally confirmed.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>About half of 26 SPR-validated, "specific" anti-WT1 TCRm antibodies bound a homologous off-target peptide-HLA complex on cells, showing that clean SPR data against unrelated peptides does not establish specificity.</li>
-<li>X-Scan mutational footprinting distinguished antibodies with narrow (5-residue) versus broad peptide-contact dependence, and this footprint correlated with fewer predicted proteome off-target hits for the platform's lead candidates versus published comparators ESK1 and 11D06.</li>
-<li>Bispecific CD3-engager formats of the lead antibody killed WT1-pulsed and endogenous WT1-expressing, HLA-A2-positive tumor cells in a dose-dependent, peptide-specific manner, but cytotoxicity against a WT1-negative/HLA-A2-positive control was not tested.</li>
-</ol>
-<p><strong>Read the source:</strong> https://doi.org/10.1080/19420862.2026.2731282</p>]]></content:encoded>
+<li>Half the 26 candidate antibodies that passed clean SPR screening against irrelevant peptide-HLA still bound a homologous off-target peptide (M13L, PIGQ) when tested on cells — 13/26 and 14/26 respectively.</li>
+<li>X-Scan mutational footprinting is more mechanistically informative than proteome-hit lists: lead ATX-TCRm-06 reads 5 contact residues versus ESK1's apparent reliance on essentially one.</li>
+<li>Bispecific killing data is clean under the controls run (isotype bispecific, peptide titration), but the authors themselves flag that the WT1-negative, HLA-A2-positive killing control is still outstanding.</li>
+</ol>]]></content:encoded>
       <link>https://raymondruff.github.io/sciencetldr/#episode-083</link>
       <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/083-discovery-and-engineering-of-bispecific-tcr-mimic-antibodies.mp3" length="8220093" type="audio/mpeg"/>
       <guid isPermaLink="false">b536c598-1af1-4bbf-9880-057e4bf02f5b</guid>
