@@ -17,7 +17,7 @@ DOI: [10.xxxx/xxxxx](https://doi.org/10.xxxx/xxxxx)
 
 **Question:** [One sentence: what the authors set out to find.]
 
-**Answer:** [One or two sentences: what they found, stated only as strongly as the evidence supports. If a limitation changes what the answer means — no in vivo data, a missing control, a small sample — say so here, briefly.]
+**Answer:** [At most two sentences, at most 45 words: what they found, stated only as strongly as the evidence supports. If a limitation changes what the answer means — no in vivo data, a missing control, a small sample — name it in a few words.]
 
 **Three takeaways**
 
@@ -27,9 +27,10 @@ DOI: [10.xxxx/xxxxx](https://doi.org/10.xxxx/xxxxx)
 ```
 
 Rules:
-- **Aim for 100–130 words in total.** Never exceed 150.
+- **Length budget.** The Question, Answer and three takeaways together: about 110 words, never more than 130. (The title, journal and DOI lines don't count.) Question at most 25 words; Answer at most 45; each takeaway at most 25. When over budget, cut detail — keep the numbers that carry the finding, drop secondary ones.
+- **Compare like with like.** Numbers set against each other must share units and time frame — per year against per year, total against total, the same denominator. Never put a multi-year total next to an annual figure.
 - **Takeaways:** when a transcript is provided, the hosts state three takeaways near the end of the episode. Use those — tightened into one sentence each for print — so the notes match what the listener heard. Do not substitute your own. Without a transcript, derive them from the abstract's results, not its speculation.
-- Each takeaway is one sentence and carries a specific finding, with its number where there is one.
+- Each takeaway is one sentence of at most 25 words and carries a specific finding, with its key number where there is one.
 - Title is the paper's full title, linked to `source_url`. Keep its original capitalisation.
 - Journal line: journal name and year. For preprints write "Preprint (bioRxiv, 2026)" or similar; for white papers "White paper — {organisation}".
 - DOI line: the DOI as link text, linked to `https://doi.org/{DOI}`. If there is no DOI, write `Source: [source_url](source_url)` instead.
