@@ -8,9 +8,11 @@ the same show as the rss.com original.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
+import markdown
 from lxml import etree
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -45,6 +47,21 @@ def _cdata(parent, tag: str, text: str, attrib: dict | None = None):
     el = etree.SubElement(parent, tag, attrib=attrib or {})
     el.text = etree.CDATA(text)
     return el
+
+
+_HTML_TAG = re.compile(r"<(p|a|br|b|strong|em|i|ul|ol|li)\b", re.IGNORECASE)
+
+
+def description_html(text: str) -> str:
+    """Episode notes as HTML, which podcast apps render; they don't render Markdown.
+
+    Episodes migrated from rss.com already carry HTML and pass through
+    untouched. Notes written since the move are Markdown, which apps showed as
+    literal asterisks and brackets, with unclickable links.
+    """
+    if _HTML_TAG.search(text):
+        return text
+    return markdown.markdown(text)
 
 
 def build_feed(channel: dict, episodes: list[dict], base_url: str) -> bytes:
@@ -100,7 +117,9 @@ def build_feed(channel: dict, episodes: list[dict], base_url: str) -> bytes:
         _cdata(item, "title", ep["title"])
         if ep.get("itunes_title"):
             _cdata(item, _q("itunes", "title"), ep["itunes_title"])
-        _cdata(item, "description", ep["description"])
+        notes = description_html(ep["description"])
+        _cdata(item, "description", notes)
+        _cdata(item, _q("content", "encoded"), notes)
         _sub(item, "link", f"{base_url}#episode-{ep['episode_number']:03d}")
         enclosure_url = f"{base_url}episodes/{ep['enclosure_filename']}"
         _sub(item, "enclosure", attrib={
