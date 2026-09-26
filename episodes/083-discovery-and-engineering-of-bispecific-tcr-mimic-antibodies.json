@@ -1,0 +1,41 @@
+{
+  "guid": "b536c598-1af1-4bbf-9880-057e4bf02f5b",
+  "title": "Episode 83: Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex",
+  "itunes_title": "Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**Paper:** [Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex](https://doi.org/10.1080/19420862.2026.2731282)\n\n**Authors:** Jennifer Watkins-Yoon, Wei-Cheng Lu, Elyse M. Petrunak, et al.\n\n**Journal:** mAbs, 2026\n\n**Why it matters:** TCR-mimic antibodies open intracellular tumor antigens like WT1 to antibody-based therapy, but the entire class has a history of clinically dangerous off-target killing, so how specificity is screened matters as much as the target itself.\n\n**Summary**\n\nThis paper, from Alloy Therapeutics with MD Anderson and Immunitrack, describes an end-to-end discovery platform for TCR-mimic (TCRm) antibodies — antibodies that read a short peptide sitting in the HLA groove the way a T-cell receptor would, allowing them to target intracellular antigens invisible to conventional antibodies. Using WT1 (peptide RMFPNAPYL on HLA-A*0201) as a proof-of-concept target, the team immunized transgenic mice with refolded peptide-HLA monomers, sorted single B cells with paired positive/negative tetramer staining, ran parallel phage display, and counter-screened hits against both a mixed-peptide pool and, critically, a proteome-wide mutational scanning assay (X-Scan) that maps exactly which peptide positions each antibody's paratope depends on.\n\nThe headline finding is that early-stage specificity data was misleading: of 26 antibodies that showed clean SPR binding against an irrelevant peptide pool, roughly half bound one or both of two known homologous off-target peptides (M13L, PIGQ) when tested on cells (T2 pulsing). The X-Scan footprinting separated antibodies into distinct classes — the lead candidate, ATX-TCRm-06, depended on five peptide positions, versus published comparators ESK1 and 11D06, which tolerated substitutions broadly and, for ESK1, were driven mainly by a single residue, consistent with that molecule's known clinical cross-reactivity history. Engineered into CD3-bispecific formats, the lead antibodies drove dose-dependent, peptide-specific T-cell killing of pulsed and endogenously WT1-expressing lines, with isotype controls showing no killing. The key limitation the authors themselves flag: no WT1-negative, HLA-A2-positive target was tested in the primary CD8 T-cell killing assay, leaving open whether killing could occur at antibody occupancies too low to register as binding — precisely the failure mode this antibody class has suffered before.\n\n**Three takeaways**\n\n1. About half of 26 SPR-validated, \"specific\" anti-WT1 TCRm antibodies bound a homologous off-target peptide-HLA complex on cells, showing that clean SPR data against unrelated peptides does not establish specificity.\n2. X-Scan mutational footprinting distinguished antibodies with narrow (5-residue) versus broad peptide-contact dependence, and this footprint correlated with fewer predicted proteome off-target hits for the platform's lead candidates versus published comparators ESK1 and 11D06.\n3. Bispecific CD3-engager formats of the lead antibody killed WT1-pulsed and endogenous WT1-expressing, HLA-A2-positive tumor cells in a dose-dependent, peptide-specific manner, but cytotoxicity against a WT1-negative/HLA-A2-positive control was not tested.\n\n**Read the source:** https://doi.org/10.1080/19420862.2026.2731282",
+  "pub_date": "Sat, 26 Sep 2026 17:05:07 +0000",
+  "duration_seconds": 684,
+  "episode_number": 83,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "083-discovery-and-engineering-of-bispecific-tcr-mimic-antibodies.mp3",
+  "enclosure_length_bytes": 8220093,
+  "source_metadata": {
+    "title": "Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex",
+    "doi": "10.1080/19420862.2026.2731282",
+    "authors": [
+      "Jennifer Watkins-Yoon",
+      "Wei-Cheng Lu",
+      "Elyse M. Petrunak",
+      "Noah J. Tubo",
+      "Sara Halmos",
+      "William McConaughy",
+      "Rodolfo Ciuffa",
+      "Cédric Weber",
+      "Simon Friedensohn",
+      "Sune Justesen",
+      "Marie Skovgaard",
+      "Rennard Rachel",
+      "Caity Goshert",
+      "Lucy Liu",
+      "Piotr Bobrowicz",
+      "Jeffrey J. Molldrem",
+      "Dongxing Zha"
+    ],
+    "journal": "mAbs",
+    "abstract": "TCR-mimic (TCRm) antibodies represent a promising new frontier in cancer immunotherapy, enabling the targeting of intracellular targets previously considered undruggable with antibodies. We developed an integrated platform for generating human antibodies that mimic T-cell receptors (TCRs) and recognize peptide-HLA complexes with high specificity and affinity. These antibody binders were then engineered into highly potent bispecific antibodies capable of redirecting T cells to kill tumor cells. By leveraging high-quality pHLA immunogens, fully human transgenic mice, advanced single B-cell discovery, and whole proteome off-target screening (X-Scan) techniques, this end-to-end platform establishes a new benchmark in TCRm discovery. In this study, we highlight the successful identification and engineering of antibodies targeting the Wilms Tumor 1 (WT1) antigen, demonstrating superior performance compared to competitors' TCRm antibodies.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1080/19420862.2026.2731282"
+  },
+  "source_issue": 45
+}
