@@ -44,8 +44,13 @@ INBOX = ROOT / "inbox"
 EPISODES_DIR = ROOT / "episodes"
 PROMPTS_DIR = ROOT / "prompts"
 
-SHOW_NOTES_MODEL = "claude-sonnet-4-6"
-SHOW_NOTES_MAX_TOKENS = 1500
+SHOW_NOTES_MODEL = "claude-sonnet-5"
+# Sonnet 5 thinks by default (Sonnet 4.6 didn't), and thinking counts against
+# max_tokens — the old 1,500 cap would truncate the notes. Summarising a
+# verified transcript isn't reasoning-heavy, so medium effort; Anthropic rates
+# Sonnet 5 at medium comparable to Sonnet 4.6 at its default.
+SHOW_NOTES_MAX_TOKENS = 16000
+SHOW_NOTES_EFFORT = "medium"
 
 INBOX_AUDIO_EXTS = (".mp3", ".m4a", ".mp4a", ".wav")
 DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
@@ -407,10 +412,17 @@ def generate_show_notes(metadata: dict, transcript: str | None = None) -> str:
     resp = client.messages.create(
         model=SHOW_NOTES_MODEL,
         max_tokens=SHOW_NOTES_MAX_TOKENS,
+        output_config={"effort": SHOW_NOTES_EFFORT},
         system=template,
         messages=[{"role": "user", "content": "\n\n".join(parts)}],
     )
-    return resp.content[0].text.strip()
+    if resp.stop_reason == "max_tokens":
+        raise RuntimeError(f"show notes hit max_tokens ({SHOW_NOTES_MAX_TOKENS})")
+    # With thinking on, content[0] is a thinking block, not the notes.
+    text = "".join(b.text for b in resp.content if b.type == "text").strip()
+    if not text:
+        raise RuntimeError(f"show notes came back empty (stop_reason={resp.stop_reason})")
+    return text
 
 
 def publish_one(src: Path, metadata: dict, issue: dict | None) -> dict:

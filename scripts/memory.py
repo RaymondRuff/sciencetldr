@@ -155,20 +155,109 @@ def _relevance(card: dict, query: set[str]) -> int:
     return 2 * len(tag_terms & query) + len(text_terms & query)
 
 
-def memory_context(query_text: str = "", full_cards: int = FULL_CARDS) -> str:
+# A small, cheap model picks the relevant past episodes by meaning. Keyword
+# overlap alone ranks shared filler words ("authors", "mouse") as relevance and
+# misses real connections that don't share vocabulary — e.g. a surveillance
+# paper and an under-reporting episode. Haiku 4.5 takes structured outputs but
+# not `effort`, and this is a lookup, so no thinking.
+SELECTOR_MODEL = "claude-haiku-4-5"
+SELECTOR_SCHEMA = {
+    "type": "object",
+    "properties": {"episodes": {"type": "array", "items": {"type": "integer"}}},
+    "required": ["episodes"],
+    "additionalProperties": False,
+}
+SELECTOR_SYSTEM = """You help the hosts of "Science TLDR", a general science \
+podcast, find which past episodes genuinely bear on a new paper they are about \
+to discuss, so they can make accurate connections across episodes.
+
+A past episode is relevant if its findings, methods, open questions or failure \
+modes would sharpen the discussion of the new paper: the same target or \
+mechanism, a competing approach, a shared methodological problem (for example \
+two very different papers that both infer a population rate from a \
+non-random sample), or a result the new paper confirms or contradicts. \
+Connections across fields count and are often the most valuable.
+
+Sharing generic vocabulary is not relevance. Return fewer episodes, or none, \
+rather than padding the list. Order by relevance, most relevant first."""
+
+
+def select_relevant(
+    client: anthropic.Anthropic, query_text: str, cards: list[dict], k: int
+) -> list[int] | None:
+    """Episode numbers relevant to the paper, or None if the call failed."""
+    index = "\n".join(
+        f"{c.get('episode_number')}: {c.get('title', '')} — {c.get('one_line', '')} "
+        f"[tags: {', '.join(c.get('tags', []))}]"
+        for c in cards
+    )
+    try:
+        resp = client.messages.create(
+            model=SELECTOR_MODEL,
+            max_tokens=1024,
+            system=SELECTOR_SYSTEM,
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"The new paper (title, context and opening text):\n{query_text}"
+                        f"\n\nPast episodes:\n{index}"
+                        f"\n\nReturn the numbers of up to {k} relevant past episodes."
+                    ),
+                }
+            ],
+            output_config={
+                "format": {"type": "json_schema", "schema": SELECTOR_SCHEMA}
+            },
+        )
+        text = "".join(b.text for b in resp.content if b.type == "text")
+        picked = json.loads(text)["episodes"]
+    except Exception as exc:  # noqa: BLE001 - selection is an enhancement; never fatal
+        print(f"  [memory] Haiku selection failed ({exc}); using keyword match")
+        return None
+    known = {c.get("episode_number") for c in cards}
+    chosen: list[int] = []
+    for number in picked:
+        if number in known and number not in chosen:
+            chosen.append(number)
+    chosen = chosen[:k]
+    print(
+        f"  [memory] Haiku picked episodes {chosen or 'none'} "
+        f"(in={resp.usage.input_tokens} out={resp.usage.output_tokens})"
+    )
+    return chosen
+
+
+def memory_context(
+    query_text: str = "",
+    full_cards: int = FULL_CARDS,
+    client: anthropic.Anthropic | None = None,
+) -> str:
     """Memory for a script-generation prompt, sized to what the paper needs.
 
     Sending every card in full costs ~54k input tokens per call and is almost
     all irrelevant to any one paper. Instead: a one-line index of every episode
-    (so no callback target is lost), full cards only for the episodes that share
-    the most terms with this paper, and the running threads.
+    (so no callback target is lost), full cards only for the episodes most
+    relevant to this paper, and the running threads.
+
+    With a client, Haiku picks the relevant episodes by meaning; without one, or
+    if that call fails, the episodes sharing the most terms with the paper.
     """
     cards = load_cards()
     parts = []
     if cards:
-        query = _terms(query_text)
-        ranked = sorted(cards, key=lambda c: _relevance(c, query), reverse=True)
-        chosen = [c for c in ranked[:full_cards] if _relevance(c, query) > 0]
+        picked = (
+            select_relevant(client, query_text, cards, full_cards)
+            if client is not None
+            else None
+        )
+        if picked is not None:
+            by_number = {c.get("episode_number"): c for c in cards}
+            chosen = [by_number[n] for n in picked]
+        else:
+            query = _terms(query_text)
+            ranked = sorted(cards, key=lambda c: _relevance(c, query), reverse=True)
+            chosen = [c for c in ranked[:full_cards] if _relevance(c, query) > 0]
         chosen_numbers = {c.get("episode_number") for c in chosen}
 
         index = [

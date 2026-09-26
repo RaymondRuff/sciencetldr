@@ -379,7 +379,8 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
                 metadata.get("digest_excerpt") or "",
                 full_text[:4000],
             ]
-        )
+        ),
+        client=client,
     )
     turns = generate_script.draft(
         client, paper_text=full_text, metadata=metadata, memory=context
