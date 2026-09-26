@@ -1,0 +1,39 @@
+{
+  "episode_number": 83,
+  "title": "Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex",
+  "doi": "10.1080/19420862.2026.2731282",
+  "journal": "mAbs",
+  "source": "monday-digest",
+  "one_line": "An end-to-end TCR-mimic discovery platform (pHLA immunogen, human transgenic mice, single B-cell plus phage, and proteome-wide X-Scan counter-screening) applied to WT1 RMFPNAPYL/HLA-A*0201, yielding CD3 bispecifics that kill WT1-positive tumor cells.",
+  "key_claims": [
+    "From 12 transgenic mice, WT1-specific cells were 0.5–6.5% of IgG+ memory B cells, giving 95 hits/78 unique heavy-chain CDR3s, of which 11% (3 clonotypes) bound WT1 without mixed-peptide-pool binding; phage added 15 antibodies (2 clonotypes), for 26 total with SPR affinities 10^-7 to 10^-10 M and 25/26 non-binding to MAGE-A4 on the same allele.",
+    "Despite clean SPR, on T2 cells (100 nM antibody, 50 µM peptide pulse) 13/26 bound off-target M13L (RMFPTPPSL) and 14/26 bound PIGQ (RMFPGEVAL), with only 8/26 binding neither; comparators 33H9 and ESK1 bound both and 11D06 bound M13L.",
+    "X-Scan single-chain-trimer phage display of 172 nine-mer substitution variants resolved four footprint subsets: lead ATX-TCRm-06 depended on positions 3,4,6,7,8, other groups on four or three positions, while 11D06 and ESK1 tolerated substitutions broadly (ESK1 driven mainly by residue 1).",
+    "Proteome homology search from these footprints returned only the target peptide for the platform leads versus 4–12 candidate peptides for 11D06 and ESK1.",
+    "Knob-into-hole SP34 CD3 bispecific of TCRm-06 (KD 14.6 nM CD3, 35 nM pHLA) gave ~15,000 RLU Jurkat NFAT signal on WT1-pulsed T2 with M13L and no-peptide at baseline, and ~100% primary CD8 killing above 50 nM peptide pulse; a UCHT1/anti-HSA format of TCRm-01 and -06 killed endogenous WT1+/HLA-A2+ TF-1 and SET-2 with sub-nanomolar EC50s in two donors, with isotype bispecific not killing."
+  ],
+  "limitations": [
+    "Authors state explicitly that direct cytotoxicity against a WT1-negative, HLA-A2-positive target in the primary CD8 T-cell killing assay was not performed and is ongoing work.",
+    "T2 pulsing at 50 µM peptide presents far more copies than endogenous presentation, so the off-target binding assay is a stringency test of unquantified physiological relevance.",
+    "The proteome off-target list is an algorithmic prediction from a mutational-tolerance motif using a proprietary internal method, not an experiment against the real presented peptidome; predicted hits were not synthesised and tested.",
+    "Benchmarking conditions disadvantaged comparators: ESK1 did not plateau at 100 nM so no EC50 was derived, and the authors hypothesise the single-chain-trimer linker interfered with benchmark binding in phage ELISA.",
+    "Lead monomeric IgG affinity (~0.1 nM) is not comparable to the monovalent Fab affinity in the bispecific (35 nM), so avidity loss on reformatting is unaddressed."
+  ],
+  "open_questions": [
+    "Does a WT1-negative, HLA-A2-positive cell line survive the bispecific in the primary CD8 killing assay, given engagers can kill at occupancies below binding detection?",
+    "Do the algorithmically predicted proteome off-target peptides bind when synthesised and pulsed on T2 cells, as was done for M13L and PIGQ?",
+    "Would a head-to-head comparison under conditions not disadvantaging ESK1/11D06 support the claimed superiority of the platform leads?"
+  ],
+  "tags": [
+    "tcr-mimic",
+    "peptide-hla",
+    "specificity-screening",
+    "off-target-cross-reactivity",
+    "cd3-bispecific",
+    "wt1",
+    "phage-display",
+    "single-b-cell-discovery",
+    "t-cell-engager",
+    "platform-paper"
+  ]
+}

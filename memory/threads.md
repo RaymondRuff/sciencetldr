@@ -7,9 +7,20 @@ Can CD3-redirected killing be confined to tumour cells, and which lever — affi
 - Eps 63 and 69 attack the same problem biophysically: a CDRL3 allosteric pH switch giving a 789-fold binding difference between pH 6.5 and 7.4 (63), and a 2+1 avidity format that kills at ~1,000 EGFR/cell while covering cetuximab-resistance variants (69) — though 69 concedes normal epithelium carries 40,000–100,000 EGFR/cell.
 - Ep 71 is the only clinical datapoint: IMA401's deliberately low-affinity CD3 arm gave 38% CRS, all grade 1–2, zero ICANS, and 20% ORR at RP2D — evidence the affinity-attenuation route survives first-in-human.
 - Eps 60 and 76 change the effector rather than the targeting arm: Vγ9Vδ2 engagement spared 5T4-positive healthy tissue (60), and a CD2 costimulator restored killing at sub-efficacious TCE doses with ≤2-fold IL-6/TNF rises versus up to 200-fold for CD28 (76).
-- Ep 59 adds the third-cell variant — recruiting myeloid cells into the T-cell/tumour synapse beat a matched bispecific — but the cytokine-release profile at equi-efficacious doses is exactly what the notes do not report.
+- Eps 59 and 83 add the format-arithmetic problem: recruiting myeloid cells into the T-cell/tumour synapse beat a matched bispecific but without a cytokine profile at equi-efficacious doses (59); and in 83 the lead TCR-mimic's monomeric IgG affinity (~0.1 nM) versus the monovalent Fab in the CD3 bispecific (35 nM pHLA, 14.6 nM CD3) leaves the avidity loss on reformatting unaddressed.
 
 Watch for: any of these designs tested against a matched, non-gated, non-attenuated control in the same model — most claims so far are versus the parental molecule, not versus simple affinity reduction.
+
+## Does peptide–HLA targeting survive contact with the proteome?
+Targeting an intracellular antigen means targeting a short peptide on an HLA allele — can that recognition be shown specific enough to redirect T cells safely?
+
+- Ep 23 (MUNIS, >650,000 HLA class I ligands, bimodal binding-plus-processing model, validated on EBV) and Ep 67 (deep peptide recognition profiles from ~10⁹-member yeast libraries for 21 HLA-B*27:05 TCRs, used to predict activation and nominate autoantigens) both establish that recognition is a motif over many peptides, not a single sequence.
+- Ep 74 builds binders the other way — ProteinMPNN-guided design plus yeast display for TCR-like antibodies to KRAS G12D on HLA-C*08:02 — but the display step did the real selection work, and AlphaFold2 failed on the interface.
+- Ep 83 supplies the sharpest negative result: of 26 WT1/HLA-A*02:01 antibodies with clean SPR and 25/26 non-binding to MAGE-A4 on the same allele, 13 bound off-target M13L and 14 bound PIGQ on peptide-pulsed T2 cells, with only 8 binding neither; X-Scan phage display across 172 nine-mer substitution variants showed the lead depended on positions 3,4,6,7,8 while comparators ESK1 and 11D06 tolerated substitutions broadly, and proteome homology search from those footprints returned only the target peptide for the leads versus 4–12 candidates for the comparators.
+- Ep 83's bispecific then killed endogenous WT1+/HLA-A2+ TF-1 and SET-2 at sub-nanomolar EC50 in two donors — but the authors state outright that a WT1-negative, HLA-A2-positive killing control was not run, and the proteome off-target list was never synthesised and tested.
+- Ep 71 is where the stakes land: a TCER against a MAGE-A4/MAGE-A8 peptide dosed into 61 patients, i.e. this specificity question is already being answered in humans rather than on T2 cells.
+
+Watch for: a WT1-negative/HLA-A2-positive cytotoxicity control, and whether algorithmically predicted proteome off-targets bind when actually synthesised and pulsed — the two experiments that would convert a mutational-tolerance motif into a specificity claim.
 
 ## Does in silico design earn trust before the wet lab?
 How much of protein and antibody engineering can be decided computationally, and what does honest validation look like?
@@ -74,16 +85,6 @@ Several episodes lean on design rather than randomisation; the recurring questio
 - Ep 11's SURD framework, with its redundant/unique/synergistic decomposition and "causality leak" term, is the methodological backbone the show keeps reaching for, though it had no applied-domain demonstration in the notes.
 
 Watch for: whether Ep 73's effect reverses under return-to-office mandates, and whether Ep 82's estimate survives its own proposed direct test — a defined-denominator retrospective series of unexplained fatal encephalitis deaths assayed for rabies.
-
-## Machines that decide, not just compute
-Where is the line between automation and autonomy, and does crossing it help?
-
-- Ep 14 draws the definition explicitly (automated = human-decided, autonomous = machine-decided) and admits its decision layer is heuristic, with no quantitative definition of "novelty" to guide exploration.
-- Ep 30 closes the loop physically — an LLM re-planning mid-task in changing environments — but the episode material carried no success rates or non-LLM baseline.
-- Ep 58 is the constraint: LLMs cannot reliably attribute a false first-person belief, correcting the speaker instead, and the gap narrowed but did not close in newer releases.
-- Eps 45 and 49 show the pattern that keeps working — theory-derived features as inductive bias for a gradient-boosted model (45), and learned embedding fields enabling mapping from sparse labels (49) — both prediction, neither decision.
-
-Resolution: Ep 14's own test — a genuinely unanticipated compound or reaction class discovered by the machine and independently characterised — remains unmet.
 
 ## Is the dominant framework in a field actually load-bearing?
 A recurring meta-thread: when do accumulated anomalies mean a paradigm should be replaced rather than patched?
