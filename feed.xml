@@ -1995,25 +1995,25 @@
 <p><strong><a href="https://doi.org/10.1038/s44528-026-00031-4">Substantial under-detection of human rabies cases in the United States</a></strong></p>
 <p><em>Communications Health, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1038/s44528-026-00031-4">10.1038/s44528-026-00031-4</a></p>
-<p><strong>Question:</strong> Using rabies-infected organ donors as an accidental sample of US deaths, how many human rabies deaths does routine surveillance actually miss?</p>
-<p><strong>Answer:</strong> Three of 239,251 deceased donors (2000–2024) died of undiagnosed rabies; scaling that ratio to all US deaths yields ~856 estimated undiagnosed rabies deaths (95% CI 213–2220), versus 2.4 confirmed per year — suggesting only ~7% detection. The estimate rests entirely on assuming donors carry average national rabies risk, an assumption the authors themselves show would be undermined by only a 14-fold risk elevation among donors.</p>
+<p><strong>Question:</strong> Using rare transplant-transmitted rabies events as a proxy sample of undiagnosed deaths, how many US rabies deaths does official surveillance actually miss?</p>
+<p><strong>Answer:</strong> Scaling 3 undiagnosed rabies deaths among 239,251 deceased organ donors (2000–2024) to all US deaths yields an estimated 856 (213–2220) undiagnosed cases, versus 2.4/year confirmed — roughly 7% detection, assuming donors carry average population rabies risk.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>Three of 239,251 deceased donors died of undiagnosed rabies; scaled to 68 million US deaths, that implies ~34.2 undiagnosed rabies deaths/year against 2.4 confirmed.</li>
-<li>The whole estimate hinges on donors having average national rabies risk; the authors calculate that a 14-fold higher donor risk would erase the discrepancy.</li>
-<li>The 213–2220 confidence interval reflects only Poisson noise from three events, not the larger uncertainty from donor-selection bias.</li>
+<li>Three of 239,251 deceased donors died of undiagnosed rabies, scaling to 856 total (34.2/year) versus 2.4/year confirmed.</li>
+<li>The key assumption — donors face average national rabies risk — would need to be off by 14-fold to invalidate the estimate.</li>
+<li>The 213–2220 interval reflects only Poisson noise on 3 events; donor-selection uncertainty isn't included, so true uncertainty is wider.</li>
 </ol>]]></description>
       <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong><a href="https://doi.org/10.1038/s44528-026-00031-4">Substantial under-detection of human rabies cases in the United States</a></strong></p>
 <p><em>Communications Health, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1038/s44528-026-00031-4">10.1038/s44528-026-00031-4</a></p>
-<p><strong>Question:</strong> Using rabies-infected organ donors as an accidental sample of US deaths, how many human rabies deaths does routine surveillance actually miss?</p>
-<p><strong>Answer:</strong> Three of 239,251 deceased donors (2000–2024) died of undiagnosed rabies; scaling that ratio to all US deaths yields ~856 estimated undiagnosed rabies deaths (95% CI 213–2220), versus 2.4 confirmed per year — suggesting only ~7% detection. The estimate rests entirely on assuming donors carry average national rabies risk, an assumption the authors themselves show would be undermined by only a 14-fold risk elevation among donors.</p>
+<p><strong>Question:</strong> Using rare transplant-transmitted rabies events as a proxy sample of undiagnosed deaths, how many US rabies deaths does official surveillance actually miss?</p>
+<p><strong>Answer:</strong> Scaling 3 undiagnosed rabies deaths among 239,251 deceased organ donors (2000–2024) to all US deaths yields an estimated 856 (213–2220) undiagnosed cases, versus 2.4/year confirmed — roughly 7% detection, assuming donors carry average population rabies risk.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>Three of 239,251 deceased donors died of undiagnosed rabies; scaled to 68 million US deaths, that implies ~34.2 undiagnosed rabies deaths/year against 2.4 confirmed.</li>
-<li>The whole estimate hinges on donors having average national rabies risk; the authors calculate that a 14-fold higher donor risk would erase the discrepancy.</li>
-<li>The 213–2220 confidence interval reflects only Poisson noise from three events, not the larger uncertainty from donor-selection bias.</li>
+<li>Three of 239,251 deceased donors died of undiagnosed rabies, scaling to 856 total (34.2/year) versus 2.4/year confirmed.</li>
+<li>The key assumption — donors face average national rabies risk — would need to be off by 14-fold to invalidate the estimate.</li>
+<li>The 213–2220 interval reflects only Poisson noise on 3 events; donor-selection uncertainty isn't included, so true uncertainty is wider.</li>
 </ol>]]></content:encoded>
       <link>https://raymondruff.github.io/sciencetldr/#episode-082</link>
       <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/082-substantial-under-detection-of-human-rabies-cases-in-the.mp3" length="7821538" type="audio/mpeg"/>
@@ -2032,25 +2032,25 @@
 <p><strong><a href="https://doi.org/10.1080/19420862.2026.2731282">Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex</a></strong></p>
 <p><em>mAbs, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1080/19420862.2026.2731282">10.1080/19420862.2026.2731282</a></p>
-<p><strong>Question:</strong> Can an integrated discovery platform — transgenic mice, single B-cell and phage screening, plus a proteome-wide off-target counter-screen — generate WT1-specific TCR-mimic antibodies with better specificity than published comparators?</p>
-<p><strong>Answer:</strong> Their lead antibodies show tighter interaction footprints and fewer predicted proteome off-targets than benchmarks ESK1 and 11D06, and bispecifics built from them kill WT1+/HLA-A2+ cell lines with a matched non-binding control staying silent. But the critical WT1-negative/HLA-A2-positive killing control is missing, and the proteome cross-reactivity predictions are computational, not experimentally confirmed.</p>
+<p><strong>Question:</strong> Can building proteome-wide off-target counter-screening into TCR-mimic antibody discovery yield more specific WT1-targeting bispecifics than published comparators?</p>
+<p><strong>Answer:</strong> Their lead antibody showed tighter peptide-contact footprints and fewer predicted proteome off-targets than benchmarks ESK1/11D06, with clean bispecific killing in WT1+/A2+ tumor lines. But comparator conditions were disadvantaged, and a WT1-negative control line was not tested.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>Half the 26 candidate antibodies that passed clean SPR screening against irrelevant peptide-HLA still bound a homologous off-target peptide (M13L, PIGQ) when tested on cells — 13/26 and 14/26 respectively.</li>
-<li>X-Scan mutational footprinting is more mechanistically informative than proteome-hit lists: lead ATX-TCRm-06 reads 5 contact residues versus ESK1's apparent reliance on essentially one.</li>
-<li>Bispecific killing data is clean under the controls run (isotype bispecific, peptide titration), but the authors themselves flag that the WT1-negative, HLA-A2-positive killing control is still outstanding.</li>
+<li>13 of 26 and 14 of 26 candidates that passed clean SPR against irrelevant peptides still bound homologous off-target peptides on cells.</li>
+<li>X-scan mutational footprinting (5 contact residues vs. 1 for ESK1) is more informative than post-hoc proteome-hit lists.</li>
+<li>Bispecific killing data is clean but lacks the WT1-negative, HLA-A2-positive control needed to rule out CD3-arm-driven off-target killing.</li>
 </ol>]]></description>
       <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
 <p><strong><a href="https://doi.org/10.1080/19420862.2026.2731282">Discovery and engineering of bispecific TCR-mimic antibodies targeting peptide–HLA complex</a></strong></p>
 <p><em>mAbs, 2026</em></p>
 <p>DOI: <a href="https://doi.org/10.1080/19420862.2026.2731282">10.1080/19420862.2026.2731282</a></p>
-<p><strong>Question:</strong> Can an integrated discovery platform — transgenic mice, single B-cell and phage screening, plus a proteome-wide off-target counter-screen — generate WT1-specific TCR-mimic antibodies with better specificity than published comparators?</p>
-<p><strong>Answer:</strong> Their lead antibodies show tighter interaction footprints and fewer predicted proteome off-targets than benchmarks ESK1 and 11D06, and bispecifics built from them kill WT1+/HLA-A2+ cell lines with a matched non-binding control staying silent. But the critical WT1-negative/HLA-A2-positive killing control is missing, and the proteome cross-reactivity predictions are computational, not experimentally confirmed.</p>
+<p><strong>Question:</strong> Can building proteome-wide off-target counter-screening into TCR-mimic antibody discovery yield more specific WT1-targeting bispecifics than published comparators?</p>
+<p><strong>Answer:</strong> Their lead antibody showed tighter peptide-contact footprints and fewer predicted proteome off-targets than benchmarks ESK1/11D06, with clean bispecific killing in WT1+/A2+ tumor lines. But comparator conditions were disadvantaged, and a WT1-negative control line was not tested.</p>
 <p><strong>Three takeaways</strong></p>
 <ol>
-<li>Half the 26 candidate antibodies that passed clean SPR screening against irrelevant peptide-HLA still bound a homologous off-target peptide (M13L, PIGQ) when tested on cells — 13/26 and 14/26 respectively.</li>
-<li>X-Scan mutational footprinting is more mechanistically informative than proteome-hit lists: lead ATX-TCRm-06 reads 5 contact residues versus ESK1's apparent reliance on essentially one.</li>
-<li>Bispecific killing data is clean under the controls run (isotype bispecific, peptide titration), but the authors themselves flag that the WT1-negative, HLA-A2-positive killing control is still outstanding.</li>
+<li>13 of 26 and 14 of 26 candidates that passed clean SPR against irrelevant peptides still bound homologous off-target peptides on cells.</li>
+<li>X-scan mutational footprinting (5 contact residues vs. 1 for ESK1) is more informative than post-hoc proteome-hit lists.</li>
+<li>Bispecific killing data is clean but lacks the WT1-negative, HLA-A2-positive control needed to rule out CD3-arm-driven off-target killing.</li>
 </ol>]]></content:encoded>
       <link>https://raymondruff.github.io/sciencetldr/#episode-083</link>
       <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/083-discovery-and-engineering-of-bispecific-tcr-mimic-antibodies.mp3" length="8220093" type="audio/mpeg"/>
