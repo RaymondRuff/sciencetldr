@@ -1,0 +1,149 @@
+# Predictors and prevalence of support for white nationalism in the United States
+
+**DOI:** 10.1038/s41586-026-11018-0  
+**Length:** 10809 chars (~10.2 min)
+
+## Corrections made by the verification pass
+
+- Nadia called the vignette a "four-sentence description"; the description quoted in the paper is three sentences.
+- Occupational strain was reported as flatly "nothing"; the paper states the equivalence test on that estimate failed, so a substantively meaningful association cannot be ruled out — added.
+- Added the authors' explicit caveat that endorsing the statement is not the same as identifying with or belonging to the movement, which these data do not measure (the draft let 4.9% stand as 'support for the movement' without it).
+- 'somewhere between one in sixteen and one in five' rounded the 6.0–21.0 interval in a way that shifts both bounds; replaced with the percentages.
+- 'Informed responses carry less measurement error than uninformed ones' was stated as fact; the paper presents this as its interpretation — now attributed.
+- 'It rules out acquiescence as an inflator' restated as the authors' reading, and 'the lower wording' clarified to 'the lower-yielding wording'.
+- The 2.5-point equivalence threshold was described as simply 'set before the tests'; the paper states it was not preregistered, which is now said out loud.
+- Trimmed setup, framing and connective tissue (why-this-paper, description read-out, bias discussion) to bring the script from 10,994 spoken characters into the 10,200–10,800 window; no numbers or limitations cut.
+
+---
+
+**Nadia:** Hi, and welcome to Science TLDR. I'm Nadia.
+
+**Theo:** And I'm Theo.
+
+**Nadia:** And today we're on a Nature paper: "Predictors and prevalence of support for white nationalism in the United States." Three national surveys of non-Hispanic white US adults. The authors show respondents a short description of white nationalist beliefs, then ask straight out whether they support the movement.
+
+**Theo:** So the trick is they don't assume people know the term.
+
+**Nadia:** That's the whole methodological move, yes.
+
+**Theo:** Okay — why is that worth ten minutes? Survey asks question, people answer.
+
+**Nadia:** Because the prior literature deliberately didn't ask. It's treated support as a latent construct — batteries about ethnic homogeneity and racial superiority, and you infer the attitude underneath. And it's mostly been used as a predictor of something else: attitudes to political violence, to immigration, to COVID. Here it's the thing being explained.
+
+**Theo:** Right. And the cost of the indirect approach?
+
+**Nadia:** You can't state a prevalence, and you can't track it over time. A direct question gives you a number you can compare across subgroups and re-field in five years.
+
+**Theo:** And the risk is people don't know what they're agreeing to.
+
+**Nadia:** Which is why they built the experiment. Half the sample, at random, reads a three-sentence description first. I'll read it, the wording is load-bearing — whites are under threat and the movement seeks the survival of the white race; white people should hold more political and economic power than other groups; whites should maintain their majority, and white culture is superior to all other cultures. Then: "Are you a supporter of the white nationalist movement?" Yes or no.
+
+**Theo:** And the other half?
+
+**Nadia:** Asked cold first, then shown the description and asked again. So everyone ends up giving an informed answer, and you also get the uninformed one.
+
+**Theo:** Nice design. What did the description do?
+
+**Nadia:** In study one — three thousand two hundred twenty-seven respondents on the Cooperative Election Study panel, fielded in 2021 — uninformed endorsement was 3.8 percent. Informed, 7.6 percent. P less than 0.001.
+
+**Theo:** Doubled.
+
+**Nadia:** In study two, it didn't replicate. That's the two thousand one hundred fourteen-person NORC AmeriSpeak probability sample from 2024. Three point zero percent control, 4.3 percent treatment, a 1.3 point difference, confidence interval minus 0.89 to 3.52, P of 0.25.
+
+**Theo:** Hmm. So does the description matter or not?
+
+**Nadia:** Unresolved, and they say so. The equivalence test on that null failed — so they can't rule out a real effect either. They note study two was powered to detect about 2.5 points, which should have caught study one's 3.8.
+
+**Theo:** Before prevalence — how do I know the people saying yes mean it?
+
+**Nadia:** That's the strongest part of the paper. Study one also had batteries on white identity strength, on whether racial and religious groups have too much power, and on support for intimidation and violence against non-white people. The treatment-control gap wasn't uniform: 22 points larger among those with the strongest white identity, 29 points larger among those most agreeing that non-white and non-Christian groups have too much power, 27 points larger among the strongest supporters of intimidation and violence.
+
+**Theo:** Ah — so the description sorts people toward their other answers rather than generating random yeses.
+
+**Nadia:** So, I think that reading holds. Their interpretation is that informed responses carry less measurement error. The violence contrast is only P less than 0.10, though, so I'd lean on the first two.
+
+**Theo:** And it's not just racial resentment under a new name?
+
+**Nadia:** Correlations in study three are positive but modest. White identity r of 0.40, great replacement beliefs 0.31, old-fashioned racism 0.26, racial resentment 0.25, denial of white privilege 0.15. Adjacent but distinct is their phrase, and that range supports it.
+
+**Theo:** Sure. Give me the headline number.
+
+**Nadia:** From the probability sample, with NORC's weights — 4.9 percent of non-Hispanic white US adults endorse the statement. Confidence interval 3.6 to 6.2. Among white men aged 18 to 29 it's 13.5 percent, interval 6.0 to 21.0.
+
+**Theo:** That interval is enormous.
+
+**Nadia:** It is. Fifteen points wide. The point estimate is the one being quoted everywhere; the honest version is somewhere between six and twenty-one percent, which is a different sentence. And the authors are explicit: endorsing the statement isn't the same as identifying with the movement or belonging to it — affiliation isn't measured here.
+
+**Theo:** And the age pattern is men only?
+
+**Nadia:** Men only. Thirteen points between youngest and oldest men in study one, twelve in study two. Among women, nothing — P of 0.37 and 0.87, and the BIC comparisons favour the null. Pooled across both studies, n of five thousand eighty-eight, the age-by-sex interaction comes out at P of 0.02.
+
+**Theo:** What else predicts it?
+
+**Nadia:** Education, 15 points between the extremes in study one. Income, 7. Religious service attendance, 4 points, positive. Conservatives 8 points above liberals, Republicans 5 above Democrats, Trump 2020 voters 6 above Biden voters. Conspiracy thinking about government, a 9-point gap. In the multivariate model everything survives except income.
+
+**Theo:** Now the theories. Strain, status threat, online mobilisation.
+
+**Nadia:** Strain gets partial support. People reporting three or more personal hardships in the past year — death, job loss, divorce, crime victimisation — were 4 points higher than those reporting none. County-level social distress, built from poverty, unemployment, population loss and drug and alcohol mortality: also 4 points, top versus bottom. But occupational decline — they coded open-ended job descriptions into sectors, then used ten-year employment change — no significant relationship, and there the equivalence test failed, so a real effect isn't ruled out.
+
+**Theo:** Huh. And status threat? That's the one I'd have bet on.
+
+**Nadia:** Null, and unusually cleanly null. County racial diversity and recent change in the white share both come in at P less than 0.08, in the opposite direction to the prediction, and the equivalence tests passed — so they rule out a substantively meaningful association either way. Rural versus urban, nothing, delta-BIC about 21 for the null.
+
+**Theo:** Wait — the sign is backwards?
+
+**Nadia:** Slightly more support in less diverse counties, with smaller white-population declines. They make nothing of it, and flag that residential sorting could mask the effect. But the classic demographic-threat story does not appear in this data.
+
+**Theo:** And online?
+
+**Nadia:** This pairing is the one I keep thinking about. Frequency of social media use: null, delta-BIC about 8. Political activity on social media: null, delta-BIC about 23. But they also asked people to name their three closest friends and whether each was known only online. Those whose three closest friends were all online-only were 13 points higher than those with none.
+
+**Theo:** That's a bigger gap than almost anything else in the paper.
+
+**Nadia:** It is. And the authors state the problem themselves: cross-sectional data, so the arrow could run the other way — holding views like this may make offline friendship harder. They write that out rather than burying it.
+
+**Theo:** Let me push on bias. A yes-no question about a stigmatised position — acquiescence has to be the first worry.
+
+**Nadia:** They tested it. In study three, a random half got "Are you a supporter of the white nationalist movement?", the other half "Are you an opponent?" If acquiescence were inflating the estimate, the opponent wording should knock it down.
+
+**Theo:** And?
+
+**Nadia:** It went up. The reverse-keyed item produced endorsement rates 9 points higher, P less than 0.001.
+
+**Theo:** Oh — that's a strange result.
+
+**Nadia:** It is. They read it as ruling out acquiescence as an inflator, and they use the lower-yielding wording for all headline numbers. But re-running the correlates adjusted for acquiescence, two fall below conventional significance: age among men, P of 0.16, and education, P of 0.15.
+
+**Theo:** So the young-men finding is the most-quoted result and it's the one that wobbles under the wording check.
+
+**Nadia:** Um — yes, with a caveat. It replicated across two samples with different recruitment, which is real. But the adjusted version doesn't clear 0.05. I'd hold it more loosely than the education or partisanship gradients.
+
+**Theo:** What about who isn't in the sample?
+
+**Nadia:** The NORC cumulative response rate was 2.7 percent. Typical for probability panels now, and they say so. Their argument is that non-response pushes the estimate down, because response was lower among Republicans and the less politically engaged — the groups that score higher here. Plausible, but it's an argument, not a measurement. They also counted every non-response as a no.
+
+**Theo:** Mm-hm. And study one is an opt-in panel.
+
+**Nadia:** Matched and weighted, and they state the assumption directly: conditional on the weighting variables, panel participation is independent of the attitudes measured. For stigmatised opinions that's unverifiable — and they say so. Twice.
+
+**Theo:** This connects to something we keep hitting. Episode 82, the rabies under-detection estimate — what we praised there was that they named the number that would falsify them.
+
+**Nadia:** Yeah — and there's a version of that here. The 2.5-point equivalence threshold wasn't preregistered, but it was set before the tests and matched to study two's minimal detectable effect, and they report the failures as well as the passes. Naming a threshold in advance is what lets a null mean something.
+
+**Theo:** Episode 66, the political polarisation of health outcomes, had the opposite texture — half the divergence unexplained, mechanism from a separate survey.
+
+**Nadia:** And here the theory tests are explicitly labelled corroborative, not causal. The sensitivity analysis singles out county social distress as most vulnerable to omitted-variable bias.
+
+**Theo:** Alright. Three takeaways. One: on a probability sample, 4.9 percent of non-Hispanic white US adults say yes to an explicit white nationalist statement once told what it means — and the young-white-men figure, 13.5 percent, carries an interval from 6 to 21.
+
+**Theo:** Two: the demographic-threat explanation doesn't survive here. Local diversity and local white-population decline are ruled out as substantive predictors by passed equivalence tests, while personal hardship, county social distress and online-only friendship all show up.
+
+**Theo:** Three: the measure looks distinct rather than a relabelling — correlations of 0.15 to 0.40 with existing racial attitude scales, and the description effect concentrating among people whose other answers already lean that way.
+
+**Nadia:** What would change my mind: the same item fielded twice to the same panel a few years apart. Everything about the young-men result turns on cohort versus life-cycle, and one cross-section cannot tell you which.
+
+**Theo:** For me it's the reverse-keyed gap. Nine points between two phrasings of the same question is unexplained, and until someone explains it I'd treat 4.9 percent as one wording's answer rather than the answer.
+
+**Nadia:** Fair. The paper is in Nature, DOI 10.1038/s41586-026-11018-0.
+
+**Theo:** Thanks for listening.
