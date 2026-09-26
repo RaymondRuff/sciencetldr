@@ -1,0 +1,55 @@
+name: regenerate-notes
+
+# Rewrite the show notes of published episodes with the current
+# prompts/show_notes.md, then rebuild the feed. Audio, titles and GUIDs are
+# untouched. Costs a couple of cents per episode (Sonnet 5).
+
+on:
+  workflow_dispatch:
+    inputs:
+      episodes:
+        description: 'Episode numbers, space- or comma-separated (e.g. "82 83")'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-feed
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Regenerate notes
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          EPISODES: ${{ inputs.episodes }}
+        run: uv run python scripts/regenerate_notes.py $EPISODES
+
+      - name: Commit notes + feed
+        env:
+          EPISODES: ${{ inputs.episodes }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add episodes/ feed.xml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "notes: regenerate show notes for episode(s) $EPISODES [skip ci]"
+          git push
