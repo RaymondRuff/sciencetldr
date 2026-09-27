@@ -1,0 +1,299 @@
+{
+  "issue": 41,
+  "generated_at": "2026-09-27T18:08:13.870606+00:00",
+  "metadata": {
+    "title": "1. Genome-scale perturb-seq in primary human CD4 T cells maps context-specific regulators of T cell programs and human immune traits",
+    "doi": "10.1016/j.cell.2026.08.002",
+    "dice_score": 5,
+    "pdf_url": "https://www.biorxiv.org/content/biorxiv/early/2025/12/24/2025.12.23.696273.full.pdf",
+    "source": "monday-digest",
+    "digest_excerpt": "## Top Papers\n\n### 1. Genome-scale perturb-seq in primary human CD4 T cells maps context-specific regulators of T cell programs and human immune traits\n\nZhu R, Dann E, Yan J, Reyes Retana J, Goto R, Guitche RC, et al.\n\n*Cell*\n\n[10.1016/j.cell.2026.08.002](https://doi.org/10.1016/j.cell.2026.08.002)\n\nNot a molecule — a CRISPRi perturbation of every expressed gene across 22 million primary human CD4 T cells from four donors, at rest and after stimulation, read out by a probe-based perturb-seq platform.\n\nThe engager field has spent a decade optimizing the molecule and treating the T cell as a fixed reagent, and this is the paper that makes the other half of the synapse legible at the same resolution. The headline technical achievement is scale in the right cells: genome-wide perturbation in *primary* human CD4 T cells rather than Jurkats or mouse cells, with a probe-based readout that makes 22 million cells economically tractable. The result that matters most for anyone designing a redirecting molecule is the context dependence. Active regulators and the gene programs they control changed dramatically between resting and stimulated states — meaning the regulatory network a CD3 arm engages is not one network but several, selected by the activation state of whatever T cell the molecule happens to find. That reframes a recurring clinical observation (heterogeneous response to the same engager at the same dose) as a property of the effector compartment rather than of exposure. The authors also model T cell states seen in population-scale atlases from perturbation signatures, nominating regulators of polarization and of age-related phenotypes, and connect context-specific pathways to autoimmune risk loci — directly relevant now that BCMA×CD3 and CD19-directed molecules are moving into autoimmune indications. As a resource it is a map of which intracellular nodes a future armed or costimulatory engager would want to move, and in which cell state moving them will actually do "
+  },
+  "paper_text_source": "pdf-url",
+  "verification_changes": [
+    "Publication status: draft said the paper was \"posted as a preprint and now in Cell\"; the PDF is an uncertified bioRxiv preprint, so this is now stated as the preprint carrying a Cell DOI.",
+    "Library description: \"essentially every expressed gene\" corrected to the paper's actual library — the union of all expressed CD4 T cell genes and all transcription factors (12,748 genes).",
+    "Off-target figure: script said 18% of \"all tested perturbations\"; the paper reports 18% of all tested perturbed genes.",
+    "Theo's gloss \"two guides against the same gene agree about half the time\" misdescribes a Pearson correlation of ~0.5; rephrased as a correlation statement.",
+    "Th1/Th2 inverted regulators: script named only IL4 as one of the two; the paper names TRAF3 and IL4, so TRAF3 is now named.",
+    "Power analysis: draft said \"donor count matters more than cells per perturbation once you're past roughly two hundred cells\" and framed \"four donors is where they ran out of budget\" as following from their analysis; corrected to the paper's actual finding (for fixed cells per perturbation, more donors consistently improved trans-effect estimates; cell-number gains stabilized at ~200 cells) with the budget inference marked as Nadia's read.",
+    "Figure 4H attribution: draft said the authors attribute the subtle single-cell shifts to the non-polarizing culture; the paper attributes them to full polarization requiring coordinated action of multiple regulators plus external signal input.",
+    "FBXO32 \"unstudied in immunity\" now attributed to the authors rather than stated flatly.",
+    "Claim strength: \"cleanest internal demonstration of the whole context-dependence claim\" softened to \"cleanest internal support\".",
+    "Length: trimmed from 13,432 to within the 10,200–10,800 character window, cutting setup and framing rather than numbers or limitations."
+  ],
+  "turns": [
+    {
+      "speaker": "Nadia",
+      "text": "Hello and welcome to Science TLDR. I'm Nadia."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And I'm Theo."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "And today: genome-scale perturb-seq in primary human C-D-four T cells, out of Gladstone-U-C-S-F and Stanford. We read the bioRxiv preprint; it carries a Cell D-O-I. They knocked down the union of all expressed genes and all transcription factors — twelve thousand seven hundred forty-eight genes — across twenty-two million primary C-D-four T cells from four donors, at rest and after re-stimulation."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Okay. Why ten minutes? Genome-wide perturb-seq isn't new."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "It isn't — it's been done in K562 and other immortalized lines. The move here is primary cells, donor replication, and enough depth to trust per-gene effects rather than coarse signatures. Median transcripts per cell per context around ten thousand, comparable to the cell-line datasets, with roughly double the cell coverage — an average five hundred seventy-five cells per perturbed gene per condition."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Right. CRISPRi — knockdown, not knockout?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Correct. Catalytically dead Cas9 fused to a repressor domain, parked at the promoter. Partial silencing, cell stays alive. The readout is probe-based single-cell R-N-A-seq — ten-x Flex — where instead of capturing polyadenylated messages you hybridize a defined probe panel. That lets them fix cells and superload lanes: twenty-two million assigned cells across fewer than eighty lanes."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Probe-based means you only see what's on the panel."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Yes — real constraint. They also spiked in custom probes for the guide R-N-A itself."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Hm. Quality control first — at this scale I'm suspicious. What fraction of cells got a clean guide assignment?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Thirty-three point four million cells passed transcriptome Q-C. Sixty-five point eight percent got a single guide, fourteen percent had none detected, twenty percent had multiple. They characterize both failure modes: multi-guide cells had higher U-M-I counts, consistent with doublets; no-guide cells had lower puromycin-resistance transcript, so they escaped selection rather than the probe failing."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Nice diagnostic. Did the guides knock down?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Seventy-three percent of tested guides gave significant target reduction versus non-targeting controls. The failures concentrated in genes with very low baseline expression."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And off-target? Two guides per gene is thin."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Um — careful here. They ran the proximal check: guides near a non-target transcription start site. Within five kilobases they saw downregulation of that neighbour in sixty percent of the one thousand seven hundred eighty-two genes with a proximal T-S-S — eighteen percent of all tested perturbed genes. They flag those as putative off-targets rather than silently including them."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Eighteen percent is not small."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "No. And they state in their own limitations that fully assessing off-target guide effects would need more guides per target. Cross-guide correlation was moderate — median point four seven to point five two depending on condition."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So a correlation of about a half between two guides against the same gene."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "On genes where both had measurable effects, yes. They attribute most discrepancies to differential knockdown efficiency — an attribution, not a demonstration."
+    },
+    {
+      "speaker": "Theo",
+      "text": "External validation?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Two comparisons. Against published arrayed knockout R-N-A-seq in C-D-four T cells, twenty-seven of thirty-two matched targets showed significant correlation, higher than randomly paired perturbations. And against F-A-C-S-based CRISPRi screens for four T-cell genes, effects correlated better between matched stimulation conditions than mismatched ones."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Ah — that second one's the better control."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Agreed. And the headline is context dependence, larger than I'd have guessed. They clustered three thousand three hundred forty-one strong perturbations into one hundred eleven regulator clusters. About a third show coherent regulator effects in only one or two of the three conditions — rest, eight hours post-stimulation, forty-eight hours — and they checked it isn't explained by the regulator not being expressed in the others."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So the gene's there, it's just... not wired in."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's their read. There's a second flavour: clusters whose regulators act coherently in all three conditions — consistent with a physical complex — but control different downstream gene sets depending on activation state. Mediator and SAGA are the example."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Huh. Even the housekeeping coactivators, then."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Does any of it transfer to K562, which is what everyone else has been generating?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Roughly eight percent of trans-effects detected in C-D-four T cells across three thousand eighty-one shared perturbations were also seen in K562, after meta-analysis for power differences. Mean Pearson correlation point three two for the same perturbation across cell types — better than random pairs, lower than between donor replicates. What transferred was enriched for housekeeping processes: transcription, chromatin remodelling, cell cycle."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Eight percent. That's the number I'd put on a slide arguing against training perturbation models on cell lines."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "The authors make roughly that argument, and they're explicit that cross-context prediction is likely to be hard."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Any concrete biology, or is it all atlas?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "They validated two cytokines — I-L-ten and I-L-twenty-one — with arrayed knockdowns of nine regulators, read out by bulk R-N-A-seq and intracellular protein staining. Eleven of twelve tested regulator-target interactions moved in the predicted direction; eight were statistically significant."
+    },
+    {
+      "speaker": "Theo",
+      "text": "At protein level?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Mostly concordant, with one clean exception: N-F-K-B-two's effect on I-L-ten showed up transcriptionally but not in protein. They report it and suggest post-transcriptional regulation."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And the modelling — they claim they can explain cell states from population atlases?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "They fit a regression reconstructing an observed cell-state signature as a linear combination of perturbation signatures. On a T-h-two versus T-h-one signature from sorted human cells: mean cross-validation correlation point three nine in the discovery cohort, point two seven in an independent replication cohort, on held-out genes. That beat models fit on K562 data, and beat scrambled controls."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Point two seven. Real, but — what's the ceiling?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "They plot it: inter-cohort agreement is the maximum achievable, and point two seven sits meaningfully below it. Signal, clearly. Not reconstruction."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Sanity check on the regulators?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Known ones rank correctly with the right sign — I-F-N-gamma receptors, JAK2, IRF1 on T-h-one; I-L-four receptor, STAT6, GATA3, RARA on T-h-two. Only two came out inverted, TRAF3 and I-L-four itself, which they attribute to paracrine signalling in pooled culture damping the I-L-four knockdown response."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Mm-hm. Anything not already known?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "F-B-X-O-thirty-two as a top T-h-two regulator — expressed in T cells but, they say, unstudied in immunity. It and STAT6 have similar average effects on the signature while controlling distinct genes: F-B-X-O-thirty-two enriched for chemokines, STAT6 for GATA3 and T-G-F-beta components."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Wait — no functional validation of F-B-X-O-thirty-two?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "None. It's a nomination, and they say so."
+    },
+    {
+      "speaker": "Theo",
+      "text": "There's an aging analysis too."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Same framework on age-associated C-D-four expression across seven hundred eighty-two donors from the OneK1K cohort. Rest-condition perturbation effects fit best — cross-validation correlation point three six six. Top nominated pathways: m-T-O-R-C-one components and SUMOylation enzymes."
+    },
+    {
+      "speaker": "Theo",
+      "text": "m-T-O-R and aging. Almost too tidy."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Well — the honest part is that the directions run backwards. Knocking down the m-T-O-R-C-one inhibitors, T-S-C and GATOR genes, induces genes that are down in aged T cells, and RPTOR comes out as a negative regulator of the aging signature. That's opposite to the hyperactive-m-T-O-R story."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Oh. What do they do with that?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Flag it, show the individual knockdowns move gold-standard m-T-O-R-C-one activation signatures as expected, then hypothesize feedback, compensation, or survivor bias in T cells from aged donors. It's in a supplementary note — they didn't quietly flip a sign."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And the human genetics integration?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "They correlate each regulator's knockdown effect on a gene with that regulator's loss-of-function burden effect on lymphocyte count in U-K Biobank. Excess correlation shows up in stimulated T cells at both timepoints — not in rested cells, not in K562, not in a Jurkat essential-gene screen."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Not in rested cells. Same cells, different state."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's the cleanest internal support for the context-dependence claim, because it holds cell type fixed. They do note the Jurkat comparison is confounded by the far larger number of perturbations they measured."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Limitations. Four donors."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Four. Their power analysis shows that for a fixed number of cells per perturbation, adding donors consistently improved trans-effect estimates, while gains from more cells flattened around two hundred. So donors were the higher-value axis — my read is that four is a budget number."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And donor biology versus batch?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Confounded, and they say so in limitations. Also pseudobulk aggregation, which masks heterogeneity of response across cells. And non-polarizing culture, so the cytokine-driven rewiring that defines T-helper differentiation is unmapped — which matters, given they're nominating polarization regulators."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So the T-h-one/T-h-two nominations come from cells that were never polarized."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Correct. The single-cell shifts in Figure four-H are subtle, and they attribute that to full polarization requiring coordinated action of multiple regulators plus external signal input."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Connections — this sits against a thread we keep circling: episode sixty-three's p-H-switchable C-D-three binders, episode seventy-six's C-D-two costimulatory bispecific, episode seventy-one's clinical T-C-E-R. All engineer the molecule and treat the T cell as a fixed reagent."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "And this paper argues the reagent is wired differently depending on activation state. Whether that explains heterogeneous engager responses is a hypothesis — there's no engager anywhere in this paper."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Three takeaways. One: the technical claim holds — twenty-two million primary cells, seventy-three percent of tested guides with significant knockdown, replication against two independent screen types. Two: context dependence is the substantive result, and the sharpest evidence is the lymphocyte-count correlation appearing in stimulated but not rested cells, same cell type. Three: roughly eight percent of trans-effects shared with K562 — the number that should worry anyone training perturbation models on cell lines."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "I'd add: the cell-state modelling is a proof of concept at correlations around point three, under the noise ceiling. They call it a baseline themselves."
+    },
+    {
+      "speaker": "Theo",
+      "text": "What would change my mind — a third guide per target on the eighteen percent flagged for proximal off-target effects, showing the trans-effects hold."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "For me, polarizing conditions. Add T-h-one and T-h-two skewing cytokines, re-run the polarization nominations. If F-B-X-O-thirty-two survives that, I'd believe it."
+    },
+    {
+      "speaker": "Theo",
+      "text": "D-O-I ten point one zero one six, slash, j dot cell dot twenty twenty-six dot zero eight dot zero zero two. The data are publicly released."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Thanks for listening."
+    }
+  ]
+}
