@@ -1,0 +1,143 @@
+Nadia: Hello and welcome to Science TLDR. I'm Nadia.
+
+Theo: And I'm Theo.
+
+Nadia: And today it's "Specific targeting of MR1-antigen complexes using nanobodies" — Hussain and colleagues, Science Immunology. They raise nanobodies against a microbial metabolite bound to MR1, an M-H-C-like molecule that barely varies between people, and reformat the lead into a C-D-three engager.
+
+Theo: Okay. Define MR1 for me before we go further.
+
+Nadia: M-H-C class-one-related protein one. Same fold family as classical M-H-C, but instead of a shallow groove for nine-mer peptides it has a closed pocket lined with aromatic residues that captures small cyclic metabolites. The best-characterised one is 5-O-P-R-U, an intermediate of microbial riboflavin synthesis. It forms a covalent Schiff base with a lysine in the pocket.
+
+Theo: And the T cells that read it —
+
+Nadia: MAIT cells. Mucosal-associated invariant T cells. A conserved lineage that effectively treats MR1 as an infection sensor, because riboflavin synthesis is a microbial pathway and we don't have it.
+
+Theo: So why is this worth ten minutes?
+
+Nadia: Two things. MR1 is essentially non-polymorphic — a handful of rare variants. And the ligand is a defined small molecule rather than one nine-mer drawn from a combinatorial space of self peptides. Both change the specificity problem for a T-cell-receptor-mimic binder.
+
+Theo: Right — TCR-mimic meaning an antibody that reads the antigen plus the presenting molecule as a composite, the way a T-C-R does.
+
+Nadia: Yes. And peptide-H-L-A programmes pay two taxes for that. You pick an allele, usually H-L-A-A star oh-two-oh-one, and lose most of the population. Then you spend a year proving your paratope doesn't cross-react across the rest of the presented proteome.
+
+Theo: And that tax isn't hypothetical. Episode 71 — the I-M-A-four-oh-one phase one — every patient had to be H-L-A-A star oh-two-oh-one-positive and MAGE-A-four or A-eight-expressing before they could be dosed.
+
+Nadia: Mm-hm. Here, in principle, an off-target has to be another MR1-presented small molecule rather than any nine-mer in the presented self proteome. Much smaller space. Not zero, though, and we'll come back to it.
+
+Theo: Okay, how did they get the binders?
+
+Nadia: A synthetic nanobody yeast display library — nanobodies being camelid single-domain antibodies. The selection is what I'd flag: every round is a negative depletion before the positive pull. They deplete on C-D-1-c tetramers, which strips anything binding streptavidin, beta-2-microglobulin, the P-E fluorophore or the beads, then enrich on human MR1–5-O-P-R-U.
+
+Theo: So the counter-screen sits inside the loop, not after it.
+
+Nadia: Right. Three magnetic rounds then a sort. In the naive library, 0.63 percent bound MR1–5-O-P-R-U; after four rounds, 51.6 percent.
+
+Theo: And ligand discrimination?
+
+Nadia: Partial. 38.8 percent also bound MR1 loaded with 6-formylpterin, a non-stimulatory ligand — so many clones were reading MR1 itself, not the antigen. 22.6 percent cross-reacted to mouse MR1–5-O-P-R-U.
+
+Theo: Hmm. So most of the enrichment isn't specificity.
+
+Nadia: No. They screened two hundred single clones and got seven unique sequences with the profile they wanted. Expressed as F-c fusions and put on cells, only three stained in a 5-O-P-R-U-dependent way — and weakly.
+
+Theo: So the on-yeast signal didn't transfer.
+
+Nadia: It didn't, and they say so. The fix was error-prone P-C-R affinity maturation on two clones, and the screening change matters: they went from tetramer to monomer staining, dropping avidity so intensity tracks affinity, and stepped the monomer down — 190 nanomolar, then 19, then 1.9.
+
+Theo: How big were the mutant libraries?
+
+Nadia: Around 108 and 113 million. And then 44 and 72 single-cell subclones screened at the end — so the numbers going in are large and the numbers coming out are hand-countable.
+
+Theo: And the payoff?
+
+Nadia: The lead is clone C11. The parent bound human MR1–5-O-P-R-U with a K-D of about 3.2 micromolar. C11 is 1.8 nanomolar. Roughly fifteen-hundred-fold.
+
+Theo: Oh — from error-prone P-C-R alone?
+
+Nadia: Mostly C-D-R loop mutations, yes. Mouse MR1–5-O-P-R-U is 0.52 nanomolar. And against MR1 loaded with acetyl-6-formylpterin, C11 is about 20 micromolar — more than ten-thousand-fold weaker than the target complex.
+
+Theo: What's the comparator?
+
+Nadia: Clone 26.5, the field-standard anti-MR1. It binds human MR1–5-O-P-R-U at 4.7 nanomolar and MR1–Ac-6-F-P at 2.1 — effectively blind to what's loaded. That contrast is the cleanest number in the paper.
+
+Theo: Now — do they show the nanobody actually touches the metabolite? Otherwise you have a conformational MR1 binder that happens to prefer one loading state.
+
+Nadia: That's the right question, and it's why the crystallography carries the paper. Two structures, 2.9 and 3.1 angstroms. C11 docks over the cleft in a manner the authors describe as analogous to MAIT T-C-R docking, burying 1155 square angstroms, against 1170 for the MAIT T-C-R–MR1 complex.
+
+Theo: Huh. Same footprint size, from a single domain.
+
+Nadia: And C-D-R-three serine 100 hydrogen-bonds directly to the ribityl hydroxyl of 5-O-P-R-U. In the Ac-6-F-P structure the C-D-R-one loop is flipped out of the pocket, C-D-R-three makes no contact with the ligand at all, and buried surface drops to 830.
+
+Theo: Ah, okay. So the discrimination has a structural basis rather than being inferred from titration curves.
+
+Nadia: And the alanine scan agrees — substitutions at arginine 61 and leucine 65 impaired C11 staining, down to wild-type C1R background, both beside the pocket, and both appear in the structure's contact list.
+
+Theo: Did they check that C11 and 26.5 actually overlap on the molecule?
+
+Nadia: They did, and the answer's slightly counterintuitive. The alanine map puts them on opposite helices — C11 sensitive to arginine 61 and leucine 65 on alpha-one, 26.5 to asparagine 146 and histidine 148 on alpha-two. But in sequential staining each blocks the other dose-dependently, so the footprints overlap across the apical surface even though the hot-spots differ.
+
+Theo: Function?
+
+Nadia: It blocks MAIT activation — reporter line, primary human P-B-M-Cs, mouse splenocytes. The selective part: C11 blocks a 5-O-P-R-U-specific MAIT clone but leaves two MR1-reactive clones with other specificities untouched, where 26.5 shuts all of them down.
+
+Theo: How many donors?
+
+Nadia: Two, for the primary P-B-M-C proliferation block. Small — though the effect is binary, full block versus none, so I'm less worried than I'd be about a graded readout. In mouse splenocyte cultures, 5-O-P-R-U drove MAIT cells to seven to twenty percent of T-C-R-beta cells, and C11, D9 and 26.5 each abolished that.
+
+Theo: That's the case for antigen-specific rather than pan-MR1 blockade. In vivo?
+
+Nadia: 125 micrograms intravenously, sixteen hours before 200 picomoles of 5-O-P-R-U. C11-F-c fully blocked C-D-25 and C-D-69 upregulation in liver and lung, substantially reduced it in spleen, and the blockade held at baseline out to day 16.
+
+Theo: Versus 26.5?
+
+Nadia: Um — here they're careful, and I'd credit it. 26.5 partially suppressed in spleen and lung and did nothing in liver. But they state plainly the two weren't molar-matched and used different F-c formats — theirs is a silenced mouse IgG1 D265A, 26.5 is F-c-sufficient IgG2a. They call 26.5 a positive control, not a head-to-head comparator.
+
+Theo: Good. That's the sentence most papers leave out.
+
+Nadia: They also ran a Francisella tularensis infection, where MAIT cells contribute to early bacterial control. Both reagents suppressed MAIT accumulation in liver and blood and raised splenic bacterial burden above P-B-S controls, approaching what's seen in MR1-deficient mice.
+
+Theo: So the blockade does something in a real infection. Now the engager.
+
+Nadia: C11 fused to O-K-T-3, anti-C-D-three, as a single-chain bispecific. Size exclusion gave two species per construct — a monomer and a second peak they read as a non-covalently linked dimer from chain mispairing — and they characterised both instead of discarding one. Monomer and dimer both drove primary C-D-8 killing of C1R cells and of the breast line SKBR3, and the monomer killed E. coli-treated targets. No killing on MR1-knockout cells.
+
+Theo: And orientation mattered?
+
+Nadia: It did. C11 at the N-terminus outperformed C11 at the C-terminus, and the dimers outperformed the monomers at lower concentrations — consistent with valency rather than anything subtle.
+
+Theo: Wait. The tumour cells were pulsed with synthetic 5-O-P-R-U?
+
+Nadia: Ten micromolar, three hours. Yes.
+
+Theo: Then what's shown is that if you put the antigen onto a tumour cell, the engager kills it.
+
+Nadia: That is the limit, and I'd state it that way too. There's no demonstration of a tumour-relevant MR1 ligand at sufficient surface density without exogenous loading. The authors are explicit about it and point at candidates — recently described nucleobase adducts associated with cellular stress, for instance.
+
+Theo: Which rhymes with episode 83 — thirteen of twenty-six W-T-1 TCR-mimics with clean S-P-R bound an off-target peptide once you pulsed target cells at fifty micromolar. Loading a cell that hard is a stringency test for the binder, not a statement about physiological density.
+
+Nadia: Same shape, yeah.
+
+Theo: So what else would you want?
+
+Nadia: Well — three things. One, the bispecifics show 5-O-P-R-U-independent activity at high doses. They addressed it: a two-mutation variant, ComboH, cut the antigen-independent activity but also cut potency. So it's a real trade, not a solved problem.
+
+Theo: And two?
+
+Nadia: Other pocket ligands. Bile acids gave nothing, but C11 bound pyridoxal- and pyridoxal-5-prime-phosphate-pulsed cells above isotype, weakly. That's vitamin B6 — a mammalian metabolite, not a microbial one. Third, commensals make the 5-A-R-U precursor too, and where MR1–5-O-P-R-U appears at barrier surfaces at steady state is unknown. The authors flag that twice as the on-target safety question.
+
+Theo: Okay. Takeaways. First, the structural result: a single-domain antibody buries 1155 square angstroms over MR1 and hydrogen-bonds the metabolite directly, with the C-D-R-one loop flipping out when the wrong ligand is loaded. That's a mechanism for discrimination, not an inference from binding curves.
+
+Nadia: Second?
+
+Theo: Second, the screening format did the work, not a design step. Monomer instead of tetramer, stepped to 1.9 nanomolar, 3.2 micromolar to 1.8 nanomolar. No model in the loop anywhere.
+
+Nadia: And the third.
+
+Theo: Third — and this is where I draw the line. On this data I'd believe C11 is a selective blocking reagent for MR1–5-O-P-R-U in human and mouse systems. I would not yet believe the tumour application, because every tumour experiment used exogenously loaded antigen.
+
+Nadia: What I'd watch for: a tumour or infected line presenting an endogenous MR1 ligand at native density, killed by the engager, with an MR1-knockout arm in the same assay.
+
+Theo: Mine's the pyridoxal cross-reactivity — whether it matters at barrier tissue, and whether ComboH's more specific version is too weak to be useful. If it is, that trade is the whole story.
+
+Nadia: That's Science Immunology, D-O-I 10.1126/sciimmunol.aeb8726.
+
+Theo: Thanks for listening.
