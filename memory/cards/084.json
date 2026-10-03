@@ -1,0 +1,40 @@
+{
+  "episode_number": 84,
+  "title": "Trending — Predictors and prevalence of support for white nationalism in the United States",
+  "doi": "10.1038/s41586-026-11018-0",
+  "journal": "Nature",
+  "source": "friday-reddit",
+  "one_line": "Three national surveys of non-Hispanic white US adults (2021–2025) used a direct, information-first question — describing white nationalist tenets then asking for support — to estimate prevalence and test strain, status-threat and online-mobilisation accounts.",
+  "key_claims": [
+    "In the NORC AmeriSpeak probability sample (n=2,114, 2024), 4.9% of non-Hispanic white adults endorsed support (CI 3.6–6.2), rising to 13.5% among white men aged 18–29 (CI 6.0–21.0).",
+    "Status threat found no support: county racial diversity and recent change in white share were non-significant (P<0.08, opposite-signed) with equivalence tests passed; rural/urban null (delta-BIC ~21).",
+    "Strain predictors held: three or more personal hardships in past year +4 points, top-vs-bottom county social distress +4 points; occupational decline null but equivalence test failed.",
+    "Online-only friendship, not social media use, tracked support: all three closest friends known only online was +13 points, while frequency of use (delta-BIC ~8) and political social media activity (delta-BIC ~23) were null.",
+    "The measure looks distinct from existing scales: r=0.40 white identity, 0.31 great replacement, 0.26 old-fashioned racism, 0.25 racial resentment, 0.15 white privilege denial; informing respondents raised endorsement 3.8%→7.6% in study one (n=3,227, P<0.001) but not in study two (3.0% vs 4.3%, P=0.25).",
+    "Other correlates: education 15-point spread, income 7, religious attendance +4, conservatives +8, Republicans +5, Trump-2020 voters +6, government conspiracy thinking +9; all survive multivariate except income."
+  ],
+  "limitations": [
+    "Reverse-keyed wording ('Are you an opponent?') produced endorsement 9 points higher (P<0.001), an unexplained gap; after acquiescence adjustment, age-among-men (P=0.16) and education (P=0.15) fall below conventional significance.",
+    "Authors state expressed support is not organisational affiliation, which was not measured.",
+    "Cross-sectional data: authors note the online-friendship arrow could run the other way, and theory tests are labelled corroborative, not causal.",
+    "NORC cumulative response rate was 2.7% with non-responses counted as 'no'; the claim that non-response biases the estimate downward is an argument, not a measurement.",
+    "Study one is a matched opt-in panel resting on the unverifiable assumption that participation is independent of the stigmatised attitudes measured; sensitivity analysis flags county social distress as most vulnerable to omitted-variable bias.",
+    "The 13.5% young-men interval is 15 points wide; the 2.5-point equivalence threshold was pre-set but not preregistered."
+  ],
+  "open_questions": [
+    "Field the same item to the same panel years apart to separate cohort from life-cycle effects in the young-white-men result.",
+    "Explain the 9-point reverse-keying gap before treating 4.9% as a wording-independent prevalence.",
+    "Resolve whether the information treatment has a real effect, given study one's doubling and study two's failed-equivalence null.",
+    "Longitudinal or design-based evidence on whether online-only friendship precedes or follows these attitudes."
+  ],
+  "tags": [
+    "survey-methodology",
+    "prevalence-estimation",
+    "political-extremism",
+    "equivalence-testing",
+    "measurement-validity",
+    "response-bias",
+    "replication",
+    "social-media"
+  ]
+}
