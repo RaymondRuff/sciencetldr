@@ -220,3 +220,27 @@ def resolve(
     if _transient:
         raise TransientFetchError("; ".join(_transient))
     return None
+
+
+# Papers arrive with reference lists, supplementary tables and publisher
+# boilerplate; past this length the extra text costs money without improving
+# the script. 120k chars is ~30k tokens — room for any main text we've seen.
+MAX_PAPER_CHARS = 120_000
+REFERENCES_RE = re.compile(
+    r"\n\s*(References|REFERENCES|Bibliography|Literature Cited)\s*\n"
+)
+
+
+def prepare_paper_text(text: str) -> str:
+    """Drop the reference list and cap the length, logging what was cut."""
+    original = len(text)
+    # Only treat a References heading as the tail if it's in the back half —
+    # an early match is more likely a table of contents or a figure label.
+    matches = [m for m in REFERENCES_RE.finditer(text) if m.start() > len(text) * 0.5]
+    if matches:
+        text = text[: matches[-1].start()]
+    if len(text) > MAX_PAPER_CHARS:
+        text = text[:MAX_PAPER_CHARS]
+    if len(text) < original:
+        print(f"  [paper] text trimmed {original:,} -> {len(text):,} chars")
+    return text
