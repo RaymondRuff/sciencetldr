@@ -16,12 +16,12 @@ than paying to process it again. Only the final instruction block differs.
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 
 import anthropic
 
 import claude
+from paper_text import prepare_paper_text  # noqa: F401 - re-exported for callers
 
 ROOT = Path(__file__).resolve().parent.parent
 PROMPTS_DIR = ROOT / "prompts"
@@ -116,30 +116,6 @@ def total_chars(turns: list[dict]) -> int:
 
 def estimated_minutes(turns: list[dict]) -> float:
     return total_chars(turns) / CHARS_PER_MINUTE
-
-
-# Papers arrive with reference lists, supplementary tables and publisher
-# boilerplate; past this length the extra text costs money without improving
-# the script. 120k chars is ~30k tokens — room for any main text we've seen.
-MAX_PAPER_CHARS = 120_000
-REFERENCES_RE = re.compile(
-    r"\n\s*(References|REFERENCES|Bibliography|Literature Cited)\s*\n"
-)
-
-
-def prepare_paper_text(text: str) -> str:
-    """Drop the reference list and cap the length, logging what was cut."""
-    original = len(text)
-    # Only treat a References heading as the tail if it's in the back half —
-    # an early match is more likely a table of contents or a figure label.
-    matches = [m for m in REFERENCES_RE.finditer(text) if m.start() > len(text) * 0.5]
-    if matches:
-        text = text[: matches[-1].start()]
-    if len(text) > MAX_PAPER_CHARS:
-        text = text[:MAX_PAPER_CHARS]
-    if len(text) < original:
-        print(f"  [script] paper text trimmed {original:,} -> {len(text):,} chars")
-    return text
 
 
 def _shared_prefix(paper_text: str, metadata: dict, memory: str) -> list[dict]:
