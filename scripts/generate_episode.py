@@ -454,6 +454,37 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
     return DRAFTED
 
 
+def publish_next_draft() -> None:
+    """Merge the oldest waiting episode draft, which publishes it.
+
+    One per call, oldest first, so a backlog of drafts reaches the feed one a
+    day rather than all at once. The merge is made with GH_TOKEN (the PAT), and
+    a push made with a PAT — unlike one made with GITHUB_TOKEN — fires the
+    publish workflow that watches inbox/.
+    """
+    prs = json.loads(
+        gh(
+            [
+                "pr", "list", "--state", "open", "--limit", "100",
+                "--json", "number,title,headRefName,createdAt",
+            ]
+        )
+    )
+    drafts = sorted(
+        (p for p in prs if p["headRefName"].startswith("episode/")),
+        key=lambda p: p["createdAt"],
+    )
+    if not drafts:
+        print("[publish] no episode drafts waiting")
+        return
+    pr = drafts[0]
+    gh(["pr", "merge", str(pr["number"]), "--merge", "--delete-branch"])
+    print(
+        f"[publish] merged draft PR #{pr['number']} ({pr['title'][:60]}); "
+        f"{len(drafts) - 1} still waiting"
+    )
+
+
 def is_run_fatal(exc: Exception) -> bool:
     """Errors that will hit every remaining Issue too, so the run should stop."""
     if isinstance(exc, (anthropic.AuthenticationError, anthropic.PermissionDeniedError)):
@@ -475,6 +506,11 @@ def main() -> None:
         "--dry-run",
         action="store_true",
         help="write the script but skip synthesis, commits and the PR",
+    )
+    parser.add_argument(
+        "--publish-next",
+        action="store_true",
+        help="after the sweep, merge the oldest waiting draft PR (auto-publish)",
     )
     args = parser.parse_args()
 
@@ -549,6 +585,10 @@ def main() -> None:
         request_missing_pdfs(github_issue.list_pending_issues())
 
     print(f"\n{drafts} draft(s) produced, {attempts} paid attempt(s), {failures} failure(s)")
+    # After generation, so a draft made in this run can publish in this run
+    # when nothing older is waiting.
+    if args.publish_next and not args.dry_run:
+        publish_next_draft()
     if failures:
         sys.exit(f"{failures} issue(s) failed")
 

@@ -72,6 +72,7 @@ Optional repository **variable** (Settings → Secrets and variables → Actions
 | Name | Value |
 |---|---|
 | `MAX_EPISODES_PER_RUN` | how many drafts one sweep may generate (default `3`) |
+| `AUTO_PUBLISH` | `true` = the daily sweep merges the oldest waiting draft PR, publishing one episode a day with no review. Anything else = you merge drafts yourself. |
 
 ---
 

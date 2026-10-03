@@ -159,12 +159,12 @@ def _shared_prefix(paper_text: str, metadata: dict, memory: str) -> list[dict]:
                 + "\n\nFull text of the paper:\n"
                 + paper_text
             ),
-            "cache_control": {"type": "ephemeral"},
+            "cache_control": claude.CACHE,
         }
     ]
     if memory:
         blocks.append(
-            {"type": "text", "text": memory, "cache_control": {"type": "ephemeral"}}
+            {"type": "text", "text": memory, "cache_control": claude.CACHE}
         )
     return blocks
 
@@ -183,7 +183,8 @@ def draft(
             "text": (
                 "Write this episode's script, following the show prompt in the "
                 f"system message. Total spoken text must land between "
-                f"{TARGET_MIN_CHARS} and {TARGET_MAX_CHARS} characters."
+                f"{TARGET_MIN_CHARS} and {TARGET_MAX_CHARS} characters. "
+                "Return the script in `turns`, and `changes` as an empty list."
             ),
         }
     )
@@ -191,7 +192,10 @@ def draft(
         client,
         system=claude.cached_system(host_prompt()),
         user=content,
-        schema=TURNS_SCHEMA,
+        # The same schema as the verify pass, on purpose: the output format is
+        # part of the cached prefix, and a different schema per pass meant the
+        # verify pass re-wrote the whole paper instead of reading it.
+        schema=VERIFIED_SCHEMA,
         effort="high",
         max_tokens=MAX_OUTPUT_TOKENS,
     )
