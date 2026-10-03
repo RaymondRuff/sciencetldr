@@ -1,0 +1,27 @@
+{
+  "guid": "eef89f72-53dc-4649-a368-07fb55882557",
+  "title": "Episode 84: Trending — Predictors and prevalence of support for white nationalism in the United States",
+  "itunes_title": "Trending — Predictors and prevalence of support for white nationalism in the United States",
+  "description": "**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.\n\n**[Predictors and prevalence of support for white nationalism in the United States](https://doi.org/10.1038/s41586-026-11018-0)**\n\n*Nature, 2026*\n\nDOI: [10.1038/s41586-026-11018-0](https://doi.org/10.1038/s41586-026-11018-0)\n\n**Question:** How common is explicit, informed support for white nationalism among white US adults, and what predicts it?\n\n**Answer:** In a probability sample, 4.9% (CI 3.6–6.2) of non-Hispanic white adults endorsed the ideology when told its tenets, rising to 13.5% (CI 6–21) of young white men. Personal hardship and online-only friendships, not local diversity or demographic change, tracked with support.\n\n**Three takeaways**\n\n1. Prevalence: 4.9% overall; 13.5% among white men 18–29, but that interval is wide and the result wobbles once wording bias is adjusted for.\n2. Status-threat theory (local racial diversity, demographic change) is ruled out by passed equivalence tests; strain and online-only friendship predict support instead.\n3. The measure correlates only modestly (r=0.15–0.40) with existing racism scales, suggesting it captures something distinct rather than relabelled resentment.",
+  "pub_date": "Sat, 03 Oct 2026 22:26:43 +0000",
+  "duration_seconds": 646,
+  "episode_number": 84,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "084-predictors-and-prevalence-of-support-for-white-nationalism.mp3",
+  "enclosure_length_bytes": 7755306,
+  "source_metadata": {
+    "title": "Predictors and prevalence of support for white nationalism in the United States",
+    "doi": "10.1038/s41586-026-11018-0",
+    "authors": [
+      "Patrick J. Egan",
+      "James Bisbee",
+      "Joshua A. Tucker"
+    ],
+    "journal": "Nature",
+    "abstract": "Abstract\n                  \n                    White nationalism has become increasingly visible in American public life\n                    1–10\n                    . Yet we lack knowledge of the predictors and prevalence of explicit support for this ideology, as survey research has treated it as a latent construct captured through indirect indicators\n                    11–15\n                    . We introduce and validate a measure that informs respondents of the core tenets of the white nationalist movement and then asks whether they support the movement. Expressed support is distinct from organizational affiliation with the movement, which we do not measure. Here we show with three national surveys of non-Hispanic white adults (conducted from 2021 to 2025) that support for white nationalism is (1) higher among white people encountering personal hardship and local social distress, consistent with strain theories\n                    3,16\n                    ; (2) unrelated to local racial composition or recent demographic change, complicating status threat accounts\n                    4,17,18\n                    ; and (3) elevated among white people with close friendships primarily online, consistent with theories of extremism driven by online mobilization\n                    7,10,19\n                    . Support for white nationalism is more common among white people with lower incomes and education, Republicans and conservatives, and those who are politically disaffected. In our national probability sample, prevalence of support was estimated at 4.9% of white adults, including 13.5% of white men aged 18–29. Support for white nationalism seems to constitute a discrete dimension of white racial attitudes, and many white people who endorse its core ideas are unaware of the label.",
+    "source": "friday-reddit",
+    "source_url": "https://doi.org/10.1038/s41586-026-11018-0"
+  },
+  "source_issue": 47
+}
