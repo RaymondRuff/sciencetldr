@@ -13,12 +13,18 @@ Conventions used throughout:
 from __future__ import annotations
 
 import json
+import time
 from typing import Any, Iterable
 
 import anthropic
 
 MODEL = "claude-opus-5"
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
+# A cache entry's lifetime runs from the *start* of the request that wrote it,
+# so a draft pass that generates for several minutes can outlive the default
+# 5-minute entry before the verify pass reads it. One hour makes the read
+# certain; it costs 2x base to write instead of 1.25x.
+CACHE = {"type": "ephemeral", "ttl": "1h"}
 
 
 def _blocks(content: Iterable[Any]) -> str:
@@ -34,6 +40,7 @@ def _stream(
     effort: str,
     output_config_format: dict | None = None,
 ) -> Any:
+    started = time.monotonic()
     output_config: dict[str, Any] = {"effort": effort}
     if output_config_format:
         output_config["format"] = output_config_format
@@ -56,13 +63,13 @@ def _stream(
         raise RuntimeError(
             f"response hit max_tokens ({max_tokens}); raise it and retry"
         )
-    log_usage(message)
+    log_usage(message, time.monotonic() - started)
     return message
 
 
 def cached_system(prompt: str) -> list[dict]:
     """A system prompt marked for caching — it is identical across episodes."""
-    return [{"type": "text", "text": prompt, "cache_control": {"type": "ephemeral"}}]
+    return [{"type": "text", "text": prompt, "cache_control": CACHE}]
 
 
 def text(
@@ -99,12 +106,12 @@ def structured(
     return json.loads(_blocks(message.content))
 
 
-def log_usage(message: Any) -> None:
+def log_usage(message: Any, seconds: float = 0.0) -> None:
     """Print token usage so each workflow run shows what the episode cost."""
     usage = message.usage
     print(
         "  [claude] tokens in="
         f"{usage.input_tokens} cache_write={getattr(usage, 'cache_creation_input_tokens', 0)} "
         f"cache_read={getattr(usage, 'cache_read_input_tokens', 0)} "
-        f"out={usage.output_tokens}"
+        f"out={usage.output_tokens} ({seconds:.0f}s)"
     )

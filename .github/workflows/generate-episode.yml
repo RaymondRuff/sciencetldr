@@ -86,11 +86,22 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           MAX_EPISODES_PER_RUN: ${{ vars.MAX_EPISODES_PER_RUN || '3' }}
+          PYTHONUNBUFFERED: '1'   # real timestamps on log lines
+          # Auto-publish: with the AUTO_PUBLISH variable set to 'true', the
+          # daily sweep (and a manual run with no issue named) merges the oldest
+          # waiting draft PR — one a day. Any other value keeps the manual merge.
+          AUTO_PUBLISH: ${{ vars.AUTO_PUBLISH }}
+          PUBLISH_SLOT: ${{ github.event.schedule == '0 14 * * *' || github.event_name == 'workflow_dispatch' }}
+          ISSUE: ${{ inputs.issue }}
         run: |
+          PUBLISH=""
+          if [ "$AUTO_PUBLISH" = "true" ] && [ "$PUBLISH_SLOT" = "true" ]; then
+            PUBLISH="--publish-next"
+          fi
           if [ "$POLL" = "true" ]; then
             uv run python scripts/generate_episode.py --mailbox-only
-          elif [ -n "${{ inputs.issue }}" ]; then
-            uv run python scripts/generate_episode.py --issue "${{ inputs.issue }}"
+          elif [ -n "$ISSUE" ]; then
+            uv run python scripts/generate_episode.py --issue "$ISSUE"
           else
-            uv run python scripts/generate_episode.py
+            uv run python scripts/generate_episode.py $PUBLISH
           fi
