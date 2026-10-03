@@ -66,7 +66,7 @@ WHISPER_COMPUTE_TYPE = os.environ.get("WHISPER_COMPUTE_TYPE", "int8")
 # select_*_paper.py scripts in the issue's METADATA block.
 SERIES = {
     "friday-reddit": {
-        "title_prefix": "Trending — ",
+        "title_prefix": "Reddit Trending — ",
         "description_header": (
             "**Top Trending Friday** — our weekly pick of the "
             "top-trending paper on r/science this week."
