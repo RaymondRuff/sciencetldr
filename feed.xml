@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Tue, 05 Aug 2025 07:10:07 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 22:26:43 +0000</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -703,21 +703,6 @@
       <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
-      <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
-      <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
-      <content:encoded><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-sliding-window-interaction-grammar-swing-a-generalized.mp3" length="16072339" type="audio/mpeg"/>
-      <guid isPermaLink="false">9201969d-0f95-4f0e-9bc1-c21da915fa14</guid>
-      <itunes:duration>1004</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>46</itunes:episode>
-      <podcast:episode>46</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
       <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
       <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
@@ -731,6 +716,21 @@
       <podcast:episode>46</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
+      <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
+      <content:encoded><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-sliding-window-interaction-grammar-swing-a-generalized.mp3" length="16072339" type="audio/mpeg"/>
+      <guid isPermaLink="false">9201969d-0f95-4f0e-9bc1-c21da915fa14</guid>
+      <itunes:duration>1004</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
@@ -808,21 +808,6 @@
       <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
-      <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
-      <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
-      <content:encoded><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-the-impact-of-cd3-affinity-attenuation-on-t-cell-engaging.mp3" length="16364075" type="audio/mpeg"/>
-      <guid isPermaLink="false">ef6b64ae-650d-4e35-bfbd-88e0168f0b2c</guid>
-      <itunes:duration>1022</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>52</itunes:episode>
-      <podcast:episode>52</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
       <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
       <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
@@ -836,6 +821,21 @@
       <podcast:episode>52</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
+      <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
+      <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
+      <content:encoded><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-the-impact-of-cd3-affinity-attenuation-on-t-cell-engaging.mp3" length="16364075" type="audio/mpeg"/>
+      <guid isPermaLink="false">ef6b64ae-650d-4e35-bfbd-88e0168f0b2c</guid>
+      <itunes:duration>1022</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
@@ -1550,8 +1550,8 @@
       <pubDate>Tue, 02 Jun 2026 19:11:42 +0000</pubDate>
     </item>
     <item>
-      <title><![CDATA[Episode 73: Trending — Work from Home and Disability Employment]]></title>
-      <itunes:title><![CDATA[Trending — Work from Home and Disability Employment]]></itunes:title>
+      <title><![CDATA[Episode 73: Reddit Trending — Work from Home and Disability Employment]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Work from Home and Disability Employment]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong>Paper:</strong> <a href="https://doi.org/10.1257/aeri.20240538">Work from Home and Disability Employment</a></p>
 <p><strong>Authors:</strong> Nicholas Bloom, Gordon B. Dahl, Dan-Olof Rooth</p>
@@ -1646,8 +1646,8 @@
       <pubDate>Tue, 09 Jun 2026 17:32:21 +0000</pubDate>
     </item>
     <item>
-      <title><![CDATA[Episode 75: Trending — A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone]]></title>
-      <itunes:title><![CDATA[Trending — A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone]]></itunes:title>
+      <title><![CDATA[Episode 75: Reddit Trending — A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone]]></title>
+      <itunes:title><![CDATA[Reddit Trending — A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong>Paper:</strong> <a href="https://doi.org/10.1038/s41586-026-10546-z">A 5.3-million-year-old deep-sea whale necropolis in the Diamantina Zone</a></p>
 <p><strong>Authors:</strong> Xiaotong Peng, Peng Zhou, Xikun Song, Giovanni Bianucci, et al.</p>
@@ -1748,8 +1748,8 @@
       <pubDate>Mon, 15 Jun 2026 16:16:41 +0000</pubDate>
     </item>
     <item>
-      <title><![CDATA[Episode 77: Trending — People prefer to negotiate with women, even when outcomes are identical and gender is unknown]]></title>
-      <itunes:title><![CDATA[Trending — People prefer to negotiate with women, even when outcomes are identical and gender is unknown]]></itunes:title>
+      <title><![CDATA[Episode 77: Reddit Trending — People prefer to negotiate with women, even when outcomes are identical and gender is unknown]]></title>
+      <itunes:title><![CDATA[Reddit Trending — People prefer to negotiate with women, even when outcomes are identical and gender is unknown]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong>Paper:</strong> <a href="https://doi.org/10.1073/pnas.2523202123">People prefer to negotiate with women, even when outcomes are identical and gender is unknown</a></p>
 <p><strong>Authors:</strong> Charlotte H. Townsend, Laura J. Kray, Solène Delecourt</p>
@@ -1836,8 +1836,8 @@
       <pubDate>Mon, 06 Jul 2026 23:01:59 +0000</pubDate>
     </item>
     <item>
-      <title><![CDATA[Episode 79: Trending — Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study]]></title>
-      <itunes:title><![CDATA[Trending — Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study]]></itunes:title>
+      <title><![CDATA[Episode 79: Reddit Trending — Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong>Paper:</strong> <a href="https://doi.org/10.1371/journal.pone.0344552">Probability of a timely vocal response in mother-infant interaction and later psychiatric diagnosis: A case-control study</a></p>
 <p><strong>Authors:</strong> Bethany Stanley, Clare S. Allely, Jenna Charlton, Christopher Gillberg, et al.</p>
@@ -1887,8 +1887,8 @@
       <pubDate>Thu, 16 Jul 2026 15:23:38 +0000</pubDate>
     </item>
     <item>
-      <title><![CDATA[Episode 80: Trending — Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata]]></title>
-      <itunes:title><![CDATA[Trending — Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata]]></itunes:title>
+      <title><![CDATA[Episode 80: Reddit Trending — Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong>Paper:</strong> <a href="https://doi.org/10.1073/pnas.2536089123">Educational expansion and the hidden reversal of the Flynn effect—Differential trends across socioeconomic strata</a></p>
 <p><strong>Authors:</strong> Bernt Bratsberg, Anders M. Fjell, Ole J. Rogeberg, Kristine B. Walhovd</p>
@@ -1989,8 +1989,8 @@
       <pubDate>Tue, 25 Aug 2026 16:16:03 +0000</pubDate>
     </item>
     <item>
-      <title><![CDATA[Episode 82: Trending — Substantial under-detection of human rabies cases in the United States]]></title>
-      <itunes:title><![CDATA[Trending — Substantial under-detection of human rabies cases in the United States]]></itunes:title>
+      <title><![CDATA[Episode 82: Reddit Trending — Substantial under-detection of human rabies cases in the United States]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Substantial under-detection of human rabies cases in the United States]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong><a href="https://doi.org/10.1038/s44528-026-00031-4">Substantial under-detection of human rabies cases in the United States</a></strong></p>
 <p><em>Communications Health, 2026</em></p>
@@ -2063,8 +2063,8 @@
       <pubDate>Sat, 26 Sep 2026 17:05:07 +0000</pubDate>
     </item>
     <item>
-      <title><![CDATA[Episode 84: Trending — Predictors and prevalence of support for white nationalism in the United States]]></title>
-      <itunes:title><![CDATA[Trending — Predictors and prevalence of support for white nationalism in the United States]]></itunes:title>
+      <title><![CDATA[Episode 84: Reddit Trending — Predictors and prevalence of support for white nationalism in the United States]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Predictors and prevalence of support for white nationalism in the United States]]></itunes:title>
       <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
 <p><strong><a href="https://doi.org/10.1038/s41586-026-11018-0">Predictors and prevalence of support for white nationalism in the United States</a></strong></p>
 <p><em>Nature, 2026</em></p>
