@@ -1,0 +1,37 @@
+{
+  "guid": "5fa5de0b-ae8f-49c9-9389-cde73e073724",
+  "title": "Episode 85: Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits",
+  "itunes_title": "Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**[Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits](https://doi.org/10.1016/j.cell.2026.08.002)**\n\n*Cell, 2026*\n\nDOI: [10.1016/j.cell.2026.08.002](https://doi.org/10.1016/j.cell.2026.08.002)\n\n**Question:** Can genome-scale CRISPRi perturb-seq in primary human CD4+ T cells, at rest and after stimulation, map which genes regulate T cell states and disease-relevant traits?\n\n**Answer:** Knockdown of ~12,700 genes across 22M cells (4 donors) reveals extensive context-dependence: about a third of regulator clusters act coherently in only one of three activation states, and disease-gene correlations appear only in stimulated cells.\n\n**Three takeaways**\n\n1. Technical validity holds up: 73% of tested guides gave significant knockdown, replicated against two independent external screens.\n2. Context dependence is the key finding — lymphocyte-count genetic associations correlate with perturbation effects in stimulated, not resting, cells.\n3. Only ~8% of trans-effects shared with K562 cell-line data, cautioning against training perturbation models on immortalized lines.",
+  "pub_date": "Sun, 04 Oct 2026 17:59:41 +0000",
+  "duration_seconds": 644,
+  "episode_number": 85,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "085-genome-scale-perturb-seq-in-primary-human-cd4-t-cells-maps.mp3",
+  "enclosure_length_bytes": 7736798,
+  "source_metadata": {
+    "title": "Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits",
+    "doi": "10.1016/j.cell.2026.08.002",
+    "authors": [
+      "Ronghui Zhu",
+      "Emma Dann",
+      "Jun Yan",
+      "Justine Reyes Retana",
+      "Ryunosuke Goto",
+      "Reese C. Guitche",
+      "Lillian Brixi",
+      "Mineto Ota",
+      "Austin Hartman",
+      "Theodore L. Roth",
+      "Ansuman T. Satpathy",
+      "Jonathan K. Pritchard",
+      "Alexander Marson"
+    ],
+    "journal": "Cell",
+    "abstract": "Gene regulatory networks encode the fundamental logic of cellular functions, but systematic network mapping remains challenging, especially in cell states relevant to human biology and disease. Here, we perturbed all expressed genes across 22 million primary human CD4+ T cells from four donors and developed a probe-based perturb-seq platform to measure the transcriptome effects in cells at rest and after stimulation. These data allowed us to map genes regulating immune pathways, including previously uncharacterized regulators of cytokine production. Importantly, active regulators and the gene programs they control changed dramatically across stimulation conditions. Perturbation signatures enabled us to model T cell states observed in population-scale transcriptomic atlases, nominating regulators of T cell polarization and of age-related phenotypes. Finally, we leveraged perturb-seq to implicate context-specific gene regulatory pathways in autoimmune disease risk. Our study provides a foundational resource and new approaches to decode T cell function and human immune traits.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1016/j.cell.2026.08.002"
+  },
+  "source_issue": 41
+}

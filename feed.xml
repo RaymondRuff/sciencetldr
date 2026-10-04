@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Sat, 03 Oct 2026 22:26:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 Aug 2025 07:10:07 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -703,21 +703,6 @@
       <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
-      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
-      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
-      <content:encoded><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
-      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
-      <itunes:duration>934</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>46</itunes:episode>
-      <podcast:episode>46</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
       <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
       <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
@@ -731,6 +716,21 @@
       <podcast:episode>46</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
+      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
+      <content:encoded><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
+      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
+      <itunes:duration>934</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
@@ -808,21 +808,6 @@
       <pubDate>Fri, 29 Aug 2025 23:17:04 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
-      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
-      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
-      <content:encoded><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
-      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
-      <itunes:duration>837</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>52</itunes:episode>
-      <podcast:episode>52</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></title>
       <itunes:title><![CDATA[The impact of CD3 affinity-attenuation on T cell engaging bispecific antibodies: is it really that simple?]]></itunes:title>
       <description><![CDATA[<p>DOI: 10.1080/17460441.2025.2522088</p>]]></description>
@@ -836,6 +821,21 @@
       <podcast:episode>52</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 12 Sep 2025 23:13:15 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></title>
+      <itunes:title><![CDATA[Profiling Hinge Plasticity in Intact Monoclonal Antibodies for Antigen Recognition]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></description>
+      <content:encoded><![CDATA[<p>https://doi.org/10.1021/acs.biochem.5c00274</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-052</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/052-profiling-hinge-plasticity-in-intact-monoclonal-antibodies.mp3" length="13395310" type="audio/mpeg"/>
+      <guid isPermaLink="false">e6fe52a3-b8de-4cdd-a5a1-a53cded11c16</guid>
+      <itunes:duration>837</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>52</itunes:episode>
+      <podcast:episode>52</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 15 Sep 2025 07:00:44 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[A genetic common factor underlying self-reported math ability and highest math class taken]]></title>
@@ -2098,6 +2098,43 @@
       <podcast:episode>84</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Sat, 03 Oct 2026 22:26:43 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 85: Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits]]></title>
+      <itunes:title><![CDATA[Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits]]></itunes:title>
+      <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1016/j.cell.2026.08.002">Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits</a></strong></p>
+<p><em>Cell, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1016/j.cell.2026.08.002">10.1016/j.cell.2026.08.002</a></p>
+<p><strong>Question:</strong> Can genome-scale CRISPRi perturb-seq in primary human CD4+ T cells, at rest and after stimulation, map which genes regulate T cell states and disease-relevant traits?</p>
+<p><strong>Answer:</strong> Knockdown of ~12,700 genes across 22M cells (4 donors) reveals extensive context-dependence: about a third of regulator clusters act coherently in only one of three activation states, and disease-gene correlations appear only in stimulated cells.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Technical validity holds up: 73% of tested guides gave significant knockdown, replicated against two independent external screens.</li>
+<li>Context dependence is the key finding — lymphocyte-count genetic associations correlate with perturbation effects in stimulated, not resting, cells.</li>
+<li>Only ~8% of trans-effects shared with K562 cell-line data, cautioning against training perturbation models on immortalized lines.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1016/j.cell.2026.08.002">Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits</a></strong></p>
+<p><em>Cell, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1016/j.cell.2026.08.002">10.1016/j.cell.2026.08.002</a></p>
+<p><strong>Question:</strong> Can genome-scale CRISPRi perturb-seq in primary human CD4+ T cells, at rest and after stimulation, map which genes regulate T cell states and disease-relevant traits?</p>
+<p><strong>Answer:</strong> Knockdown of ~12,700 genes across 22M cells (4 donors) reveals extensive context-dependence: about a third of regulator clusters act coherently in only one of three activation states, and disease-gene correlations appear only in stimulated cells.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Technical validity holds up: 73% of tested guides gave significant knockdown, replicated against two independent external screens.</li>
+<li>Context dependence is the key finding — lymphocyte-count genetic associations correlate with perturbation effects in stimulated, not resting, cells.</li>
+<li>Only ~8% of trans-effects shared with K562 cell-line data, cautioning against training perturbation models on immortalized lines.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-085</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/085-genome-scale-perturb-seq-in-primary-human-cd4-t-cells-maps.mp3" length="7736798" type="audio/mpeg"/>
+      <guid isPermaLink="false">5fa5de0b-ae8f-49c9-9389-cde73e073724</guid>
+      <itunes:duration>644</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>85</itunes:episode>
+      <podcast:episode>85</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sun, 04 Oct 2026 17:59:41 +0000</pubDate>
     </item>
   </channel>
 </rss>
