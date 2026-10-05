@@ -1,0 +1,42 @@
+{
+  "guid": "7ca4a015-3e21-48cc-b1a1-3084b2d476a6",
+  "title": "Episode 86: Specific targeting of MR1-antigen complexes using nanobodies",
+  "itunes_title": "Specific targeting of MR1-antigen complexes using nanobodies",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**[Specific targeting of MR1-antigen complexes using nanobodies](https://doi.org/10.1126/sciimmunol.aeb8726)**\n\n*Science Immunology, 2025*\n\nDOI: [10.1126/sciimmunol.aeb8726](https://doi.org/10.1126/sciimmunol.aeb8726)\n\n**Question:** Can nanobodies be raised to selectively recognize MR1 only when it presents a spec",
+  "pub_date": "Mon, 05 Oct 2026 21:24:40 +0000",
+  "duration_seconds": 663,
+  "episode_number": 86,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "086-specific-targeting-of-mr1-antigen-complexes-using-nanobodies.mp3",
+  "enclosure_length_bytes": 7961762,
+  "source_metadata": {
+    "title": "Specific targeting of MR1-antigen complexes using nanobodies",
+    "doi": "10.1126/sciimmunol.aeb8726",
+    "authors": [
+      "Hisham S. Hussain",
+      "Samuel J. Redmond",
+      "Wael Awad",
+      "Calvin Xu",
+      "Caroline Soliman",
+      "Huimeng Wang",
+      "Yuyang Zhang",
+      "Lisa Ciacchi",
+      "Alexis P. Gonzalez",
+      "Jeffrey Y. W. Mak",
+      "David P. Fairlie",
+      "James McCluskey",
+      "Alexandra J. Corbett",
+      "Adam P. Uldrich",
+      "Jamie Rossjohn",
+      "Dale I. Godfrey",
+      "Hui-Fern Koay",
+      "Nicholas A. Gherardin"
+    ],
+    "journal": "Science Immunology",
+    "abstract": "T cell receptor mimic (TCRm) antibodies that bind peptide–human leukocyte antigen complexes have great therapeutic potential. Major histocompatibility complex class I–related protein 1 (MR1) exhibits limited polymorphism and presents conserved metabolites, such as 5-OP-RU, derived from microbial riboflavin biosynthesis. Whether antibodies targeting such MR1–5-OP-RU complexes can be generated remains unclear. Using yeast display technology, nanobodies with high affinity toward the MR1–5-OP-RU complex were generated. These nanobodies can bind both mouse and human MR1–5-OP-RU and inhibit mucosal-associated invariant T (MAIT) cell responses to 5-OP-RU and bacterial challenge, demonstrating in vitro and in vivo bioactivity. We also solved the crystal structures of the lead nanobody in complex with MR1 antigens and demonstrated that the nanobody cobound MR1 and 5-OP-RU, akin to a TCRm antibody. Last, we engineered bispecific antibodies targeting both MR1–5-OP-RU and CD3 that drive broad T cell killing of bacterially infected cells as well as tumor cells treated with 5-OP-RU, providing evidence for immune redirection via MR1-targeting TCRm-based nanobodies.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1126/sciimmunol.aeb8726"
+  },
+  "source_issue": 66
+}

@@ -2136,5 +2136,28 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Sun, 04 Oct 2026 17:59:41 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 86: Specific targeting of MR1-antigen complexes using nanobodies]]></title>
+      <itunes:title><![CDATA[Specific targeting of MR1-antigen complexes using nanobodies]]></itunes:title>
+      <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1126/sciimmunol.aeb8726">Specific targeting of MR1-antigen complexes using nanobodies</a></strong></p>
+<p><em>Science Immunology, 2025</em></p>
+<p>DOI: <a href="https://doi.org/10.1126/sciimmunol.aeb8726">10.1126/sciimmunol.aeb8726</a></p>
+<p><strong>Question:</strong> Can nanobodies be raised to selectively recognize MR1 only when it presents a spec</p>]]></description>
+      <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1126/sciimmunol.aeb8726">Specific targeting of MR1-antigen complexes using nanobodies</a></strong></p>
+<p><em>Science Immunology, 2025</em></p>
+<p>DOI: <a href="https://doi.org/10.1126/sciimmunol.aeb8726">10.1126/sciimmunol.aeb8726</a></p>
+<p><strong>Question:</strong> Can nanobodies be raised to selectively recognize MR1 only when it presents a spec</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-086</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/086-specific-targeting-of-mr1-antigen-complexes-using-nanobodies.mp3" length="7961762" type="audio/mpeg"/>
+      <guid isPermaLink="false">7ca4a015-3e21-48cc-b1a1-3084b2d476a6</guid>
+      <itunes:duration>663</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>86</itunes:episode>
+      <podcast:episode>86</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 05 Oct 2026 21:24:40 +0000</pubDate>
+    </item>
   </channel>
 </rss>
