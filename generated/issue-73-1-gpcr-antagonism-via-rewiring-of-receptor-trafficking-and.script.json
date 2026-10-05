@@ -1,0 +1,302 @@
+{
+  "issue": 73,
+  "generated_at": "2026-10-05T13:28:13.852264+00:00",
+  "metadata": {
+    "title": "1. GPCR antagonism via rewiring of receptor trafficking and degradation",
+    "doi": "10.1038/s41586-026-11088-0",
+    "dice_score": 5,
+    "pdf_url": null,
+    "source": "monday-digest",
+    "digest_excerpt": "## Top Papers\n\n### 1. GPCR antagonism via rewiring of receptor trafficking and degradation\n\nRhee K, Shue L, Adachi A, Sun P, Osei-Owusu J, Zhou D, et al.\n\n*Nature*\n\n[10.1038/s41586-026-11088-0](https://doi.org/10.1038/s41586-026-11088-0)\n\nGPCR (BILF1, RXFP1, CCR6) × TfR1 bispecific antibody degraders — \"GTACs\".\n\nThe bispecific-degrader idea has been circulating for several years, but the demonstrations have mostly been on targets a conventional antibody could already block, which makes the degradation modality look like an elaboration rather than an enabling step. This is the first set where the modality buys something a blocker cannot. GPCRs are seven-pass receptors with minimal extracellular surface and, critically, many signal constitutively — so an antagonist that must occupy an orthosteric site is both hard to raise and intrinsically capped in what it can achieve. Removing the receptor from the surface sidesteps both problems, and the potency numbers show it: one to two orders of magnitude better than conventional antibody antagonists on the same targets, with complete inhibition including constitutive signalling. The three targets are deliberately hard — BILF1 is viral, RXFP1 and CCR6 have both resisted biologics. The part engager programs should read closely is the design section: the authors establish that degrader performance is context-dependent and work out, by protein engineering plus multicolour live-cell imaging, which geometry and trafficking pathway actually produce degradation rather than recycling. That is the same question governing whether a bispecific engager forms a productive synapse, and it is answered here with mechanism rather than empirical format screening. Caveat: TfR1 as the effector arm carries its own biodistribution and safety baggage, and nothing here is in vivo at therapeutic scale yet.\n\nDICE score: 5 — Establishes induced endocytosis as a general bispecific modality against a target class that resists blockade entirely, with a mec"
+  },
+  "paper_text_source": "publisher-html",
+  "verification_changes": [
+    "Nadia attached the '>10-fold more potent than Nb–Fc' figure to the AT1R GFP degradation readout; in the paper that comparison is for signalling antagonism (NFAT/beta-arrestin), so the sentence was split and re-attributed.",
+    "Nadia said the matured RXFP1 nanobody 'barely inhibited signalling at micromolar'; the paper states inhibition 'remained modest', so the wording was softened here and in the following exchange ('a good binder that does nothing' / 'Nothing functionally').",
+    "Nadia said the FLAG GTAC depleted 70-80% of surface BILF1; the paper reports 'up to 70-80%' — 'up to' restored.",
+    "Nadia described 'half-life was three days... ten for the others'; the paper reports the antibodies remained detectable in circulation for up to 3 days (TfR1-HIGH GTAC) or 10 days (the others), which is not a measured half-life — rephrased.",
+    "Four past-episode callbacks (47, 63, 54, 71) exceeded the maximum of three; the episode 54 reference was removed, keeping episode 71 as the clinical datapoint for the affinity-attenuation lever."
+  ],
+  "turns": [
+    {
+      "speaker": "Nadia",
+      "text": "Hi, and welcome to Science TLDR. I'm Nadia."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And I'm Theo."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "And today we're on a Nature paper — \"GPCR antagonism via rewiring of receptor trafficking and degradation.\" Short version: instead of blocking a G-protein-coupled receptor with an antagonist, they tether it to transferrin receptor 1 with a bispecific antibody and let the cell haul it to the lysosome."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So an extracellular degrader, pointed at G-P-C-Rs."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's it. They call them GTACs — G-P-C-R–TfR1 targeting chimeras. One arm binds the receptor, the other binds TfR1, which cycles in and out of the membrane constantly whether you ask it to or not. The receptor comes along for the ride."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Okay. But bispecific degraders aren't new — LYTAC, KineTAC, the authors' own TransTAC. Why is this one worth ten minutes?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "The target class. Most degrader demos have been on things a plain antibody could already block, so degradation looks like an elaboration. G-P-C-Rs are different — seven transmembrane passes, almost no extracellular surface to grab, pockets buried in the helical bundle. And a lot of them signal constitutively, with no ligand at all."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Right — if the receptor fires on its own, blocking the ligand site buys you nothing."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Nothing. Removing it from the membrane doesn't care why it was signalling."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Which targets?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Seven. The headline three are BILF1, a constitutively active receptor encoded by Epstein–Barr virus; RXFP1, the relaxin-2 receptor; and CCR6, the chemokine receptor on T-helper-17 cells. Plus the angiotensin receptor AT1R, APJ, A2AR and M3 muscarinic."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Start me on potency, because that's the abstract's claim."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "So — across the first panel, GTACs removed forty to ninety per cent of surface receptor, with I-C-50s from picomolar to single-digit nanomolar. For AT1R they had a G-F-P fusion to read total protein: maximum degradation sixty-five per cent, D-C-50 around one nanomolar. And on signalling, the GTAC was more than ten-fold more potent than the same nanobody as a plain Fc fusion, with greater maximal inhibition."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Hmm. AT1R is a strange flagship, though — angiotensin receptor blockers are generic drugs."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "It's the benchmark, not the pitch. The case that carries the paper is RXFP1. Relaxin-2 binds at picomolar affinity, the signalosome is pre-assembled, so competition is brutal. Their nanobody bound cells at an E-C-50 near fifty nanomolar; affinity maturation got it to about two nanomolar, K-i of 340 picomolar — and signalling inhibition stayed modest even at micromolar."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So a good binder that doesn't do much."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Modest at best, by their own description. Put that same binder into a GTAC and c-A-M-P inhibition comes in at an I-C-50 of about thirty picomolar. More than two-hundred-fold over the nanobody–Fc."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Oh — same binding arm?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Same arm. That's the cleanest internal argument that the modality is doing the work rather than the binder."
+    },
+    {
+      "speaker": "Theo",
+      "text": "What's the system, though? I'm guessing tagged overexpression."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "You guess correctly. FLAG-tagged receptors, co-transfected TfR1, HEK293T and Expi293. The authors say up front that tagged overexpression is standard in this field because endogenous levels are too low for signalling assays. True — and still a caveat on every number I just read."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Anything endogenous?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "For RXFP1, OVCAR-8 ovarian carcinoma, which overexpresses TfR1 natively. q-P-C-R showed downregulation of MMP9, MMP23B, NOTCH1, NOTCH3 and DVL1 at a hundred nanomolar antibody. Suggestive of pathway suppression; it isn't a phenotype."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And BILF1 is the constitutive one."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Where the modality argument is sharpest, because a neutralising antibody has nothing to neutralise. BILF1 drives N-F-kappa-B and pulls M-H-C class one off the surface. A FLAG-targeting GTAC depleted up to seventy to eighty per cent of surface BILF1, shut down the reporter with an I-C-50 around 0.8 to 1 nanomolar, and in Raji cells restored surface M-H-C class one."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Wait — FLAG-targeting? The binding arm is against an epitope tag."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Yes, and I want to be careful there. It's a research tool, not a therapeutic arm. It does show you can degrade with a binder that has zero antagonist activity — they use it on M3R, which lacks good antibodies, getting about seventy per cent degradation. But it only works on constructs you built."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Fine. Take me to the engineering section."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "CCR6. Second-generation design: non-competitive TfR1 nanobodies spanning roughly 0.1 to 120 nanomolar, paired with an anti-CCR6 Fab at about 500 picomolar. The idea is that weakening the TfR1 arm means engagement only happens where the target arm has already concentrated the molecule."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So the effector arm becomes the selectivity filter."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Exactly. One flag: the biolayer interferometry legend labels the high-affinity variant at 124 nanomolar and the low-affinity one at 0.1 nanomolar, which is backwards relative to the text. I think it's a legend error, but as written it's unclear."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Huh. Does it change the conclusion?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "No. The functional ordering is consistent — lower TfR1 affinity, more CCR6-dependent binding, by flow cytometry and by a split-luciferase proximity assay on CCR6-positive versus negative Jurkats."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Does degradation survive the weaker arm?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "It does. About eighty-five per cent CCR6 depletion with either variant, nanomolar I-C-50s. The difference is collateral: the high-affinity TfR1 version partially co-degraded TfR1 itself; the low-affinity ones left TfR1 untouched."
+    },
+    {
+      "speaker": "Theo",
+      "text": "That's the number I'd have asked for."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Function tracks it. Near-complete inhibition of CCL20-driven beta-arrestin recruitment and F-actin polymerisation, chemotaxis blocked almost entirely, I-C-50s of 0.4 to 4 nanomolar. The parental antagonist antibody managed fifty-five to sixty per cent. In primary T-helper-17 cells, up to ninety-five per cent internalisation and about ninety per cent chemotaxis inhibition."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Did they run a real clinical comparator?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "PF-07054894, which reached phase 1b in ulcerative colitis. The GTAC inhibited chemotaxis more completely, and their Fab was more selective over CCR7 and CXCR2 — two receptors that molecule also hits. Worth crediting."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Mechanism. Where does the receptor actually die?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Lysosome. MG132 did nothing. Bafilomycin or chloroquine restored total AT1R and CCR6. Cycloheximide made degradation look better. And surface levels came back only modestly under lysosomal block, which says removal from the membrane and destruction are separable steps."
+    },
+    {
+      "speaker": "Theo",
+      "text": "What about beta-arrestin? These receptors have their own internalisation machinery."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Tested properly. Two AT1R mutants with impaired beta-arrestin recruitment — T282M and a serine-threonine cluster mutant — internalised poorly with angiotensin, and both were degraded by GTACs indistinguishably from wild type."
+    },
+    {
+      "speaker": "Theo",
+      "text": "That's a clean control."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "It is. Though the imaging complicates it — treated CCR6 colocalised with both RAB7, late endosome, and RAB11, recycling. Depletion is a net number."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Let's do in vivo, because that's where I get nervous."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Um — one model. Imiquimod psoriasis in human-CCR6 transgenic mice, 10 milligrams per kilogram daily, six days. GTAC reduced clinical scores and epidermal hyperplasia versus the CCR6 Fab–Fc, suppressed Il17a, Il1b and Cxcl2 in skin, and depleted human CCR6 protein — but not its messenger R-N-A — on neutrophils and monocytes."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Protein down, transcript unchanged. Right control for a degrader."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "It is. The limits are the design: four untreated, six GTAC, eight Fab–Fc, one experiment, no randomisation or blinding — stated in the methods. And the authors note mouse CCL20 is less potent on human CCR6 and their GTAC binds mouse TfR1 poorly, so the model runs with both arms handicapped."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And TfR1 safety? A reviewer would sit on that."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Partially addressed. TfR1 unchanged in spleen and brain by immunofluorescence, liver low either way, and the non-competitive nanobodies didn't impair iron uptake in a FerroOrange assay. The antibodies stayed detectable in circulation up to three days for the high-affinity construct, up to ten days for the others. Six days of dosing in one model is not a tolerability package, and they say long-term effects warrant evaluation."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Did they find design rules?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Honestly, no — and they report it that way. They tested 2:2, 2:1, 1:1 and 1:2 target-to-TfR1 geometries. RXFP1 preferred 2:1, AT1R preferred bivalent TfR1, CCR6 preferred 1:1."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Same answer as episode 47, the bispecific complex structures — geometry as an engineerable determinant with no transferable rule. Here they at least offer a why: receptor abundance and surface residence."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Their interpretation, and I'd call it plausible rather than shown. RXFP1 sits mostly perinuclear, barely at the surface — and it's the weakest depletion despite the best potency."
+    },
+    {
+      "speaker": "Theo",
+      "text": "There's a pH element too."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "The piece I'd hold loosest. The CCR6 Fab has a histidine, H31, in light-chain C-D-R-1 giving pH-dependent binding. Mutating it to alanine abolished the pH sensitivity — and also reduced overall binding — and degradation dropped about three-fold. Affinity and pH-dependence are confounded in that experiment."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Versus episode 63, the pH-switch C-D-3 binders, where the causative mutations didn't contact antigen — so you could separate switch from affinity."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's the missing control. To their credit they don't overclaim it: several GTACs work fine without any pH-sensitive binder, so they call it optional and target-by-target."
+    },
+    {
+      "speaker": "Theo",
+      "text": "One more thread — lowering effector affinity to buy selectivity. Episode 71 had the deliberately weak C-D-3 arm that survived first-in-human. Same lever, aimed here at TfR1."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "With the same gap. The comparison is high-affinity versus low-affinity TfR1 arm. What none of these run is a matched control that reduces affinity without the claimed gating geometry."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Agreed. Okay — three takeaways."
+    },
+    {
+      "speaker": "Theo",
+      "text": "One: RXFP1 is the strongest result. A nanobody that barely inhibits signalling at micromolar gives thirty-picomolar inhibition once you attach a TfR1 arm. That's the modality, not the binder."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Two: the mechanistic work is better than the usual degrader paper. Lysosomal not proteasomal, independent of beta-arrestin using trafficking-deficient mutants, and surface removal separable from destruction."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Three: the format rules don't generalise. Optimal valency differed for every target — so today this is a per-target engineering campaign, not plug-and-play."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "And one line of credit: they ran the clinical-stage comparator, not just the easy one."
+    },
+    {
+      "speaker": "Theo",
+      "text": "What I'd watch for: a mouse-cross-reactive or surrogate GTAC dosed long enough to say something real about TfR1 and iron biology — which the authors name as the next study themselves."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Mine is endogenous receptor at native density, no FLAG tag, no co-transfected TfR1. The whole potency ranking could move when target and effector are at physiological abundance."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Fair."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's GTACs — Nature, D-O-I 10.1038/s41586-026-11088-0. Thanks for listening."
+    }
+  ]
+}
