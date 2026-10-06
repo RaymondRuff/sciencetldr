@@ -2159,5 +2159,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 05 Oct 2026 21:24:40 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 87: Reddit Trending — Did Donald Trump Receive a Mandate for Sweeping Change in 2024?]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Did Donald Trump Receive a Mandate for Sweeping Change in 2024?]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1017/S1049096525101868">Did Donald Trump Receive a Mandate for Sweeping Change in 2024?</a></strong></p>
+<p><em>PS: Political Science &amp; Politics, 2025</em></p>
+<p>DOI: <a href="https://doi.org/10.1017/S1049096525101868">10.1017/S1049096525101868</a></p>
+<p><strong>Question:</strong> Did Trump's 2024 victory and subsequent polling give him a genuine public mandate for the sweeping changes he and his team claimed?</p>
+<p><strong>Answer:</strong> No, by the author's criteria. Trump won 49.8% of the vote, a smaller share than 40 of the prior 50 presidential winners, and polls show the public opposed most of his major policy actions.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Trump's margin over Harris was ~1.5 points; he ranks in the bottom fifth of popular-vote winners historically.</li>
+<li>Support for deporting undocumented immigrants ranged from 97% (violent criminals) to 5% (married to a citizen), and fell 14 points once consequences were named.</li>
+<li>Many actions taken (Greenland, USAID cuts, NIH firings) were never mentioned during the campaign, weakening any mandate claim for them.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1017/S1049096525101868">Did Donald Trump Receive a Mandate for Sweeping Change in 2024?</a></strong></p>
+<p><em>PS: Political Science &amp; Politics, 2025</em></p>
+<p>DOI: <a href="https://doi.org/10.1017/S1049096525101868">10.1017/S1049096525101868</a></p>
+<p><strong>Question:</strong> Did Trump's 2024 victory and subsequent polling give him a genuine public mandate for the sweeping changes he and his team claimed?</p>
+<p><strong>Answer:</strong> No, by the author's criteria. Trump won 49.8% of the vote, a smaller share than 40 of the prior 50 presidential winners, and polls show the public opposed most of his major policy actions.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Trump's margin over Harris was ~1.5 points; he ranks in the bottom fifth of popular-vote winners historically.</li>
+<li>Support for deporting undocumented immigrants ranged from 97% (violent criminals) to 5% (married to a citizen), and fell 14 points once consequences were named.</li>
+<li>Many actions taken (Greenland, USAID cuts, NIH firings) were never mentioned during the campaign, weakening any mandate claim for them.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-087</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/087-did-donald-trump-receive-a-mandate-for-sweeping-change-in.mp3" length="7843705" type="audio/mpeg"/>
+      <guid isPermaLink="false">181ca97d-f205-4970-98f3-2a78ffd9f420</guid>
+      <itunes:duration>653</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>87</itunes:episode>
+      <podcast:episode>87</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 06 Oct 2026 19:19:33 +0000</pubDate>
+    </item>
   </channel>
 </rss>
