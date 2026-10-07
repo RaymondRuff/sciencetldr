@@ -1,0 +1,41 @@
+{
+  "guid": "79955d3f-5bd5-4fd7-be12-6f0839a530c3",
+  "title": "Episode 88: GPCR antagonism via rewiring of receptor trafficking and degradation",
+  "itunes_title": "GPCR antagonism via rewiring of receptor trafficking and degradation",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**[GPCR antagonism via rewiring of receptor trafficking and degradation](https://doi.org/10.1038/s41586-026-11088-0)**\n\n*Nature, 2026*\n\nDOI: [10.1038/s41586-026-11088-0](https://doi.org/10.1038/s41586-026-11088-0)\n\n**Question:** Can bispecific antibodies that hijack transferrin receptor 1 trafficking degrade GPCRs that are hard to block with conventional antagonists?\n\n**Answer:** Yes in overexpression systems and one short-term mouse model: GTACs degraded seven GPCRs via the lysosome, independent of beta-arrestin, with far greater potency than matched antibody antagonists. Optimal valency differed per target, and endogenous-density, long-term, cross-species data are still missing.\n\n**Three takeaways**\n\n1. For RXFP1, a nanobody barely active at micromolar became a 30 pM inhibitor once built into a GTAC — the modality, not the binder, drives potency.\n2. Mechanism is unusually well-controlled: lysosomal (not proteasomal) degradation, unaffected by beta-arrestin–deficient receptor mutants, with surface removal separable from destruction.\n3. Optimal target-to-TfR1 valency differed for every receptor tested, so this remains a per-target engineering effort, not a plug-and-play platform.",
+  "pub_date": "Wed, 07 Oct 2026 19:48:41 +0000",
+  "duration_seconds": 690,
+  "episode_number": 88,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "088-gpcr-antagonism-via-rewiring-of-receptor-trafficking-and.mp3",
+  "enclosure_length_bytes": 8282828,
+  "source_metadata": {
+    "title": "GPCR antagonism via rewiring of receptor trafficking and degradation",
+    "doi": "10.1038/s41586-026-11088-0",
+    "authors": [
+      "Kaitlin Rhee",
+      "Lawrence Shue",
+      "Akimasa Adachi",
+      "Pengwei Sun",
+      "James Osei-Owusu",
+      "Dingjingyu Zhou",
+      "Aoxing Cheng",
+      "Yi Ran Xu",
+      "Qingyue Li",
+      "Apoorva Baluapuri",
+      "Edward P. Harvey",
+      "Karen Adelman",
+      "Meredith A. Skiba",
+      "Bianxiao Cui",
+      "Jun R. Huh",
+      "Andrew C. Kruse",
+      "Xin Zhou"
+    ],
+    "journal": "Nature",
+    "abstract": "G-protein-coupled receptors (GPCRs) represent one of the most important yet incompletely addressed classes of therapeutic targets1. Here we report a strategy for functional GPCR antagonism through bispecific antibody-mediated endocytosis and lysosomal degradation. GPCR-TfR1 targeting chimeras (GTACs) achieve potent and selective downregulation of multiple GPCRs, including BILF1, RXFP1 and CCR6-viral, cancer and immune targets that have been difficult to drug2-4. GTACs lead to complete inhibition of receptor signalling, including constitutive signalling, with more than one to two orders of magnitude greater potency than conventional antibody antagonists. Using protein engineering and multicolour live-cell imaging, we establish a context-dependent degrader design and explain the cellular mechanisms, with broad relevance for degrader technology. The GTAC platform establishes induced endocytosis and rewiring protein trafficking as a model for therapeutic GPCR modulation.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1038/s41586-026-11088-0"
+  },
+  "source_issue": 73
+}

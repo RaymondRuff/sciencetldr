@@ -2196,5 +2196,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Tue, 06 Oct 2026 19:19:33 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 88: GPCR antagonism via rewiring of receptor trafficking and degradation]]></title>
+      <itunes:title><![CDATA[GPCR antagonism via rewiring of receptor trafficking and degradation]]></itunes:title>
+      <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1038/s41586-026-11088-0">GPCR antagonism via rewiring of receptor trafficking and degradation</a></strong></p>
+<p><em>Nature, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s41586-026-11088-0">10.1038/s41586-026-11088-0</a></p>
+<p><strong>Question:</strong> Can bispecific antibodies that hijack transferrin receptor 1 trafficking degrade GPCRs that are hard to block with conventional antagonists?</p>
+<p><strong>Answer:</strong> Yes in overexpression systems and one short-term mouse model: GTACs degraded seven GPCRs via the lysosome, independent of beta-arrestin, with far greater potency than matched antibody antagonists. Optimal valency differed per target, and endogenous-density, long-term, cross-species data are still missing.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>For RXFP1, a nanobody barely active at micromolar became a 30 pM inhibitor once built into a GTAC — the modality, not the binder, drives potency.</li>
+<li>Mechanism is unusually well-controlled: lysosomal (not proteasomal) degradation, unaffected by beta-arrestin–deficient receptor mutants, with surface removal separable from destruction.</li>
+<li>Optimal target-to-TfR1 valency differed for every receptor tested, so this remains a per-target engineering effort, not a plug-and-play platform.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1038/s41586-026-11088-0">GPCR antagonism via rewiring of receptor trafficking and degradation</a></strong></p>
+<p><em>Nature, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s41586-026-11088-0">10.1038/s41586-026-11088-0</a></p>
+<p><strong>Question:</strong> Can bispecific antibodies that hijack transferrin receptor 1 trafficking degrade GPCRs that are hard to block with conventional antagonists?</p>
+<p><strong>Answer:</strong> Yes in overexpression systems and one short-term mouse model: GTACs degraded seven GPCRs via the lysosome, independent of beta-arrestin, with far greater potency than matched antibody antagonists. Optimal valency differed per target, and endogenous-density, long-term, cross-species data are still missing.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>For RXFP1, a nanobody barely active at micromolar became a 30 pM inhibitor once built into a GTAC — the modality, not the binder, drives potency.</li>
+<li>Mechanism is unusually well-controlled: lysosomal (not proteasomal) degradation, unaffected by beta-arrestin–deficient receptor mutants, with surface removal separable from destruction.</li>
+<li>Optimal target-to-TfR1 valency differed for every receptor tested, so this remains a per-target engineering effort, not a plug-and-play platform.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-088</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/088-gpcr-antagonism-via-rewiring-of-receptor-trafficking-and.mp3" length="8282828" type="audio/mpeg"/>
+      <guid isPermaLink="false">79955d3f-5bd5-4fd7-be12-6f0839a530c3</guid>
+      <itunes:duration>690</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>88</itunes:episode>
+      <podcast:episode>88</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 07 Oct 2026 19:48:41 +0000</pubDate>
+    </item>
   </channel>
 </rss>
