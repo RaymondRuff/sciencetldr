@@ -2233,5 +2233,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 07 Oct 2026 19:48:41 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 89: Reddit Trending — Not with a Bang but a Whimper: Congressional Silence Amid an Historic Assault on the Power of the Purse]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Not with a Bang but a Whimper: Congressional Silence Amid an Historic Assault on the Power of the Purse]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1017/S1049096525101704">Not with a Bang but a Whimper: Congressional Silence Amid an Historic Assault on the Power of the Purse</a></strong></p>
+<p><em>PS: Political Science &amp; Politics, 2025</em></p>
+<p>DOI: <a href="https://doi.org/10.1017/S1049096525101704">10.1017/S1049096525101704</a></p>
+<p><strong>Question:</strong> Why has Congress barely resisted President Trump's unilateral impoundments and tariffs, actions that assault its constitutional power of the purse?</p>
+<p><strong>Answer:</strong> Kriner argues partisan incentives and Trump's dominance of his party have muted congressional pushback, despite public opposition and statutory violations. It's an analytic case essay, not a measured dataset, so the "historic" comparison and the proposed mechanism remain largely narrative.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>The core claim—Congress acted less than historical precedent—lacks a counted baseline (hearings, riders, votes) across administrations; it's asserted, not measured.</li>
+<li>Under unified government, partisanship and institutional erosion predict identical silence, so the paper can't separate which mechanism is driving it.</li>
+<li>The durable point: the 1974 Impoundment Control Act has no self-executing enforcement, so a Congress unwilling to use it leaves the statute toothless.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1017/S1049096525101704">Not with a Bang but a Whimper: Congressional Silence Amid an Historic Assault on the Power of the Purse</a></strong></p>
+<p><em>PS: Political Science &amp; Politics, 2025</em></p>
+<p>DOI: <a href="https://doi.org/10.1017/S1049096525101704">10.1017/S1049096525101704</a></p>
+<p><strong>Question:</strong> Why has Congress barely resisted President Trump's unilateral impoundments and tariffs, actions that assault its constitutional power of the purse?</p>
+<p><strong>Answer:</strong> Kriner argues partisan incentives and Trump's dominance of his party have muted congressional pushback, despite public opposition and statutory violations. It's an analytic case essay, not a measured dataset, so the "historic" comparison and the proposed mechanism remain largely narrative.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>The core claim—Congress acted less than historical precedent—lacks a counted baseline (hearings, riders, votes) across administrations; it's asserted, not measured.</li>
+<li>Under unified government, partisanship and institutional erosion predict identical silence, so the paper can't separate which mechanism is driving it.</li>
+<li>The durable point: the 1974 Impoundment Control Act has no self-executing enforcement, so a Congress unwilling to use it leaves the statute toothless.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-089</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/089-not-with-a-bang-but-a-whimper-congressional-silence-amid-an.mp3" length="6865697" type="audio/mpeg"/>
+      <guid isPermaLink="false">6b3c2bbe-0090-47e1-91d0-7bfde0b58b5f</guid>
+      <itunes:duration>572</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>89</itunes:episode>
+      <podcast:episode>89</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 09 Oct 2026 19:16:17 +0000</pubDate>
+    </item>
   </channel>
 </rss>
