@@ -2270,5 +2270,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 09 Oct 2026 19:16:17 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 90: Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition]]></title>
+      <itunes:title><![CDATA[Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition]]></itunes:title>
+      <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1038/s44320-026-00246-1">Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition</a></strong></p>
+<p><em>Molecular Systems Biology, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s44320-026-00246-1">10.1038/s44320-026-00246-1</a></p>
+<p><strong>Question:</strong> Do AI-designed minibinders function as CAR-T antigen-recognition domains, not just as high-affinity binders in isolation?</p>
+<p><strong>Answer:</strong> Across 12,000 designs from 28 teams, team hit rates ranged from 0.6% to 38.4% on an identical CD20 task. 707 designs showed significant enrichment, but of 10 validated individually only 4 showed CD20-specific lysis, all below the scFv control.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Team hit rates spanned 0.6–38.4% on an identical task, though methods were self-selected, not assigned.</li>
+<li>98.9% of non-recovered designs used MPNN pipelines; a lysine-glutamate helix feature predicted dropout with 0.91 AUC.</li>
+<li>Structure-confidence scores (pLDDT, ipTM) predicted nothing; a sequence-composition filter nearly doubled the functional hit rate.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1038/s44320-026-00246-1">Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition</a></strong></p>
+<p><em>Molecular Systems Biology, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s44320-026-00246-1">10.1038/s44320-026-00246-1</a></p>
+<p><strong>Question:</strong> Do AI-designed minibinders function as CAR-T antigen-recognition domains, not just as high-affinity binders in isolation?</p>
+<p><strong>Answer:</strong> Across 12,000 designs from 28 teams, team hit rates ranged from 0.6% to 38.4% on an identical CD20 task. 707 designs showed significant enrichment, but of 10 validated individually only 4 showed CD20-specific lysis, all below the scFv control.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Team hit rates spanned 0.6–38.4% on an identical task, though methods were self-selected, not assigned.</li>
+<li>98.9% of non-recovered designs used MPNN pipelines; a lysine-glutamate helix feature predicted dropout with 0.91 AUC.</li>
+<li>Structure-confidence scores (pLDDT, ipTM) predicted nothing; a sequence-composition filter nearly doubled the functional hit rate.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-090</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/090-validation-and-analysis-of-12000-ai-driven-car-t-designs-in.mp3" length="6837700" type="audio/mpeg"/>
+      <guid isPermaLink="false">1dd767e6-61fd-4891-a5c3-6752a7622135</guid>
+      <itunes:duration>569</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>90</itunes:episode>
+      <podcast:episode>90</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 13 Oct 2026 20:04:13 +0000</pubDate>
+    </item>
   </channel>
 </rss>
