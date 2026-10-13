@@ -1,0 +1,293 @@
+{
+  "issue": 77,
+  "generated_at": "2026-10-13T01:57:12.318938+00:00",
+  "metadata": {
+    "title": "1. Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition",
+    "doi": "10.1038/s44320-026-00246-1",
+    "dice_score": 4,
+    "pdf_url": "https://link.springer.com/content/pdf/10.1038/s44320-026-00246-1.pdf",
+    "source": "monday-digest",
+    "digest_excerpt": "## Top Papers\n\n### 1. Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition\n\nKosonocky CW, Abel AM, Feller AL, Cifuentes Rieffer AE, Woolley PR, Lála J, et al.\n\n*Molecular Systems Biology*\n\n[10.1038/s44320-026-00246-1](https://doi.org/10.1038/s44320-026-00246-1)\n\nDe novo 80-amino-acid minibinders against human CD20, deployed as CAR binding domains.\n\nEvery de novo binder paper reports affinity; almost none report whether the binder works as a functional module in a therapeutic construct, which is the only question that matters for an engager arm. Bits to Binders closes that gap at a scale no single lab could: 12,000 designs from teams in 42 countries, all 80-residue minibinders against CD20, all screened in the same pooled CAR-T proliferation assay, with 707 showing significant CD20-specific enrichment and top candidates validated individually for proliferation, expansion, cytokine production and lysis. The spread is the finding — team hit rates ran from 0.6% to 38.4% on an identical target with identical validation, which says method choice, not target difficulty, dominates outcomes. The authors then extract what separated the good campaigns: factors correlating with DNA synthesis success, expression and target-specific activation that nearly double hit rates when applied as a retrospective filter. For engager programs the transferable content is twofold — a prospective filter set for minibinder arms, and a public dataset of functionally labeled binder designs, which is exactly the label type the field has been short of. Caveat: one target, one easy epitope, and proliferation-based pooled screening rewards agonism rather than the tunable, avidity-driven engagement an engager arm actually needs.\n\nDICE score: 4 — Converts de novo binder evaluation from affinity to higher-order cellular function at 12,000-design scale and releases the functionally labeled dataset plus a filter set that nearly doubles success rates.\n\nMarcotte lab ("
+  },
+  "paper_text_source": "emailed-pdf:issue-77.pdf",
+  "verification_changes": [
+    "Nadia conflated two different sets of seven designs: the paper's seven CAR-positive designs are 1506, 1892, 3494, 3718, 5300, 5624, 5981, while the seven that outperformed the negative control on proliferation/expansion/cytokine are 1506, 2383, 3494, 3718, 5300, 5624, 5981 — 1892 expressed but failed all functional assays, and 2383 was functional despite <5% CAR+. Corrected and made explicit.",
+    "'untransduced control' changed to 'untransfected control' — the paper's negative control was untransfected TCR+ T cells.",
+    "'Which says method choice dominates, not target difficulty' overstated a correlation: method use was uncontrolled and self-selected (the authors state this), so the line was rewritten as correlation between approach and outcome, not a controlled comparison.",
+    "Takeaway 1 likewise asserted 'method, not target, set the outcome'; softened to note methods were self-selected rather than assigned.",
+    "Takeaway 2 stated the lysine-glutamate translational-interference mechanism as established fact; the paper offers it as a working hypothesis ('we believe'), so it is now attributed to the authors, and the dropout framing corrected.",
+    "Takeaway 3 now specifies the near-doubling of hit rate came from a retrospective filter, as the paper describes.",
+    "'Two candidate mechanisms' for the K+E effect now attributed to the authors as working hypotheses.",
+    "Trimmed setup and framing lines (cold open, 'why this paper', connective tissue) to bring spoken text from 10,907 characters inside the 10,200–10,800 window; no numbers or limitations were cut."
+  ],
+  "turns": [
+    {
+      "speaker": "Nadia",
+      "text": "Hello and welcome to Science TLDR. I'm Nadia."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And I'm Theo."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "And today, 'Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition', in Molecular Systems Biology. Teams worldwide designed de novo eighty-amino-acid minibinders against C-D-twenty, each tested as the binding domain of a CAR-T cell."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So the scoring function isn't affinity. It's a T cell."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's the move, yes."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Okay — why is that worth ten minutes, though?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Because almost every de novo binder paper reports a dissociation constant and stops. Whether the design works as a module inside a construct — expresses, localises, signals — is a different question, and it's the one that decides if it's useful. Twelve thousand designs, twenty-eight teams, forty-two countries, all through the same pooled CAR-T proliferation assay."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And the spread between teams is the headline?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Hit rates ran from zero point six percent to thirty-eight point four percent."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Oh — on an identical task."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Identical target, identical validation. Though methods were self-selected, not assigned — so it's a correlation between approach and outcome, not a controlled comparison."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Set up the construct for me. What's a minibinder doing in a CAR?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "A chimeric antigen receptor normally uses an s-c-F-v — a single-chain antibody fragment, two hundred thirty to two hundred sixty amino acids — as the extracellular recognition domain. Teams here were capped at eighty residues, cloned into a second-generation CAR backbone: C-D-twenty-eight hinge and costimulatory domain, C-D-three-zeta signalling."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Eighty is tight. Fold diversity has to suffer."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "The authors flag it in the limitations — the length cap constrains fold diversity, and therefore what you can conclude across generative methods."
+    },
+    {
+      "speaker": "Theo",
+      "text": "How was the pool read out?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "The binder sequence is its own barcode. They knocked the CAR library into the T-cell receptor alpha constant locus in primary human T cells, then split the pool: two weeks with CD20-positive Raji cells, or two weeks alone, three technical replicates each. Enrichment is the ratio between the two, scored with edgeR at a five percent false discovery rate."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Wait. The comparator is 'no target cells', not CD20-negative target cells."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Correct, and the authors flag it themselves. What they measured is Raji-specific proliferation, not strictly CD20-specific. That's their own stated limitation and it's put plainly."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Fine. Numbers."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Of twelve thousand designs, ninety-eight point three percent passed the D-N-A synthesis quality check. Only fifty-six point eight percent cleared the minimum read threshold after growth — twenty-five reads in all six replicates. And seven hundred and seven showed significant CD20-specific enrichment of at least twofold."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So forty-two percent of them just... vanished from the pool."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Four thousand nine hundred and eighty-five, yes. A working CAR provides the basal signalling T cells need, so dropping out is read as failed expression, folding or solubility."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Mm-hm. And the top designs — they pulled them out and tested them one at a time?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Top ten non-redundant designs, each rebuilt as an individual construct. Seven were CAR-positive, at ten to fifty percent of cells; 1304 and 3109 all but lacked expression and were kept in as internal negative controls. Then seven beat the untransfected control on CD20-specific proliferation, expansion, and I-L-two plus interferon gamma — but not quite the same seven. 2383, which was under five percent CAR-positive, was functional; 1892 expressed and failed everything."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Seven out of ten is a good number. What about killing?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Hmm — this is where it tightens. All seven killed target cells. But only four had significant specific lysis of CD20-positive Raji over CD20-negative K562: designs 1506, 2383, 3494 and 3718. The rest killed both lines."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So non-specific cytotoxicity across the board."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "There's a baseline of it, and the authors say it would have to be remediated before anything went near an animal. They also note every design underperformed the s-c-F-v positive control on every readout except cytokines, where one design, 5300, produced more than fifty percent higher intracellular accumulation."
+    },
+    {
+      "speaker": "Theo",
+      "text": "What did S-P-R say about actual binding?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "The s-c-F-v control came in at a K-D of 1.75 nanomolar. Of the top ten designs, three bound appreciably. Design 2383 had a K-D of 643 nanomolar; 1506 and 5981 gave weak signal, estimated between two hundred and six hundred nanomolar."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Huh. So four functional designs with no measurable binding at all."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Which is either interesting or an artefact, and the paper doesn't claim to know which. The binding assay used the eighty-mers as isolated proteins from a prokaryotic cell-free system, against detergent-solubilised C-D-twenty. No CAR context, no avidity, no mammalian secretory pathway."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And the low-affinity story? CARs are supposed to like moderate affinity."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Well — they raise it, then pull straight back. Their words are that the results are consistent with function from moderate- or low-affinity binders, but the limited number of designs with quantifiable binding doesn't establish that CD20 CARs require it. That's the right amount of claim for that data."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Okay, the part I actually want: why did five thousand designs die?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "This is the strongest section of the paper. Ninety-eight point nine percent of the non-recovered designs were made with ProteinMPNN or SolubleMPNN."
+    },
+    {
+      "speaker": "Theo",
+      "text": "That's — that's basically all of them."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "So they restricted to MPNN designs and asked what separated the survivors. The non-recovered ones were almost entirely alpha-helical, averaging eighty-three percent helix, and those helices were loaded with lysine and glutamate. Fraction of residues in a lysine-glutamate helix: thirty-five percent in the non-recovered, fifteen percent in the recovered. Logistic regression on that one feature gives a R-O-C-A-U-C of zero point nine one."
+    },
+    {
+      "speaker": "Theo",
+      "text": "One feature. Why K and E?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "They offer two working hypotheses, both translational. Glutamate runs in a nascent chain are known to stall ribosomes — non-recovered sequences averaged 3.9 E-E repeats versus 1.6. And lysine and glutamate codons are adenosine-rich, so the D-N-A carried adenosine dinucleotide repeats averaging 35.4 versus 21.7. That feature alone gets zero point eight eight."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And this is known ProteinMPNN behaviour?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "At the default sampling temperature of zero point one it over-picks lysine and glutamate — that's in the original ProteinMPNN paper, and it goes away at temperature one point zero. Combine it with RFdiffusion's tendency to produce helices and you get a shared failure mode. The authors use the word monoculture, and they cite an independent phage display study finding the same K-plus-E signal."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So the fix is a sequence filter, not a better structure model."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's what this data says, and it's uncomfortable. Global confidence metrics — p-L-D-D-T, i-p-T-M, Rosetta interface energy, ProteinMPNN likelihood, E-S-M-two pseudo-log-likelihood — none predicted the outcomes. D-N-A sequence entropy got zero point nine."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Ouch."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Their retrospective filter removes high-G-C, low-entropy, adenosine-repeat-heavy, E-E-repeat-heavy and K-plus-E-helix-heavy designs. Four thousand six hundred sequences out. Recovery goes from fifty-six point eight to eighty-one point two percent, and the proliferation hit rate from five point nine to seven point six. Add 'no cysteines' and the hit rate reaches ten point six, though recovery falls back to seventy-two point six."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Why cysteine?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Um, so — the designs that depleted were enriched in predicted intrachain disulfides. Their hypothesis is misfolding exposing hinge sulfhydryls and amplifying tonic signalling — a hypothesis, not a measurement. The filter does remove two of the dead top-ten designs."
+    },
+    {
+      "speaker": "Theo",
+      "text": "And if you'd filtered on i-p-T-M instead?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "At a threshold of zero point five you'd lose 1506 and 5981 — two of the functional ones that actually bound — and gain zero point seven percent recovery."
+    },
+    {
+      "speaker": "Theo",
+      "text": "That's the line connecting to episode 81, the blinded antibody benchmark. There, a non-M-L positional consensus placed third at 540 picomolar with perfect developability, and most AI entries lost to a most-abundant-clone heuristic on the ranking task."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Yeah. Same shape — a simple sequence statistic beating the layered learned score. And it rhymes with episode 74: ProteinMPNN proposed, yeast display disposed. Here the proposing worked; the scoring didn't."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Right. What else is missing?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "The authors' own list is long: one CAR scaffold, so hinge and transmembrane effects are unknown; no input-timepoint sequencing; a single donor T-cell isolate throughout; the Raji-versus-nothing comparator; and the pool is skewed — most designs came from RFdiffusion-plus-ProteinMPNN pipelines, and twenty percent of within-team sequences were at least ninety-five percent identical to another design from that team."
+    },
+    {
+      "speaker": "Theo",
+      "text": "So the effective n is well under twelve thousand."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Considerably under. Across teams it's the opposite — over eighty-three percent of submissions had no significant alignment to any other team's. And the screen ran at LEAH Labs, a company whose assay platform this is. That's context for reading the benchmarking, not a knock; data and code are public on Zenodo."
+    },
+    {
+      "speaker": "Theo",
+      "text": "One more. Seven hundred and seven hits — how real is that number?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Uh — they say themselves it's likely an upper bound, because three of their own top ten failed the individual assays."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Takeaways. One: on an identical task with identical validation, team hit rates ran sixty-fold apart, zero point six to thirty-eight point four percent — though methods were self-selected, so that's approach correlating with outcome, not a controlled test."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Two: the dominant failure mode was dropout rather than weak binding, and ninety-eight point nine percent of dropouts came from MPNN pipelines; the authors' proposed cause is lysine-glutamate helices interfering with translation, and that one feature separates recovered from non-recovered at zero point nine one A-U-C. Three: structure-confidence scores predicted nothing here, while a retrospective filter built from G-C content and repeat counts nearly doubled the functional hit rate."
+    },
+    {
+      "speaker": "Theo",
+      "text": "What I'd believe: the sequence-level failure analysis, which has independent replication in another system. What I wouldn't believe yet: that any of these are good CAR binders. Four of ten with specific lysis, all below the s-c-F-v control, with baseline non-specific killing."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Fair."
+    },
+    {
+      "speaker": "Theo",
+      "text": "What would change your mind, Nadia?"
+    },
+    {
+      "speaker": "Nadia",
+      "text": "Re-running a subset at ProteinMPNN temperature one point zero. If the recovery rate jumps, the mechanism is confirmed prospectively instead of inferred."
+    },
+    {
+      "speaker": "Theo",
+      "text": "Mine's the scaffold. Take the four specific killers and the three that killed everything, put them in a different hinge and transmembrane, and see whether the specificity ordering holds. If it doesn't, we've benchmarked a scaffold, not a set of binders."
+    },
+    {
+      "speaker": "Nadia",
+      "text": "That's Molecular Systems Biology, D-O-I ten dot one-zero-three-eight, slash, s-four-four-three-two-zero-dash-zero-two-six-dash-zero-zero-two-four-six-dash-one. Thanks for listening."
+    }
+  ]
+}
