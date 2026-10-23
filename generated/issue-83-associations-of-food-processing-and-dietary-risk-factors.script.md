@@ -1,0 +1,148 @@
+# Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study
+
+**DOI:** 10.1371/journal.pmed.1005251  
+**Length:** 10632 chars (~10.0 min)
+
+## Corrections made by the verification pass
+
+- Cold open said "twenty years of follow-up"; the paper reports a median follow-up of 18.8 years — changed to "a median of nearly nineteen years", and the null was scoped to colorectal cancer *incidence in this cohort* rather than stated flatly.
+- Theo's second takeaway said the components behaved per dietary guidance "regardless of processing class ... including from group four sources"; the paper reports that the non-UPF whole grain and fiber estimates in the mutually adjusted model were not significant — rewritten to separate calcium/dairy/meat (both sources) from whole grain/fiber (UPF source only).
+- Nadia's frozen-dessert line implied her own reading of the subgroup result; re-attributed to the authors, who frame those subgroups as sources of calcium, dairy, fiber and whole grain.
+- Length: draft was 10,880 spoken characters, above the 10,800 ceiling. Trimmed setup and framing turns only (the "why this paper" turn, the episode-82 callback wording, two short Theo questions, the funding aside); all numbers, limitations and attributions retained.
+- Checked every spoken figure against the paper — HR 0.97 (0.91–1.03), ptrend 0.55; subsite 1.02/0.94/0.91; 0.94 for both secondary models; 461,682; 10,075 cases; 18.8-year median; 293 g/1000 kcal; 43% (36–50); source fractions 82.8/33.5/31.7/23.5/74.3; mutually adjusted HRs 0.77, 0.90, 0.75, 0.90, 1.08, 1.04, 0.87, 0.72; subgroups 0.91, 0.84, 0.82, 1.10 (1.04–1.18); validity coefficients 0.66, 0.43, 0.33; PH score test p = 0.005; E-value 2.1-fold; substitution 0.98 (0.96–0.99) versus EPIC 0.94; 36.2/20.1, 5.0/15.2, 43.6/57.3 g per day — all match, no numeric corrections needed.
+
+---
+
+**Nadia:** Hello, and welcome to Science TLDR. I'm Nadia.
+
+**Theo:** And I'm Theo.
+
+**Nadia:** And today it's a cohort study in PLOS Medicine: "Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study." Four hundred sixty-one thousand people, a median of nearly nineteen years of follow-up, and no association between ultra-processed food intake and colorectal cancer incidence in this cohort.
+
+**Theo:** Which is the opposite of what most people expect. So why this paper?
+
+**Nadia:** Because of what they do after the null. The headline is one line. The rest of the paper takes ultra-processed food apart and asks which components inside it are doing what — whole grain from U-P-F sources versus whole grain from everything else, in the same model.
+
+**Theo:** Okay. Define the exposure, because "ultra-processed" gets used loosely.
+
+**Nadia:** Nova group four. Nova sorts foods by degree and purpose of processing: group one is unprocessed or minimally processed, group two is culinary ingredients like oil and sugar, group three is processed foods, and group four is industrial formulations — soft drinks, packaged bread, breakfast cereal, reconstituted meat products.
+
+**Theo:** Right — so packaged whole wheat bread is group four.
+
+**Nadia:** It is. And that's the entire tension of the paper.
+
+**Theo:** Cohort details?
+
+**Nadia:** N-I-H-A-A-R-P. Recruited in 1995 and '96 from A-A-R-P members aged 50 to 71, six states and two metro areas. After exclusions, 461,682 participants who were cancer-free at baseline. Diet by food frequency questionnaire, once — 124 food and beverage items. Cancer registry follow-up through the end of 2018, median 18.8 years. Ten thousand and seventy-five colorectal adenocarcinomas.
+
+**Theo:** And how much U-P-F were these people eating in the mid-nineties?
+
+**Nadia:** Median 293 grams per 1,000 kilocalories per day — 43% of daily energy. Interquartile range on that energy share, 36 to 50 percent.
+
+**Theo:** Hm. Tighter spread than I'd have guessed.
+
+**Nadia:** Hold that thought. The authors raise it themselves as a candidate explanation for the null.
+
+**Theo:** Give me the main number.
+
+**Nadia:** Sex-specific quintiles of energy-adjusted U-P-F grams. Fifth versus first quintile, hazard ratio 0.97, confidence interval 0.91 to 1.03, p for trend 0.55. By subsite: proximal colon 1.02, distal colon 0.94, rectum 0.91 — all crossing one.
+
+**Theo:** Does that hold under adjustment?
+
+**Nadia:** They ran diet quality — the Healthy Eating Index 2020 — plus calcium and fiber in one model, and body mass index in another, deliberately kept separate from the main model because those could sit on the causal pathway. Both gave 0.94, under a ten percent change in the estimate.
+
+**Theo:** Were the high-U-P-F people a different population?
+
+**Nadia:** Substantially. Top quintile versus bottom: 60.7 versus 63.8 years old. Obesity 29.6% versus 15.2%. College graduates 34.4% versus 41.8%. Exercising three or more times a week, 40.6% versus 49.7%. Rating their health excellent, 14.2% versus 21.4%.
+
+**Theo:** So a confounding structure that should push the hazard ratio up, and it's sitting at 0.97.
+
+**Nadia:** That's one honest reading — residual confounding on those variables would bias away from null, not toward it. The alcohol pattern cuts the other way, though: 30.7% of the top quintile were nondrinkers versus 21.5% of the bottom.
+
+**Theo:** Okay. The decomposition — what did they actually do?
+
+**Nadia:** They disaggregated every questionnaire line item down to ingredient-level food codes, about 3,500 standard reference codes, and classified each one under Nova. So they can say what fraction of your whole grain came from group four. And the fractions are the striking part: 82.8% of whole grain intake came from U-P-F sources. Fiber, 33.5%. Calcium, 31.7%. Dairy, 23.5%. Processed meat, 74.3%.
+
+**Theo:** Oh — so for whole grain, "ultra-processed" and "the thing the guidelines tell you to eat" are nearly the same foods.
+
+**Nadia:** In this cohort, in the nineties, yes. Packaged bread and breakfast cereal.
+
+**Theo:** So what happens when both sources go in one model?
+
+**Nadia:** Mutually adjusted, continuous intakes. Calcium from U-P-F, hazard ratio 0.77 per 300 milligrams per day, 0.69 to 0.86; from non-U-P-F, 0.90, 0.87 to 0.93. Dairy from U-P-F, 0.75 per serving; non-U-P-F, 0.90. Meat from U-P-F, 1.08 per serving; non-U-P-F meat, 1.04.
+
+**Theo:** Same direction from both sources, different magnitude.
+
+**Nadia:** For those three. Whole grain and fiber are the asymmetric case: whole grain from U-P-F, 0.87 per serving; fiber from U-P-F, 0.72 per ten grams. Their non-U-P-F counterparts in the same model were not significant.
+
+**Theo:** [interrupting] Is that a real difference, or a precision problem?
+
+**Nadia:** Um — the authors say precision, and I think they're right. Under twenty percent of whole grain intake was non-U-P-F, so there's barely any intake spread to estimate from. For fiber their argument is narrower: the fiber signal in this cohort has previously come from whole-grain fiber, and whole grains here are mostly group four. That's an interpretation, not a demonstration.
+
+**Theo:** Noted. Subgroups?
+
+**Nadia:** They split in the direction you'd now predict. Bread, 0.91 fifth versus first quintile. Breakfast cereals, 0.84. Frozen desserts and milk drinks, 0.82 — all p for trend under 0.001. Reconstituted meat and fish products, 1.10, 1.04 to 1.18.
+
+**Theo:** Huh. Frozen desserts coming out inverse is going to annoy somebody.
+
+**Nadia:** The authors frame it as a dairy and calcium signal, not a recommendation about ice cream. These are secondary analyses with a lot of tests, and they say explicitly that significant findings should be interpreted cautiously given multiple testing and type one error.
+
+**Theo:** Let's do the hard part. Weakest link?
+
+**Nadia:** Exposure measurement, and the authors lead with it. The questionnaire was built to estimate nutrients, not processing. If you tick "yogurt," they don't know whether it was plain or flavoured — which fall into different Nova groups — so the Nova assignment comes from population-level consumption data applied identically to everyone who ate that item.
+
+**Theo:** Non-differential misclassification, which pulls toward null.
+
+**Nadia:** For the main analysis, yes. They do report validation against two 24-hour recalls in a calibration sub-study: validity coefficient for energy-adjusted U-P-F gram intake, 0.66 in both men and women. Energy from U-P-F unadjusted was worse — 0.43 in men, 0.33 in women — which is why the gram-based energy-adjusted exposure is the primary one.
+
+**Theo:** Hmm. 0.66 is respectable for diet, and still a lot of attenuation.
+
+**Nadia:** Agreed. And the by-source analyses stack a second classification layer on top of the first. The authors call those exploratory in the text. That's the right label, and I'd hold them to it.
+
+**Theo:** What about the thing everyone actually suspects — additives?
+
+**Nadia:** Not addressable here. No ingredient-level data, so no emulsifiers, no sweeteners, no estimates at all. They cite the emulsifier-and-gut-barrier literature and then say plainly they couldn't test it. If processing acts on colorectal risk through additives, this design can't see it.
+
+**Theo:** And it's a 1995 diet.
+
+**Nadia:** One baseline questionnaire, mostly white adults aged 50 to 71. They write that their estimates likely underestimate current U-P-F intake levels, and that limited variation across quintiles may itself contribute to the null finding.
+
+**Theo:** There was a proportional hazards violation, too?
+
+**Nadia:** Score test p-value 0.005. So they estimated hazard ratios within five-year follow-up windows, from under five years out past fifteen, and report them as generally similar. With 461,000 people and twenty years, a detectable departure doesn't surprise me, and showing the windows is the right response.
+
+**Theo:** Who funded it?
+
+**Nadia:** N-C-I Intramural Research Program, and several authors are employees of that funder. The paper states the funder had no role in design, analysis, or the decision to publish, and declares no competing interests. Worth saying once.
+
+**Theo:** Credit where it's due — what did they do well?
+
+**Nadia:** Three things. They pre-specified which covariates go in separate models. They quantified the confounding bar: an unmeasured confounder would need to be associated with more than a 2.1-fold higher relative rate of both exposure and outcome to explain away their strongest estimate — the 0.72 for fiber. And they replicated E-P-I-C's substitution analysis rather than just discussing it.
+
+**Theo:** What came out of that?
+
+**Nadia:** Swapping ten percent of grams from ultra-processed to minimally processed food: hazard ratio 0.98, 0.96 to 0.99. In E-P-I-C the same substitution gave 0.94. Same direction, about a third the magnitude.
+
+**Theo:** And their explanation for the gap?
+
+**Nadia:** Composition. Mean ultra-processed meat intake was 36.2 grams a day in E-P-I-C versus 20.1 here; ultra-processed breakfast cereal, 5.0 versus 15.2; bread, 43.6 versus 57.3. Less processed meat, more cereal and bread. It's post hoc — but it's a testable post hoc.
+
+**Theo:** This fits a pattern. Episode 82, the rabies under-detection estimate — we praised it for stating its falsification bar as a number. Same discipline here, applied to confounding: 2.1-fold, named.
+
+**Nadia:** And the contrast with episode 55, the early allergen introduction guidelines, is instructive. There the exposure was guideline era standing in for what any individual infant ate. Here it's measured per person — just with an instrument designed for a different question.
+
+**Theo:** Which may be the more common failure in nutrition. Okay — three takeaways. One: total ultra-processed food intake was not associated with colorectal cancer incidence in this cohort, 0.97 top versus bottom quintile, and that survived adjustment for diet quality and for B-M-I.
+
+**Theo:** Two: the component associations tracked current dietary guidance — calcium and dairy inverse, meat positive, from both sources; whole grain and fiber inverse from U-P-F sources, with their non-U-P-F estimates not significant. Three: the subgroup split — bread and cereal down, reconstituted meat up — is exploratory, built on a second classification layer.
+
+**Theo:** What I would not take from this: that processing is irrelevant. Additives weren't measured, and intake was measured once, in 1995, in a food supply that no longer exists.
+
+**Nadia:** And a null in a cohort with 43% median energy from U-P-F and an interquartile range of 36 to 50 is a null over a fairly narrow contrast. That isn't the same as a null across what people eat now.
+
+**Theo:** What would change my mind: a cohort with repeated dietary assessment and ingredient-level additive estimates showing an association that survives adjustment for the nutrient components. That separates processing from content.
+
+**Nadia:** Mine's narrower. Repeat the whole-grain-by-source comparison in a population where non-U-P-F whole grain is commonly eaten, so that estimate has the precision to be compared. If it's still null there, the asymmetry is real.
+
+**Theo:** PLOS Medicine, 2026. D-O-I ten point one three seven one, slash, journal dot p-med dot one zero zero five two five one.
+
+**Nadia:** Thanks for listening.
