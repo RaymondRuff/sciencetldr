@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Thu, 06 Feb 2025 10:00:56 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 05 Aug 2025 07:10:07 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -703,21 +703,6 @@
       <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
-      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
-      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
-      <content:encoded><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
-      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
-      <itunes:duration>934</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>46</itunes:episode>
-      <podcast:episode>46</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
       <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
       <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
@@ -731,6 +716,21 @@
       <podcast:episode>46</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
+      <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
+      <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
+      <content:encoded><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-navigating-protein-landscapes-with-a-machine-learned.mp3" length="14949283" type="audio/mpeg"/>
+      <guid isPermaLink="false">eeee13cc-afad-43b2-97c7-90609b8ff5ab</guid>
+      <itunes:duration>934</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
@@ -2382,6 +2382,43 @@
       <podcast:episode>92</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 19 Oct 2026 19:39:47 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 93: Reddit Trending — Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1371/journal.pmed.1005251">Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study</a></strong></p>
+<p><em>PLOS Medicine, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1371/journal.pmed.1005251">10.1371/journal.pmed.1005251</a></p>
+<p><strong>Question:</strong> Is total ultra-processed food (UPF) intake associated with colorectal cancer, and which nutrients inside UPF drive risk?</p>
+<p><strong>Answer:</strong> No association between total UPF intake and colorectal cancer (HR 0.97, top vs bottom quintile) across 461,682 adults followed ~19 years. Component-level analysis suggests this null partly reflects offsetting effects of beneficial (grain, fiber, dairy, calcium) and harmful (meat) nutrients within UPF.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Total UPF intake showed no association with colorectal cancer (HR 0.97), robust to adjustment for diet quality and BMI.</li>
+<li>Calcium, dairy and whole grain/fiber from UPF sources were inversely associated, processed meat positively associated, mirroring standard dietary guidance.</li>
+<li>Subgroup splits (bread/cereal protective, reconstituted meat harmful) are exploratory, built on a second, less-validated classification layer.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1371/journal.pmed.1005251">Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study</a></strong></p>
+<p><em>PLOS Medicine, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1371/journal.pmed.1005251">10.1371/journal.pmed.1005251</a></p>
+<p><strong>Question:</strong> Is total ultra-processed food (UPF) intake associated with colorectal cancer, and which nutrients inside UPF drive risk?</p>
+<p><strong>Answer:</strong> No association between total UPF intake and colorectal cancer (HR 0.97, top vs bottom quintile) across 461,682 adults followed ~19 years. Component-level analysis suggests this null partly reflects offsetting effects of beneficial (grain, fiber, dairy, calcium) and harmful (meat) nutrients within UPF.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Total UPF intake showed no association with colorectal cancer (HR 0.97), robust to adjustment for diet quality and BMI.</li>
+<li>Calcium, dairy and whole grain/fiber from UPF sources were inversely associated, processed meat positively associated, mirroring standard dietary guidance.</li>
+<li>Subgroup splits (bread/cereal protective, reconstituted meat harmful) are exploratory, built on a second, less-validated classification layer.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-093</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/093-associations-of-food-processing-and-dietary-risk-factors.mp3" length="8167429" type="audio/mpeg"/>
+      <guid isPermaLink="false">42034465-f43f-4e45-8369-f3f9ed3266a1</guid>
+      <itunes:duration>680</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>93</itunes:episode>
+      <podcast:episode>93</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 23 Oct 2026 18:14:20 +0000</pubDate>
     </item>
   </channel>
 </rss>

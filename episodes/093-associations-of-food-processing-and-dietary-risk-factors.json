@@ -1,0 +1,39 @@
+{
+  "guid": "42034465-f43f-4e45-8369-f3f9ed3266a1",
+  "title": "Episode 93: Reddit Trending — Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study",
+  "itunes_title": "Reddit Trending — Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study",
+  "description": "**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.\n\n**[Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study](https://doi.org/10.1371/journal.pmed.1005251)**\n\n*PLOS Medicine, 2026*\n\nDOI: [10.1371/journal.pmed.1005251](https://doi.org/10.1371/journal.pmed.1005251)\n\n**Question:** Is total ultra-processed food (UPF) intake associated with colorectal cancer, and which nutrients inside UPF drive risk?\n\n**Answer:** No association between total UPF intake and colorectal cancer (HR 0.97, top vs bottom quintile) across 461,682 adults followed ~19 years. Component-level analysis suggests this null partly reflects offsetting effects of beneficial (grain, fiber, dairy, calcium) and harmful (meat) nutrients within UPF.\n\n**Three takeaways**\n\n1. Total UPF intake showed no association with colorectal cancer (HR 0.97), robust to adjustment for diet quality and BMI.\n2. Calcium, dairy and whole grain/fiber from UPF sources were inversely associated, processed meat positively associated, mirroring standard dietary guidance.\n3. Subgroup splits (bread/cereal protective, reconstituted meat harmful) are exploratory, built on a second, less-validated classification layer.",
+  "pub_date": "Fri, 23 Oct 2026 18:14:20 +0000",
+  "duration_seconds": 680,
+  "episode_number": 93,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "093-associations-of-food-processing-and-dietary-risk-factors.mp3",
+  "enclosure_length_bytes": 8167429,
+  "source_metadata": {
+    "title": "Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study",
+    "doi": "10.1371/journal.pmed.1005251",
+    "authors": [
+      "Leila Abar",
+      "Caitlin P. O’Connell",
+      "Hyokyoung G. Hong",
+      "Kirsten A. Herrick",
+      "Lisa Kahle",
+      "Jennifer L. Lerman",
+      "Linda M. Liao",
+      "Xuehong Zhang",
+      "Xinyuan Zhang",
+      "Longgang Zhao",
+      "Sémi Zouiouich",
+      "Rashmi Sinha",
+      "Neha Khandpur",
+      "Eurídice Martínez Steele",
+      "Erikka Loftfield"
+    ],
+    "journal": "PLOS Medicine",
+    "abstract": "Background\n                    Ultra-processed foods (UPF) account for &gt;50% of energy intake by US adults. UPF intake can include dietary components linked to lower colorectal cancer (CRC) risk, such as whole grain and dairy products, and others linked to higher CRC risk, such as processed meats, potentially explaining the heterogeneity of evidence for an association between UPF and CRC risk. Our goal was to estimate the associations of UPF and established CRC-related dietary factors, by UPF and non-UPF source, with CRC incidence in a large cohort study.\n                  \n                  \n                    Methods and findings\n                    \n                      US adults, aged 50–71, who enrolled in the NIH-AARP Diet and Health Study in 1995–96, self-reported dietary intake using a food frequency questionnaire (FFQ). Median UPF intake was 293 g/1000 kcal/day or 43% of daily energy intake. We assigned disaggregated FFQ items to Nova classification and categorized UPF intake (g/1000 kcal/day) into sex-specific quintiles. Participants who were cancer-free at baseline (\n                      N\n                       = 461,682) were followed for cancer incidence through 2018, and 10,075 colorectal adenocarcinoma cases were diagnosed. We used multivariable-adjusted Cox proportional hazards regression models, adjusted for demographic, lifestyle, and health-related factors, including age, sex, race/ethnicity, education, physical activity, smoking, and alcohol drinking, to estimate associations for UPF and related dietary components with CRC incidence. UPF intake was not associated with CRC incidence (hazard ratio\n                      5th versus 1st quintile\n                      0.97; 95% confidence interval [0.91–1.03];\n                      p\n                      \n                        trend\n                      \n                       = 0.55). Whole grain, fiber, dairy, and calcium intakes from UPF sources were inversely but meat intake from UPF sources was positively associated with CRC incidence. The main limitations of the study relate to its observational design and include potential residual confounding and exposure misclassification owing to systematic or random error in self-reported dietary data.\n                    \n                  \n                  \n                    Conclusions\n                    Total UPF intake was not associated with incident CRC in this cohort of older, US adults. This may be explained, in part, by opposing associations of some UPF with CRC risk. Our findings support current dietary guidance to consume whole grains, fiber, dairy, and calcium and avoid processed meat for CRC prevention.",
+    "source": "friday-reddit",
+    "source_url": "https://doi.org/10.1371/journal.pmed.1005251"
+  },
+  "source_issue": 83
+}
