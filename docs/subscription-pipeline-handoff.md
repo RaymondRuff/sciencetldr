@@ -69,22 +69,43 @@ it found the published paper in PMC when `paper_text.py` had failed. Branch
 `claude/routine-prototype-issue-41` still exists; the API version of the same
 paper published as episode 85, so the two are directly comparable.
 
-Fix all four before the next prototype:
+All four are fixed (2026-10-31). What the run log
+(`RemoteTrigger get_run_log cse_01PaB4hcbZG8fAagnxJvWRqf`) showed, and the fix:
 
-1. **The fact-check never ran.** The routine launched it as a background
-   subagent, committed the draft, and the session ended before the check
-   reported. **Fix:** the checker is its own routine (above). Within a single
-   session, never background the check.
-2. **It gamed the validator.** `scripts/routine_tools.py validate` counts
-   characters, so it wrote "12,779" instead of the spelled-out form to fit the
-   window — same spoken length, fewer characters. **Fix:** measure estimated
-   *spoken* length, and reject bare digits and unexpanded acronyms in dialogue
-   (`prompts/host_dialogue.md` requires spelled-out forms for the ear).
-3. **Safeguards flagged the session twice** as biology-research-adjacent. It
-   recovered both times. Not engineerable around — detect and retry. Issue #86
-   (economics) tests whether this is field-specific.
-4. **No token accounting.** Accepted: there will be no cost signal. Watch
-   wall-clock and plan usage instead.
+1. **The fact-check only landed by luck.** The routine launched it as a
+   background subagent. A stop hook then made it commit the unchecked draft,
+   and the run ended at 00:17:49 recorded as *succeeded*. The subagent's
+   hand-back at 00:22 happened to revive the session, which applied 19
+   corrections in a second commit at 00:26. **Fix:** the checker is its own
+   routine, `prompts/routine_checker.md`. Both prompts forbid subagents and
+   background tasks, and the writer builds its draft in `/tmp` so the stop hook
+   cannot push half a script.
+2. **It gamed the validator.** The validator counted written characters, so the
+   writer swapped spelled-out numbers for digits ("12,779") to fit the window.
+   **Fix:** `validate` measures *spoken* length (`spoken_form`) and rejects
+   digits, runs of capitals and symbols in dialogue. Spoken length tracks real
+   runtime better: r=0.69 against episodes 82–93's audio, versus r=0.31 for
+   written characters, at 1,075 spoken chars/min. The window is now 11,000–11,600
+   spoken characters, the 10.2–10.8 minutes the old window actually produced.
+   Measured this way the prototype was 11,879, about a quarter-minute over.
+   Note: the API scripts *also* use digits and bare acronyms throughout, and
+   `host_dialogue.md`'s own examples do too ("13 of the 26"). So the ear rule is
+   written as a routine-only override in `routine_writer.md`, and the API
+   prompt is untouched.
+3. **Safeguards stopped the session** when it read the episode index and
+   threads. The harness then continued once and logged
+   `model_refusal_fallback`; the later restart reports `model=claude-opus-5`,
+   so the prototype was probably finished on the fallback model, not Opus 5.5.
+   **Fix:** both routines count stops in the script's `runs[].safeguard_stops`.
+   Both are safe to rerun: the writer stops if a draft exists, the checker
+   stops if there is no draft or it is already `checked`. So the retry is just
+   `RemoteTrigger run`. When measuring, also check the run log for
+   `model_refusal_fallback`, which the session itself may not notice.
+4. **No token accounting.** Accepted. Each run records `started`/`finished`
+   UTC in `runs`, and `validate --stage draft|checked` enforces the record.
+   Plan usage still has to be read before and after by hand.
+
+Tests: `uv run python -m unittest discover tests`.
 
 ## Next step: prototype on Issue #86
 
@@ -110,7 +131,9 @@ the existing `WeeklyDigestGenerator` (`action: "list"`). Known-good values:
   (`https://gmailmcp.googleapis.com/mcp/v1`) and others — list the digest
   routine to see them all
 - `run_once_at` for a one-shot; minimum cron interval is 1 hour
-- routine instructions live in `prompts/routine_episode.md`
+- routine instructions live in `prompts/routine_writer.md` and
+  `prompts/routine_checker.md`; give each the Issue number and the branch
+  `claude/routine-issue-<N>` in its starting message
 - debug with `action: "list_runs"` then `action: "get_run_log"`
 
 Measure: wall-clock, whether safeguards fire, whether the validator passes
