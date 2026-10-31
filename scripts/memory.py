@@ -84,6 +84,11 @@ accurate connections across episodes.
 Rules:
 - Every claim and number must come from the material you are given. Never infer \
 a number that is not present.
+- Write numbers as digits and genes as standard nomenclature, whatever the \
+transcript does. The transcript spells figures out for the voices that read it \
+aloud ("thirteen of twenty-six", "C-D-four"); a card is read by a model later, \
+so record "13 of 26" and "CD4". Cards are the show's searchable record of what \
+each paper reported.
 - Record what the authors showed, not how the show framed it.
 - Limitations matter as much as findings; include the authors' own stated \
 limitations when they appear.

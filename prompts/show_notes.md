@@ -29,6 +29,7 @@ DOI: [10.xxxx/xxxxx](https://doi.org/10.xxxx/xxxxx)
 Rules:
 - **Length budget.** The Question, Answer and three takeaways together: about 110 words, never more than 130. (The title, journal and DOI lines don't count.) Question at most 25 words; Answer at most 45; each takeaway at most 25. When over budget, cut detail — keep the numbers that carry the finding, drop secondary ones.
 - **Compare like with like.** Numbers set against each other must share units and time frame — per year against per year, total against total, the same denominator. Never put a multi-year total next to an annual figure.
+- **Numbers as digits.** The transcript spells figures out because the voices read it aloud — "thirteen of twenty-six", "zero point three six six". Show notes are read on a screen, so write them as digits and standard nomenclature: "13 of 26", "0.366", "CD4", "IL-10", "HLA-A*02:01". Never carry the spoken spelling into the notes.
 - **Takeaways:** when a transcript is provided, the hosts state three takeaways near the end of the episode. Use those — tightened into one sentence each for print — so the notes match what the listener heard. Do not substitute your own. Without a transcript, derive them from the abstract's results, not its speculation.
 - Each takeaway is one sentence of at most 25 words and carries a specific finding, with its key number where there is one.
 - Title is the paper's full title, linked to `source_url`. Keep its original capitalisation.
