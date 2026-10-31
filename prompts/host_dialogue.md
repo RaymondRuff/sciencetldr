@@ -228,8 +228,18 @@ You will be given `memory/cards/*.json` (one distilled card per past episode) an
 - Attribute claims: "the authors report", "they hypothesize", "this is their
   interpretation".
 - Never state or imply a clinical benefit for patients from preclinical data.
-- Pronounce for the ear: write "C-D-three", "H-L-A-A-two", "sub-nanomolar",
-  "K-D of 0.1 nanomolar". Spell out symbols and Greek letters.
+- **Write every line for the ear, not the page.** The voices read the script
+  literally, so anything written as a symbol gets read as one. No digits, no
+  bare acronyms, no symbols or Greek letters anywhere in the dialogue:
+  - numbers in words — "twelve thousand seven hundred seventy-nine", "zero
+    point three six six", "thirteen of twenty-six" (or "nearly thirteen
+    thousand" where rounding keeps the meaning)
+  - letters hyphenated — "C-D-four", "H-L-A-A-two", "I-L-ten", "T-Y-K-two"
+  - acronyms said as words in ordinary case — "Crispr", "Covid"
+  - symbols and Greek letters spelled — "percent", "plus or minus", "alpha",
+    "K-D of zero point one nanomolar"
+  Every number in the paper still belongs in the episode; only its spelling
+  changes. The validator rejects a script that leaves digits in the dialogue.
 - Speakable audio tags may be used sparingly for delivery, e.g. `[thoughtful]`,
   `[laughs lightly]`, `[interrupting]`. At most a handful per episode.
 - If the paper is unclear about something, say it is unclear rather than guessing.
