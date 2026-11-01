@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Tue, 05 Aug 2025 07:10:07 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 02 Apr 2025 03:42:50 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -703,21 +703,6 @@
       <pubDate>Tue, 29 Jul 2025 23:30:23 GMT</pubDate>
     </item>
     <item>
-      <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
-      <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
-      <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
-      <content:encoded><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></content:encoded>
-      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
-      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-sliding-window-interaction-grammar-swing-a-generalized.mp3" length="16072339" type="audio/mpeg"/>
-      <guid isPermaLink="false">9201969d-0f95-4f0e-9bc1-c21da915fa14</guid>
-      <itunes:duration>1004</itunes:duration>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:episode>46</itunes:episode>
-      <podcast:episode>46</podcast:episode>
-      <itunes:explicit>false</itunes:explicit>
-      <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
-    </item>
-    <item>
       <title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></title>
       <itunes:title><![CDATA[Navigating protein landscapes with a machine-learned transferable coarse-grained model]]></itunes:title>
       <description><![CDATA[<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://doi.org/10.1038/s41557-025-01874-0">https://doi.org/10.1038/s41557-025-01874-0</a></p>]]></description>
@@ -731,6 +716,21 @@
       <podcast:episode>46</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 30 Jul 2025 23:28:55 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></title>
+      <itunes:title><![CDATA[Sliding Window Interaction Grammar (SWING): a generalized interaction language model for peptide and protein interactions]]></itunes:title>
+      <description><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></description>
+      <content:encoded><![CDATA[<p>https://doi.org/10.1038/s41592-025-02723-1</p>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-046</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/046-sliding-window-interaction-grammar-swing-a-generalized.mp3" length="16072339" type="audio/mpeg"/>
+      <guid isPermaLink="false">9201969d-0f95-4f0e-9bc1-c21da915fa14</guid>
+      <itunes:duration>1004</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>46</itunes:episode>
+      <podcast:episode>46</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 30 Jul 2025 13:01:50 GMT</pubDate>
     </item>
     <item>
       <title><![CDATA[Bispecific antibody-antigen complex structures reveal activity enhancement by domain rearrangement]]></title>
@@ -2419,6 +2419,43 @@
       <podcast:episode>93</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 23 Oct 2026 18:14:20 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 94: Reddit Trending — The Effect of Deactivating Facebook and Instagram on Users’ Emotional State]]></title>
+      <itunes:title><![CDATA[Reddit Trending — The Effect of Deactivating Facebook and Instagram on Users’ Emotional State]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1257/pol.20240806">The Effect of Deactivating Facebook and Instagram on Users’ Emotional State</a></strong></p>
+<p><em>American Economic Journal: Economic Policy, 2024</em></p>
+<p>DOI: <a href="https://doi.org/10.1257/pol.20240806">10.1257/pol.20240806</a></p>
+<p><strong>Question:</strong> Does deactivating Facebook or Instagram for six weeks improve users' self-reported happiness, depression and anxiety?</p>
+<p><strong>Answer:</strong> Facebook deactivation improved a well-being index by 0.060 SD; Instagram's 0.041 SD effect didn't clear the authors' own multiple-comparison threshold. Freed-up time mostly moved to other apps, not offline activity.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Facebook deactivation improved well-being by 0.060 SD (q=0.002); Instagram's 0.041 SD failed the preregistered FDR bar (q=0.139).</li>
+<li>The effect size is 15–22% of an average psychological intervention — smaller than prior, smaller RCTs suggested.</li>
+<li>Time off Instagram fully relocated to other apps; ~75% of Facebook's freed time did too — not "touching grass."</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1257/pol.20240806">The Effect of Deactivating Facebook and Instagram on Users’ Emotional State</a></strong></p>
+<p><em>American Economic Journal: Economic Policy, 2024</em></p>
+<p>DOI: <a href="https://doi.org/10.1257/pol.20240806">10.1257/pol.20240806</a></p>
+<p><strong>Question:</strong> Does deactivating Facebook or Instagram for six weeks improve users' self-reported happiness, depression and anxiety?</p>
+<p><strong>Answer:</strong> Facebook deactivation improved a well-being index by 0.060 SD; Instagram's 0.041 SD effect didn't clear the authors' own multiple-comparison threshold. Freed-up time mostly moved to other apps, not offline activity.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Facebook deactivation improved well-being by 0.060 SD (q=0.002); Instagram's 0.041 SD failed the preregistered FDR bar (q=0.139).</li>
+<li>The effect size is 15–22% of an average psychological intervention — smaller than prior, smaller RCTs suggested.</li>
+<li>Time off Instagram fully relocated to other apps; ~75% of Facebook's freed time did too — not "touching grass."</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-094</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/094-the-effect-of-deactivating-facebook-and-instagram-on-users.mp3" length="7352784" type="audio/mpeg"/>
+      <guid isPermaLink="false">7071fca2-453f-4e43-a0b4-4a4c64413e56</guid>
+      <itunes:duration>612</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>94</itunes:episode>
+      <podcast:episode>94</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sun, 01 Nov 2026 18:44:55 +0000</pubDate>
     </item>
   </channel>
 </rss>

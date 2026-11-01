@@ -1,0 +1,31 @@
+{
+  "guid": "7071fca2-453f-4e43-a0b4-4a4c64413e56",
+  "title": "Episode 94: Reddit Trending — The Effect of Deactivating Facebook and Instagram on Users’ Emotional State",
+  "itunes_title": "Reddit Trending — The Effect of Deactivating Facebook and Instagram on Users’ Emotional State",
+  "description": "**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.\n\n**[The Effect of Deactivating Facebook and Instagram on Users’ Emotional State](https://doi.org/10.1257/pol.20240806)**\n\n*American Economic Journal: Economic Policy, 2024*\n\nDOI: [10.1257/pol.20240806](https://doi.org/10.1257/pol.20240806)\n\n**Question:** Does deactivating Facebook or Instagram for six weeks improve users' self-reported happiness, depression and anxiety?\n\n**Answer:** Facebook deactivation improved a well-being index by 0.060 SD; Instagram's 0.041 SD effect didn't clear the authors' own multiple-comparison threshold. Freed-up time mostly moved to other apps, not offline activity.\n\n**Three takeaways**\n\n1. Facebook deactivation improved well-being by 0.060 SD (q=0.002); Instagram's 0.041 SD failed the preregistered FDR bar (q=0.139).\n2. The effect size is 15–22% of an average psychological intervention — smaller than prior, smaller RCTs suggested.\n3. Time off Instagram fully relocated to other apps; ~75% of Facebook's freed time did too — not \"touching grass.\"",
+  "pub_date": "Sun, 01 Nov 2026 18:44:55 +0000",
+  "duration_seconds": 612,
+  "episode_number": 94,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "094-the-effect-of-deactivating-facebook-and-instagram-on-users.mp3",
+  "enclosure_length_bytes": 7352784,
+  "source_metadata": {
+    "title": "The Effect of Deactivating Facebook and Instagram on Users’ Emotional State",
+    "doi": "10.1257/pol.20240806",
+    "authors": [
+      "Hunt Allcott",
+      "Matthew Gentzkow",
+      "Benjamin Wittenbrink",
+      "Winter Mason",
+      "Arjun Wilkins",
+      "Natalie Jomini Stroud",
+      "Joshua A. Tucker"
+    ],
+    "journal": "American Economic Journal: Economic Policy",
+    "abstract": "We estimate the effect of social media deactivation on users’ emotional state in two large randomized experiments before the 2020 US election. People who deactivated Facebook for the six weeks before the election reported a 0.060 standard deviation improvement in an index of happiness, depression, and anxiety, relative to controls who deactivated for just the first of those six weeks. People who deactivated Instagram for those six weeks reported a 0.041 standard deviation improvement relative to controls. Exploratory analysis suggests that the Facebook effect is driven by people over 35, while the Instagram effect is driven by women under 25. (JEL D12, D91, I31, J16, L82)",
+    "source": "friday-reddit",
+    "source_url": "https://doi.org/10.1257/pol.20240806"
+  },
+  "source_issue": 86
+}
