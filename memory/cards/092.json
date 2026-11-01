@@ -1,0 +1,43 @@
+{
+  "episode_number": 92,
+  "title": "Engineered TYK2 dependence enables myeloid-selective IL-10 receptor agonism",
+  "doi": "10.1038/s41586-026-11176-1",
+  "journal": "Nature",
+  "source": "monday-digest",
+  "one_line": "A tetravalent nanobody agonist of IL-10Ralpha and IL-10Rbeta that suppresses macrophage TNF and IL-6 at low picomolar potency while leaving T cells silent, with selectivity arising from cross-linking geometry that makes signalling strictly TYK2-dependent and receptor-density-gated.",
+  "key_claims": [
+    "The exploitable asymmetry is kinase wiring: in macrophages TYK2 knockout or the inhibitor zasocitinib only partially reduces pSTAT3 and leaves LPS-induced TNF and IL-6 suppression intact, whereas in CD8 T cells TYK2 inhibition or CRISPR knockout drops pSTAT3 and completely abolishes the granzyme B and interferon-gamma response.",
+    "The lead, pairing anti-IL-10Ralpha nanobody E07 with anti-IL-10Rbeta A05 in each Fc arm, gave IC50s of 2.1 pM for TNF suppression and 6.9 pM for IL-6 in LPS-stimulated PBMCs with no significant T cell interferon-gamma or granzyme B and no B cell proliferation; of 882 tetravalent combinations, 182 gave reporter activity, 21 cleared 90% TNF and 85% IL-6 inhibition, and essentially one was selective.",
+    "Selectivity tracks geometry, not occupancy: shortening or lengthening the glycine-serine linker substantially reduced activity, reversing nanobody order (beta-binder first) abolished detectable signalling, and a symmetric construct with two beta-binders on one arm and two alpha-binders on the other was a stronger myeloid agonist that restored about 20% of native IL-10's T cell interferon-gamma response.",
+    "Cryo-EM at 3.14 A (full ectodomain complex, with an anti-nanobody Fab fiducial) and 2.40 A (IL-10Ralpha with E07) show A05 binding IL-10Rbeta on a surface partly overlapping the cytokine site while remodelling the Asn138-Trp143 loop into a cleft between CDR2 and CDR3, and E07 binding IL-10Ralpha across the junction of two fibronectin type III domains, opposite the IL-10 site.",
+    "Because the agonist avoids the cytokine-binding interface, it retained full activity in cells carrying the very-early-onset IBD IL10RA mutations R117C, R117H and Y64C, where native IL-10's TNF suppression is markedly impaired and detuned muteins fare worse.",
+    "Selectivity is receptor-density-gated and shown in both directions: myeloid cells carry 2- to 18-fold more surface copies of both chains than T, B or NK cells (calibration beads, nine donors); overexpressing IL-10Ralpha on activated CD8 T cells substantially restored pSTAT3 and adding IL-10Rbeta restored granzyme B (beta, TYK2 or JAK1 alone did not); and pairing IL-10Ralpha with IL-2Rgamma, about tenfold enriched on lymphocytes, redirected agonism to T and NK cells with minimal monocyte activity.",
+    "In vivo, in knock-in mice with humanised receptor ectodomains, the agonist matched IL-10-Fc on suppressing serum TNF, IL-6 and IL-12 after LPS, reduced KLH-induced ear swelling and draining-node neutrophils and improved DSS colitis colon weight-to-length ratio; in cynomolgus monkeys a humanised version had a terminal half-life of ~8 days with ex vivo TNF suppression beyond three weeks after one dose, and showed no significant dose-dependent IL-18 rise or haematological abnormality up to 100 mg/kg, where IL-10-Fc induced IL-18, thrombocytopaenia and anaemia at 0.25 mg/kg."
+  ],
+  "limitations": [
+    "The selective molecule was found, not designed: the screen of 882 combinations was empirical and the geometry explanation came afterwards from the structures, so the 'geometry-based strategy' framing is retrospective.",
+    "The toxicity separation rests on a single-dose study in healthy cynomolgus monkeys against a comparator chosen because it is already known to be toxic; there is no chronic dosing and no human data.",
+    "Efficacy is only equivalent to IL-10-Fc in the mouse models, not better; the claim is equivalence on efficacy with difference on toxicity.",
+    "Strict TYK2 dependence is designed in but its clinical consequence is not discussed: patients on TYK2 inhibitors, which are in clinical use, or carrying TYK2 loss-of-function variants would be expected to lose the therapy.",
+    "The cryo-EM covers two receptor ectodomains with a tandem nanobody, not the intact tetravalent molecule and not on a membrane; the full assembly is a composite model and the linker was unresolved.",
+    "Receptor-density gating is only 2- to 18-fold, which is a narrow margin by the standards of other density-gated engagers, though the failure mode here is T cell stimulation rather than cytotoxicity.",
+    "The authors concede receptor abundance emerged as the determinant but that higher T cell signalling thresholds or phosphatases damping IL-10R signalling may also contribute; the engineered IL-10 monomer that first demonstrated the asymmetry was thermally unstable, vulnerable to IBD anti-IL-10 autoantibodies and less potent.",
+    "The molecule has no mouse cross-reactivity, so all in vivo efficacy ran in receptor-humanised mice with an otherwise mouse immune compartment."
+  ],
+  "open_questions": [
+    "Chronic dosing with a TYK2 inhibitor on board, the clean test of whether strict TYK2 dependence is a feature or a liability.",
+    "Colitis efficacy in a model where the immune compartment is human, not only the receptor ectodomains.",
+    "Repeat-dose primate toxicology against a non-toxic comparator before claiming a therapeutic window.",
+    "Resolve the intact tetravalent assembly, including the linker, on a membrane rather than as a composite ectodomain model."
+  ],
+  "tags": [
+    "cytokine-engineering",
+    "nanobody",
+    "il-10",
+    "format-geometry",
+    "receptor-density-gating",
+    "selectivity",
+    "structural-biology",
+    "myeloid-cells"
+  ]
+}

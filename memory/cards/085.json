@@ -1,0 +1,40 @@
+{
+  "episode_number": 85,
+  "title": "Genome-scale perturb-seq in primary human CD4+ T cells maps context-specific regulators of T cell programs and human immune traits",
+  "doi": "10.1016/j.cell.2026.08.002",
+  "journal": "Cell",
+  "source": "monday-digest",
+  "one_line": "CRISPRi perturb-seq knocking down 12,748 expressed genes and transcription factors across 22 million primary human CD4+ T cells from 4 donors, at rest and 8 h and 48 h after re-stimulation, to map which regulators control T cell programs in which activation state.",
+  "key_claims": [
+    "Technical scale and QC held: 33.4M cells passed transcriptome QC with 65.8% single-guide assignment, median ~10,000 transcripts per cell and ~575 cells per perturbed gene per condition, and 73% of tested guides gave significant target knockdown.",
+    "Context dependence is the central result: of 111 regulator clusters from 3,341 strong perturbations, about a third act coherently in only one or two of the three conditions, and this was not explained by the regulator being unexpressed elsewhere.",
+    "Only ~8% of trans-effects across 3,081 shared perturbations were also seen in K562 (mean Pearson 0.32 for the same perturbation across cell types), and what transferred was enriched for housekeeping transcription, chromatin remodelling and cell cycle.",
+    "UK Biobank lymphocyte-count loss-of-function burden effects correlated with perturbation effects in stimulated T cells at both timepoints but not in rested cells, K562 or a Jurkat essential-gene screen — the cleanest internal support for context dependence, since cell type is held fixed.",
+    "Arrayed validation of 9 regulators of IL-10 and IL-21 moved 11 of 12 tested regulator-target interactions in the predicted direction, 8 significantly, with NFKB2's effect on IL-10 present transcriptionally but not at protein level.",
+    "Perturbation signatures modelled population-atlas cell states only modestly: Th2-versus-Th1 cross-validation correlation 0.39 in discovery and 0.27 in replication, and 0.366 for an age-associated signature across 782 OneK1K donors, all below the inter-cohort noise ceiling."
+  ],
+  "limitations": [
+    "Guides near a non-target TSS downregulated the neighbour in 60% of the 1,782 genes with a proximal TSS (18% of all perturbed genes); the authors flag these as putative off-targets and state that fully assessing off-target effects needs more guides per target.",
+    "Cross-guide correlation was only moderate (median 0.47-0.52 by condition), with discrepancies attributed to differential knockdown efficiency rather than demonstrated to be so.",
+    "Four donors only, with donor biology confounded with batch by the authors' own admission, although their power analysis showed donors were the higher-value axis above ~200 cells per perturbation.",
+    "Culture was non-polarizing, so Th1/Th2 polarization regulators are nominated from cells that were never polarized, and the single-cell shifts are subtle; FBXO32, the novel top Th2 regulator, received no functional validation.",
+    "The mTORC1 aging nominations run opposite to the hyperactive-mTOR story (knockdown of TSC and GATOR inhibitors induces genes down in aged T cells, RPTOR a negative regulator); the authors flag this and hypothesise feedback or survivor bias rather than resolving it.",
+    "Probe-based 10x Flex readout sees only panel genes, and pseudobulk aggregation masks cell-to-cell heterogeneity of response."
+  ],
+  "open_questions": [
+    "Add a third guide per target for the 18% of genes flagged for proximal off-target effects and show the trans-effects hold.",
+    "Re-run the polarization nominations under Th1- and Th2-skewing cytokines to test whether FBXO32 survives.",
+    "Functionally validate FBXO32 in immunity, where it is currently unstudied.",
+    "Establish whether activation-state rewiring explains heterogeneous T-cell-engager responses, which this paper does not test with any engager."
+  ],
+  "tags": [
+    "perturb-seq",
+    "crispri",
+    "cd4-t-cells",
+    "context-specificity",
+    "gene-regulatory-networks",
+    "human-genetics",
+    "cell-line-transferability",
+    "off-target-effects"
+  ]
+}

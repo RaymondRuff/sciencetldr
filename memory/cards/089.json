@@ -1,0 +1,40 @@
+{
+  "episode_number": 89,
+  "title": "Not with a Bang but a Whimper: Congressional Silence Amid an Historic Assault on the Power of the Purse",
+  "doi": "10.1017/S1049096525101704",
+  "journal": "PS: Political Science & Politics",
+  "source": "friday-reddit",
+  "one_line": "A seven-page analysis essay (PS 59:456-462) arguing that Congress offered little resistance to unprecedented presidential impoundments and unilateral tariffs, and attributing the silence to partisan incentives and the president's dominance of his own party.",
+  "key_claims": [
+    "The abstract makes four distinct claims needing different evidence: that the scope and breadth of the unilateral actions is a departure; that there were clear statutory violations; that there was widespread public opposition; and that Congress nonetheless offered little resistance, a stark departure from historical precedent.",
+    "The constitutional baseline is Article I Section 9 (no money drawn but by appropriation) and Article I Section 8 (duties and imposts), with tariff authority delegated to the president across a century of statutes mostly conditioned on national-security or emergency findings — so the claim is about the scope of exercise, not the novelty of delegation.",
+    "The Impoundment Control Act of 1974, written by the Congress that had just experienced Nixon's impoundments, sets a rescission procedure: Congress has 45 days of continuous session to agree, and absent agreement the money must be obligated — which is why the episode is framed as unprecedented.",
+    "The durable structural point is that the 1974 Act has no self-executing enforcement: the remedy is political plus whatever courts decide, so a Congress unwilling to defend its own appropriations leaves the statute toothless regardless of who holds the office.",
+    "The proposed mechanism is partisan incentives plus presidential dominance of the party; the hosts note Episode 72's preregistered experiment supplies the micro-foundation this essay lacks but could borrow."
+  ],
+  "limitations": [
+    "The load-bearing comparative claim has no counted baseline: no series of oversight hearings, obligation-compelling appropriations riders, termination-resolution floor votes, subpoenas or institutional lawsuits coded consistently across administrations, so 'stark departure' is a narrative comparison to Nixon rather than a measurement.",
+    "Unified government confounds the mechanism: partisan incentives and institutional erosion predict identical silence in this period, and the comparisons that would separate them (a same-party Congress facing a same-party president's impoundment, or an opposition Congress under the same statute) are unavailable.",
+    "Silence is an absence and the public record cannot adjudicate it — private bargaining and anticipated reaction both code as inaction, while cheap-talk letters inflate apparent resistance, which argues for counting only costly actions.",
+    "The case-study genre selects on the dependent variable — episodes where Congress stayed quiet — so no rate of congressional pushback can be estimated, though the claim is about two specific large episodes rather than a rate.",
+    "The 'widespread public opposition' premise is load-bearing but unaccompanied in the abstract by item wording or margins, and tariff and spending-cut polling is highly wording-sensitive.",
+    "The statutory-violation claim is a legal judgment resting on institutional authorities rather than political-science measurement, and the hosts could not identify which authorities are relied on.",
+    "The paper is paywalled: the hosts worked from the abstract and surrounding literature and said so, and the article went to press before the relevant litigation resolved."
+  ],
+  "open_questions": [
+    "Build a counted series of hearings, riders and termination votes per Congress across four or five administrations with published coding rules, and show recent Congresses sitting below that distribution.",
+    "Pre-commit to a numerical threshold — defections or enacted riders — that would have counted as resistance, as Episode 82 did with its falsification bar.",
+    "Watch the next appropriations cycle for hard obligation language and reporting deadlines, which would mean Congress defended itself slowly rather than not at all.",
+    "Find or construct a case that separates partisan incentives from institutional erosion outside unified government."
+  ],
+  "tags": [
+    "political-science",
+    "executive-power",
+    "institutional-design",
+    "measurement-validity",
+    "causal-inference",
+    "case-study-design",
+    "us-politics",
+    "falsification-bar"
+  ]
+}

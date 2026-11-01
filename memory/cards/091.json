@@ -1,0 +1,41 @@
+{
+  "episode_number": 91,
+  "title": "\"It's Like You're Trying to Defuse a Bomb\": Fear, Responsibility, and Shame in Young Men's Sexual Lives",
+  "doi": "10.1080/0092623X.2026.2740624",
+  "journal": "Journal of Sex & Marital Therapy",
+  "source": "friday-reddit",
+  "one_line": "Thematic analysis of 31 single-sitting interviews (64-124 min, mean 92) with heterosexual men aged 18-32, conducted in late 2023, reporting that these men who grew up inside consent-focused sex education rarely described enjoying sex.",
+  "key_claims": [
+    "Anxiety and vigilance: 29 of 31 men (94%) spontaneously described fear, nervousness or pressure around sex, and the same 29 described it shaping behaviour through constant monitoring of a partner's signals and of themselves.",
+    "Fear of causing harm: also 29 of 31, substantially overlapping the first group, with the authors arguing the concern tips into people-pleasing and self-erasure — men describing unenthusiastic sex performed for a partner's benefit, one handing over 'full control', which the authors note could protect him as much as please her.",
+    "Shame: 26 of 31 (84%) described sex as high stakes, of whom 19 (61%) feared formal consequences such as accusation, legal trouble or career damage, 17 (55%) feared informal consequences such as gossip, reputation and exclusion, and 16 (52%) turned the same logic inward.",
+    "The inward turn is the thesis: men judged themselves rather than only their partner's wishes as the uncertain, risky object — 'am I the kind of man who could get this wrong' — which the authors read as internalised cultural suspicion and tie to the shame-versus-guilt distinction, guilt prompting change where shame prevents it.",
+    "The emotional material was not what the study sought: the seven-question guide never asks how sex feels, and the themes came from spontaneous asides noticed during fieldwork, after which all 31 transcripts were coded line by line.",
+    "The authors argue these men overestimate the likelihood of a false accusation, citing a Law Commission report and Victoria Police data rather than anything in this dataset, and state their finding is about the fear, not its frequency."
+  ],
+  "limitations": [
+    "Four of the seven interview questions point at uncertain or non-consensual encounters and none asks about pleasure or good sex, so the headline claim — an absence of described enjoyment — is exactly what this instrument would manufacture; the authors flag it but in a single paragraph.",
+    "The percentages are counts of spontaneous mention in one cohort, not prevalence: non-mention was deliberately not treated as absence, and the authors state in as many words that the counts describe this cohort only.",
+    "Self-selected volunteers for a consent study with a 40-dollar grocery voucher, 26 of 35 recruited by campus flyers at mostly one Australian university and 9 by snowballing, 24 in Australia and 7 in the US, 5 interviews in Spanish, men charged or convicted of a sexual offence ineligible — so the sample skews toward men who already think about consent a lot.",
+    "Performance anxiety could not be separated from consent-related anxiety; the authors say the two were hard to disentangle for these men and do not disentangle them either.",
+    "Accounts of social exclusion mix real and imagined cases and the paper cannot separate them.",
+    "One participant, 'Ernest', 28, is quoted more than anyone, which the methods disclose, so the reader's impression of 31 men is set disproportionately by one articulate one.",
+    "One interview each, no partners interviewed, mostly Judeo-Christian upbringing; the discussion nonetheless suggests the pattern may reach young men across Western post-MeToo societies, which sits uneasily with the stated sampling limits."
+  ],
+  "open_questions": [
+    "Run the same study with a guide that includes pleasure and good encounters, and ideally young women on the same schedule, to test whether the inward turn is specific to these men.",
+    "Measure shame and self-criticism on a validated scale alongside interviews in a sample not recruited to talk about consent.",
+    "Test the shame-versus-guilt interpretation directly, since the authors present it as an interpretation and it is testable.",
+    "Separate consent-related anxiety from ordinary sexual performance anxiety with a design that asks about both."
+  ],
+  "tags": [
+    "qualitative-methods",
+    "thematic-analysis",
+    "instrument-effects",
+    "sampling-bias",
+    "sexual-consent",
+    "masculinity",
+    "shame",
+    "prevalence-estimation"
+  ]
+}

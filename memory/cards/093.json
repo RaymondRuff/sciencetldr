@@ -1,0 +1,43 @@
+{
+  "episode_number": 93,
+  "title": "Associations of food processing and dietary risk factors with colorectal cancer incidence in the NIH-AARP Diet and Health Study: A cohort study",
+  "doi": "10.1371/journal.pmed.1005251",
+  "journal": "PLOS Medicine",
+  "source": "friday-reddit",
+  "one_line": "A prospective cohort of 461,682 cancer-free US adults aged 50-71 at recruitment in 1995-96, followed a median 18.8 years to 10,075 colorectal adenocarcinomas, finding no association with total ultra-processed food intake and then decomposing UPF into its nutrient components.",
+  "key_claims": [
+    "Total Nova group 4 intake showed no association with colorectal cancer: fifth versus first sex-specific quintile of energy-adjusted grams gave HR 0.97 (CI 0.91-1.03, p for trend 0.55), with proximal colon 1.02, distal colon 0.94 and rectum 0.91 all crossing one.",
+    "The null survived adjustment: adding Healthy Eating Index 2020 plus calcium and fibre, or BMI (kept in separate models as possible mediators), each gave 0.94, under a 10% change in estimate.",
+    "In this cohort UPF and guideline-recommended foods largely coincide: 82.8% of whole grain intake, 33.5% of fibre, 31.7% of calcium, 23.5% of dairy and 74.3% of processed meat came from UPF sources, with median UPF intake 293 g per 1,000 kcal per day, 43% of energy (IQR 36-50%).",
+    "Mutually adjusted continuous component analyses mirrored standard dietary guidance from both sources: calcium from UPF HR 0.77 per 300 mg/day (0.69-0.86) versus 0.90 (0.87-0.93) from non-UPF; dairy 0.75 versus 0.90 per serving; meat 1.08 versus 1.04 per serving.",
+    "Whole grain and fibre were the asymmetric case: from UPF sources HR 0.87 per serving of whole grain and 0.72 per 10 g of fibre, while their non-UPF counterparts in the same model were not significant.",
+    "Exploratory subgroups split as the decomposition predicts: bread 0.91, breakfast cereals 0.84 and frozen desserts/milk drinks 0.82 (all p for trend <0.001), against reconstituted meat and fish products 1.10 (1.04-1.18).",
+    "Substituting 10% of grams from ultra-processed to minimally processed food gave HR 0.98 (0.96-0.99) against 0.94 for the same substitution in EPIC — same direction, about a third the magnitude — which the authors attribute post hoc to composition (UPF meat 20.1 g/day here versus 36.2 in EPIC; breakfast cereal 15.2 versus 5.0; bread 57.3 versus 43.6)."
+  ],
+  "limitations": [
+    "The food frequency questionnaire (124 items, administered once) was built to estimate nutrients, not processing, so Nova assignment for ambiguous items such as yogurt comes from population-level consumption data applied identically to everyone, giving non-differential misclassification that pulls toward the null.",
+    "Validation against two 24-hour recalls gave a validity coefficient of 0.66 for energy-adjusted UPF grams in both sexes (and only 0.43 in men and 0.33 in women for unadjusted energy from UPF), so substantial attenuation remains even for the primary exposure.",
+    "No ingredient-level data, so emulsifiers, sweeteners and other additives were not estimated at all; the authors cite the emulsifier-and-gut-barrier literature and state plainly they could not test it.",
+    "A single 1995-96 baseline diet in a mostly white cohort aged 50-71; the authors write that their estimates likely underestimate current UPF intake and that limited variation across quintiles may itself contribute to the null.",
+    "The by-source analyses stack a second, less-validated classification layer on the first and are labelled exploratory, with the authors noting significant findings should be read cautiously given multiple testing.",
+    "The non-significant non-UPF whole grain and fibre estimates are most likely a precision problem — under 20% of whole grain intake was non-UPF — and the authors' narrower fibre argument (that the cohort's fibre signal has come from whole-grain fibre) is an interpretation, not a demonstration.",
+    "Proportional hazards were violated (score test p = 0.005), handled by estimating within five-year follow-up windows reported as generally similar.",
+    "High-UPF participants differed substantially (top versus bottom quintile: obesity 29.6% versus 15.2%, college 34.4% versus 41.8%, frequent exercise 40.6% versus 49.7%), which would bias away from the null, although the top quintile also had more nondrinkers (30.7% versus 21.5%); funding was the NCI Intramural Research Program with several authors employed by the funder, declared as having no role in design, analysis or publication."
+  ],
+  "open_questions": [
+    "A cohort with repeated dietary assessment and ingredient-level additive estimates, showing whether any association survives adjustment for the nutrient components — the experiment that separates processing from content.",
+    "Repeat the whole-grain-by-source comparison in a population where non-UPF whole grain is commonly eaten, so that estimate has the precision to be compared.",
+    "Test the composition explanation for the EPIC discrepancy directly, since it is post hoc but testable.",
+    "Establish whether a null over a 36-50% energy-share contrast says anything about current intake levels."
+  ],
+  "tags": [
+    "nutritional-epidemiology",
+    "cohort-study",
+    "ultra-processed-food",
+    "colorectal-cancer",
+    "exposure-misclassification",
+    "residual-confounding",
+    "falsification-bar",
+    "null-results"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "episode_number": 87,
+  "title": "Did Donald Trump Receive a Mandate for Sweeping Change in 2024?",
+  "doi": "10.1017/S1049096525101868",
+  "journal": "PS: Political Science & Politics",
+  "source": "friday-reddit",
+  "one_line": "A single-author symposium essay operationalising 'mandate' through six Dahl-derived conditions, then auditing the 2024 vote returns and public polling against the administration's own mandate claims.",
+  "key_claims": [
+    "Trump won 49.8% of the vote with a margin of about 1.5 points over Harris (roughly 77 million votes for him against 78.4 million voters who did not vote for him); of 50 presidential elections in the preceding two centuries, 40 winners took a larger share, and Republicans lost a House seat while gaining four Senate seats, only one from a competitive state.",
+    "The public did not read the result as a mandate: a pre-inauguration Fox News poll of registered voters found 42% yes against 51% no, and 54% called it mostly a rejection of Biden and Harris versus 41% an endorsement of Trump.",
+    "Voters did not want delegation: 32% said he should advance his agenda even if divisive against 65% preferring he work with Democrats; 23% said congressional Republicans should back whatever Trump wanted against 77% favouring pushback; and 55% of Republicans in the public said their own members had no obligation to support policies they disagreed with.",
+    "Immigration support is strongly conditional: mass deportation support fell from 52% to 38% as consequences were named (48% with Social Security and Medicare contributions, 47% labour market, 43% higher prices, 38% family separation), and by group ran from 97% for violent criminals to 52% nonviolent, 15% employed, 14% parents of US-born children, 9% childhood arrivals and 5% married to a US citizen.",
+    "Several major actions were never mentioned in any campaign speech or interview — buying Greenland, Canada joining the US, retaking the Panama Canal, USAID, firing a large share of NIH doctors and researchers — weakening any authorisation claim for them.",
+    "On the Musk delegation defence, an AdImpact analysis found the Trump campaign and supporting outside groups never mentioned Musk in any broadcast or cable TV ad; one rapper's ad named him, total spend 658 dollars, aired once, while ads led on immigration, inflation, crime and taxes."
+  ],
+  "limitations": [
+    "No stated numerical bar for what would have counted as a mandate, so the verdict cannot come out the other way; the author does concede that by these criteria mandates for transformational change essentially never occur.",
+    "Much of the opposition polling is post-inauguration, which a defender would read as a referendum on execution rather than on what voters authorised in November; the author's answer — that he acted on issues never campaigned on — covers Greenland and USAID better than tariffs or deportation, where pre-election polling existed.",
+    "Sourcing is by triangulation across many public polls with no inclusion rule, no pooling, no uncertainty intervals and no systematic treatment of question wording, even though the paper's own table shows wording moving support 14 points.",
+    "No individual-level analysis: the 2024 ANES and Cooperative Election Study are cited (the ANES result via another analyst) but never used to test whether Trump voters' own policy preferences track the policies.",
+    "The perception strand of the mandate literature is dropped on space grounds, although perception is the mechanism by which mandates have historically had effect.",
+    "A Pew item that 65% think giving Trump more power is too risky sits beside 78% opposing more presidential power in general, so the Trump-specific number may measure only the baseline; the author reports both but does not reconcile them.",
+    "Short single-author essay with no original data collection, and the conclusion is stated in the title."
+  ],
+  "open_questions": [
+    "Run the individual-level analysis on the 2024 ANES or Cooperative Election Study: vote choice against policy preferences within the same respondents.",
+    "State a numerical mandate threshold before an election rather than after, so the test can fail in either direction.",
+    "Separate authorisation from execution by using only pre-election polling for policies that were campaigned on.",
+    "Address whether general opposition to presidential power, not Trump-specific judgement, drives the delegation items."
+  ],
+  "tags": [
+    "political-science",
+    "public-opinion",
+    "survey-methodology",
+    "measurement-validity",
+    "question-wording",
+    "causal-inference",
+    "us-politics",
+    "executive-power"
+  ]
+}

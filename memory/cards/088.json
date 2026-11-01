@@ -1,0 +1,40 @@
+{
+  "episode_number": 88,
+  "title": "GPCR antagonism via rewiring of receptor trafficking and degradation",
+  "doi": "10.1038/s41586-026-11088-0",
+  "journal": "Nature",
+  "source": "monday-digest",
+  "one_line": "Bispecific antibodies (GTACs) tether a GPCR to constitutively cycling transferrin receptor 1 so the cell hauls the receptor to the lysosome, giving functional antagonism of seven GPCRs including constitutively active and hard-to-block targets.",
+  "key_claims": [
+    "Across seven GPCRs (BILF1, RXFP1, CCR6, AT1R, APJ, A2AR, M3R) GTACs removed 40-90% of surface receptor with IC50s from picomolar to single-digit nanomolar; for an AT1R-GFP fusion, maximum degradation was 65% with a DC50 near 1 nM, and the GTAC was more than 10-fold more potent than the same nanobody as a plain Fc fusion.",
+    "RXFP1 is the strongest modality argument: the same affinity-matured nanobody (cell EC50 ~2 nM, Ki 340 pM) inhibited signalling only modestly even at micromolar, but as a GTAC gave cAMP inhibition with an IC50 near 30 pM, more than 200-fold over the nanobody-Fc.",
+    "The approach works on a constitutively active receptor a neutralising antibody could not address: a FLAG-targeting GTAC depleted up to 70-80% of surface EBV BILF1, shut down the NF-kB reporter with an IC50 of ~0.8-1 nM, and restored surface MHC class I in Raji cells.",
+    "Weakening the TfR1 arm preserved degradation while removing collateral: non-competitive TfR1 nanobodies from ~0.1 to 120 nM paired with a ~500 pM anti-CCR6 Fab all gave ~85% CCR6 depletion, but only the high-affinity TfR1 version co-degraded TfR1 itself.",
+    "CCR6 function was blocked more completely than by antibody or clinical-stage comparators: near-complete inhibition of CCL20-driven beta-arrestin recruitment, F-actin polymerisation and chemotaxis at IC50s of 0.4-4 nM versus 55-60% for the parental antagonist antibody, up to 95% internalisation and ~90% chemotaxis inhibition in primary Th17 cells, and more complete chemotaxis inhibition plus better CCR7/CXCR2 selectivity than PF-07054894.",
+    "Mechanism is lysosomal and beta-arrestin-independent: MG132 had no effect while bafilomycin or chloroquine restored total AT1R and CCR6, cycloheximide improved apparent degradation, and two AT1R mutants with impaired beta-arrestin recruitment (T282M and a Ser/Thr cluster mutant) were degraded indistinguishably from wild type."
+  ],
+  "limitations": [
+    "Nearly all potency numbers come from FLAG-tagged receptors with co-transfected TfR1 in HEK293T and Expi293; the authors state this is standard because endogenous levels are too low for signalling assays, but no number is at native target and effector abundance.",
+    "Optimal target-to-TfR1 valency differed for every receptor (RXFP1 2:1, AT1R bivalent TfR1, CCR6 1:1), so no transferable design rule emerged; the proposed explanation via receptor abundance and surface residence is an interpretation, not a demonstration.",
+    "One in vivo model only: imiquimod psoriasis in human-CCR6 transgenic mice, 10 mg/kg daily for six days, n = 4 untreated / 6 GTAC / 8 Fab-Fc, single experiment, no randomisation or blinding (stated in methods), and with both arms handicapped since mouse CCL20 is less potent on human CCR6 and the GTAC binds mouse TfR1 poorly.",
+    "TfR1 safety is only partially addressed — unchanged in spleen and brain by immunofluorescence, no impairment of iron uptake in a FerroOrange assay — and the authors say long-term effects warrant evaluation; six days of dosing is not a tolerability package.",
+    "The pH-dependence claim is confounded: mutating CCR6 Fab light-chain CDR1 His31 to alanine removed pH sensitivity but also reduced overall binding, with degradation falling ~3-fold, and the authors call pH sensitivity optional since several GTACs work without it.",
+    "Endogenous evidence is limited to qPCR downregulation of MMP9, MMP23B, NOTCH1, NOTCH3 and DVL1 in OVCAR-8 at 100 nM, which is pathway suggestion rather than phenotype; a biolayer interferometry legend also labels the TfR1 affinity variants backwards relative to the text, and treated CCR6 colocalised with both RAB7 and RAB11, so depletion is a net number."
+  ],
+  "open_questions": [
+    "Dose a mouse-cross-reactive or surrogate GTAC long enough to say something real about TfR1 occupancy and iron biology, which the authors name as the next study.",
+    "Repeat the potency ranking on endogenous receptors at native density with no epitope tag and no co-transfected TfR1.",
+    "Separate pH-switch behaviour from affinity loss with a mutation that does not reduce binding.",
+    "Compare a low-affinity TfR1 arm against a matched control that lowers affinity without the claimed gating geometry."
+  ],
+  "tags": [
+    "targeted-degradation",
+    "gpcr",
+    "bispecific-antibody",
+    "transferrin-receptor",
+    "affinity-attenuation",
+    "format-geometry",
+    "ph-switch",
+    "mechanism-controls"
+  ]
+}

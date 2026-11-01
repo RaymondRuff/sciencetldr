@@ -1,0 +1,42 @@
+{
+  "episode_number": 90,
+  "title": "Validation and analysis of 12,000 AI-driven CAR-T designs in the Bits to Binders competition",
+  "doi": "10.1038/s44320-026-00246-1",
+  "journal": "Molecular Systems Biology",
+  "source": "monday-digest",
+  "one_line": "A community competition in which 28 teams from 42 countries designed 12,000 de novo 80-residue minibinders against CD20 and had them scored not by affinity but as the antigen-recognition domain of a pooled primary human CAR-T proliferation assay.",
+  "key_claims": [
+    "On an identical target and identical validation, team hit rates ran from 0.6% to 38.4%, roughly sixtyfold apart, although methods were self-selected rather than assigned.",
+    "Dropout, not weak binding, was the dominant failure mode: 98.3% of designs passed DNA synthesis QC but only 56.8% cleared the read threshold (25 reads in all six replicates), so 4,985 designs disappeared from the pool, read as failed expression, folding or solubility; 707 showed significant at-least-twofold enrichment.",
+    "98.9% of non-recovered designs came from ProteinMPNN or SolubleMPNN pipelines; within MPNN designs the non-recovered were ~83% helical with 35% of residues in lysine-glutamate helices versus 15% in recovered designs, and logistic regression on that single feature gave ROC-AUC 0.91.",
+    "The proposed cause is translational: non-recovered sequences averaged 3.9 EE repeats versus 1.6 and 35.4 adenosine dinucleotide repeats versus 21.7 (the latter feature alone 0.88 AUC), consistent with ProteinMPNN over-picking lysine and glutamate at its default sampling temperature of 0.1, a bias absent at temperature 1.0; an independent phage display study found the same K+E signal.",
+    "Structure-confidence scores predicted nothing — pLDDT, ipTM, Rosetta interface energy, ProteinMPNN likelihood and ESM-2 pseudo-log-likelihood all failed, while DNA sequence entropy reached 0.9 — and a retrospective sequence filter removing high-GC, low-entropy, adenosine-repeat, EE-repeat and K+E-helix designs (4,600 sequences) raised recovery from 56.8% to 81.2% and the proliferation hit rate from 5.9% to 7.6%, or 10.6% with a no-cysteine rule at 72.6% recovery.",
+    "Individual validation of the top 10 non-redundant designs: 7 were CAR-positive at 10-50% of cells, 7 beat untransfected controls on CD20-specific proliferation, expansion, IL-2 and IFN-gamma, all 7 killed targets, but only 4 (1506, 2383, 3494, 3718) showed significant specific lysis of CD20-positive Raji over CD20-negative K562, and all designs underperformed the scFv control on every readout except cytokines, where design 5300 gave >50% higher intracellular accumulation.",
+    "Binding was largely unmeasurable: against an scFv control KD of 1.75 nM, only 3 of the top 10 bound appreciably (2383 at 643 nM; 1506 and 5981 weakly, estimated 200-600 nM), so four functional designs had no detectable affinity."
+  ],
+  "limitations": [
+    "The enrichment comparator was 'no target cells' rather than CD20-negative target cells, so the pooled readout measures Raji-specific rather than strictly CD20-specific proliferation — stated plainly by the authors.",
+    "Baseline non-specific cytotoxicity was present across designs and the authors say it would need remediation before any animal study.",
+    "The SPR assay used isolated 80-mers from a prokaryotic cell-free system against detergent-solubilised CD20, with no CAR context, avidity or mammalian secretory pathway, so the no-binding/yes-function discordance cannot be resolved; the authors raise moderate/low-affinity CAR function as consistent but explicitly do not claim it is established.",
+    "The 80-residue cap constrains fold diversity and therefore what can be concluded across generative methods.",
+    "One CAR scaffold only (CD28 hinge and costimulatory domain, CD3-zeta), so hinge and transmembrane effects are unknown; no input-timepoint sequencing; a single donor T-cell isolate throughout.",
+    "The design pool is skewed and partly redundant: most submissions came from RFdiffusion-plus-ProteinMPNN pipelines and 20% of within-team sequences were at least 95% identical to another design from the same team, so effective n is well below 12,000 (across teams, over 83% of submissions had no significant alignment to another team's).",
+    "The authors state the 707 hits are likely an upper bound, since 3 of their own top 10 failed individual assays; the cysteine/tonic-signalling explanation is a hypothesis, not a measurement; and the screen ran at LEAH Labs, whose assay platform it is, with data and code public on Zenodo."
+  ],
+  "open_questions": [
+    "Re-run a subset at ProteinMPNN sampling temperature 1.0 to confirm the lysine-glutamate mechanism prospectively rather than retrospectively.",
+    "Move the four specific killers and the three indiscriminate killers into a different hinge and transmembrane to test whether the specificity ordering survives, or whether a scaffold rather than a set of binders was benchmarked.",
+    "Repeat the pooled screen against CD20-negative target cells to make the primary readout antigen-specific.",
+    "Measure binding of the functional designs in CAR context and on native membrane CD20 to resolve the function-without-affinity designs."
+  ],
+  "tags": [
+    "de-novo-design",
+    "proteinmpnn",
+    "car-t",
+    "blinded-benchmark",
+    "in-silico-validation",
+    "cd20",
+    "expression-failure",
+    "scoring-functions"
+  ]
+}

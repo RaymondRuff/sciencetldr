@@ -1,0 +1,40 @@
+{
+  "episode_number": 86,
+  "title": "Specific targeting of MR1-antigen complexes using nanobodies",
+  "doi": "10.1126/sciimmunol.aeb8726",
+  "journal": "Science Immunology",
+  "source": "monday-digest",
+  "one_line": "Yeast-display nanobodies were raised against the near-non-polymorphic MR1 presenting the microbial riboflavin metabolite 5-OP-RU, matured to nanomolar affinity, shown by crystallography to contact the metabolite directly, and reformatted into a CD3 bispecific.",
+  "key_claims": [
+    "Affinity maturation by error-prone PCR took lead clone C11 from a KD of ~3.2 uM to 1.8 nM for human MR1-5-OP-RU (~1,500-fold) and 0.52 nM for mouse, mostly through CDR loop mutations with no model in the loop.",
+    "C11 discriminates by ligand: ~20 uM for MR1 loaded with acetyl-6-formylpterin (>10,000-fold weaker), whereas the field-standard anti-MR1 clone 26.5 binds MR1-5-OP-RU at 4.7 nM and MR1-Ac-6-FP at 2.1 nM, i.e. is effectively blind to loading.",
+    "Two crystal structures (2.9 and 3.1 A) show C11 docking over the cleft analogously to a MAIT TCR, burying 1,155 A2 versus 1,170 A2 for the MAIT TCR-MR1 complex, with CDR3 Ser100 hydrogen-bonding the ribityl hydroxyl of 5-OP-RU; with Ac-6-FP the CDR1 loop flips out, CDR3 makes no ligand contact and buried surface falls to 830 A2.",
+    "Blockade is antigen-selective: C11 blocked a 5-OP-RU-specific MAIT clone while leaving two differently specific MR1-reactive clones untouched, where 26.5 shut all of them down.",
+    "In vivo, 125 ug of C11-Fc given 16 h before 200 pmol of 5-OP-RU fully blocked CD25 and CD69 upregulation in liver and lung, reduced it substantially in spleen, and held to day 16; in Francisella tularensis infection it suppressed MAIT accumulation and raised splenic bacterial burden toward MR1-deficient levels.",
+    "A C11-OKT3 single-chain bispecific drove primary CD8 killing of C1R and SKBR3 cells and of E. coli-treated targets with no killing of MR1-knockout cells, with N-terminal C11 outperforming C-terminal and dimers outperforming monomers at low concentrations."
+  ],
+  "limitations": [
+    "Every tumour-killing experiment used target cells pulsed with 10 uM synthetic 5-OP-RU for 3 h; the authors state no tumour-relevant endogenous MR1 ligand has been shown at sufficient surface density.",
+    "The bispecifics showed 5-OP-RU-independent activity at high doses, and the two-mutation ComboH variant that cut it also cut potency — an unresolved trade.",
+    "C11 bound pyridoxal- and pyridoxal-5'-phosphate-pulsed cells weakly above isotype, i.e. a mammalian vitamin B6 metabolite, and the authors twice flag unknown steady-state MR1-5-OP-RU display at barrier surfaces (commensals also make the 5-A-RU precursor) as the on-target safety question.",
+    "The in vivo comparison with 26.5 was not molar-matched and used different Fc formats (silenced mouse IgG1 D265A versus Fc-sufficient IgG2a); the authors call 26.5 a positive control, not a head-to-head comparator.",
+    "Yeast-display enrichment was mostly not specificity: after four rounds 51.6% bound MR1-5-OP-RU but 38.8% also bound the non-stimulatory 6-formylpterin complex, and of 200 clones screened only 7 were unique and only 3 stained cells 5-OP-RU-dependently, weakly.",
+    "Primary human PBMC proliferation blockade rested on two donors, and the single-chain bispecifics ran as a monomer plus a mispaired non-covalent dimer."
+  ],
+  "open_questions": [
+    "Show a tumour or infected line presenting an endogenous MR1 ligand at native density being killed by the engager, with an MR1-knockout arm in the same assay.",
+    "Determine whether the weak pyridoxal cross-reactivity matters at barrier tissue, and whether the more specific ComboH variant retains useful potency.",
+    "Map where MR1-5-OP-RU is displayed at steady state given commensal riboflavin-pathway metabolites.",
+    "Test proposed stress-associated nucleobase adducts as tumour-relevant MR1 ligands."
+  ],
+  "tags": [
+    "tcr-mimic",
+    "nanobody",
+    "mr1",
+    "mait-cells",
+    "t-cell-engager",
+    "specificity-screening",
+    "structural-biology",
+    "yeast-display"
+  ]
+}
