@@ -1,0 +1,139 @@
+# The Effect of Deactivating Facebook and Instagram on Users’ Emotional State
+
+**DOI:** 10.1257/pol.20240806  
+**Length:** 11002 chars (~10.4 min)
+
+## Corrections made by the verification pass
+
+- Added that the headline effects are instrumental-variable (compliance-adjusted) estimates and attributed them as estimates ('they estimate'), rather than stating the effects as flat facts.
+- Nadia's substitution interpretation ('the effect has to come from the difference between these platforms...') was stated as fact and ignored the nine-minute reduction in total app time for Facebook; rewritten as the authors' interpretation and qualified.
+- Theo's takeaway 'Any mechanism built on screen time as such is in trouble' overstated the data (Facebook deactivation did cut total app time by nine minutes); softened to 'a mechanism built purely on total screen time doesn't fit'.
+- Theo's closing line said there was 'no significant difference' by political engagement without noting the paper reports larger point estimates for more engaged users that are not statistically distinguishable; added that qualifier and attributed the election-specificity inference to the authors.
+- 'Facebook's effect is larger for people over thirty-five' changed to 'the point estimates are larger', matching the paper's wording.
+- Attrition comparison made precise: the paper benchmarks against the mean of ninety-six field experiments published in top economics journals.
+- Subgroup claim 'the first experiment powered to see it at all' re-attributed to the authors' statement that such age-and-gender effects went undetected in previous experimental work.
+- Trimmed setup and framing throughout to bring the script from 11,162 spoken characters into the 10,200–10,800 window, leaving all numbers and limitations intact.
+
+---
+
+**Nadia:** Hello, and welcome to Science TLDR. I'm Nadia.
+
+**Theo:** And I'm Theo.
+
+**Nadia:** And today we're looking at "The Effect of Deactivating Facebook and Instagram on Users' Emotional State", in the American Economic Journal: Economic Policy. Two randomised experiments, thirty-five thousand people, in the six weeks before the twenty-twenty U-S election.
+
+**Theo:** So why this one? The headline — social media makes you unhappy — we've all heard a hundred times.
+
+**Nadia:** Right. Which is why the design matters more than the result. This literature is overwhelmingly correlational — the Hancock meta-analysis from twenty twenty-two included two hundred twenty-six correlation studies. Seven prior randomised experiments used abstention of a week or more; the largest randomised about two thousand people. This one is, by the authors' count, about twenty times larger.
+
+**Theo:** Okay. Walk me through what they actually did.
+
+**Nadia:** Meta put survey invitations at the top of users' news feeds. On Facebook, ten point six million people were invited; after clicks, enrollment, a baseline survey, and a filter for at least fifteen minutes a day of use, nineteen thousand eight hundred fifty-seven were in the analysis sample. Instagram: fifteen thousand five hundred eighty-five.
+
+**Theo:** Less than one percent of invitees, then.
+
+**Nadia:** Less than one percent, and they say that outright — be cautious generalising beyond the sample. The part I'd single out: twenty-seven percent were assigned to deactivate for six weeks for a hundred fifty dollars; the control deactivated for just the first of those six weeks, for twenty-five dollars.
+
+**Theo:** Ah — so the control also deactivates.
+
+**Nadia:** Everyone deactivates, everyone believes they're in a deactivation study, so the only difference between arms is length and payment. That blunts experimenter demand, differential attrition, and artefacts of the deactivation process itself.
+
+**Theo:** And the outcome measure?
+
+**Nadia:** Three questions from the European Social Survey well-being module: how much of the time in the past four weeks did you feel happy, depressed, anxious. Five-point scale, standardised, the negative items re-signed, averaged into an index. Cronbach's alpha of zero point seven nine and zero point seven eight.
+
+**Theo:** Self-report, inside a survey that's mostly about politics.
+
+**Nadia:** Yes — and they flag that themselves. Three specific items in a larger political instrument, and effects could differ on another instrument.
+
+**Theo:** Fine. Numbers.
+
+**Nadia:** These are instrumental-variable estimates, since compliance wasn't perfect. They estimate Facebook deactivation improved the index by zero point zero six zero standard deviations, p less than zero point zero zero one, with a false-discovery-rate adjusted q of zero point zero zero two — adjusted against all sixty-one primary and secondary outcomes from the companion politics paper. Instagram: zero point zero four one, p of zero point zero one six on its own, q of zero point one three nine after the same adjustment.
+
+**Theo:** So the Instagram result doesn't clear their own preregistered bar.
+
+**Nadia:** Well — no, it doesn't, and they say so in the abstract and again in the conclusion. Credit where it's due: it would have been easy to lead with the unadjusted p.
+
+**Theo:** What's driving the index? Happy, or depressed and anxious?
+
+**Nadia:** Happy, in both. Facebook: happy zero point zero six four, depressed zero point zero three nine, anxious zero point zero two eight — p-values of less than zero point zero zero one, zero point zero one eight, and zero point one one zero. Instagram has the same ordering, all smaller.
+
+**Theo:** So anxiety barely moves.
+
+**Nadia:** Anxiety barely moves.
+
+**Theo:** Mm. Help me with whether zero point zero six is a lot.
+
+**Nadia:** They do this well — six benchmarks. In raw response units, the average effect across the six outcomes is zero point zero three eight, which they describe as equivalent to three point eight percent of people saying they feel happy "often" instead of "sometimes". In their own sample, after demographic controls, emotional state is zero point four eight standard deviations higher for Republicans than Democrats. And the van Agteren meta-analysis puts the average psychological intervention — C-B-T, mindfulness — at zero point two seven standard deviations.
+
+**Theo:** So this is a fraction of a course of therapy.
+
+**Nadia:** Fifteen percent for Facebook, twenty-two percent for Instagram, on their arithmetic. And the one I found most useful: Kessler-six distress scores for eighteen to twenty-four-year-olds worsened by zero point three seven standard deviations between two thousand eight and twenty twenty-two. The Instagram effect in that band is about seventeen percent of that shift.
+
+**Theo:** Which is not nothing. But it's also not "social media explains the youth mental health decline".
+
+**Nadia:** And they say so explicitly — a five-week individual deactivation before an election tells you little about what fifteen years of population-level adoption does.
+
+**Theo:** The app-tracking data. What did that show?
+
+**Nadia:** This is the genuinely new piece. They passively metered smartphone app use in a subsample — about twenty-nine and twenty-five percent of the two samples had valid tracking. Facebook deactivation cut Facebook use by thirty-seven minutes a day, but cut total app use by only nine minutes — about three-quarters of the freed time went to other apps.
+
+**Theo:** Huh. And Instagram?
+
+**Nadia:** All of it. The effect on total app time was small and statistically insignificant. Twenty minutes off Instagram, and it reappears on Twitter, Snapchat, TikTok, YouTube, browsers.
+
+**Theo:** So the story can't be "people went outside and touched grass".
+
+**Nadia:** Mostly not. Facebook deactivation did cut total app time by nine minutes. But their reading is that the effects are mostly driven by the difference between these platforms and the apps people moved to, rather than screen time as such. The earlier twenty-twenty experiment from two of these authors reported more substitution to offline time — on self-reports.
+
+**Theo:** Subgroups. The Instagram-and-young-women question.
+
+**Nadia:** Hmm — so, carefully. These are non-preregistered exploratory subgroups; the preregistered ones were chosen for the political outcomes. For Instagram the largest estimate is women aged eighteen to twenty-four, zero point one one one standard deviations, p of zero point zero zero two. Every other age-by-gender cell is less than half that and indistinguishable from zero. The four-way test of difference gives p of zero point zero six two.
+
+**Theo:** And Facebook goes the other way.
+
+**Nadia:** The point estimates are larger for people over thirty-five, with a test of equality against the younger group at p of zero point zero four six. There's also suggestive heterogeneity for undecided voters and for people without a college degree — p of zero point zero five three and zero point zero five eight.
+
+**Theo:** Yeah, that's a lot of p-values sitting just either side of zero point zero five, from analyses chosen after the fact.
+
+**Nadia:** It is. The honest read is that the young-women result is consistent with the public concern, and the authors note such age-and-gender effects went undetected in earlier, smaller experiments — but it's exploratory, and I'd treat it as a hypothesis for the next study.
+
+**Theo:** Let's do the rest of the problems. Attrition?
+
+**Nadia:** Uh, so — ten percent in Facebook, thirteen in Instagram, lower than the mean of ninety-six field experiments in top economics journals. But the deactivation group was about two percentage points more likely to complete endline, and completed it earlier; in a sample this size that gap is significant.
+
+**Theo:** Earlier matters, because the election sits in the middle of the survey window.
+
+**Nadia:** It does — endline ran November fourth to eighteenth. They run Lee bounds, response-date controls, and a balanced-response sample. The bounds exclude zero for happy and the index in Facebook, and for happy in Instagram; for the other five outcomes they rule out negative effects larger than zero point zero one zero to zero point zero two five standard deviations.
+
+**Theo:** Baseline balance?
+
+**Nadia:** Well — there's a real one. In the Facebook experiment the deactivation group had significantly worse baseline emotional state, by chance. They pre-specified controlling for baseline, and the imbalance runs against their finding — but it's there, and they report it.
+
+**Theo:** And Meta is a co-author.
+
+**Nadia:** Eight of the authors are at Meta. Under the partnership terms the independent academics had final authority over the pre-analysis plan, the analysis, and the manuscript text, and Meta could not block results from being published. I'll note it once: the finding isn't flattering to the platforms.
+
+**Theo:** This connects to a thread we keep circling — episode seventy-three on work-from-home and disability employment, episode eighty-two on rabies under-detection from three organ donors. When does design substitute for randomisation?
+
+**Nadia:** And here's the datapoint for that thread. In appendix D-point-six they run the standard non-experimental approaches on their own data — cross-sections with controls, within-person panel designs. Those estimates are biased in unpredictable directions relative to the experiment, and sometimes have the wrong sign.
+
+**Theo:** Unpredictable is the bad one. If it were consistently inflated you could correct for it.
+
+**Nadia:** That's the point. Two hundred twenty-six correlation studies, no reliable sign on the bias.
+
+**Theo:** The other echo is episode eighty-four, where reverse-keyed wording moved endorsement of white nationalism by nine points. Self-report instruments are load-bearing in both, and nobody here ran a wording variant.
+
+**Nadia:** Mm-hm. Agreed — and that's the cheap experiment: the same deactivation, two different well-being instruments.
+
+**Theo:** Three takeaways. One: five extra weeks off Facebook improved a self-reported emotional state index by zero point zero six standard deviations; the Instagram estimate was zero point zero four one and failed the authors' own multiple-comparison threshold. Two: the sign matches public concern, the magnitude doesn't — fifteen to twenty-two percent of an average psychological intervention, and the inverse-variance weighted average of the seven prior experiments was zero point one one, larger than what they find. Small studies, big effects.
+
+**Theo:** Three — and this is the one I'll remember — the time mostly doesn't come back as offline time. All of the Instagram time and about three-quarters of the Facebook time went into other apps, so a mechanism built purely on total screen time doesn't fit.
+
+**Nadia:** What would change my mind: a replication outside an election window. About six percent of Facebook content viewed in twenty twenty was politics-related, and Meta has cut political content in feeds since. If the effect survives in a boring month, it's about the product. If it doesn't, it was about the election.
+
+**Theo:** Mine is the engagement moderator. Point estimates were larger for more politically engaged users but not statistically distinguishable, and no difference by civic pages followed — which the authors read as no evidence the effect is election-specific. I'd want that in a sample less liberal and less civically engaged.
+
+**Nadia:** That's the paper. American Economic Journal: Economic Policy; D-O-I ten point one two five seven slash P-O-L dot two zero two four zero eight zero six.
+
+**Theo:** Thanks for listening.
