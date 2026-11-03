@@ -1,0 +1,39 @@
+{
+  "episode_number": 94,
+  "title": "The Effect of Deactivating Facebook and Instagram on Users' Emotional State",
+  "doi": "10.1257/pol.20240806",
+  "journal": "American Economic Journal: Economic Policy",
+  "source": "friday-reddit",
+  "one_line": "Two randomised experiments run with Meta in the six weeks before the 2020 US election, 19,857 Facebook and 15,585 Instagram users, in which both arms deactivated and only the length differed, estimating the effect of staying off the platform on a three-item self-reported well-being index.",
+  "key_claims": [
+    "Facebook deactivation improved the happiness/depression/anxiety index by 0.060 SD (p < 0.001, FDR-adjusted q = 0.002 against all 61 primary and secondary outcomes); Instagram gave 0.041 SD (p = 0.016) but q = 0.139, which the authors state plainly does not clear their own preregistered bar.",
+    "The index is driven by the happiness item in both experiments (Facebook: happy 0.064, depressed 0.039, anxious 0.028, the last at p = 0.110), so anxiety barely moves.",
+    "On the authors' own six benchmarks the magnitude is modest: 15% (Facebook) to 22% (Instagram) of the 0.27 SD average psychological intervention in the van Agteren meta-analysis, against a 0.48 SD Republican-Democrat gap within the same sample.",
+    "Passively metered app use in a subsample (29% and 25% of the two samples) showed the freed time mostly did not go offline: Facebook deactivation cut Facebook use by 37 min/day but total app use by only 9 min, and Instagram's roughly 20 min reappeared entirely on other apps.",
+    "Running standard non-experimental designs on their own data (appendix D.6) produced estimates biased in unpredictable directions relative to the experiment, sometimes with the wrong sign — the literature being corrected contains 226 correlational studies (Hancock 2022)."
+  ],
+  "limitations": [
+    "Under 1% of the 10.6 million invited Facebook users reached the analysis sample, and the authors say outright to be cautious generalising beyond it.",
+    "The outcome is three self-report items from the European Social Survey well-being module embedded in a largely political instrument; the authors note effects could differ on another instrument, and no wording variant was run.",
+    "Attrition was 10% and 13%, but the deactivation group was about 2 percentage points more likely to complete endline and completed it earlier, which matters because the election fell inside the 4-18 November endline window; Lee bounds exclude zero only for happiness and the index in Facebook and happiness in Instagram.",
+    "The subgroup results — Instagram women aged 18-24 at 0.111 SD, Facebook larger over 35 — are non-preregistered and exploratory, with the four-way difference test at p = 0.062 and several other heterogeneity p-values sitting just either side of 0.05.",
+    "The Facebook deactivation group had significantly worse baseline emotional state by chance (pre-specified baseline controls, and the imbalance runs against the finding); 8 of the authors are at Meta, with the independent academics holding final authority over the pre-analysis plan, analysis and manuscript."
+  ],
+  "open_questions": [
+    "The same deactivation outside an election window: about 6% of Facebook content viewed in 2020 was political and Meta has since cut political content, so a replication in an ordinary month separates the product from the election.",
+    "The same deactivation run with two different well-being instruments, which is the cheap test of how load-bearing the three-item self-report is.",
+    "A preregistered test of the Instagram young-women effect, which is currently a hypothesis generated after the fact rather than a result.",
+    "Whether the effect holds in a sample less liberal and less civically engaged, since the engagement moderator was suggestive but not distinguishable."
+  ],
+  "tags": [
+    "randomised-experiment",
+    "social-media",
+    "self-report-instruments",
+    "multiple-comparisons",
+    "preregistration",
+    "exploratory-subgroups",
+    "design-versus-randomisation",
+    "industry-partnership",
+    "attrition"
+  ]
+}

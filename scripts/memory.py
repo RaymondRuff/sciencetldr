@@ -321,7 +321,7 @@ def build_card(client: anthropic.Anthropic, episode_path: Path) -> dict:
         user="\n\n".join(parts),
         schema=CARD_SCHEMA,
         effort="low",
-        max_tokens=8000,
+        max_tokens=16_000,
     )
     card["episode_number"] = episode.get("episode_number", card.get("episode_number"))
     return card
@@ -399,7 +399,11 @@ def cmd_threads(new_cards: list[dict] | None = None) -> None:
             system=THREADS_SYSTEM,
             user="\n\n".join(parts),
             effort="medium",
-            max_tokens=8000,
+            # The whole threads file is rewritten each time, and it has grown
+            # to ten sections (~6k tokens) with reasoning tokens counting
+            # against the same budget. 8,000 truncated it, which is what the
+            # last four automatic runs died on.
+            max_tokens=32_000,
         ).strip()
         + "\n",
         encoding="utf-8",
