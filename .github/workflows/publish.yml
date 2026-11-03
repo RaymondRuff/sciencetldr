@@ -47,6 +47,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          # Publishing an episode discards its paper bundle: the papers
+          # repository is a staging area for other people's copyrighted work,
+          # not an archive.
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
         run: uv run python scripts/publish_episode.py
 
       - name: Commit episode + feed

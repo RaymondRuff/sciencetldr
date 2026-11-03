@@ -53,6 +53,10 @@ jobs:
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
       PDF_SENDER_ALLOWLIST: ${{ secrets.PDF_SENDER_ALLOWLIST }}
+      # The private repository that paper bundles live in. Reaching it needs
+      # GH_PAT with Contents: Read and write on it; without that the run falls
+      # back to fetching text over HTTP, as it did before bundles existed.
+      PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -84,6 +88,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           MAX_EPISODES_PER_RUN: ${{ vars.MAX_EPISODES_PER_RUN || '3' }}
           PYTHONUNBUFFERED: '1'   # real timestamps on log lines

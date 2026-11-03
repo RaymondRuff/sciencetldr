@@ -391,6 +391,24 @@ def cmd_context(issue_number: int, out_dir: Path) -> int:
     (out_dir / "episode_index.txt").write_text(index + "\n", encoding="utf-8")
     print(f"[context] metadata.json, episode_index.txt ({len(cards)} episodes) -> {out_dir}")
 
+    # A bundle is the best text there is — body prose with the figure and
+    # table captions collected at the end, beside the figure images, which
+    # hold values that exist nowhere in any extraction. Try it first, and
+    # fall back to fetching the paper over HTTP.
+    import paper_bundle
+
+    meta = paper_bundle.fetch(issue_number, out_dir)
+    if meta:
+        text = (out_dir / "paper.txt").read_text(encoding="utf-8")
+        figures = [f for f in meta.get("figures", []) if f.get("file")]
+        print(f"[context] paper.txt: {len(text):,} chars via bundle")
+        if figures:
+            print(
+                f"[context] {len(figures)} figure image(s) in {out_dir / 'figures'} — "
+                "read any figure whose numbers the script cites"
+            )
+        return 0
+
     try:
         resolved = paper_text.resolve(
             doi=metadata.get("doi") or "",
@@ -407,6 +425,7 @@ def cmd_context(issue_number: int, out_dir: Path) -> int:
     text = paper_text.prepare_paper_text(text)
     (out_dir / "paper.txt").write_text(text, encoding="utf-8")
     print(f"[context] paper.txt: {len(text):,} chars via {source}")
+    print("[context] no figure images: this paper came as text only")
     return 0
 
 

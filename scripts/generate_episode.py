@@ -80,9 +80,11 @@ automatically{reason}.
 Publishers often refuse scripted downloads even for open-access articles, so \
 this step can be needed even when the Issue lists a PDF link."""
 
-HOW_EMAIL = """A request has been emailed. **Reply to that email with the PDF \
-attached** and the episode generates within about half an hour. The PDF stays \
-in the mailbox and is never committed to this public repository."""
+HOW_EMAIL = """A request has been emailed. Either **reply to that email with \
+the PDF attached** or [upload it to the private papers repository]({upload}) \
+— both stop at 25 MB, and the email says how to shrink a paper past that. The \
+episode then generates within about half an hour. The PDF is never committed \
+to this public repository."""
 
 HOW_COMMIT = """To unblock it, reply to a PDF-request email if one arrives, or — \
 only for openly licensed papers, since this repository is public — commit the \
@@ -116,10 +118,46 @@ def issue_labels(issue: dict) -> set[str]:
     }
 
 
+def bundle_waiting_papers(issues: list[dict]) -> dict[int, dict]:
+    """Turn every PDF that has arrived into a bundle, in one pass.
+
+    A PDF reaches the show by email or by browser upload to the private papers
+    repository, and either way the rest of the run reads the bundle rather
+    than the PDF. This is the single place that normalises them, so the route
+    a paper took stops mattering here.
+
+    Never fatal: without a bundle the run falls back to fetching text over
+    HTTP, which is what it did before bundles existed.
+    """
+    wanted = []
+    for issue in issues:
+        if LABEL_IN_REVIEW in issue_labels(issue):
+            continue
+        meta = github_issue.parse_metadata(issue["body"]) or {}
+        wanted.append(
+            {
+                "issue": issue["number"],
+                "doi": meta.get("doi") or "",
+                "title": meta.get("title") or issue["title"],
+                "journal": meta.get("journal") or "",
+            }
+        )
+    try:
+        import paper_bundle
+
+        return paper_bundle.sync_all(wanted)
+    except Exception as exc:  # noqa: BLE001 - the papers repo is an optimisation
+        print(f"[bundle] no bundles this run ({exc})")
+        return {}
+
+
 def eligible_issues(
-    issues: list[dict], explicit: int | None, emailed: set[int]
+    issues: list[dict],
+    explicit: int | None,
+    emailed: set[int],
+    bundled: set[int] = frozenset(),
 ) -> list[dict]:
-    """Issues worth attempting: those with an emailed PDF first, then oldest first.
+    """Issues worth attempting: those with a supplied paper first, then oldest.
 
     Not capped here: the cap in main() counts paid attempts, so an Issue that
     turns out to need a PDF doesn't use up the run.
@@ -130,12 +168,13 @@ def eligible_issues(
             raise SystemExit(f"Issue #{explicit} is not an open {LABEL_PENDING} issue")
         return chosen
 
-    with_pdf, rest = [], []
+    with_pdf, uploaded, rest = [], [], []
     for issue in issues:
         labels = issue_labels(issue)
+        number = issue["number"]
         if LABEL_IN_REVIEW in labels:
             continue
-        if issue["number"] in emailed:
+        if number in emailed:
             # A PDF reply is an explicit request to generate — including a
             # retry after a failure, so it overrides generation-failed.
             with_pdf.append(issue)
@@ -143,12 +182,19 @@ def eligible_issues(
         if labels & SKIP_LABELS:
             continue
         meta = github_issue.parse_metadata(issue["body"]) or {}
+        if number in bundled:
+            # Someone supplied this paper deliberately, so it goes near the
+            # front — but inside the run's cap, because an upload is not
+            # consumed the way an email reply is and must not be able to
+            # re-bill on every sweep.
+            uploaded.append(issue)
+            continue
         if LABEL_NEEDS_PDF in labels and not paper_text.from_local_pdf(
-            meta.get("doi", ""), issue["number"]
+            meta.get("doi", ""), number
         ):
             continue  # still waiting on the human
         rest.append(issue)
-    return with_pdf + rest
+    return with_pdf + uploaded + rest
 
 
 def request_pdf(issue: dict, metadata: dict) -> None:
@@ -170,9 +216,16 @@ def request_pdf(issue: dict, metadata: dict) -> None:
 
     if LABEL_NEEDS_PDF not in labels:
         add_label(number, LABEL_NEEDS_PDF)
-        how = HOW_EMAIL if emailed else HOW_COMMIT.format(
-            number=number,
-            pdf_dir="https://github.com/RaymondRuff/sciencetldr/tree/main/inbox/pdfs",
+        papers_repo = os.environ.get("PAPERS_REPO", "RaymondRuff/sciencetldr-papers")
+        how = (
+            HOW_EMAIL.format(
+                upload=f"https://github.com/{papers_repo}/upload/main/papers"
+            )
+            if emailed
+            else HOW_COMMIT.format(
+                number=number,
+                pdf_dir="https://github.com/RaymondRuff/sciencetldr/tree/main/inbox/pdfs",
+            )
         )
         github_issue.comment(
             number,
@@ -517,12 +570,14 @@ def main() -> None:
     github_issue.ensure_auth()
     emailed = pdf_mailbox.received()
     all_pending = github_issue.list_pending_issues()
-    issues = eligible_issues(all_pending, args.issue, set(emailed))
+    bundled = bundle_waiting_papers(all_pending)
+    issues = eligible_issues(all_pending, args.issue, set(emailed), set(bundled))
     if args.mailbox_only:
         issues = [i for i in issues if i["number"] in emailed]
 
     print(
-        f"{len(issues)} eligible issue(s), {len(emailed)} with an emailed PDF; "
+        f"{len(issues)} eligible issue(s), {len(emailed)} with an emailed PDF, "
+        f"{len(bundled)} with a bundled paper; "
         f"at most {MAX_PER_RUN} other paid attempt(s) this run"
     )
 

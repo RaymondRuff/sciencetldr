@@ -14,6 +14,12 @@ dependencies = [
     "faster-whisper>=1.0",
     "google-genai>=1.0",
     "pypdf>=5.0",
+    "pillow>=10.0",
+]
+
+[dependency-groups]
+dev = [
+    "reportlab>=4.0",   # builds PDFs in tests, so no fixture PDF is committed
 ]
 
 [tool.uv]
