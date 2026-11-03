@@ -74,23 +74,49 @@ def allowed_senders() -> set[str]:
 
 
 def request(issue_number: int, *, title: str, doi: str, journal: str = "") -> bool:
-    """Email a request for the PDF. Returns False if no recipient is configured."""
+    """Email a request for the PDF. Returns False if no recipient is configured.
+
+    Two routes, because a reply from a phone is the easiest thing in the world
+    until the paper is bigger than Gmail's 25 MB attachment limit. The upload
+    link is no larger a ceiling — GitHub's browser upload stops at 25 MiB too
+    — but it suits a desktop, and the shrink note covers the rare paper that
+    clears both.
+    """
     to = os.environ.get("PDF_REQUEST_TO", "").strip()
     if not to or not os.environ.get("GMAIL_APP_PASSWORD"):
         print("  [mailbox] PDF_REQUEST_TO or GMAIL_APP_PASSWORD unset; not emailing")
         return False
     link = f"https://doi.org/{doi}" if doi else "(no DOI on the Issue)"
     repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
+    papers_repo = os.environ.get("PAPERS_REPO", "RaymondRuff/sciencetldr-papers")
+    upload = f"https://github.com/{papers_repo}/upload/main/papers"
     body = f"""No open-access full text could be found for this paper, so its episode is waiting on a PDF.
 
   {title}
   {journal}
   {link}
 
-Reply to this email with the PDF attached. That's all — the episode generates
-automatically within about half an hour and a draft PR appears for review.
+Either route works — whichever is to hand:
 
-The PDF stays in this mailbox; it is never committed to the public repository.
+  1. Reply to this email with the PDF attached.
+
+  2. Drop it here, which opens straight into the right folder:
+     {upload}
+     Name it issue-{issue_number}.pdf if that's easy; a filename containing
+     the DOI is recognised too.
+
+The episode then generates within about half an hour and a draft PR appears
+for review.
+
+Over 25 MB? Both routes stop there. Shrink it first — this downsamples the
+figures, which stay legible, and usually cuts a figure-heavy paper by most of
+its size:
+
+  python scripts/paper_bundle.py shrink --pdf big.pdf --out small.pdf
+
+The PDF is never committed to the public repository. Whichever route it
+arrives by, it is reduced to text plus downsampled figures in the private
+papers repository, and the original is deleted.
 
 Issue: https://github.com/{repo}/issues/{issue_number}
 """

@@ -36,7 +36,7 @@ the git log: the script is all you need from the writer.
 ## 1. Get the paper, and read it before the script
 
 ```bash
-pip install -q requests beautifulsoup4 lxml pypdf
+pip install -q requests beautifulsoup4 lxml pypdf pillow
 python scripts/routine_tools.py context --issue <N> --out /tmp/episode
 ```
 
@@ -44,6 +44,14 @@ If it reports **PAPER NOT FETCHED**, follow the script's `paper_source`, which
 says where the writer got the text, and save the full text as
 `/tmp/episode/paper.txt`. If you cannot get the full text, **stop**: commit
 nothing and say what you tried. Never check a script against an abstract.
+
+When the paper came as a bundle, `paper.txt` ends in a `FIGURES AND TABLES`
+section and `/tmp/episode/figures/` holds the figure images. **A number drawn
+inside a figure appears nowhere in the text**, so a figure's values cannot be
+checked against `paper.txt` — nor can the `--paper` cross-check in step 4 see
+them, which is one reason it reports leads rather than verdicts. Where the
+script cites a figure, open that image with Read and check the number against
+what is drawn.
 
 **Never commit the paper's text or anything from `/tmp/episode`.**
 

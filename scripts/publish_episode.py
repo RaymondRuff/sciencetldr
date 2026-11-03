@@ -527,6 +527,23 @@ def main() -> None:
         )
         github_issue.close(issue["number"])
         print(f"  ✓ closed issue #{issue['number']}")
+        discard_bundle(issue["number"])
+
+
+def discard_bundle(issue_number: int) -> None:
+    """Delete the paper bundle now the episode is out.
+
+    The papers repository is a staging area, not an archive: it holds other
+    people's copyrighted papers, so nothing stays in it longer than the
+    episode takes to make.
+    """
+    try:
+        import paper_bundle
+
+        if paper_bundle.discard(issue_number):
+            print(f"  ✓ discarded paper bundle for #{issue_number}")
+    except Exception as exc:  # noqa: BLE001 - publishing already succeeded
+        print(f"  [warn] could not discard paper bundle for #{issue_number}: {exc}")
 
 
 if __name__ == "__main__":

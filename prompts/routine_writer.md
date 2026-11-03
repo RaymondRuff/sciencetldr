@@ -31,13 +31,24 @@ Install what the tools need, then gather context into a scratch folder
 **outside the repository**:
 
 ```bash
-pip install -q requests beautifulsoup4 lxml pypdf
+pip install -q requests beautifulsoup4 lxml pypdf pillow
 python scripts/routine_tools.py context --issue <N> --out /tmp/episode
 ```
 
 This writes `/tmp/episode/metadata.json` (the paper's title, DOI and how it was
 picked), `/tmp/episode/episode_index.txt` (one line per past episode) and, if it
 could be fetched, `/tmp/episode/paper.txt` (the paper's full text).
+
+When the paper was supplied as a PDF it arrives as a **bundle**, and the
+context step says so. Then `paper.txt` ends in a `FIGURES AND TABLES` section
+holding every caption as printed, and `/tmp/episode/figures/` holds the figure
+images. This matters: **a value drawn inside a figure is not in the text at
+all.** The hazard ratios on a forest plot, the points of a dot plot, the peak
+of a Manhattan plot — extraction loses every one of them. A caption in that
+section that names an image file is telling you the numbers are only in that
+file, so open it with Read before citing anything from that figure. A caption
+with no image file was drawn as vector graphics or is a table, and its numbers
+are in the text above.
 
 If it reports **PAPER NOT FETCHED**, get the full text another way: the PubMed
 connector (convert the DOI to a PMC id, then fetch the full text), the bioRxiv

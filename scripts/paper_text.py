@@ -4,12 +4,16 @@ Abstracts are not enough: the skeptical content of an episode lives in the
 results, the methods and the authors' own limitations paragraph. This module
 tries, in order:
 
-  1. A PDF supplied by hand (issue-NN.pdf, or any PDF whose name contains the
+  1. A bundle built from a supplied PDF by paper_bundle.py — body text with
+     the figure and table captions collected at the end, beside the figure
+     images. Best quality: extraction alone scatters captions through the
+     prose and loses everything drawn inside a raster figure.
+  2. A PDF supplied by hand (issue-NN.pdf, or any PDF whose name contains the
      DOI suffix): first one emailed in and saved to the runner's temp
      directory by pdf_mailbox.py, then one committed to `inbox/pdfs/`.
-  2. Europe PMC full text XML, for anything in the PMC open-access subset.
-  3. The open-access PDF URL recorded on the Issue.
-  4. The publisher's HTML landing page.
+  3. Europe PMC full text XML, for anything in the PMC open-access subset.
+  4. The open-access PDF URL recorded on the Issue.
+  5. The publisher's HTML landing page.
 
 Publishers routinely answer scripted requests with 403 even for open-access
 articles, so (3) and (4) fail often; that is expected, and the caller should
@@ -79,6 +83,27 @@ def pdf_dirs() -> list[tuple[Path, str]]:
 
     dirs = [(pdf_mailbox.drop_dir(), "emailed-pdf"), (PDF_INBOX, "repo-pdf")]
     return [(d, label) for d, label in dirs if d.is_dir()]
+
+
+def from_bundle(issue_number: int | None) -> Optional[tuple[str, str]]:
+    """Text from a bundle already pulled down this run, if there is one.
+
+    Deliberately local-only: `paper_bundle.sync_all` does the one clone that
+    fills the cache, so resolving a dozen Issues costs no extra network.
+    """
+    if issue_number is None:
+        return None
+    try:
+        import paper_bundle
+    except ImportError:
+        return None
+    bundle = paper_bundle.cached(issue_number)
+    if bundle is None:
+        return None
+    text = (bundle / "paper.txt").read_text(encoding="utf-8")
+    if len(text) < MIN_USEFUL_CHARS:
+        return None
+    return text, f"bundle:issue-{issue_number}"
 
 
 def from_local_pdf(doi: str, issue_number: int | None) -> Optional[tuple[str, str]]:
@@ -207,6 +232,7 @@ def resolve(
     """
     _transient.clear()
     for attempt in (
+        lambda: from_bundle(issue_number),
         lambda: from_local_pdf(doi, issue_number),
         lambda: from_europe_pmc(doi),
         lambda: from_pdf_url(pdf_url),
@@ -230,17 +256,29 @@ REFERENCES_RE = re.compile(
     r"\n\s*(References|REFERENCES|Bibliography|Literature Cited)\s*\n"
 )
 
+# The heading paper_bundle.py puts above the collected figure and table
+# captions. Everything from here on is the most valuable part of the text and
+# must survive trimming, even though it sits past the references heading.
+FIGURES_MARKER = "\nFIGURES AND TABLES\n"
+
 
 def prepare_paper_text(text: str) -> str:
-    """Drop the reference list and cap the length, logging what was cut."""
+    """Drop the reference list and cap the length, logging what was cut.
+
+    Safe to run twice: a bundle's collected captions are held back, trimmed
+    around, and reattached, so preparing an already-prepared bundle is a
+    no-op rather than the loss of its best section.
+    """
     original = len(text)
+    body, marker, captions = text.partition(FIGURES_MARKER)
     # Only treat a References heading as the tail if it's in the back half —
     # an early match is more likely a table of contents or a figure label.
-    matches = [m for m in REFERENCES_RE.finditer(text) if m.start() > len(text) * 0.5]
+    matches = [m for m in REFERENCES_RE.finditer(body) if m.start() > len(body) * 0.5]
     if matches:
-        text = text[: matches[-1].start()]
-    if len(text) > MAX_PAPER_CHARS:
-        text = text[:MAX_PAPER_CHARS]
+        body = body[: matches[-1].start()]
+    if len(body) > MAX_PAPER_CHARS:
+        body = body[:MAX_PAPER_CHARS]
+    text = body + marker + captions
     if len(text) < original:
         print(f"  [paper] text trimmed {original:,} -> {len(text):,} chars")
     return text

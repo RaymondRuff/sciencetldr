@@ -152,7 +152,10 @@ after.
 - **Seven Issues are stalled on PDFs**: #40, #43, #44, #48, #58, #85, #86. This
   is a bigger content bottleneck than cost. The digest routine already has a
   Gmail connector, so a routine could read the owner's emailed PDF replies
-  directly and replace the IMAP code in `scripts/pdf_mailbox.py`.
+  directly and replace the IMAP code in `scripts/pdf_mailbox.py`. A supplied
+  PDF is now normalised into a bundle — text with collected captions plus
+  downsampled figures — before anything reads it; see
+  [paper-bundles.md](paper-bundles.md).
 - **Cache TTL is wrong in `scripts/claude.py`**: `CACHE` uses a 1-hour TTL
   (2× write premium), which for a single reuse costs slightly more than not
   caching at all. Every draft pass measured 155–282s, inside the 5-minute
