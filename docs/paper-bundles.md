@@ -69,9 +69,19 @@ which rewrites the PDF with its images downsampled. Figures stay readable; only
 print resolution goes. A paper whose bulk is text rather than figures will
 barely shrink — that paper was never the problem.
 
-A PDF uploaded to the papers repository is recognised as `issue-NN.pdf`, or by
-a filename containing the DOI suffix, which covers publisher filenames like
-`journal.pmed.1005251.pdf` without renaming anything.
+An uploaded PDF is matched to its Issue in three ways, in order:
+
+1. The filename `issue-NN.pdf`.
+2. A filename containing the DOI suffix, which covers publishers who name
+   downloads after the DOI (`journal.pmed.1005251.pdf`).
+3. **One** unclaimed upload and **one** Issue still waiting can only mean each
+   other, so they are paired. Elsevier names downloads
+   `1-s2.0-S2451945626003234-main.pdf` — neither the Issue number nor the DOI
+   — and this is what saves a rename in the common case.
+
+Rule 3 deliberately refuses to guess: with several Issues waiting, an ambiguous
+upload is reported in the log and left alone. Since the backlog is usually more
+than one Issue, **renaming to `issue-NN.pdf` is still the reliable move**.
 
 ## What happens to it
 

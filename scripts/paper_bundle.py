@@ -590,10 +590,12 @@ def sync_all(wanted: list[dict]) -> dict[int, dict]:
     cache.mkdir(parents=True, exist_ok=True)
 
     with PapersRepo() as repo:
+        # Pass one: match each Issue to a PDF by name.
+        plan: list[tuple[dict, Path, str]] = []
+        unmatched: list[dict] = []
+        claimed: set[Path] = set()
         for item in wanted:
             number = int(item["issue"])
-            doi = item.get("doi") or ""
-            bundle_dir = repo.papers / f"issue-{number}"
             source: Optional[Path] = None
             provenance = ""
 
@@ -610,25 +612,70 @@ def sync_all(wanted: list[dict]) -> dict[int, dict]:
                 except Exception as exc:  # noqa: BLE001 - mailbox is optional
                     print(f"[bundle] mailbox drop unavailable ({exc})")
             if source is None:
-                uploaded = repo.find_raw_pdf(number, doi)
+                uploaded = repo.find_raw_pdf(number, item.get("doi") or "")
                 if uploaded is not None:
                     source, provenance = uploaded, f"upload:{uploaded.name}"
 
             if source is None:
-                if (bundle_dir / "paper.txt").is_file():
-                    print(f"[bundle] issue {number}: bundle already published")
-                    _copy_tree(bundle_dir, cache / f"issue-{number}")
-                    results[number] = json.loads(
-                        (bundle_dir / "meta.json").read_text("utf-8")
-                    )
+                unmatched.append(item)
                 continue
+            claimed.add(source.resolve())
+            plan.append((item, source, provenance))
 
+        # Pass two: one unclaimed upload and one Issue still waiting can only
+        # mean each other. Publishers name downloads things like
+        # `1-s2.0-S2451945626003234-main.pdf`, which carries neither the Issue
+        # number nor the DOI, so without this the common case needs a rename.
+        leftover = [
+            p
+            for p in sorted(repo.papers.glob("*.pdf"))
+            if p.resolve() not in claimed
+        ]
+        waiting = [
+            item
+            for item in unmatched
+            if not (repo.papers / f"issue-{int(item['issue'])}" / "paper.txt").is_file()
+        ]
+        if len(leftover) == 1 and len(waiting) == 1:
+            item, source = waiting[0], leftover[0]
+            print(
+                f"[bundle] issue {item['issue']}: claiming the only unmatched "
+                f"upload, {source.name}"
+            )
+            unmatched.remove(item)
+            plan.append((item, source, f"upload:{source.name}"))
+        elif leftover and waiting:
+            names = ", ".join(p.name for p in leftover)
+            numbers = ", ".join(f"#{int(i['issue'])}" for i in waiting)
+            print(
+                f"[bundle] {len(leftover)} unmatched upload(s) ({names}) and "
+                f"{len(waiting)} Issue(s) waiting ({numbers}) — too ambiguous "
+                "to pair. Rename each upload to issue-NN.pdf."
+            )
+        elif leftover:
+            names = ", ".join(p.name for p in leftover)
+            print(f"[bundle] upload(s) with no Issue waiting for them: {names}")
+
+        # Issues with no PDF at all, but a bundle already published.
+        for item in unmatched:
+            number = int(item["issue"])
+            bundle_dir = repo.papers / f"issue-{number}"
+            if (bundle_dir / "paper.txt").is_file():
+                print(f"[bundle] issue {number}: bundle already published")
+                _copy_tree(bundle_dir, cache / f"issue-{number}")
+                results[number] = json.loads(
+                    (bundle_dir / "meta.json").read_text("utf-8")
+                )
+
+        for item, source, provenance in plan:
+            number = int(item["issue"])
+            bundle_dir = repo.papers / f"issue-{number}"
             try:
                 meta = build(
                     source.read_bytes(),
                     number,
                     bundle_dir,
-                    doi=doi,
+                    doi=item.get("doi") or "",
                     title=item.get("title") or "",
                     journal=item.get("journal") or "",
                     provenance=provenance,
