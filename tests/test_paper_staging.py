@@ -179,10 +179,8 @@ class StagingTests(unittest.TestCase):
         git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "seed", cwd=seed)
         git("push", "-q", "origin", "HEAD:main", cwd=seed)
 
-        remote = str(self.remote)
-        patcher = mock.patch.object(
-            paper_bundle, "PapersRepo", lambda repo=remote: paper_bundle_repo(repo)
-        )
+        remote, real = str(self.remote), paper_bundle.PapersRepo
+        patcher = mock.patch.object(paper_bundle, "PapersRepo", lambda repo=remote: real(repo))
         patcher.start()
         self.addCleanup(patcher.stop)
         env = mock.patch.dict(
@@ -221,13 +219,6 @@ class StagingTests(unittest.TestCase):
         self.assertEqual(self.published(), ["README.md"])
 
 
-def paper_bundle_repo(repo):
-    return paper_bundle.__dict__["_RealPapersRepo"](repo)
-
-
-paper_bundle._RealPapersRepo = paper_bundle.PapersRepo
-
-
 class DeniedTests(unittest.TestCase):
     def test_a_token_without_the_repository_is_named_as_such(self):
         refused = subprocess.CompletedProcess(
@@ -237,14 +228,14 @@ class DeniedTests(unittest.TestCase):
         )
         with mock.patch.object(paper_bundle.subprocess, "run", return_value=refused):
             with self.assertRaises(paper_bundle.PapersRepoDenied):
-                with paper_bundle._RealPapersRepo("RaymondRuff/sciencetldr-papers"):
+                with paper_bundle.PapersRepo("RaymondRuff/sciencetldr-papers"):
                     pass
 
     def test_other_git_failures_stay_ordinary(self):
         broken = subprocess.CompletedProcess([], 1, "", "fatal: not a git repository")
         with mock.patch.object(paper_bundle.subprocess, "run", return_value=broken):
             with self.assertRaises(RuntimeError) as caught:
-                with paper_bundle._RealPapersRepo("RaymondRuff/sciencetldr-papers"):
+                with paper_bundle.PapersRepo("RaymondRuff/sciencetldr-papers"):
                     pass
         self.assertNotIsInstance(caught.exception, paper_bundle.PapersRepoDenied)
 
