@@ -222,9 +222,11 @@ that path has carried a few papers.
 
 ## Also outstanding
 
-- **Memory is 9 episodes stale.** Cards stop at 84; `memory/threads.md` has not
-  changed since 2026-10-03. Episodes 85–93 are missing. The API limit resets
-  2026-11-01 00:00 UTC, but prefer to backfill with a routine rather than spend.
+- ~~**Memory is 9 episodes stale.**~~ Done on 2026-11-01: the prototype routine
+  wrote cards 85–93 and revised `memory/threads.md`, on the subscription. Only
+  card 094 is missing, which `memory.yml` builds on the next publish. Worth
+  rechecking after a few unattended episodes, because the writer draws its
+  callbacks from these files and stale memory degrades them quietly.
 - **`.github/workflows/memory.yml` discards its work on failure.** The commit
   step does not run when the script dies partway, so every failed run rebuilt
   and threw away the same cards. If that workflow survives the migration, give
