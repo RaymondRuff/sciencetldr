@@ -110,5 +110,76 @@ class RoutineHandoffTests(unittest.TestCase):
         self.assertIsNone(ge.routine_script(8))
 
 
+class PublishSlotTests(unittest.TestCase):
+    """Only a PR carrying audio may take the daily publish slot."""
+
+    def setUp(self):
+        self.calls: list[list[str]] = []
+        self.files: dict[str, list[str]] = {}
+        original = ge.gh
+
+        def fake_gh(args):
+            self.calls.append(args)
+            if args[:2] == ["pr", "list"]:
+                return json.dumps(
+                    [
+                        {
+                            "number": 96,
+                            "title": "Routine writer: draft script",
+                            "headRefName": "episode/issue-90-chimeraffibodies",
+                            "createdAt": "2026-11-04T01:00:00Z",
+                        },
+                        {
+                            "number": 97,
+                            "title": "Episode draft: a real one",
+                            "headRefName": "episode/issue-90-real",
+                            "createdAt": "2026-11-04T14:00:00Z",
+                        },
+                    ]
+                )
+            if args[:2] == ["pr", "view"]:
+                paths = self.files.get(args[2], [])
+                return json.dumps({"files": [{"path": x} for x in paths]})
+            return ""
+
+        ge.gh = fake_gh
+        self.addCleanup(lambda: setattr(ge, "gh", original))
+
+    def merged(self) -> list[str]:
+        return [a[2] for a in self.calls if a[:2] == ["pr", "merge"]]
+
+    def test_a_script_only_pr_does_not_take_the_slot(self):
+        self.files["96"] = ["generated/routine/issue-90.script.json"]
+        self.files["97"] = ["inbox/issue-90-real.mp3", "inbox/issue-90-real.transcript.txt"]
+        ge.publish_next_draft()
+        # The older PR is skipped even though its branch name matches.
+        self.assertEqual(self.merged(), ["97"])
+
+    def test_nothing_is_merged_when_no_pr_carries_audio(self):
+        self.files["96"] = ["generated/routine/issue-90.script.json"]
+        self.files["97"] = ["docs/notes.md"]
+        ge.publish_next_draft()
+        self.assertEqual(self.merged(), [])
+
+    def test_an_unreadable_file_list_still_publishes(self):
+        # A silent, permanent stop to auto-publishing is the worse failure.
+        original = ge.gh
+
+        def failing_view(args):
+            if args[:2] == ["pr", "view"]:
+                raise RuntimeError("unknown JSON field: files")
+            return original(args)
+
+        ge.gh = failing_view
+        ge.publish_next_draft()
+        self.assertEqual(self.merged(), ["96"])
+
+    def test_audio_outside_inbox_does_not_count(self):
+        self.files["96"] = ["docs/sample.mp3"]
+        self.files["97"] = ["inbox/issue-90-real.MP3"]
+        ge.publish_next_draft()
+        self.assertEqual(self.merged(), ["97"])
+
+
 if __name__ == "__main__":
     unittest.main()

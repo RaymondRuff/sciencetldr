@@ -57,6 +57,9 @@ import tts_dialogue
 ROOT = Path(__file__).resolve().parent.parent
 INBOX = ROOT / "inbox"
 GENERATED = ROOT / "generated"
+# The audio extensions publish.yml triggers on; a draft PR has to carry one.
+AUDIO_SUFFIXES = (".mp3", ".m4a", ".mp4a", ".wav")
+
 # Where the Claude Code routines leave a script they have already written.
 ROUTINE_DIR = GENERATED / "routine"
 
@@ -561,6 +564,32 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
     return outcome
 
 
+def carries_audio(number: int) -> bool:
+    """Whether this PR actually adds an episode's audio to inbox/.
+
+    A branch name is not evidence. The routines commit a written script on a
+    branch of their own, and a PR carrying only a script publishes nothing if
+    it is merged in the publish slot — it consumes the slot and leaves the real
+    draft waiting another day. So the audio is what makes a draft a draft.
+
+    A confident "nothing matches" skips the PR. A lookup that *fails* falls
+    back to trusting the branch name, because silently never publishing again
+    is worse than merging one PR too eagerly.
+    """
+    try:
+        files = json.loads(gh(["pr", "view", str(number), "--json", "files"]))["files"]
+    except Exception as exc:  # noqa: BLE001 - an older gh, or a transient API error
+        print(
+            f"[publish] could not list the files on #{number} ({exc}); "
+            "falling back to the branch name"
+        )
+        return True
+    return any(
+        f["path"].startswith("inbox/") and f["path"].lower().endswith(AUDIO_SUFFIXES)
+        for f in files
+    )
+
+
 def publish_next_draft() -> None:
     """Merge the oldest waiting episode draft, which publishes it.
 
@@ -577,10 +606,16 @@ def publish_next_draft() -> None:
             ]
         )
     )
-    drafts = sorted(
+    candidates = sorted(
         (p for p in prs if p["headRefName"].startswith("episode/")),
         key=lambda p: p["createdAt"],
     )
+    drafts = []
+    for pr in candidates:
+        if carries_audio(pr["number"]):
+            drafts.append(pr)
+        else:
+            print(f"[publish] #{pr['number']} carries no audio, so it is not a draft")
     if not drafts:
         print("[publish] no episode drafts waiting")
         return

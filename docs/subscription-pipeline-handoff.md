@@ -67,6 +67,15 @@ That leaves audio as the only unavoidable spend in an episode: roughly
 nineteen cents of Gemini synthesis against the dollar thirty-five to dollar
 ninety the two Opus passes cost.
 
+One consequence worth knowing about. A routine now opens a pull request that
+carries a script and no audio, and `publish_next_draft` used to pick the
+oldest open `episode/*` branch — so such a PR could win the daily publish slot,
+merge, publish nothing, and leave the real draft waiting another day. The
+publish slot now requires the PR to actually add audio under `inbox/`, which is
+what the publish workflow triggers on. Branch names are no longer evidence of
+anything, but keep giving the routines `claude/routine-issue-<N>` anyway: it
+reads correctly in the PR list.
+
 Two routines rather than one is deliberate: it is genuinely two sets of eyes,
 and it makes the prototype's worst failure (below) structurally impossible.
 
