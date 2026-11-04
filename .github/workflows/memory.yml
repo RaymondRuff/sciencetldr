@@ -2,13 +2,15 @@ name: memory
 
 # Keeps the show's cross-episode memory current: one card per published
 # episode, plus the running-threads file the hosts draw on when recording.
-# Runs after a publish, and on demand for the initial back-catalogue backfill.
+#
+# Manual only. The routine in prompts/routine_memory.md does this on the
+# Claude subscription and has done it well (episodes 85-93 in one pass), so
+# the API path is kept as a deliberate fallback rather than something that
+# fires on every publish. It failed its last five automatic runs anyway: once
+# on the API spend limit, then repeatedly on max_tokens while rewriting a
+# threads file that had grown to ten sections.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'episodes/*.json'
   workflow_dispatch:
     inputs:
       rebuild_threads:
@@ -50,7 +52,11 @@ jobs:
             uv run python scripts/memory.py threads
           fi
 
+      # Always: a run that dies partway has usually written some cards, and
+      # without this they are rebuilt and thrown away on the next attempt —
+      # which is what every failed run so far did.
       - name: Commit memory
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
