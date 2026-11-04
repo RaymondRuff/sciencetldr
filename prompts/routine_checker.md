@@ -14,9 +14,10 @@ Do the whole check yourself, in this session, in the foreground. Do not launch
 subagents or background tasks: when this session ends, anything still running
 is lost.
 
-The Issue number `<N>` and the branch are given in the message that started
-you. Nobody is available to answer questions: decide, do the work, and report
-at the end.
+The Issue number `<N>` and its branch `claude/routine-issue-<N>` are the ones
+you found in `prompts/routine_checker_daily.md` (or, for a one-off run, the
+ones given in the message that started you). Nobody is available to answer
+questions: decide, do the work, and report at the end.
 
 ## 0. Start the clock and find the draft
 
@@ -84,6 +85,10 @@ script cites.
    lacks, that changes how far a result goes and that the script leaves out.
 8. **Show framing.** Science TLDR is a general science podcast: no line ties it
    to one field or treats this paper's field as unusual for the show.
+9. **Show notes.** `show_notes` is held to the same standard as the dialogue:
+   every number right, nothing stronger than the paper, the title, journal and
+   DOI as the paper gives them, and the same three takeaways the hosts state
+   at the end. It follows `prompts/show_notes.md`, where numbers are digits.
 
 A correction is a problem of fact, strength, selection, reference, register,
 attribution or a material omission. Do not rewrite for style, and do not
@@ -129,8 +134,10 @@ git commit -m "Routine checker: fact-check Issue #<N> (<k> corrections)"
 git push origin <branch>
 ```
 
-Commit exactly those two files to the branch. Do not open a pull request. Do
-not push to `main`. Do not modify any other file.
+Commit exactly those two files to the branch. Do not open a pull request, and
+do not modify any other file. Landing the checked script on `main` — or holding
+it back — is step 3 of `prompts/routine_checker_daily.md`; a one-off run
+stops at the branch.
 
 Write that `git commit` exactly as shown, with a plain single-line `-m`
 message. Never build a commit message with `$(...)`, backticks, `printf` or a

@@ -1,0 +1,52 @@
+name: alert-on-failure
+
+# A failing workflow used to tell nobody. Now its first failure opens one
+# Issue, assigned to the owner so GitHub notifies them; repeat failures edit
+# that Issue silently; the next success closes it. See scripts/pipeline_alert.py.
+
+on:
+  workflow_run:
+    workflows:
+      - generate-episode
+      - publish
+      - monday-podcast
+      - friday-podcast
+      - email-digest
+      - promote-digest
+      - memory
+      - regenerate-notes
+    types: [completed]
+
+permissions:
+  actions: read   # to read the failed run's log
+  issues: write
+
+concurrency:
+  group: alert-${{ github.event.workflow_run.name }}
+  cancel-in-progress: false
+
+jobs:
+  alert:
+    # Only runs of the default branch: a broken feature branch is not the
+    # pipeline. Cancelled and skipped runs say nothing either way.
+    if: >-
+      github.event.workflow_run.head_branch == github.event.repository.default_branch &&
+      contains(fromJSON('["failure", "timed_out", "startup_failure", "success"]'),
+        github.event.workflow_run.conclusion)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - name: Open, update or close the alert
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          WORKFLOW: ${{ github.event.workflow_run.name }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          EVENT: ${{ github.event.workflow_run.event }}
+          OWNER: ${{ github.repository_owner }}
+        run: python3 scripts/pipeline_alert.py

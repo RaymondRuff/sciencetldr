@@ -24,6 +24,7 @@ from __future__ import annotations
 import io
 import re
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
@@ -140,21 +141,28 @@ def pdf_bytes_to_text(data: bytes) -> Optional[str]:
         return None
 
 
+def europe_pmc_record(doi: str) -> Optional[dict]:
+    """Europe PMC's record for a DOI, or None. Raises on a failed request."""
+    if not doi:
+        return None
+    search = requests.get(
+        f"{EUROPEPMC}/search",
+        params={"query": f"DOI:{doi}", "format": "json", "resultType": "core"},
+        timeout=TIMEOUT,
+    )
+    search.raise_for_status()
+    results = search.json().get("resultList", {}).get("result", [])
+    return results[0] if results else None
+
+
 def from_europe_pmc(doi: str) -> Optional[tuple[str, str]]:
     """Full text XML from Europe PMC, for papers in the PMC OA subset."""
     if not doi:
         return None
     try:
-        search = requests.get(
-            f"{EUROPEPMC}/search",
-            params={"query": f"DOI:{doi}", "format": "json", "resultType": "core"},
-            timeout=TIMEOUT,
-        )
-        search.raise_for_status()
-        results = search.json().get("resultList", {}).get("result", [])
-        if not results:
+        record = europe_pmc_record(doi)
+        if not record:
             return None
-        record = results[0]
         pmcid = record.get("pmcid")
         if not pmcid or record.get("inPMC") != "Y":
             print("  [paper] Europe PMC: metadata only, no full text")
@@ -243,6 +251,119 @@ def resolve(
             text, source = result
             print(f"  [paper] full text via {source} ({len(text)} chars)")
             return text, source
+    if _transient:
+        raise TransientFetchError("; ".join(_transient))
+    return None
+
+
+# --------------------------------------------------------------------------- #
+# Fetching to stage
+#
+# The routines that write the scripts run in a sandbox that cannot reach any
+# paper source: doi.org, Europe PMC, Unpaywall and the publishers are all
+# refused there. GitHub Actions can reach them. So Actions fetches whatever is
+# open, once, and stages it as a bundle in the private papers repository,
+# which the routines can read. This is the fetch half of that.
+# --------------------------------------------------------------------------- #
+
+EUROPEPMC_PDF = "https://europepmc.org/backend/ptpmcrender.fcgi"
+
+# A paywalled landing page is an abstract followed by a long reference list,
+# which clears MIN_USEFUL_CHARS easily. Staging it would have a routine write
+# an episode from the abstract, so a staged paper must carry this much body
+# text *before* its last references heading: well above a structured abstract
+# (two to three thousand characters), well below a research article's body.
+MIN_STAGED_BODY_CHARS = 12_000
+
+
+@dataclass
+class Fetched:
+    """Full text from an open source, with the PDF itself when that's what came."""
+
+    text: str
+    provenance: str
+    pdf: Optional[bytes] = None
+
+
+def body_chars(text: str) -> int:
+    """Characters before the last references heading — the paper, not its citations."""
+    matches = list(REFERENCES_RE.finditer(text))
+    return matches[-1].start() if matches else len(text)
+
+
+def looks_like_full_text(text: str) -> bool:
+    return bool(text) and body_chars(text) >= MIN_STAGED_BODY_CHARS
+
+
+def _download_pdf(url: str) -> Optional[bytes]:
+    """The bytes at `url` if they are a PDF. Publishers often answer with HTML."""
+    try:
+        resp = requests.get(url, headers={"User-Agent": BROWSER_UA}, timeout=TIMEOUT)
+        resp.raise_for_status()
+    except Exception as exc:  # noqa: BLE001 - a 403 from a publisher is routine
+        _record(exc)
+        print(f"  [paper] PDF download failed ({url[:60]}): {exc}")
+        return None
+    if not resp.content.lstrip()[:5].startswith(b"%PDF"):
+        print(f"  [paper] {url[:60]} answered with something other than a PDF")
+        return None
+    return resp.content
+
+
+def _pdf_fetched(data: Optional[bytes], provenance: str) -> Optional[Fetched]:
+    if not data:
+        return None
+    text = pdf_bytes_to_text(data)
+    if not text or not looks_like_full_text(text):
+        print(f"  [paper] {provenance}: PDF is not the full paper")
+        return None
+    return Fetched(text, provenance, data)
+
+
+def fetch_open_text(*, doi: str = "", pdf_url: str = "") -> Optional[Fetched]:
+    """The paper's full text from open sources only, or None.
+
+    Prefers a PDF, because a bundle built from one keeps the figure images —
+    and the values drawn in a figure exist nowhere in any extraction. Falls
+    back to Europe PMC's XML and then the publisher's page as text.
+
+    Stricter than resolve(): what this returns gets staged for an unattended
+    writer, so text that looks like an abstract plus references is refused.
+    Raises TransientFetchError when nothing was found but a source failed
+    only temporarily, so the caller can try again rather than ask for a PDF.
+    """
+    _transient.clear()
+
+    found = _pdf_fetched(_download_pdf(pdf_url), "pdf-url") if pdf_url else None
+    if found:
+        return found
+
+    record = None
+    if doi:
+        try:
+            record = europe_pmc_record(doi)
+        except Exception as exc:  # noqa: BLE001
+            _record(exc)
+            print(f"  [paper] Europe PMC lookup failed: {exc}")
+    pmcid = (record or {}).get("pmcid")
+    if pmcid and record.get("inPMC") == "Y":
+        if record.get("isOpenAccess") == "Y":
+            found = _pdf_fetched(
+                _download_pdf(f"{EUROPEPMC_PDF}?accid={pmcid}&blobtype=pdf"),
+                f"europepmc-pdf:{pmcid}",
+            )
+            if found:
+                return found
+        xml = from_europe_pmc(doi)
+        if xml and looks_like_full_text(xml[0]):
+            return Fetched(*xml)
+
+    html = from_publisher_html(doi)
+    if html and looks_like_full_text(html[0]):
+        return Fetched(*html)
+    if html:
+        print("  [paper] publisher page is an abstract and references, not the paper")
+
     if _transient:
         raise TransientFetchError("; ".join(_transient))
     return None

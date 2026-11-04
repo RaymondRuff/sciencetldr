@@ -4,6 +4,80 @@ Written 2026-10-31 for a fresh session. Self-contained: assume no memory of
 earlier conversations. The goal is approved and the direction is settled; what
 follows is the work.
 
+## Update, 2026-11-04 evening: paper supply
+
+The writer's first unattended run (08:11 UTC) showed that the routine sandbox
+cannot reach any paper source — doi.org, Europe PMC, Unpaywall, OpenAlex,
+Crossref, Semantic Scholar and the publishers are all refused or unresolvable.
+Only the PubMed and bioRxiv connectors, web search and `gh` REST get out, and
+`gh` GraphQL is refused too. It also pushed one notification per stalled
+paper, though Actions had already emailed a request for every one of them.
+
+**Actions fetches, routines read.** The fix puts every fetch where the network
+is:
+
+- **The pickers stage at pick time.** `select_monday_paper.py` walks the
+  digest best-first and takes the first peer-reviewed paper whose full text it
+  can get, down to one DICE point below the top. `select_friday_paper.py` does
+  the same over the first eight usable r/science papers. The text goes into
+  `sciencetldr-papers` as a bundle (from a PDF, with figures, when one is
+  open; from Europe PMC XML or the publisher page otherwise). A landing page
+  that is only an abstract and references is refused: a staged paper needs
+  12,000 characters of body before its last references heading. Only when
+  nothing that good is open does the top pick go ahead without its text.
+- **The daily sweep stages the rest.** `bundle_waiting_papers()` bundles any
+  emailed or uploaded PDF, then fetches open text for every waiting Issue that
+  has neither a bundle nor a checked script — including `needs-pdf` ones, since
+  papers do become open later. When one turns up its PDF request is cleared.
+- **One request per paper, by email.** `request_missing_pdfs()` now runs after
+  staging and asks only for Issues still without a bundle, skipping any whose
+  sources merely failed for now. The `pdf-requested` label is the memory. If
+  the papers repository could not be reached it asks for nothing, because a
+  supplied PDF could not reach the routine either.
+- **The writer picks mechanically and never pushes about a paper.**
+  `routine_tools.py queue` ranks the Issues over REST — staged papers first,
+  then Issues nobody has asked a PDF for — and skips anything already asked
+  for. A paper the writer cannot get is parked `needs-pdf` with
+  `routine_tools.py park`, silently; the sweep's one email is the only ask.
+  The only push either routine sends is for an Issue it parks
+  `generation-failed` (the checker holding a script back, or a staged paper
+  that is wrong or unreadable), and a parked Issue is never touched again.
+- The daily prompts now live in the repo: `prompts/routine_writer_daily.md`
+  and `prompts/routine_checker_daily.md`. The triggers just point at them, so
+  a prompt change is a reviewed PR.
+
+**What needs the owner, once:** `GH_PAT` has no access to
+`sciencetldr-papers` (the sweep's clone gets `403 Write access to repository
+not granted`; SETUP.md told you to select only the public repo). Every bundle
+so far was pushed from a desktop. Until the token lists the papers repository
+with Contents read and write, nothing staged by Actions can reach the routines,
+and every sweep that has papers to stage fails with that message — which the
+new failure alert turns into one Issue.
+
+**Options considered and not taken:**
+
+- *A Gmail connector in a routine instead of IMAP in Actions.* The IMAP path
+  already works — every stalled Issue carries `pdf-requested`, so the emails
+  went out — and the broken link was the token, not the mailbox. The connector
+  returns an attachment only as a raw MIME message through the model's own
+  context, which costs plan usage on every poll, and the reply lands in the
+  podcast account's inbox, not the account the connector is signed into.
+- *Allowlisting paper hosts for the routine environment.* It buys nothing once
+  Actions stages the open papers, and the stalled six are closed: none of #40,
+  #43, #48 or #85 has a PubMed Central copy (checked through the PubMed
+  connector), #44 is a paywalled SAGE paper, and #58 is open on Wiley but Wiley
+  refuses scripted downloads from Actions too.
+
+**Also changed:** a checked script on `main` now makes its episode without the
+paper text (#98, which is what let episode 95 publish), and landing one starts
+a sweep at once instead of waiting for the 14:00 cron, which GitHub has been
+starting up to six hours late. Nothing gets past `MAX_EPISODES_PER_RUN` any
+more — not an emailed PDF, not an invalid routine script. Show notes come from
+the routine (`show_notes` in the script, checked by the checker, validated),
+so publishing makes no Anthropic call and `publish.yml` no longer has the key.
+A failing workflow opens one `pipeline-alert` Issue assigned to the owner,
+which repeat failures edit silently and the next success closes.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
@@ -231,13 +305,15 @@ that path has carried a few papers.
   step does not run when the script dies partway, so every failed run rebuilt
   and threw away the same cards. If that workflow survives the migration, give
   the commit step `if: always()`.
-- **Seven Issues are stalled on PDFs**: #40, #43, #44, #48, #58, #85, #86. This
-  is a bigger content bottleneck than cost. The digest routine already has a
-  Gmail connector, so a routine could read the owner's emailed PDF replies
-  directly and replace the IMAP code in `scripts/pdf_mailbox.py`. A supplied
-  PDF is now normalised into a bundle — text with collected captions plus
-  downsampled figures — before anything reads it; see
-  [paper-bundles.md](paper-bundles.md).
+- ~~**Seven Issues are stalled on PDFs.**~~ See the update at the top: papers
+  are now chosen for being readable and staged by Actions. Six stalled Issues
+  remain (#40, #43, #44, #48, #58, #85), each asked for once by email; the
+  writer skips them silently until a PDF arrives. A supplied PDF is normalised
+  into a bundle — text with collected captions plus downsampled figures —
+  before anything reads it; see [paper-bundles.md](paper-bundles.md).
+- **Memory has no schedule.** `prompts/routine_memory.md` exists but no
+  routine runs it, and `memory.yml` is manual. Cards 094 and 095 are missing,
+  and the writer draws its callbacks from these files.
 - **Cache TTL is wrong in `scripts/claude.py`**: `CACHE` uses a 1-hour TTL
   (2× write premium), which for a single reuse costs slightly more than not
   caching at all. Every draft pass measured 155–282s, inside the 5-minute

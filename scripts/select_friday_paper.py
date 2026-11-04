@@ -1,10 +1,17 @@
 """Pick the Friday trending paper, open a podcast Issue.
 
 Source order:
-  1. r/science top/week — the first peer-reviewed paper we can resolve to
-     a DOI, skipping anything already published or pending.
+  1. r/science top/week — the highest-ranked peer-reviewed paper we can
+     resolve to a DOI *and get the full text of*, skipping anything already
+     published or pending.
   2. PubMed trending — automatic fallback when Reddit yields nothing
      usable (network, schema drift, all candidates were preprints, etc.).
+
+The full text matters because the routine that writes the script cannot
+reach any paper source: the text is staged in the private papers repository
+here, while Actions can still reach it. A paywalled paper is passed over for
+the next one down; only when none of the first few can be had does the top
+one go ahead, and the sweep then asks for its PDF once.
 
 Reddit picks are enriched via Crossref so the issue title and metadata
 come from the journal record, not the redditor's editorialised headline.
@@ -67,19 +74,27 @@ def already_seen_dois() -> set[str]:
     return seen
 
 
-def pick_from_reddit(seen: set[str]) -> dict | None:
+# How many surviving candidates to gather before checking their full text.
+MAX_CANDIDATES = 8
+
+
+def reddit_candidates(seen: set[str], limit: int = MAX_CANDIDATES) -> list[dict]:
+    """Up to `limit` usable r/science papers, in Reddit's ranking order."""
     try:
         posts = reddit_source.fetch_top_week(limit=REDDIT_FETCH_LIMIT)
     except Exception as exc:
         print(f"[select-friday] reddit fetch failed: {exc}")
-        return None
+        return []
 
     print(f"[select-friday] reddit: {len(posts)} candidate posts after pre-filter")
     if len(posts) < MIN_REDDIT_POSTS:
         print(f"[select-friday] reddit: too few posts (<{MIN_REDDIT_POSTS}); falling back")
-        return None
+        return []
 
+    found: list[dict] = []
     for rank, post in enumerate(posts, start=1):
+        if len(found) >= limit:
+            break
         doi, reason = reddit_source.extract_doi_with_reason(post.url)
         if not doi:
             print(f"[select-friday]  r#{rank} skip ({reason}): {post.title[:70]}")
@@ -96,7 +111,7 @@ def pick_from_reddit(seen: set[str]) -> dict | None:
             print(f"[select-friday]  r#{rank} skip (preprint): {meta['title'][:70]} [{doi}]")
             continue
         pmid = crossref_lookup.pmid_for_doi(doi) or ""
-        return {
+        found.append({
             "rank": rank,
             "doi": doi,
             "pmid": pmid,
@@ -111,9 +126,16 @@ def pick_from_reddit(seen: set[str]) -> dict | None:
                 f"Journal: {meta.get('journal', '')}\n"
                 f"Published: {meta.get('published', '')}"
             ),
-        }
-    print("[select-friday] reddit: no candidate survived filtering")
-    return None
+        })
+    if not found:
+        print("[select-friday] reddit: no candidate survived filtering")
+    return found
+
+
+def pick_from_reddit(seen: set[str]) -> dict | None:
+    """The top surviving r/science candidate, without checking its full text."""
+    found = reddit_candidates(seen, limit=1)
+    return found[0] if found else None
 
 
 def fetch_pubmed_trending() -> list[dict]:
@@ -147,7 +169,7 @@ def fetch_doi_for_pmid(pmid: str) -> str:
     return ""
 
 
-def pick_from_pubmed(seen: set[str]) -> dict | None:
+def pubmed_candidates(seen: set[str], limit: int = MAX_CANDIDATES) -> list[dict]:
     entries = fetch_pubmed_trending()
     print(f"[select-friday] pubmed: {len(entries)} trending entries")
     if len(entries) < MIN_PUBMED_TRENDING_ENTRIES:
@@ -155,7 +177,10 @@ def pick_from_pubmed(seen: set[str]) -> dict | None:
             f"Only parsed {len(entries)} PubMed trending entries — expected "
             f">= {MIN_PUBMED_TRENDING_ENTRIES}. Markup may have changed; aborting."
         )
+    found: list[dict] = []
     for rank, entry in enumerate(entries[:MAX_PUBMED_CANDIDATES], start=1):
+        if len(found) >= limit:
+            break
         doi = fetch_doi_for_pmid(entry["pmid"]) if entry["pmid"] else ""
         if doi and doi.lower() in seen:
             print(f"[select-friday]  p#{rank} skip (already seen): {entry['title'][:70]} [{doi}]")
@@ -164,7 +189,7 @@ def pick_from_pubmed(seen: set[str]) -> dict | None:
         if (meta and meta.get("is_preprint")) or doi.lower().startswith("10.1101/"):
             print(f"[select-friday]  p#{rank} skip (preprint): {entry['title'][:70]} [{doi}]")
             continue
-        return {
+        found.append({
             "rank": rank,
             "doi": doi,
             "pmid": entry["pmid"],
@@ -175,8 +200,13 @@ def pick_from_pubmed(seen: set[str]) -> dict | None:
                 f"PMID: {entry['pmid']}\n"
                 f"Citation: {entry['journal_citation']}"
             ),
-        }
-    return None
+        })
+    return found
+
+
+def pick_from_pubmed(seen: set[str]) -> dict | None:
+    found = pubmed_candidates(seen, limit=1)
+    return found[0] if found else None
 
 
 def main() -> None:
@@ -196,34 +226,38 @@ def main() -> None:
     seen = already_seen_dois()
     print(f"[select-friday] {len(seen)} DOIs already published or pending")
 
-    chosen: dict | None = None
+    candidates: list[dict] = []
     primary_label = ""
     fell_back = False
 
     if args.source in ("auto", "reddit"):
         print("[select-friday] trying r/science top/week")
-        chosen = pick_from_reddit(seen)
-        if chosen:
+        candidates = reddit_candidates(seen)
+        if candidates:
             primary_label = "friday-reddit"
 
-    if chosen is None and args.source in ("auto", "pubmed"):
+    if not candidates and args.source in ("auto", "pubmed"):
         if args.source == "auto":
             print("[select-friday] reddit yielded nothing — falling back to PubMed trending")
             fell_back = True
         else:
             print("[select-friday] using PubMed trending")
-        chosen = pick_from_pubmed(seen)
-        if chosen:
+        candidates = pubmed_candidates(seen)
+        if candidates:
             primary_label = "friday-trending"
 
-    if chosen is None:
+    if not candidates:
         print("[select-friday] no candidates — nothing new to publish this week.")
         return
 
+    chosen, pdf_url, fetched, notes = select_monday_paper.choose_obtainable(candidates)
     print(f"[select-friday] picking {primary_label} #{chosen['rank']}: {chosen['title'][:80]}")
-
-    pdf_url = paper_resolver.resolve_pdf(doi=chosen["doi"], pmid=chosen.get("pmid", ""))
-    print(f"[select-friday] PDF: {pdf_url or 'none (closed-access fallback)'}")
+    for note in notes:
+        print(f"[select-friday]  passed over: {note}")
+    print(
+        "[select-friday] full text: "
+        + (fetched.provenance if fetched else "none open; the sweep will ask for the PDF")
+    )
 
     paper = {
         "title": chosen["title"],
@@ -231,7 +265,9 @@ def main() -> None:
         "dice": None,
         "raw": chosen["raw"],
     }
-    body = select_monday_paper.render_issue_body(paper, pdf_url, primary_label)
+    body = select_monday_paper.render_issue_body(
+        paper, pdf_url, primary_label, fetched=fetched, notes=notes
+    )
     title_emoji = "🔥" if primary_label == "friday-reddit" else "📈"
     issue_title = f"{title_emoji} {chosen['title'][:160]}"
 
@@ -249,6 +285,9 @@ def main() -> None:
 
     issue_number = github_issue.open_issue(title=issue_title, body=body, labels=labels)
     print(f"[select-friday] opened issue #{issue_number}")
+    select_monday_paper.stage_for_writer(
+        issue_number, paper, fetched, journal=chosen.get("journal_citation", "")
+    )
 
 
 if __name__ == "__main__":

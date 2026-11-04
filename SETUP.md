@@ -39,13 +39,18 @@ In your `RaymondRuff/sciencetldr` repo:
 3. Copy. Without this, PubMed limits you to 3 req/sec; with it, 10 req/sec.
 
 ### GitHub Personal Access Token (for opening Issues from workflows)
-The default `GITHUB_TOKEN` works for most things, but using a fine-grained PAT
-gives cleaner attribution.
+Workflows need a fine-grained PAT for three things `GITHUB_TOKEN` cannot do:
+reach the private papers repository, trigger the publish workflow when a draft
+is merged, and open review pull requests.
 1. https://github.com/settings/personal-access-tokens/new
-2. Repository access: select **only** `RaymondRuff/sciencetldr`
+2. Repository access: select **both** `RaymondRuff/sciencetldr` and
+   `RaymondRuff/sciencetldr-papers`. Without the second, no paper — emailed,
+   uploaded or fetched open-access — can reach the writer routine, and every
+   sweep fails with a message saying so.
 3. Permissions:
    - Issues → **Read and write**
    - Contents → **Read and write**
+   - Pull requests → **Read and write**
    - Metadata → **Read** (auto-selected)
 4. Expiration: 90 days (rotate quarterly) or longer if you prefer
 5. Generate, copy

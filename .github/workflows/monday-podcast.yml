@@ -30,4 +30,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
           SELECTION_SOURCE: monday-digest
+          # The pick stages its paper's full text in the private papers
+          # repository, where the writer routine reads it; GH_PAT needs
+          # Contents: Read and write there.
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
         run: uv run python scripts/select_monday_paper.py
