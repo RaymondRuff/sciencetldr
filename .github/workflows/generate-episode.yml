@@ -4,8 +4,10 @@ name: generate-episode
 # Merging the PR drops the mp3 into inbox/, which fires the publish workflow.
 #
 # Two schedules:
-#   - daily: the full sweep (one draft per run by default, plus emailing PDF
-#     requests for any Issue whose full text can't be reached)
+#   - daily: the full sweep. It stages every waiting paper it can get in the
+#     private papers repository for the writer routine, emails one PDF request
+#     for each paper nobody can get, and synthesises any checked routine
+#     script on main. A checked script landing on main also starts a sweep.
 #   - every 30 min: a mailbox check for PDFs you've emailed back. It uses only
 #     the standard library and stops before installing anything if the inbox
 #     has nothing new, so a quiet poll costs seconds.
@@ -17,6 +19,10 @@ on:
     branches: [main]
     paths:
       - 'inbox/pdfs/**.pdf'
+      # The checker routine landing a checked script. Without this the episode
+      # waited for the 14:00 sweep, which GitHub's scheduler has been starting
+      # up to six hours late.
+      - 'generated/routine/*.script.json'
   schedule:
     - cron: '0 14 * * *'      # full sweep
     - cron: '*/30 * * * *'    # mailbox poll
@@ -70,7 +76,21 @@ jobs:
 
       - name: Install ffmpeg
         if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        timeout-minutes: 30
+        # On 2026-11-04 the runner's Ubuntu mirror served this at about 50 kB/s
+        # and the step took well over ten minutes. Slow is fine; a failure is
+        # retried, and apt is skipped when the image already has ffmpeg.
+        run: |
+          if command -v ffmpeg >/dev/null; then ffmpeg -version | head -1; exit 0; fi
+          for attempt in 1 2 3; do
+            if sudo apt-get update -o Acquire::Retries=3 &&
+               sudo apt-get install -y -o Acquire::Retries=3 ffmpeg; then
+              exit 0
+            fi
+            echo "apt attempt $attempt failed; retrying"
+            sleep 15
+          done
+          exit 1
 
       - name: Install uv
         if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
@@ -96,7 +116,7 @@ jobs:
           # daily sweep (and a manual run with no issue named) merges the oldest
           # waiting draft PR — one a day. Any other value keeps the manual merge.
           AUTO_PUBLISH: ${{ vars.AUTO_PUBLISH }}
-          PUBLISH_SLOT: ${{ github.event.schedule == '0 14 * * *' || github.event_name == 'workflow_dispatch' }}
+          PUBLISH_SLOT: ${{ github.event.schedule == '0 14 * * *' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
           ISSUE: ${{ inputs.issue }}
         run: |
           PUBLISH=""

@@ -16,6 +16,24 @@ import generate_episode as ge  # noqa: E402
 import routine_tools  # noqa: E402
 
 
+SHOW_NOTES = """**[A paper](https://doi.org/10.1/x)**
+
+*Journal of Things, 2026*
+
+DOI: [10.1/x](https://doi.org/10.1/x)
+
+**Question:** Does the treatment change the outcome in 120 patients?
+
+**Answer:** It lowered the outcome by 12% (95% CI 4-20%), in one cohort without a control arm.
+
+**Three takeaways**
+
+1. The effect was 12% in 120 patients.
+2. There was no control arm.
+3. The authors call it preliminary.
+"""
+
+
 def a_valid_script(issue: int, *, checked: bool = False) -> dict:
     """The smallest script the validator accepts, built from its own rules."""
     turns = [
@@ -35,6 +53,7 @@ def a_valid_script(issue: int, *, checked: bool = False) -> dict:
         "issue": issue,
         "writer": "routine",
         "paper_source": "bundle:issue-" + str(issue),
+        "show_notes": SHOW_NOTES,
         "checked": checked,
         "callbacks": [],
         "verification_changes": ["fixed a number"] if checked else [],
@@ -83,10 +102,11 @@ class RoutineHandoffTests(unittest.TestCase):
         self.write(7, a_valid_script(7, checked=True))
         result = ge.routine_script(7)
         self.assertIsNotNone(result)
-        turns, changes, source = result
+        turns, changes, source, notes = result
         self.assertEqual(turns[0]["speaker"], "Nadia")
         self.assertEqual(changes, ["fixed a number"])
         self.assertEqual(source, "bundle:issue-7")
+        self.assertIn("**Three takeaways**", notes)
 
     def test_an_unchecked_draft_waits_for_the_checker(self):
         # The checker's push to main is what puts an episode into production;

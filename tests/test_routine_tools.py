@@ -16,6 +16,24 @@ FILLER = (
 )
 
 
+SHOW_NOTES = """**[A paper](https://doi.org/10.1/x)**
+
+*Journal of Things, 2026*
+
+DOI: [10.1/x](https://doi.org/10.1/x)
+
+**Question:** Does the treatment change the outcome in 120 patients?
+
+**Answer:** It lowered the outcome by 12% (95% CI 4-20%), in one cohort without a control arm.
+
+**Three takeaways**
+
+1. The effect was 12% in 120 patients.
+2. There was no control arm.
+3. The authors call it preliminary.
+"""
+
+
 def make_script(target: int = 11_300) -> dict:
     turns = [
         {"speaker": "Nadia", "text": "Hi, and welcome to Science TLDR. I'm Nadia."},
@@ -30,6 +48,7 @@ def make_script(target: int = 11_300) -> dict:
         "issue": 86,
         "writer": "routine",
         "paper_source": "test fixture",
+        "show_notes": SHOW_NOTES,
         "checked": False,
         "callbacks": [],
         "verification_changes": [],

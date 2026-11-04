@@ -14,13 +14,23 @@ session, a checker (prompts/routine_checker.md).
             that it is written for the ear (no digits, bare acronyms or
             symbols). Exits non-zero, listing every problem.
   render    Write a readable .script.md beside the JSON.
+  queue     List the Issues the writer may take today, best first, with the
+            reason for every Issue it may not. Selection is mechanical, so it
+            lives here rather than in a prompt.
+  park      Label an Issue (needs-pdf, generation-failed) and optionally
+            comment on it. The label is the routines' memory: whatever they
+            have already reported, they skip, so nothing is reported twice.
 
-Needs no API key and no GitHub login: the repository is public, so Issues are
-read over the unauthenticated REST API.
+Needs no API key. GitHub is read and written over REST with `gh api` when it
+is available, and read over the unauthenticated REST API otherwise. Never
+GraphQL: a routine's sandbox refuses it, which rules out gh's own
+issue and pr subcommands.
 
 Usage:
+  python scripts/routine_tools.py queue
   python scripts/routine_tools.py context --issue 41 --out /tmp/episode
   python scripts/routine_tools.py validate --stage draft /tmp/episode/draft.script.json
+  python scripts/routine_tools.py park --issue 41 --label needs-pdf --note /tmp/episode/note.md
 """
 from __future__ import annotations
 
@@ -416,16 +426,167 @@ def cmd_context(issue_number: int, out_dir: Path) -> int:
             issue_number=issue_number,
         )
     except paper_text.TransientFetchError as exc:
-        print(f"[context] PAPER NOT FETCHED (temporary failure): {exc}")
-        return 2
+        resolved = None
+        if "proxy" in str(exc).lower():
+            print("[context] (the direct sources are refused from this sandbox, as expected)")
+        else:
+            print(f"[context] a direct source failed: {str(exc)[:300]}")
     if not resolved:
-        print("[context] PAPER NOT FETCHED: no open full text reachable from here")
+        print(
+            "[context] PAPER NOT FETCHED: it is not staged in the papers repository, "
+            "and nothing open was reachable from here. Try the PubMed and bioRxiv "
+            "connectors; do not retry the direct sources."
+        )
         return 2
     text, source = resolved
     text = paper_text.prepare_paper_text(text)
     (out_dir / "paper.txt").write_text(text, encoding="utf-8")
     print(f"[context] paper.txt: {len(text):,} chars via {source}")
     print("[context] no figure images: this paper came as text only")
+    return 0
+
+
+# --------------------------------------------------------------------------- #
+# queue and park
+# --------------------------------------------------------------------------- #
+
+LABEL_PENDING = "podcast-pending"
+LABEL_IN_REVIEW = "episode-in-review"
+LABEL_NEEDS_PDF = "needs-pdf"
+LABEL_FAILED = "generation-failed"
+PARK_LABELS = (LABEL_NEEDS_PDF, LABEL_FAILED)
+
+
+def _gh_api(path: str, *extra: str) -> str | None:
+    """`gh api` over REST, or None when gh is missing or the call fails."""
+    import shutil
+    import subprocess
+
+    if not shutil.which("gh"):
+        return None
+    result = subprocess.run(
+        ["gh", "api", path, *extra], capture_output=True, text=True, encoding="utf-8"
+    )
+    if result.returncode != 0:
+        print(f"[gh] {path}: {(result.stderr or result.stdout).strip()[:300]}")
+        return None
+    return result.stdout
+
+
+def _rest_get(path: str) -> list | dict:
+    """GET a REST path, authenticated through gh if possible."""
+    out = _gh_api(path)
+    if out is not None:
+        return json.loads(out)
+    import requests
+
+    resp = requests.get(
+        f"https://api.github.com/{path}",
+        headers={"Accept": "application/vnd.github+json", "User-Agent": "sciencetldr"},
+        timeout=30,
+    )
+    resp.raise_for_status()
+    return resp.json()
+
+
+def mentions_issue(name: str, number: int) -> bool:
+    """Whether a branch name carries `issue-<number>` — and not issue-<number>0."""
+    return re.search(rf"(?<![0-9])issue-{number}(?![0-9])", name) is not None
+
+
+def rank_queue(
+    issues: list[dict],
+    *,
+    scripts_on_main: set[int],
+    branches: list[str],
+    bundled: set[int],
+) -> tuple[list[int], list[tuple[int, str]]]:
+    """(Issues to try, best first; every other Issue with the reason).
+
+    An Issue whose paper is already staged comes first, oldest first: the
+    writer is certain to have its text. Then Issues nobody has asked a PDF
+    for yet, which the writer can try through its connectors. An Issue
+    waiting on a PDF is skipped silently: it was asked for once, by email,
+    and asking again every morning is what this replaces.
+    """
+    ready, maybe, skipped = [], [], []
+    for issue in sorted(issues, key=lambda i: (i.get("created_at") or "", i["number"])):
+        if "pull_request" in issue:
+            continue
+        number = issue["number"]
+        labels = {l["name"] if isinstance(l, dict) else l for l in issue.get("labels", [])}
+        if LABEL_PENDING not in labels:
+            continue
+        in_flight = [b for b in branches if mentions_issue(b, number)]
+        if LABEL_IN_REVIEW in labels:
+            skipped.append((number, "an episode is already waiting to publish"))
+        elif LABEL_FAILED in labels:
+            skipped.append((number, "parked as generation-failed; it needs Ray"))
+        elif number in scripts_on_main:
+            skipped.append((number, "a checked script is already on main"))
+        elif in_flight:
+            skipped.append((number, f"a script is already in flight on {in_flight[0]}"))
+        elif number in bundled:
+            ready.append(number)
+        elif LABEL_NEEDS_PDF in labels:
+            skipped.append((number, "waiting for its PDF (already asked for once)"))
+        else:
+            maybe.append(number)
+    return ready + maybe, skipped
+
+
+def _git_lines(*args: str) -> list[str]:
+    import subprocess
+
+    result = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
+    return result.stdout.splitlines() if result.returncode == 0 else []
+
+
+def cmd_queue() -> int:
+    import subprocess
+
+    import paper_bundle
+
+    subprocess.run(["git", "fetch", "-q", "origin", "main"], cwd=ROOT)
+    issues = _rest_get(f"repos/{REPO}/issues?labels={LABEL_PENDING}&state=open&per_page=100")
+    scripts = set()
+    for path in _git_lines("ls-tree", "-r", "--name-only", "origin/main", "generated/routine/"):
+        found = re.search(r"issue-(\d+)\.script\.json$", path)
+        if found:
+            scripts.add(int(found.group(1)))
+    branches = [line.split("refs/heads/", 1)[-1] for line in _git_lines("ls-remote", "--heads", "origin")]
+    branches += [pr["head"]["ref"] for pr in _rest_get(f"repos/{REPO}/pulls?state=open&per_page=100")]
+    try:
+        bundled = paper_bundle.bundled_issues()
+    except Exception as exc:  # noqa: BLE001 - say so, and rank without bundles
+        print(f"[queue] papers repository unreadable ({exc}); no Issue counts as staged")
+        bundled = set()
+
+    order, skipped = rank_queue(issues, scripts_on_main=scripts, branches=branches, bundled=bundled)
+    for number in order:
+        state = "paper staged" if number in bundled else "no paper staged; try the connectors"
+        print(f"[queue] #{number}: eligible ({state})")
+    for number, reason in skipped:
+        print(f"[queue] #{number}: skip, {reason}")
+    print("NEXT: " + (" ".join(str(n) for n in order) if order else "none"))
+    return 0
+
+
+def cmd_park(issue_number: int, label: str, note: Path | None) -> int:
+    """Label an Issue and, given a note file, comment on it. REST only."""
+    if _gh_api(
+        f"repos/{REPO}/issues/{issue_number}/labels", "-X", "POST", "-f", f"labels[]={label}"
+    ) is None:
+        print(f"[park] could not label #{issue_number} {label}")
+        return 1
+    print(f"[park] #{issue_number} labelled {label}")
+    if note is not None:
+        if _gh_api(
+            f"repos/{REPO}/issues/{issue_number}/comments", "-X", "POST", "-F", f"body=@{note}"
+        ) is None:
+            print(f"[park] labelled, but could not comment on #{issue_number}")
+            return 1
+        print(f"[park] commented on #{issue_number}")
     return 0
 
 
@@ -479,6 +640,40 @@ def validate_provenance(script: dict, stage: str) -> list[str]:
     return errors
 
 
+# prompts/show_notes.md: the Question, Answer and three takeaways together are
+# "about 110 words, never more than 130".
+SHOW_NOTES_MAX_WORDS = 130
+SHOW_NOTES_PARTS = ("**Question:**", "**Answer:**", "**Three takeaways**")
+
+
+def validate_show_notes(notes) -> list[str]:
+    """The show notes a routine writes for the episode page, per prompts/show_notes.md.
+
+    Read on a screen, so digits are right here, unlike the dialogue.
+    """
+    if not isinstance(notes, str) or not notes.strip():
+        return ["`show_notes` must hold the episode's show notes (see prompts/show_notes.md)"]
+    errors = []
+    for part in SHOW_NOTES_PARTS:
+        if part not in notes:
+            errors.append(f"show notes: missing {part}")
+    if "DOI:" not in notes and "Source:" not in notes:
+        errors.append("show notes: missing the DOI line (or Source: for a white paper)")
+    body = notes.split("**Question:**", 1)[-1]
+    if len(re.findall(r"^\s*\d\.\s+\S", body, re.MULTILINE)) != 3:
+        errors.append("show notes: need exactly three numbered takeaways")
+    words = len(re.findall(r"[A-Za-z0-9][\w'’.,%*:/+-]*", re.sub(r"\*\*[^*]+\*\*", "", body)))
+    if words > SHOW_NOTES_MAX_WORDS:
+        errors.append(
+            f"show notes: question, answer and takeaways run to {words} words; "
+            f"at most {SHOW_NOTES_MAX_WORDS}"
+        )
+    for pattern in HYPE:
+        for hit in re.finditer(pattern, notes, re.IGNORECASE):
+            errors.append(f"show notes: hype vocabulary {hit.group(0)!r}")
+    return errors
+
+
 def validate(
     script: dict, stage: str | None = None, paper_text: str | None = None
 ) -> tuple[list[str], list[str]]:
@@ -491,6 +686,7 @@ def validate(
     warnings: list[str] = []
     if stage is not None:
         errors += validate_provenance(script, stage)
+        errors += validate_show_notes(script.get("show_notes"))
 
     turns = script.get("turns")
     if not isinstance(turns, list) or not turns:
@@ -633,6 +829,8 @@ def cmd_render(path: Path) -> int:
     if changes:
         lines += ["## Corrections made by the fact-check pass", ""]
         lines += [f"- {c}" for c in changes] + [""]
+    if script.get("show_notes"):
+        lines += ["## Show notes", "", script["show_notes"].strip(), ""]
     lines += ["---", ""]
     for turn in turns:
         lines += [f"**{turn['speaker']}:** {turn['text']}", ""]
@@ -660,7 +858,16 @@ def main() -> None:
     )
     ren = sub.add_parser("render")
     ren.add_argument("script", type=Path)
+    sub.add_parser("queue")
+    park = sub.add_parser("park")
+    park.add_argument("--issue", type=int, required=True)
+    park.add_argument("--label", choices=PARK_LABELS, required=True)
+    park.add_argument("--note", type=Path, default=None, help="a file whose text becomes a comment")
     args = parser.parse_args()
+    if args.command == "queue":
+        sys.exit(cmd_queue())
+    if args.command == "park":
+        sys.exit(cmd_park(args.issue, args.label, args.note))
     if args.command == "context":
         sys.exit(cmd_context(args.issue, args.out))
     if args.command == "render":

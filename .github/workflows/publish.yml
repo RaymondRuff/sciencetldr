@@ -24,7 +24,21 @@ jobs:
           fetch-depth: 0
 
       - name: Install ffmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        timeout-minutes: 30
+        # On 2026-11-04 the runner's Ubuntu mirror served this at about 50 kB/s
+        # and the step took well over ten minutes. Slow is fine; a failure is
+        # retried, and apt is skipped when the image already has ffmpeg.
+        run: |
+          if command -v ffmpeg >/dev/null; then ffmpeg -version | head -1; exit 0; fi
+          for attempt in 1 2 3; do
+            if sudo apt-get update -o Acquire::Retries=3 &&
+               sudo apt-get install -y -o Acquire::Retries=3 ffmpeg; then
+              exit 0
+            fi
+            echo "apt attempt $attempt failed; retrying"
+            sleep 15
+          done
+          exit 1
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3
@@ -42,7 +56,10 @@ jobs:
 
       - name: Publish episode(s)
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # No ANTHROPIC_API_KEY: show notes come from the routine, beside the
+          # audio, or from metadata. Publishing cannot spend on the API. To
+          # bring back Sonnet-written notes, add the key here and set
+          # SHOW_NOTES_VIA_API: 'true'.
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}

@@ -10,9 +10,11 @@ your reasoning, only the paper, the script and the show's memory. So do not
 fact-check your own draft with a subagent, and do not launch background tasks
 of any kind: when this session ends, anything still running is lost.
 
-The Issue number `<N>` and the branch to commit to are given in the message
-that started you. Nobody is available to answer questions: decide, do the work,
-and report at the end.
+The Issue number `<N>` is the one you took from the queue in
+`prompts/routine_writer_daily.md` (or, for a one-off run, the one given in the
+message that started you), and the branch is `claude/routine-issue-<N>`.
+Nobody is available to answer questions: decide, do the work, and report at
+the end.
 
 ## 0. Start the clock and check this isn't a rerun
 
@@ -50,13 +52,14 @@ file, so open it with Read before citing anything from that figure. A caption
 with no image file was drawn as vector graphics or is a table, and its numbers
 are in the text above.
 
-If it reports **PAPER NOT FETCHED**, get the full text another way: the PubMed
-connector (convert the DOI to a PMC id, then fetch the full text), the bioRxiv
-connector, or fetching the DOI, the `pdf_url` or a working-paper version
-(NBER, SSRN, the authors' pages) directly. Save it as `/tmp/episode/paper.txt`.
-An abstract is not enough: the episode depends on the results, the methods and
+If it reports **PAPER NOT FETCHED**, the paper was not staged, and this
+sandbox cannot reach doi.org, Europe PMC, Unpaywall or any publisher. Try the
+PubMed connector (convert the DOI to a PMC id, then fetch the full text) and
+the bioRxiv connector, and save what you get as `/tmp/episode/paper.txt`. An
+abstract is not enough: the episode depends on the results, the methods and
 the authors' stated limitations. If you cannot get the full text, **stop**:
-commit nothing and say what you tried in your report.
+commit nothing, park the Issue as `prompts/routine_writer_daily.md` step 2
+says, and say what you tried in your report.
 
 Note exactly where the text came from, for example `PubMed Central PMC13614707
 via the PubMed connector` or `NBER working paper w31234 PDF,
@@ -91,6 +94,7 @@ draft there could be pushed if this session is cut short.
   "paper_source": "NBER working paper w31234 PDF, https://www.nber.org/...",
   "checked": false,
   "callbacks": [71, 74],
+  "show_notes": "**[Full paper title](https://doi.org/...)**\n\n*Journal, 2026*\n\n...",
   "verification_changes": [],
   "runs": [
     {"role": "writer", "started": "2026-11-06T14:03:00Z",
@@ -106,6 +110,7 @@ draft there could be pushed if this session is cut short.
 - `turns`: the dialogue. Speakers are exactly `Nadia` or `Theo`.
 - `callbacks`: the episode numbers the hosts cite in the dialogue, every one and
   only those. At most three. Empty if none.
+- `show_notes`: the episode page's notes, as Markdown — see below.
 - `checked` stays `false` and `verification_changes` stays empty: both belong to
   the checker.
 - `runs`: your one run. `finished` is the time you validate for the last time.
@@ -131,6 +136,17 @@ Two rules here **override** `prompts/host_dialogue.md`:
    to gain from any spelling. Do not estimate the length: run the validator in
    step 4 early and often.
 
+### Show notes
+
+Write `show_notes` by following `prompts/show_notes.md` exactly, with your
+finished script as the transcript: its three takeaways are the hosts' three
+takeaways, tightened to a sentence each. The notes are read on a screen, so
+here — and only here — numbers are digits and nomenclature is standard
+("13 of 26", "CD4", "IL-10"). The paper is in front of you, so take the title,
+journal and year from it rather than from memory. The validator checks the
+structure and the 130-word budget; whether every number is right is the
+checker's job, as it is for the dialogue.
+
 ## 4. Validate
 
 ```bash
@@ -139,8 +155,8 @@ python scripts/routine_tools.py validate --stage draft /tmp/episode/draft.script
 
 Fix what it reports and re-run until it prints `passed`. It checks the format,
 the spoken length, that the dialogue is written for the ear, the cold open,
-banned vocabulary, that every cited episode exists and matches `callbacks`, and
-the `runs` record. It cannot check facts. That is the checker's job, but the
+banned vocabulary, that every cited episode exists and matches `callbacks`, the
+show notes' structure and length, and the `runs` record. It cannot check facts. That is the checker's job, but the
 specification's accuracy rules still bind you. When you trim, cut setup and
 framing, never evidence or limitations.
 

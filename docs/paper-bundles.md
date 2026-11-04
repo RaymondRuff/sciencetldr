@@ -48,6 +48,15 @@ one clean labelled block instead of scattered through the prose. Tables get an
 
 ## Routes in
 
+The commonest route needs nobody: **Actions fetches the paper itself** when it
+is open. The Monday and Friday pickers prefer papers they can get and stage
+them as they open the Issue; the daily sweep stages any waiting paper that has
+since become open. A PDF found that way is bundled with its figures, and text
+from Europe PMC's XML or a publisher page becomes a bundle without them. The
+routines cannot do this for themselves: their sandbox reaches no paper source.
+
+For a paper that is not open, a person hands it over:
+
 Both of the everyday routes stop at the same place — 25 MB — so there is no
 point preferring one for size:
 
@@ -104,8 +113,11 @@ fetching text over HTTP exactly as it did before bundles existed.
 
 ## Setup
 
-- `GH_PAT` needs **Contents: Read and write** on `sciencetldr-papers`. Without
-  it the clone fails, the run says so, and bundles are silently skipped.
+- `GH_PAT` needs **Contents: Read and write** on `sciencetldr-papers`, which
+  means selecting that repository in the fine-grained token's repository
+  access. Without it the clone gets a 403, nothing is staged, no PDF is
+  requested (it could not reach the routine anyway), and the sweep exits
+  non-zero saying exactly this — which opens a `pipeline-alert` Issue.
 - The repository variable `PAPERS_REPO` overrides the default
   `RaymondRuff/sciencetldr-papers`.
 - `pillow` is a pipeline dependency; the routines install it alongside `pypdf`.

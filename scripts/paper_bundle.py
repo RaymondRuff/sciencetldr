@@ -441,6 +441,44 @@ def build(
     return meta
 
 
+def build_from_text(
+    text: str,
+    issue_number: int,
+    out_dir: Path,
+    *,
+    doi: str = "",
+    title: str = "",
+    journal: str = "",
+    provenance: str = "",
+) -> dict:
+    """A bundle with no figures, for a paper that came as text (XML or HTML).
+
+    The routines read it exactly as they read one built from a PDF; the
+    context step says no figure images came with it.
+    """
+    out_dir = Path(out_dir)
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
+    out_dir.mkdir(parents=True)
+    (out_dir / "paper.txt").write_text(text, encoding="utf-8")
+    meta = {
+        "issue": issue_number,
+        "doi": doi,
+        "title": title,
+        "journal": journal,
+        "provenance": provenance,
+        "text_chars": len(text),
+        "figures": [],
+        "captions": [],
+        "bundle_bytes": len(text.encode("utf-8")),
+    }
+    (out_dir / "meta.json").write_text(
+        json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    print(f"[bundle] issue {issue_number}: {len(text):,} chars of text via {provenance}")
+    return meta
+
+
 def _fit_budget(
     pdf_bytes: bytes, figures: list[dict], captions: list[dict], text_bytes: int
 ) -> list[dict]:
@@ -514,6 +552,24 @@ def _token() -> str:
     return ""
 
 
+class PapersRepoDenied(RuntimeError):
+    """The token works but has no access to the papers repository.
+
+    Distinct from every other failure here because it never fixes itself: a
+    fine-grained GH_PAT that does not list sciencetldr-papers fails the same
+    way on every run, and until someone adds the repository to it no
+    supplied or fetched paper can reach the routines.
+    """
+
+
+_DENIED_HINTS = (
+    "write access to repository not granted",
+    "repository not found",
+    "returned error: 403",
+    "permission to",
+)
+
+
 class PapersRepo:
     """A shallow clone of the private papers repository, in a temp directory.
 
@@ -568,7 +624,13 @@ class PapersRepo:
             message = (result.stderr or result.stdout).strip()
             if token:
                 message = message.replace(token, "***")
-            raise RuntimeError(f"git {args[0]} failed: {message}")
+            error = (
+                PapersRepoDenied
+                if args[0] in ("clone", "push")
+                and any(hint in message.lower() for hint in _DENIED_HINTS)
+                else RuntimeError
+            )
+            raise error(f"git {args[0]} failed: {message}")
         return result
 
     @property
@@ -772,29 +834,124 @@ def sync(
     return results.get(issue_number)
 
 
+def stage_many(items: list[dict]) -> dict[int, dict]:
+    """Bundle papers fetched from open sources, in one clone and one push.
+
+    `items` is one dict per Issue: {"issue", "doi", "title", "journal",
+    "fetched": paper_text.Fetched}. A fetched PDF is bundled with its figures;
+    text alone becomes a bundle without them. An Issue that already has a
+    bundle keeps it: a supplied PDF beats anything fetched.
+    """
+    if not items:
+        return {}
+    results: dict[int, dict] = {}
+    built: list[int] = []
+    cache = cache_dir()
+    cache.mkdir(parents=True, exist_ok=True)
+    with PapersRepo() as repo:
+        for item in items:
+            number = int(item["issue"])
+            bundle_dir = repo.papers / f"issue-{number}"
+            if (bundle_dir / "paper.txt").is_file():
+                print(f"[bundle] issue {number}: already bundled; keeping it")
+                continue
+            fetched = item["fetched"]
+            details = {
+                "doi": item.get("doi") or "",
+                "title": item.get("title") or "",
+                "journal": item.get("journal") or "",
+                "provenance": f"fetched:{fetched.provenance}",
+            }
+            try:
+                if fetched.pdf:
+                    meta = build(fetched.pdf, number, bundle_dir, **details)
+                else:
+                    meta = build_from_text(fetched.text, number, bundle_dir, **details)
+            except Exception as exc:  # noqa: BLE001 - a bad PDF is not fatal
+                print(f"[bundle] issue {number}: could not bundle ({exc})")
+                if bundle_dir.exists():
+                    shutil.rmtree(bundle_dir)
+                continue
+            _copy_tree(bundle_dir, cache / f"issue-{number}")
+            results[number] = meta
+            built.append(number)
+        if built:
+            listed = ", ".join(str(n) for n in built)
+            repo.commit(f"Stage open-access papers for issue(s) {listed}")
+    return results
+
+
+def stage(issue_number: int, fetched, *, doi: str = "", title: str = "", journal: str = "") -> Optional[dict]:
+    """Stage one fetched paper. See `stage_many`."""
+    return stage_many(
+        [{"issue": issue_number, "doi": doi, "title": title, "journal": journal, "fetched": fetched}]
+    ).get(issue_number)
+
+
+def local_papers_dir() -> Optional[Path]:
+    """A checkout of the papers repository beside this one, if there is one.
+
+    A routine has the papers repository cloned next to this repository when
+    it is listed as a source, so it can be read without another clone.
+    """
+    explicit = os.environ.get("PAPERS_DIR")
+    candidate = Path(explicit) if explicit else ROOT.parent / "sciencetldr-papers"
+    return candidate / "papers" if (candidate / "papers").is_dir() else None
+
+
+def bundled_issues() -> set[int]:
+    """Issue numbers that have a bundle waiting in the papers repository."""
+
+    def scan(papers: Path) -> set[int]:
+        found = set()
+        for paper in papers.glob("issue-*/paper.txt"):
+            suffix = paper.parent.name.removeprefix("issue-")
+            if suffix.isdigit():
+                found.add(int(suffix))
+        return found
+
+    local = local_papers_dir()
+    if local is not None:
+        return scan(local)
+    with PapersRepo() as repo:
+        return scan(repo.papers) if repo.papers.is_dir() else set()
+
+
 def fetch(issue_number: int, out_dir: Path) -> Optional[dict]:
-    """Copy a published bundle out of the papers repository. Returns its meta."""
+    """Copy a published bundle out of the papers repository. Returns its meta.
+
+    Reads the checkout beside this repository when there is one and it holds
+    the bundle, and clones otherwise.
+    """
     out_dir = Path(out_dir)
+
+    def copy_out(bundle: Path) -> Optional[dict]:
+        if not (bundle / "paper.txt").is_file():
+            return None
+        out_dir.mkdir(parents=True, exist_ok=True)
+        for item in bundle.iterdir():
+            target = out_dir / item.name
+            if item.is_dir():
+                shutil.copytree(item, target, dirs_exist_ok=True)
+            else:
+                shutil.copy2(item, target)
+        meta_path = out_dir / "meta.json"
+        meta = json.loads(meta_path.read_text("utf-8")) if meta_path.is_file() else {}
+        print(
+            f"[bundle] issue {issue_number}: bundle fetched "
+            f"({meta.get('text_chars', 0):,} chars, "
+            f"{len(meta.get('figures', []))} figures) -> {out_dir}"
+        )
+        return meta
+
+    local = local_papers_dir()
+    if local is not None:
+        meta = copy_out(local / f"issue-{issue_number}")
+        if meta is not None:
+            return meta
     try:
         with PapersRepo() as repo:
-            bundle = repo.papers / f"issue-{issue_number}"
-            if not (bundle / "paper.txt").is_file():
-                return None
-            out_dir.mkdir(parents=True, exist_ok=True)
-            for item in bundle.iterdir():
-                target = out_dir / item.name
-                if item.is_dir():
-                    shutil.copytree(item, target, dirs_exist_ok=True)
-                else:
-                    shutil.copy2(item, target)
-            meta_path = out_dir / "meta.json"
-            meta = json.loads(meta_path.read_text("utf-8")) if meta_path.is_file() else {}
-            print(
-                f"[bundle] issue {issue_number}: bundle fetched "
-                f"({meta.get('text_chars', 0):,} chars, "
-                f"{len(meta.get('figures', []))} figures) -> {out_dir}"
-            )
-            return meta
+            return copy_out(repo.papers / f"issue-{issue_number}")
     except Exception as exc:  # noqa: BLE001 - no bundle is a normal outcome
         print(f"[bundle] papers repository unreachable ({exc})")
         return None

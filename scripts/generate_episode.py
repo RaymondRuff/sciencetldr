@@ -13,11 +13,18 @@ Issue label states:
   episode-in-review      a draft PR is open
   generation-failed      the run errored; needs a look before retrying
 
+Most scripts are now written by Claude Code routines on the subscription, in
+a sandbox that cannot reach any paper source. So the sweep's other job is to
+put each paper where a routine *can* read it: it fetches what is open, takes
+what was emailed or uploaded, and stages either as a bundle in the private
+papers repository (see paper_bundle.py). A checked routine script on main is
+then synthesised here without the paper at all.
+
 MAX_EPISODES_PER_RUN caps *attempts* — every Issue that reaches the paid model
 calls counts, whether it succeeds or fails — so one run can never spend more
-than that many episodes' worth. Issues that only need a PDF cost nothing and
-don't count. A PDF emailed back in reply to a request is generated straight
-away outside the cap — replying is an explicit request.
+than that many episodes' worth. Nothing gets past it: not an emailed PDF,
+which is now staged for the routine instead, and not a routine script that
+fails validation. At 0 the sweep makes no paid model calls at all.
 
 The run stops outright on errors that will affect every Issue (the Anthropic
 spend limit, bad credentials), and refuses to start if the GitHub token can't
@@ -38,6 +45,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import NamedTuple
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -91,8 +99,8 @@ this step can be needed even when the Issue lists a PDF link."""
 HOW_EMAIL = """A request has been emailed. Either **reply to that email with \
 the PDF attached** or [upload it to the private papers repository]({upload}) \
 — both stop at 25 MB, and the email says how to shrink a paper past that. The \
-episode then generates within about half an hour. The PDF is never committed \
-to this public repository."""
+next sweep stages it for the writer routine, and the episode follows within a \
+day or so. The PDF is never committed to this public repository."""
 
 HOW_COMMIT = """To unblock it, reply to a PDF-request email if one arrives, or — \
 only for openly licensed papers, since this repository is public — commit the \
@@ -126,37 +134,109 @@ def issue_labels(issue: dict) -> set[str]:
     }
 
 
-def bundle_waiting_papers(issues: list[dict]) -> dict[int, dict]:
-    """Turn every PDF that has arrived into a bundle, in one pass.
+class PapersState:
+    """What this run learned about the papers repository."""
 
-    A PDF reaches the show by email or by browser upload to the private papers
-    repository, and either way the rest of the run reads the bundle rather
-    than the PDF. This is the single place that normalises them, so the route
-    a paper took stops mattering here.
+    reached: bool = False  # the staging pass got through the repository
+    denied: str = ""  # why GH_PAT could not reach it, if it could not
+    transient: set[int] = set()  # Issues whose sources failed only temporarily
 
-    Never fatal: without a bundle the run falls back to fetching text over
-    HTTP, which is what it did before bundles existed.
-    """
-    wanted = []
+
+def _paper_items(issues: list[dict]) -> list[dict]:
+    items = []
     for issue in issues:
         if LABEL_IN_REVIEW in issue_labels(issue):
             continue
         meta = github_issue.parse_metadata(issue["body"]) or {}
-        wanted.append(
+        items.append(
             {
                 "issue": issue["number"],
                 "doi": meta.get("doi") or "",
                 "title": meta.get("title") or issue["title"],
                 "journal": meta.get("journal") or "",
+                "pdf_url": meta.get("pdf_url") or "",
             }
         )
+    return items
+
+
+def fetch_open_papers(items: list[dict]) -> list[dict]:
+    """Fetch every open paper among `items`, ready to stage. HTTP only."""
+    fetched = []
+    for item in items:
+        number = item["issue"]
+        print(f"[stage] #{number}: looking for open full text")
+        try:
+            found = paper_text.fetch_open_text(doi=item["doi"], pdf_url=item["pdf_url"])
+        except paper_text.TransientFetchError as exc:
+            print(f"[stage] #{number}: a source failed temporarily; trying again next run ({exc})")
+            PapersState.transient.add(number)
+            continue
+        if found is None:
+            print(f"[stage] #{number}: no open full text")
+            continue
+        print(f"[stage] #{number}: {len(found.text):,} chars via {found.provenance}")
+        fetched.append(item | {"fetched": found})
+    return fetched
+
+
+def bundle_waiting_papers(issues: list[dict]) -> dict[int, dict]:
+    """Put every waiting paper that can be had into the papers repository.
+
+    Two sources, in order. First anything supplied — an emailed PDF or a
+    browser upload — which is normalised into a bundle. Then, for each Issue
+    still without one, whatever full text the open sources give, fetched
+    here because Actions can reach them and the routines cannot. Either way
+    the routine that writes the script reads the same bundle.
+
+    An Issue that has a checked script already needs no paper, and is left
+    alone. Never fatal: if the repository cannot be reached the reason is
+    kept in PapersState.denied and the run reports it at the end.
+    """
+    PapersState.reached = False
+    PapersState.denied = ""
+    PapersState.transient = set()
+    items = [i for i in _paper_items(issues) if routine_script(i["issue"]) is None]
     try:
         import paper_bundle
-
-        return paper_bundle.sync_all(wanted)
-    except Exception as exc:  # noqa: BLE001 - the papers repo is an optimisation
+    except Exception as exc:  # noqa: BLE001 - pillow or pypdf missing
         print(f"[bundle] no bundles this run ({exc})")
         return {}
+
+    bundled: dict[int, dict] = {}
+    try:
+        bundled.update(paper_bundle.sync_all(items))
+        unbundled = [i for i in items if i["issue"] not in bundled]
+        bundled.update(paper_bundle.stage_many(fetch_open_papers(unbundled)))
+        PapersState.reached = True
+    except paper_bundle.PapersRepoDenied as exc:
+        PapersState.denied = str(exc)
+        print(f"[bundle] the papers repository refused GH_PAT: {exc}")
+    except Exception as exc:  # noqa: BLE001 - the papers repo is an optimisation
+        print(f"[bundle] no bundles this run ({exc})")
+
+    for issue in issues:
+        if issue["number"] in bundled:
+            clear_pdf_request(issue, bundled[issue["number"]])
+    return bundled
+
+
+def clear_pdf_request(issue: dict, meta: dict) -> None:
+    """A waiting Issue's paper has arrived: say so once, and drop the labels."""
+    labels = issue_labels(issue)
+    if not labels & {LABEL_NEEDS_PDF, LABEL_PDF_REQUESTED}:
+        return
+    for stale in (LABEL_NEEDS_PDF, LABEL_PDF_REQUESTED):
+        remove_label(issue["number"], stale)
+    source = meta.get("provenance") or "a supplied PDF"
+    try:
+        github_issue.comment(
+            issue["number"],
+            f"The paper is in: staged for the writer routine (`{source}`). "
+            "No PDF is needed any more.",
+        )
+    except Exception as exc:  # noqa: BLE001 - a missing comment costs nothing
+        print(f"[bundle] could not comment on #{issue['number']}: {exc}")
 
 
 def eligible_issues(
@@ -252,30 +332,29 @@ def request_pdf(issue: dict, metadata: dict) -> None:
         )
 
 
-def request_missing_pdfs(issues: list[dict]) -> None:
-    """Ask for PDFs up front, so replies can arrive before an Issue's turn.
+def request_missing_pdfs(issues: list[dict], bundled: dict[int, dict]) -> None:
+    """Ask once for each paper that no open source has and nobody supplied.
 
-    Checks full-text availability only (HTTP, no model calls). Covers Issues the
-    sweep didn't reach this run, and Issues marked needs-pdf before emailing
-    existed.
+    The staging pass has already tried every open source, so an Issue left
+    without a bundle needs a PDF — unless its sources only failed for now, or
+    the staging pass never reached the papers repository, in which case a
+    supplied PDF could not reach the routine either and asking would only be
+    noise. The pdf-requested label is the memory: each paper is asked for once.
     """
+    if not PapersState.reached:
+        print("[episode] not requesting PDFs: the papers repository was not reached")
+        return
     for issue in issues:
+        number = issue["number"]
         labels = issue_labels(issue)
         if labels & {LABEL_IN_REVIEW, LABEL_PDF_REQUESTED}:
             continue
-        meta = github_issue.parse_metadata(issue["body"]) or {}
-        if LABEL_NEEDS_PDF not in labels:
-            try:
-                if paper_text.resolve(
-                    doi=meta.get("doi") or "",
-                    pdf_url=meta.get("pdf_url") or "",
-                    issue_number=issue["number"],
-                ):
-                    continue
-            except paper_text.TransientFetchError:
-                continue  # can't tell yet whether it's open; ask next run
-        print(f"[episode] #{issue['number']}: no full text; requesting a PDF")
-        request_pdf(issue, meta)
+        if number in bundled or number in PapersState.transient:
+            continue
+        if routine_script(number) is not None:
+            continue
+        print(f"[episode] #{number}: no full text anywhere open; requesting a PDF")
+        request_pdf(issue, github_issue.parse_metadata(issue["body"]) or {})
 
 
 def can_open_prs() -> bool:
@@ -415,7 +494,14 @@ def routine_script_path(number: int) -> Path:
     return ROUTINE_DIR / f"issue-{number}.script.json"
 
 
-def routine_script(number: int) -> tuple[list[dict], list[str], str] | None:
+class RoutineScript(NamedTuple):
+    turns: list[dict]
+    changes: list[str]
+    source: str
+    show_notes: str
+
+
+def routine_script(number: int) -> RoutineScript | None:
     """A script a Claude Code routine already wrote, if one is waiting.
 
     The routines run on the subscription, so a script that already exists is
@@ -438,10 +524,11 @@ def routine_script(number: int) -> tuple[list[dict], list[str], str] | None:
         if errors:
             print(f"  [episode] {path.name} does not validate: {errors[0]}")
             return None
-        return (
+        return RoutineScript(
             script["turns"],
             script.get("verification_changes") or [],
             script.get("paper_source") or "routine",
+            (script.get("show_notes") or "").strip(),
         )
     except Exception as exc:  # noqa: BLE001 - never let a bad file stop a sweep
         print(f"  [episode] could not read {path.name}: {exc}")
@@ -474,9 +561,10 @@ def process(
     doi = metadata.get("doi") or ""
     print(f"\n[episode] Issue #{number}: {title[:70]}")
 
+    show_notes = ""
     written = routine_script(number)
     if written:
-        turns, changes, provenance = written
+        turns, changes, provenance, show_notes = written
         outcome = DRAFTED_UNPAID
         print("  [episode] using the routine's checked script — no paid passes, "
               "no paper text needed")
@@ -561,11 +649,18 @@ def process(
     transcript_path.write_text(
         "\n\n".join(f"{t['speaker']}: {t['text']}" for t in turns), encoding="utf-8"
     )
+    sidecars = [transcript_path]
+    if show_notes:
+        # The routine wrote the show notes with the paper in front of it, and
+        # the checker checked them, so publishing needs no model call at all.
+        notes_path = INBOX / f"{stem}.notes.md"
+        notes_path.write_text(show_notes + "\n", encoding="utf-8")
+        sidecars.append(notes_path)
 
     url = open_review_pr(
         issue=issue,
         metadata=metadata,
-        files=[mp3_path, transcript_path, script_json, script_md],
+        files=[mp3_path, *sidecars, script_json, script_md],
         turns=turns,
         changes=changes,
         duration_s=duration,
@@ -683,13 +778,14 @@ def main() -> None:
     all_pending = github_issue.list_pending_issues()
     bundled = bundle_waiting_papers(all_pending)
     issues = eligible_issues(all_pending, args.issue, set(emailed), set(bundled))
+    eligible_numbers = {i["number"] for i in issues}
     if args.mailbox_only:
         issues = [i for i in issues if i["number"] in emailed]
 
     print(
         f"{len(issues)} eligible issue(s), {len(emailed)} with an emailed PDF, "
         f"{len(bundled)} with a bundled paper; "
-        f"at most {MAX_PER_RUN} other paid attempt(s) this run"
+        f"at most {MAX_PER_RUN} paid attempt(s) this run"
     )
 
     if issues and not args.dry_run and not can_open_prs():
@@ -709,67 +805,98 @@ def main() -> None:
     attempts = drafts = failures = 0
     for issue in issues:
         number = issue["number"]
-        from_email = number in emailed
-        # Emailed PDFs are deliberate requests, and a checked routine script
-        # bills nothing at all; neither sits under the cap. "Free" means a
-        # script that will actually be used: a file that fails validation
-        # must not carry its Issue past the cap into the paid path.
+        # A checked routine script bills nothing, so it sits outside the cap.
+        # Nothing else does: an emailed PDF has been staged for the routine
+        # above, not drafted on the API here. And "free" means a script that
+        # will actually be used — one that fails validation must not carry its
+        # Issue past the cap into the paid path.
         free = routine_script(number) is not None
-        allow_paid = from_email or attempts < MAX_PER_RUN
+        allow_paid = attempts < MAX_PER_RUN
         if not free and not allow_paid:
             continue
-        fatal = False
         try:
             outcome = process(
                 issue, client, dry_run=args.dry_run, allow_paid=allow_paid
             )
-            if outcome == DRAFTED and not from_email:
+            if outcome == DRAFTED:
                 attempts += 1
             if outcome in (DRAFTED, DRAFTED_UNPAID):
                 drafts += 1
         except Exception as exc:  # noqa: BLE001 - one bad paper shouldn't stop the sweep
             failures += 1
-            if not from_email:
-                attempts += 1  # a failure still spent money; it counts
+            if not free:
+                attempts += 1  # a failure on the paid path still spent money
             fatal = is_run_fatal(exc)
             print(f"  [episode] FAILED on #{number}: {exc}")
             if not args.dry_run and not fatal:
                 add_label(number, LABEL_FAILED)
-                retry = (
-                    "Reply to the PDF-request email again to retry."
-                    if from_email
-                    else "Remove the `generation-failed` label to retry."
-                )
                 github_issue.comment(
                     number,
-                    f"Episode generation failed:\n\n```\n{exc}\n```\n\n{retry}",
+                    f"Episode generation failed:\n\n```\n{exc}\n```\n\n"
+                    "Remove the `generation-failed` label to retry.",
                 )
-        finally:
-            # Consume the reply whether or not the episode succeeded, so a
-            # failing PDF can't re-trigger (and re-bill) every poll — except on
-            # a run-wide failure, which says nothing about this PDF.
-            if from_email and not args.dry_run and not fatal:
-                pdf_mailbox.mark_processed(number)
-        if fatal:
-            print("\n[episode] stopping: this error will affect every remaining issue")
-            break
+            if fatal:
+                print("\n[episode] stopping: this error will affect every remaining issue")
+                break
 
-    unprocessed = set(emailed) - {i["number"] for i in issues}
-    for number in unprocessed:
-        print(f"[mailbox] #{number}: PDF received but Issue isn't eligible; consuming reply")
-        if not args.dry_run:
-            pdf_mailbox.mark_processed(number)
+    if not args.dry_run:
+        consume_replies(emailed, eligible_numbers, bundled)
 
     if not args.mailbox_only and args.issue is None and not args.dry_run:
-        request_missing_pdfs(github_issue.list_pending_issues())
+        request_missing_pdfs(github_issue.list_pending_issues(), bundled)
 
     print(f"\n{drafts} draft(s) produced, {attempts} paid attempt(s), {failures} failure(s)")
     # After generation, so a draft made in this run can publish in this run
     # when nothing older is waiting.
     if args.publish_next and not args.dry_run:
         publish_next_draft()
+    problems = []
     if failures:
-        sys.exit(f"{failures} issue(s) failed")
+        problems.append(f"{failures} issue(s) failed")
+    if PapersState.denied:
+        problems.append(PAPERS_DENIED_MESSAGE)
+    if problems:
+        sys.exit("; ".join(problems))
+
+
+PAPERS_DENIED_MESSAGE = (
+    "GH_PAT cannot open the private papers repository, so no emailed, uploaded "
+    "or open-access paper can reach the writer routine. Edit the token at "
+    "https://github.com/settings/personal-access-tokens, add the "
+    "sciencetldr-papers repository, and give it Contents: Read and write"
+)
+
+
+def consume_replies(
+    emailed: dict[int, dict], eligible_numbers: set[int], bundled: dict[int, dict]
+) -> None:
+    """Mark emailed PDFs used once they can no longer be lost.
+
+    The mailbox is the only copy of an emailed paywalled PDF until it is
+    staged, so a reply is consumed when its bundle exists, when the PDF
+    reached a working papers repository and still would not bundle (it
+    never will), or when its Issue is no longer waiting. If the repository
+    was out of reach the reply is kept, and the next run tries again.
+    """
+    for number in emailed:
+        if number in bundled:
+            pdf_mailbox.mark_processed(number)
+        elif number not in eligible_numbers:
+            print(f"[mailbox] #{number}: PDF received but Issue isn't waiting; consuming reply")
+            pdf_mailbox.mark_processed(number)
+        elif PapersState.reached:
+            print(f"[mailbox] #{number}: the emailed PDF would not bundle; consuming reply")
+            pdf_mailbox.mark_processed(number)
+            try:
+                github_issue.comment(
+                    number,
+                    "The emailed PDF arrived but could not be read. Reply again "
+                    "with a different copy, or upload one to the papers repository.",
+                )
+            except Exception as exc:  # noqa: BLE001
+                print(f"[mailbox] could not comment on #{number}: {exc}")
+        else:
+            print(f"[mailbox] #{number}: papers repository unreachable; keeping the reply")
 
 
 if __name__ == "__main__":

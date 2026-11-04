@@ -44,6 +44,10 @@ INBOX = ROOT / "inbox"
 EPISODES_DIR = ROOT / "episodes"
 PROMPTS_DIR = ROOT / "prompts"
 
+# Show notes are written by the routine with the paper in front of it, and
+# arrive beside the audio as <stem>.notes.md. Without them the notes are built
+# from metadata alone. The Sonnet path below is kept, but runs only when
+# SHOW_NOTES_VIA_API=true: like the scripts, the notes stay on the subscription.
 SHOW_NOTES_MODEL = "claude-sonnet-5"
 # Sonnet 5 thinks by default (Sonnet 4.6 didn't), and thinking counts against
 # max_tokens — the old 1,500 cap would truncate the notes. Summarising a
@@ -425,6 +429,41 @@ def generate_show_notes(metadata: dict, transcript: str | None = None) -> str:
     return text
 
 
+def metadata_show_notes(metadata: dict) -> str:
+    """Show notes from metadata alone, for an episode that arrived without any.
+
+    Plain and true rather than eloquent: the title, journal and DOI lines of
+    prompts/show_notes.md, and nothing a model would have had to infer.
+    """
+    title = metadata.get("title") or "Untitled"
+    doi = (metadata.get("doi") or "").strip()
+    url = metadata.get("source_url") or (f"https://doi.org/{doi}" if doi else "")
+    lines = [f"**[{title}]({url})**" if url else f"**{title}**", ""]
+    if metadata.get("journal"):
+        lines += [f"*{metadata['journal']}*", ""]
+    if doi:
+        lines.append(f"DOI: [{doi}](https://doi.org/{doi})")
+    elif url:
+        lines.append(f"Source: [{url}]({url})")
+    return "\n".join(lines).strip()
+
+
+def show_notes_for(src: Path, metadata: dict, transcript: str | None) -> str:
+    """The routine's checked notes if they came with the audio; never a paid call by default."""
+    sidecar = src.with_suffix(".notes.md")
+    if sidecar.exists():
+        print("  • using the routine's show notes from inbox")
+        notes = sidecar.read_text(encoding="utf-8").strip()
+        sidecar.unlink()
+        if notes:
+            return notes
+    if os.environ.get("SHOW_NOTES_VIA_API") == "true":
+        print("  • generating show notes (Sonnet, SHOW_NOTES_VIA_API=true)")
+        return generate_show_notes(metadata, transcript=transcript)
+    print("  • no show notes came with the audio; building them from metadata")
+    return metadata_show_notes(metadata)
+
+
 def publish_one(src: Path, metadata: dict, issue: dict | None) -> dict:
     episode_number = next_episode_number()
     paper_title = metadata.get("title", "Untitled")
@@ -458,8 +497,7 @@ def publish_one(src: Path, metadata: dict, issue: dict | None) -> dict:
             transcript, encoding="utf-8"
         )
 
-    print("  • generating show notes (Sonnet)")
-    show_notes = generate_show_notes(metadata, transcript=transcript)
+    show_notes = show_notes_for(src, metadata, transcript)
     if series and series.get("description_header"):
         show_notes = f"{series['description_header']}\n\n{show_notes}"
 
