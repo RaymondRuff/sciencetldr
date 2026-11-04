@@ -2,19 +2,34 @@
   "issue": 90,
   "writer": "routine",
   "paper_source": "bundle:issue-90 (supplied PDF, uploaded to the papers repository and normalised by scripts/paper_bundle.py)",
-  "checked": false,
+  "checked": true,
   "callbacks": [
     40,
     90,
     92
   ],
-  "verification_changes": [],
+  "verification_changes": [
+    "Nadia called the affibody 'a small three-helix bundle, about fifty-eight residues, engineered from a staph protein-A domain'; the paper states neither the residue count nor the protein-A origin, so the unsupported background is cut (the GA module's origin in protein G is stated, in the Figure 1 legend, and kept).",
+    "Nadia said a protein this small 'goes straight through the kidney in minutes' and called albumin 'the most abundant protein in serum'; neither is in the paper, which says only that ZHER2 clears rapidly and that albumin binding lifts the complex above the glomerular filtration threshold. Rewritten to the paper's own framing.",
+    "Nadia described the E76 fix as 'saturation mutagenesis ... recovered it', implying an experimental scan; the paper's saturation mutagenesis was computational, ranked by predicted delta-G-bind and solubility, with only the chosen E76G variant measured by SPR. Said out loud now.",
+    "The immunogenicity beat gave only the strong-binding MHC-II windows (thirty-six versus fifty-nine, a thirty-nine percent reduction) and omitted the weak-binding windows, which move from two hundred forty-four to two hundred fifteen, twelve percent. Added, since the omission flatters the claim.",
+    "Nadia said the real in vivo separation was hepatic retention by the linkered control, 'a genuine difference'. The quantified panels do not support it: at four hours liver average radiance efficiency is four point one, three point four and three point seven for Z342, the linkered control and the lead, with no significant difference between the two fusions, and at forty-eight hours livers are near-identical (Figures 7J-7M). The difference that reaches significance is renal; corrected, with the forty-eight-hour kidney-to-tumour ratios.",
+    "Nadia listed 'a diagnosed point mutation' among the optimisations the lead received and the control did not; the linkered control is built from the same corrected albumin domain (GA_E40G) and so carries that mutation. Corrected to the optimisations the control genuinely lacks.",
+    "The comparator beat omitted the second linker control, ZLA, which at about twenty-nine point three picomolar on albumin with comparable HER2 affinity sits within roughly twofold of the lead (Figure 4A), and omitted that the parental ABD035 at one point three six picomolar is tighter than any chimera. Both bear directly on the architecture claim; added, and the second takeaway qualified.",
+    "Theo's episode ninety callback credited that episode with showing that 'a plain positional consensus beat most of the clever entries'; card 090 records no such result. Claim removed."
+  ],
   "runs": [
     {
       "role": "writer",
       "started": "2026-11-04T01:11:03Z",
       "finished": "2026-11-04T01:17:19Z",
       "safeguard_stops": 0
+    },
+    {
+      "role": "checker",
+      "started": "2026-11-04T05:55:05Z",
+      "finished": "2026-11-04T06:01:20Z",
+      "safeguard_stops": 1
     }
   ],
   "turns": [
@@ -28,7 +43,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "And today, a paper in Cell Chemical Biology from Qiu and colleagues at Sun Yat-sen University: \"Shared alpha-helix chimeraffibodies enable linker-free bispecific protein design.\" The short version — if you want one protein to grab two different targets, you normally build two binding domains and tie them together with a floppy linker. These authors got rid of the linker by making the two domains share a helix."
+      "text": "And today, in Cell Chemical Biology, Qiu and colleagues at Sun Yat-sen University: \"Shared alpha-helix chimeraffibodies enable linker-free bispecific protein design.\" The short version — if you want one protein to grab two targets, you normally build two binding domains and tie them together with a floppy linker. These authors dropped the linker and made the two domains share a helix."
     },
     {
       "speaker": "Theo",
@@ -36,7 +51,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Because of the method, not the molecule. The linker is the part nobody likes. It's flexible, so you get conformational heterogeneity. It's exposed, so proteases find it. And it's a sequence that doesn't exist in nature, which is a classic place for immune recognition to start. The usual response is a better linker. This is a geometric alternative — make it unnecessary."
+      "text": "Because of the method, not the molecule. The linker is flexible, so you get conformational heterogeneity; exposed, so proteases find it; and non-human, which is a place immune recognition can start. The usual answer is a better linker; this is a geometric one."
     },
     {
       "speaker": "Theo",
@@ -52,7 +67,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "The scaffold is an affibody — a small three-helix bundle, about fifty-eight residues, engineered from a staph protein-A domain. One is Z three forty-two, which binds H-E-R-two. The others bind human serum albumin: A-B-D zero thirty-five, and one called G-A."
+      "text": "The scaffold is an affibody — a small bundle of alpha helices. One is Z three forty-two, which binds H-E-R-two. The others bind human serum albumin: A-B-D zero thirty-five, and one called G-A, a module from protein G."
     },
     {
       "speaker": "Theo",
@@ -60,7 +75,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Exactly. A protein this small goes straight through the kidney in minutes. Bind the most abundant protein in serum and you ride along with it."
+      "text": "Exactly. A binder this small clears fast through the kidney. Bind albumin and the complex sits above the glomerular filtration threshold, so you ride along with it."
     },
     {
       "speaker": "Theo",
@@ -76,7 +91,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "A pipeline they call AlphaSync. It takes contiguous backbone fragments — four to fourteen residues — from each domain and superimposes every compatible pair, scoring on backbone alignment, atomic clashes, and how short the result is. Then Protein M-P-N-N redesign on the survivors, with AlphaFold three models and Rosetta energies to triage."
+      "text": "A pipeline they call AlphaSync. It takes contiguous backbone fragments — four to fourteen residues — from each domain, superimposes every compatible pair, and scores on backbone alignment, clashes and length. Then Protein M-P-N-N redesign on the survivors, with AlphaFold three and Rosetta energies to triage."
     },
     {
       "speaker": "Theo",
@@ -84,7 +99,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "It is, and I'll come back to that. But they did express and measure these."
+      "text": "It is. But they did express and measure these."
     },
     {
       "speaker": "Theo",
@@ -92,7 +107,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Two lineages, and one of them failed. The lineage using the albumin binding domain — they call it Z-A-B — worked on the first pass. Albumin affinity three point five one nanomolar, and it held onto H-E-R-two while albumin was bound. The G-A lineage didn't. Albumin binding one hundred twenty-one nanomolar, and once albumin was on, H-E-R-two collapsed to one point zero eight micromolar."
+      "text": "Two lineages, one of which failed. The one using the albumin binding domain — they call it Z-A-B — worked first pass. Albumin affinity three point five one nanomolar, and it held onto H-E-R-two while albumin was bound. The G-A lineage didn't. Albumin binding one hundred twenty-one nanomolar, and once albumin was on, H-E-R-two collapsed to one point zero eight micromolar."
     },
     {
       "speaker": "Theo",
@@ -100,7 +115,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "That is what it looks like. But they found out why, and it is the best experiment in the paper. They superimposed the design on the parent structure and found a specific electrostatic clash — a glutamate on their design against a glutamate on albumin. Saturation mutagenesis at that one position, glutamate to glycine, recovered it. One hundred twenty-one nanomolar to one point two three nanomolar."
+      "text": "That is what it looks like. But they diagnosed why, and that's the best work in the paper. They superimposed the design on the parent structure and found a specific electrostatic clash — a glutamate on their design against a glutamate on albumin. They scanned every substitution at that position computationally, ranked on predicted binding energy and solubility, then measured the best — glutamate to glycine. One hundred twenty-one nanomolar to one point two three nanomolar."
     },
     {
       "speaker": "Theo",
@@ -108,7 +123,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Off one diagnosed residue. It wasn't a screen that found it, it was a structural reading of why the thing failed."
+      "text": "Off one diagnosed residue — a structural reading of why the thing failed, not a screen."
     },
     {
       "speaker": "Theo",
@@ -116,7 +131,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "In rounds — first the residues away from either interface, then the ones at them. And then the move I found most interesting. For the final construct they didn't pick a best design. They generated one hundred Protein M-P-N-N designs, took every position where more than sixty percent agreed, and fixed those. The consensus, not the winner."
+      "text": "In rounds — first the residues away from either interface, then the ones at them. Then the move I found most interesting: for the final construct they didn't pick a best design. They generated one hundred Protein M-P-N-N designs, took every position where more than sixty percent agreed, and fixed those."
     },
     {
       "speaker": "Theo",
@@ -132,15 +147,15 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Um — that's the claim, and I'll put an asterisk on it shortly. The supporting data first. Against their own linkered control, the predicted confidence score is ninety-three point nine versus eighty-one point seven, and backbone geometry outliers are zero percent versus seven point six. Molecular dynamics — triplicate, two hundred nanoseconds, plus a two microsecond run — has the linker-free version in one conformational basin while the linkered one wanders."
+      "text": "Um — that's the claim, and I'll put an asterisk on it. Against their own linkered control, the predicted confidence score is ninety-three point nine versus eighty-one point seven, and backbone geometry outliers are zero percent versus seven point six. Molecular dynamics — triplicate, two hundred nanoseconds, plus a two microsecond run — has the linker-free version in one conformational basin while the linkered one wanders."
     },
     {
       "speaker": "Theo",
-      "text": "That part I believe without much argument. A thing with no linker is more rigid than a thing with a linker."
+      "text": "That I believe without argument — a thing with no linker is more rigid than one with."
     },
     {
       "speaker": "Nadia",
-      "text": "[laughs lightly] Right. That's close to confirming a definition."
+      "text": "[laughs lightly] Right. Close to confirming a definition."
     },
     {
       "speaker": "Theo",
@@ -164,7 +179,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "It is, and peak tumour signal is close too — two point eight versus two point five in the same units. The real separation isn't tumour uptake, it's where the rest goes: the linkered construct holds up in the liver. That's a genuine difference, but it isn't the headline one."
+      "text": "It is, and the whole-body tumour curves overlap inside their error bars — peak two point eight against two point five. The separation that holds up is renal. At forty-eight hours the kidney-to-tumour ratio is about zero point five for the linker-free design, zero point nine for the linkered one, and two point four for the bare H-E-R-two binder. Liver, though — the text calls the linkered one hepatic, but in the quantified panels the two fusions' livers are indistinguishable."
     },
     {
       "speaker": "Theo",
@@ -204,7 +219,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "It is. Although, credit — they reported both rather than using whichever flattered the design. And in the extended format the design still edges the parent. But 'essentially matching the parent' is a claim whose size depends on the assay."
+      "text": "It is. Though credit — they reported both rather than the one that flattered the design. And in the extended format the design still edges the parent. But 'essentially matching the parent' is a claim whose size depends on the assay."
     },
     {
       "speaker": "Theo",
@@ -212,7 +227,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "This is where I'd push hardest. Two pieces. One is a prediction — both constructs through an M-H-C class two binding predictor across a panel of H-L-A alleles, and the linker-free design has thirty-six predicted strong-binding windows against fifty-nine for the linkered one."
+      "text": "This is where I'd push hardest. Two pieces. One is a prediction — both constructs through an M-H-C class two predictor across a panel of H-L-A alleles, and the linker-free design has thirty-six predicted strong-binding windows against fifty-nine for the linkered one. Though the weak-binding windows barely move — two hundred fifteen against two hundred forty-four."
     },
     {
       "speaker": "Theo",
@@ -220,7 +235,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "No. The second piece is cytokines — interferon gamma, I-L-four, I-L-ten — in dosed mice and in human P-B-M-C cultures from four donors. Those are real measurements, and reassuring as far as they go."
+      "text": "No. The second piece is cytokines — interferon gamma, I-L-four, I-L-ten — in dosed mice and in human P-B-M-C cultures from four donors. Those are real measurements, reassuring as far as they go."
     },
     {
       "speaker": "Theo",
@@ -236,7 +251,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Correct, and that's not a criticism — they don't claim otherwise. It's a technology paper and the molecule is an imaging agent. But the only thing asked of the design in an animal is: go to the tumour and stay there."
+      "text": "Correct, and that's not a criticism — it's a technology paper and the molecule is an imaging agent."
     },
     {
       "speaker": "Theo",
@@ -244,15 +259,15 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Hmm. That's the fairest objection you could make. The linker-free lead went through two rounds of interface design, a diagnosed point mutation, and a hundred-design consensus pass. The control is one construct with a standard glycine-serine linker."
+      "text": "Hmm. Fairest objection you could make. The control does carry the same diagnosed point mutation — it's built from the corrected albumin domain. What it didn't get is the two rounds of interface design or the hundred-design consensus pass. It's one construct with a standard glycine-serine linker."
     },
     {
       "speaker": "Theo",
-      "text": "So a heavily optimised design against an unoptimised one, concluding that architecture is what's different."
+      "text": "So a heavily optimised design against a barely optimised one, concluding architecture is the difference."
     },
     {
       "speaker": "Nadia",
-      "text": "Some of that gap is architecture. Some of it is effort. And the experiment that separates them is giving the linkered version the same budget, which nobody does, because it's a lot of work to strengthen your own control."
+      "text": "Some of that gap is architecture, some is effort, and the experiment that separates them is giving the control the same budget. And there's a second linker control in the affinity figure — the linkered A-B-D zero thirty-five construct sits at twenty-nine point three picomolar on albumin, against fourteen point three for the lead, with comparable H-E-R-two — within about twofold, with a linker. The parent albumin domain alone is one point three six picomolar, tighter than anything they built."
     },
     {
       "speaker": "Theo",
@@ -264,11 +279,11 @@
     },
     {
       "speaker": "Theo",
-      "text": "Episode ninety. Twelve thousand designed minibinders scored in a pooled primary T-cell assay — and the structure-confidence scores predicted nothing. Predicted local distance score, interface confidence, Rosetta interface energy, Protein M-P-N-N likelihood. None of them separated designs that worked from designs that didn't."
+      "text": "Episode ninety. Twelve thousand designed minibinders scored in a pooled primary T-cell assay — and the structure-confidence scores predicted nothing. Predicted local distance score, interface confidence, Rosetta energies, Protein M-P-N-N likelihood — none separated designs that worked from designs that didn't."
     },
     {
       "speaker": "Nadia",
-      "text": "And here those same metrics are the evidence in one of the figures. I read that figure as a description of the model, not evidence about the molecule."
+      "text": "And here those same metrics are the evidence in one of the figures. I read that figure as describing the model, not the molecule."
     },
     {
       "speaker": "Theo",
@@ -276,7 +291,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "They do, and that's the credit. This design was expressed, purified, and measured — by surface plasmon resonance, on cells, in animals. The scores aren't standing in for data. And the consensus move, taking what a hundred designs agree on rather than the top-scoring one, is the same thing that worked in that benchmark, where a plain positional consensus beat most of the clever entries."
+      "text": "They do, and that's the credit. This design was expressed, purified, and measured — by surface plasmon resonance, on cells, in animals. The scores aren't standing in for data. And taking what a hundred designs agree on rather than the top-scoring one at least hedges against trusting any single score."
     },
     {
       "speaker": "Theo",
@@ -284,7 +299,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "In episode ninety-two, the engineered interleukin-ten receptor agonist. Same underlying claim — architecture rather than affinity decides function. Reversing the order of two nanobodies abolished signalling entirely, binders unchanged."
+      "text": "In episode ninety-two, the engineered interleukin-ten receptor agonist. Same claim — architecture rather than affinity decides function. Reversing the order of two nanobodies abolished signalling, binders unchanged."
     },
     {
       "speaker": "Theo",
@@ -292,7 +307,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Three point one four angstroms. That's the cleanest statement of what's missing here. This paper's geometric claim is carried by predicted models and simulation. There's nuclear magnetic resonance data supporting that it's folded, and the authors are candid that peak correspondence is incomplete. But no experimental structure of the chimera, and none of it bound to both partners at once."
+      "text": "Three point one four angstroms. This paper's geometric claim is carried by predicted models and simulation. There's nuclear magnetic resonance data supporting that it's folded, though the authors are candid the peak correspondence is incomplete. But no experimental structure of the chimera, and none of it bound to both partners at once."
     },
     {
       "speaker": "Theo",
@@ -308,15 +323,15 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Small formats get into tumours and then leave. An albumin binder buys residence time back. What's novel isn't the strategy, it's doing it without adding a linker or much mass."
+      "text": "Small formats get into tumours and then leave; an albumin binder buys residence time back. What's novel is doing it without a linker or much added mass."
     },
     {
       "speaker": "Theo",
-      "text": "Alright, three things. First: helix sharing is a real design option, and the best evidence for it isn't the lead molecule — it's the failure. One lineage broke, they diagnosed a single electrostatic clash, one substitution recovered about a hundredfold. That's a framework behaving like one."
+      "text": "Alright, three things. First: helix sharing is a real design option, and the best evidence isn't the lead molecule — it's the failure. One lineage broke, they diagnosed a single electrostatic clash, one substitution recovered about a hundredfold."
     },
     {
       "speaker": "Theo",
-      "text": "Second: the binding data is good and the in vivo data is thin. Picomolar albumin affinity with sub-nanomolar target affinity retained is a real result. A fifteen percent half-life difference in three mice is not."
+      "text": "Second: the binding data is good and the in vivo data is thin. Picomolar albumin affinity with sub-nanomolar target affinity retained is a real result, though their own linkered control gets within twofold. A fifteen percent half-life difference in three mice is not."
     },
     {
       "speaker": "Theo",
@@ -328,7 +343,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "For me it's the control. Give the linkered construct the same optimisation campaign and run them head to head. If the gap survives, I'd believe the architecture argument. Right now I believe this particular molecule is good."
+      "text": "For me it's the control. Give the linkered construct the same optimisation campaign, head to head. If the gap survives, I'd believe the architecture argument. Right now I believe this particular molecule is good."
     },
     {
       "speaker": "Nadia",
