@@ -1,0 +1,39 @@
+{
+  "guid": "38bc59c9-40e6-444c-a011-330e7732149d",
+  "title": "Episode 95: Shared α-helix chimeraffibodies enable linker-free bispecific protein design",
+  "itunes_title": "Shared α-helix chimeraffibodies enable linker-free bispecific protein design",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**[Shared α-helix chimeraffibodies enable linker-free bispecific protein design](https://doi.org/10.1016/j.chembiol.2026.09.022)**\n\n*Cell Chemical Biology, 2026*\n\nDOI: [10.1016/j.chembiol.2026.09.022](https://doi.org/10.1016/j.chembiol.2026.09.022)\n\n**Question:** Can two α-helical binding domains be fused by sharing a single helix instead of a flexible linker, without destroying either paratope?\n\n**Answer:** Yes for one lineage: the lead construct bound albumin at ~14.3 pM and HER2 at 610 pM, matching parental affinities, with a rigid single-conformation structure by MD. A second lineage initially failed, rescued only after diagnosing one electrostatic clash; no experimental structure of the dual-bound complex exists.\n\n**Three takeaways**\n\n1. The strongest evidence is a failure case: one glutamate-to-glycine substitution restored albumin affinity ~100-fold (121 nM to 1.23 nM).\n2. Binding data are solid, but in vivo gains are thin — a 110.2 vs 96.2-hour tumor half-life difference came from only 3 mice per group.\n3. Immunogenicity claims rest on MHC-II prediction and acute cytokine assays, not repeat-dose antibody data — weaker evidence than the headline implies.",
+  "pub_date": "Wed, 04 Nov 2026 19:04:09 +0000",
+  "duration_seconds": 665,
+  "episode_number": 95,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "095-shared-a-helix-chimeraffibodies-enable-linker-free.mp3",
+  "enclosure_length_bytes": 7986721,
+  "source_metadata": {
+    "title": "Shared α-helix chimeraffibodies enable linker-free bispecific protein design",
+    "doi": "10.1016/j.chembiol.2026.09.022",
+    "authors": [
+      "Xiaohui Qiu",
+      "Xu Chen",
+      "Zekai Zeng",
+      "Yongxiao Li",
+      "Jianye Yuan",
+      "Chang Xu",
+      "Jiaqi Wang",
+      "Xinpei Wang",
+      "Ruizhi Lai",
+      "Youjian Zhou",
+      "Jinghuan Mao",
+      "Yiqi Wang",
+      "Qiankun Liao",
+      "Zhe Wang",
+      "Junqing Wang"
+    ],
+    "journal": "Cell Chemical Biology",
+    "abstract": "Small protein scaffolds enable precise targeting but often rely on flexible linkers that increase conformational heterogeneity and immunogenic liabilities. Here we develop Chimeraffibodies (CABs), a linker-free bispecific scaffold class that encodes interdomain geometry through seamless α-helix sharing. CABs are designed by AlphaSync, a structure-design framework that defines domain orientation through closed-form exhaustive local rigid-body superposition and ProteinMPNN-based sequence refinement. Using HER2-binding affibody and an albumin-binding domain, we generated 861CM, which preserved parental paratopes while enforcing a defined shared-helix architecture. Structural, biophysical and cellular analyses demonstrated stable assembly, cooperative target recruitment and retained affinity, with HSA binding of ∼14.3 pM and HER2 binding of 610 pM in the albumin-bound state. In vivo imaging revealed sustained tumor localization, reduced hepatic and renal background and improved organ-to-tumor contrast. CABs establish helix sharing as a geometry-encoded strategy for generating compact, homogeneous, and pharmacokinetically optimized bispecific proteins.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1016/j.chembiol.2026.09.022"
+  },
+  "source_issue": 90
+}

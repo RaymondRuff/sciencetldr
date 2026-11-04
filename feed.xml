@@ -2457,5 +2457,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Sun, 01 Nov 2026 18:44:55 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 95: Shared α-helix chimeraffibodies enable linker-free bispecific protein design]]></title>
+      <itunes:title><![CDATA[Shared α-helix chimeraffibodies enable linker-free bispecific protein design]]></itunes:title>
+      <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1016/j.chembiol.2026.09.022">Shared α-helix chimeraffibodies enable linker-free bispecific protein design</a></strong></p>
+<p><em>Cell Chemical Biology, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1016/j.chembiol.2026.09.022">10.1016/j.chembiol.2026.09.022</a></p>
+<p><strong>Question:</strong> Can two α-helical binding domains be fused by sharing a single helix instead of a flexible linker, without destroying either paratope?</p>
+<p><strong>Answer:</strong> Yes for one lineage: the lead construct bound albumin at ~14.3 pM and HER2 at 610 pM, matching parental affinities, with a rigid single-conformation structure by MD. A second lineage initially failed, rescued only after diagnosing one electrostatic clash; no experimental structure of the dual-bound complex exists.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>The strongest evidence is a failure case: one glutamate-to-glycine substitution restored albumin affinity ~100-fold (121 nM to 1.23 nM).</li>
+<li>Binding data are solid, but in vivo gains are thin — a 110.2 vs 96.2-hour tumor half-life difference came from only 3 mice per group.</li>
+<li>Immunogenicity claims rest on MHC-II prediction and acute cytokine assays, not repeat-dose antibody data — weaker evidence than the headline implies.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1016/j.chembiol.2026.09.022">Shared α-helix chimeraffibodies enable linker-free bispecific protein design</a></strong></p>
+<p><em>Cell Chemical Biology, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1016/j.chembiol.2026.09.022">10.1016/j.chembiol.2026.09.022</a></p>
+<p><strong>Question:</strong> Can two α-helical binding domains be fused by sharing a single helix instead of a flexible linker, without destroying either paratope?</p>
+<p><strong>Answer:</strong> Yes for one lineage: the lead construct bound albumin at ~14.3 pM and HER2 at 610 pM, matching parental affinities, with a rigid single-conformation structure by MD. A second lineage initially failed, rescued only after diagnosing one electrostatic clash; no experimental structure of the dual-bound complex exists.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>The strongest evidence is a failure case: one glutamate-to-glycine substitution restored albumin affinity ~100-fold (121 nM to 1.23 nM).</li>
+<li>Binding data are solid, but in vivo gains are thin — a 110.2 vs 96.2-hour tumor half-life difference came from only 3 mice per group.</li>
+<li>Immunogenicity claims rest on MHC-II prediction and acute cytokine assays, not repeat-dose antibody data — weaker evidence than the headline implies.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-095</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/095-shared-a-helix-chimeraffibodies-enable-linker-free.mp3" length="7986721" type="audio/mpeg"/>
+      <guid isPermaLink="false">38bc59c9-40e6-444c-a011-330e7732149d</guid>
+      <itunes:duration>665</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>95</itunes:episode>
+      <podcast:episode>95</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 04 Nov 2026 19:04:09 +0000</pubDate>
+    </item>
   </channel>
 </rss>
