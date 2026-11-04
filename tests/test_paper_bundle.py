@@ -111,6 +111,48 @@ class FigureTests(unittest.TestCase):
         self.assertIn("figures/fig-p03-01.png", section)
 
 
+class AwkwardPdfTests(unittest.TestCase):
+    """Publishers ship PDFs that are out of spec. Losing the paper is not an option."""
+
+    @staticmethod
+    def _page_with_font_files(*keys):
+        from pypdf.generic import DictionaryObject, NameObject, NumberObject
+
+        descriptor = DictionaryObject()
+        for index, key in enumerate(keys):
+            descriptor[NameObject(key)] = NumberObject(index)
+        font = DictionaryObject()
+        font[NameObject("/FontDescriptor")] = descriptor
+        fonts = DictionaryObject()
+        fonts[NameObject("/F1")] = font
+        resources = DictionaryObject()
+        resources[NameObject("/Font")] = fonts
+        page = DictionaryObject()
+        page[NameObject("/Resources")] = resources
+        return page, descriptor
+
+    def test_a_second_font_program_is_dropped(self):
+        # Cell Chemical Biology embeds HelveticaNeue with both, and pypdf
+        # raises rather than reading the page.
+        page, descriptor = self._page_with_font_files("/FontFile", "/FontFile3")
+        reader = type("R", (), {"pages": [page]})()
+        self.assertEqual(pb._drop_duplicate_font_files(reader), 1)
+        self.assertIn("/FontFile", descriptor)
+        self.assertNotIn("/FontFile3", descriptor)
+
+    def test_a_well_formed_font_is_left_alone(self):
+        page, descriptor = self._page_with_font_files("/FontFile2")
+        reader = type("R", (), {"pages": [page]})()
+        self.assertEqual(pb._drop_duplicate_font_files(reader), 0)
+        self.assertIn("/FontFile2", descriptor)
+
+    def test_a_page_without_fonts_is_not_an_error(self):
+        from pypdf.generic import DictionaryObject
+
+        reader = type("R", (), {"pages": [DictionaryObject()]})()
+        self.assertEqual(pb._drop_duplicate_font_files(reader), 0)
+
+
 class TrimTests(unittest.TestCase):
     """The collected captions must survive `prepare_paper_text`."""
 
