@@ -54,6 +54,19 @@ parks a broken one.
 3. **Action** — validates, synthesizes audio, publishes, rebuilds the feed.
    Unchanged machinery; it just stops calling Claude.
 
+Step 3 exists as of this change. `generate_episode.process()` looks for
+`generated/routine/issue-<N>.script.json` before it writes anything, and uses
+it when the validator accepts it, skipping both Opus passes. A script that
+does not validate, or will not parse, falls through to the paid path rather
+than taking the episode down, and the run says which. Because a routine script
+bills nothing, those Issues sit outside `MAX_EPISODES_PER_RUN` and do not count
+as attempts — and a run with no `ANTHROPIC_API_KEY` at all now starts, draft
+whatever has a script waiting, and says so for the rest.
+
+That leaves audio as the only unavoidable spend in an episode: roughly
+nineteen cents of Gemini synthesis against the dollar thirty-five to dollar
+ninety the two Opus passes cost.
+
 Two routines rather than one is deliberate: it is genuinely two sets of eyes,
 and it makes the prototype's worst failure (below) structurally impossible.
 
