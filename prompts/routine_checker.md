@@ -132,6 +132,13 @@ git push origin <branch>
 Commit exactly those two files to the branch. Do not open a pull request. Do
 not push to `main`. Do not modify any other file.
 
+Write that `git commit` exactly as shown, with a plain single-line `-m`
+message. Never build a commit message with `$(...)`, backticks, `printf` or a
+heredoc: the harness cannot verify quoting like that before the command runs,
+so it raises a permission prompt, and in an unattended routine nobody is there
+to answer it. A checker run on 2026-11-04 finished its whole fact-check and
+then stalled with the work unpushed for exactly this reason.
+
 ## If a safeguard stops you
 
 Your session may be stopped by a safety classifier, which shows up as a message
