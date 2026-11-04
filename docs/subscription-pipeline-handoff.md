@@ -162,6 +162,64 @@ Measure: wall-clock, whether safeguards fire, whether the validator passes
 first try, whether the checker finds anything real, and plan usage before and
 after.
 
+## The schedule, as it now runs
+
+Three routines, all on the subscription, created 2026-11-04:
+
+| Routine | Trigger | When |
+|---|---|---|
+| writer (daily) | `trig_01VBSoyKHPFYpDDMQnTuK7iX` | `0 8 * * *` UTC |
+| checker (daily) | `trig_01WAWFF3Sqwd4GLnWquPKe6f` | `0 11 * * *` UTC |
+| checker (issue 90, one-shot) | `trig_013iTMLgNkBh9YKhYmJPt152` | fired 2026-11-04 05:40 UTC |
+
+The cadence is set by the Actions sweep at 14:00 UTC: writer, checker three
+hours later, sweep three hours after that. The writer picks its own Issue —
+oldest open `podcast-pending` first, skipping anything labelled
+`episode-in-review`, anything with a script already on `main`, and anything
+with `issue-<N>` in a remote branch or open PR head. Nothing hands it a number.
+
+**The checker pushes the checked script straight to `main`**, as the digest
+routine does, and that push is what puts an episode into production: the sweep
+reads the script from `main`, synthesises it, and `AUTO_PUBLISH` merges the
+audio PR in the same run. No human looks at it in between. That is deliberate
+— the goal is a show that does not need reviewing — but it is worth saying out
+loud, because four things are now carrying the quality on their own: the
+writer, an independent checker that never sees the writer's reasoning,
+`validate --stage checked`, and `generate_episode.routine_script()` revalidating
+before it will use anything. The checker is told to hold a script back and
+notify rather than push if it judges it unpublishable.
+
+To put a human back in the loop, set the `AUTO_PUBLISH` variable to anything
+but `true`: the audio PR is then left open for a listen. To stop the pipeline
+spending on drafts at all, `MAX_EPISODES_PER_RUN` is `0` as of 2026-11-04,
+which blocks every paid attempt while leaving routine-written scripts free to
+run, since those bypass the cap. That is the stop-loss rule expressed as
+config.
+
+## What a routine can actually do (tested 2026-11-03)
+
+A capability routine (`trig_0132enLut5dmfJrHikpQorWN`) ran four tests. All four
+passed, and two of them change what is worth building:
+
+1. **The private papers repository is cloned and readable.** List it as a
+   second source and it appears at `/home/user/sciencetldr-papers`, on `main`.
+2. **A routine can push to it.**
+3. **A routine can read a PDF natively** with `Read` and its `pages` parameter,
+   twenty pages at a time, and *see the plotted data* — it read hazard ratios
+   off a dot plot and a forest plot that appear nowhere in the pypdf text.
+   This is why both routine prompts tell the checker and writer to read
+   `figures/` as images rather than trusting `paper.txt`.
+4. **A PDF attached to a reply mid-session arrives as a file on disk** under
+   `/root/.claude/uploads/<uuid>/`, with a `.saved-uploads.jsonl` beside it
+   recording name, size and sha256. The routine read it and pushed it into the
+   papers repository with a matching checksum.
+
+Test 4 is the way out of the PDF bottleneck, and it is better than email: a
+routine that cannot reach a paper now sends a push notification and waits, and
+a PDF replied into that session goes straight into the papers repository. No
+IMAP, no app password, no polling. `scripts/pdf_mailbox.py` can be retired once
+that path has carried a few papers.
+
 ## Also outstanding
 
 - **Memory is 9 episodes stale.** Cards stop at 84; `memory/threads.md` has not
