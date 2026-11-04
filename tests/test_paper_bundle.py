@@ -249,5 +249,45 @@ class CacheTests(unittest.TestCase):
         self.assertEqual(pb.sync_all([]), {})
 
 
+class FindRawPdfTests(unittest.TestCase):
+    """Matching an upload to its Issue by whatever name it arrived under."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.repo = pb.PapersRepo.__new__(pb.PapersRepo)
+        self.repo.dir = Path(self.tmp.name)
+        (self.repo.dir / "papers").mkdir()
+
+    def drop(self, name: str) -> Path:
+        path = self.repo.papers / name
+        path.write_bytes(b"%PDF-1.4 ")
+        return path
+
+    def test_issue_number_filename_wins(self):
+        self.drop("issue-90.pdf")
+        self.drop("something-else.pdf")
+        found = self.repo.find_raw_pdf(90, "10.1016/j.chembiol.2026.09.022")
+        self.assertEqual(found.name, "issue-90.pdf")
+
+    def test_doi_suffix_in_filename_matches(self):
+        self.drop("journal.pmed.1005251.pdf")
+        found = self.repo.find_raw_pdf(86, "10.1371/journal.pmed.1005251")
+        self.assertEqual(found.name, "journal.pmed.1005251.pdf")
+
+    def test_a_publisher_filename_matches_nothing(self):
+        # Elsevier names downloads like this: no Issue number, no DOI. The
+        # sole-upload claim in sync_all is what covers it.
+        self.drop("1-s2.0-S2451945626003234-main.pdf")
+        self.assertIsNone(
+            self.repo.find_raw_pdf(90, "10.1016/j.chembiol.2026.09.022")
+        )
+
+    def test_no_papers_directory_is_not_an_error(self):
+        empty = pb.PapersRepo.__new__(pb.PapersRepo)
+        empty.dir = Path(self.tmp.name) / "nothing"
+        self.assertIsNone(empty.find_raw_pdf(1, "10.1/x"))
+
+
 if __name__ == "__main__":
     unittest.main()
