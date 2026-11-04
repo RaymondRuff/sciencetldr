@@ -99,8 +99,8 @@ this step can be needed even when the Issue lists a PDF link."""
 HOW_EMAIL = """A request has been emailed. Either **reply to that email with \
 the PDF attached** or [upload it to the private papers repository]({upload}) \
 — both stop at 25 MB, and the email says how to shrink a paper past that. The \
-episode then generates within about half an hour. The PDF is never committed \
-to this public repository."""
+next sweep stages it for the writer routine, and the episode follows within a \
+day or so. The PDF is never committed to this public repository."""
 
 HOW_COMMIT = """To unblock it, reply to a PDF-request email if one arrives, or — \
 only for openly licensed papers, since this repository is public — commit the \

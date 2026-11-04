@@ -105,8 +105,10 @@ Either route works — whichever is to hand:
      Name it issue-{issue_number}.pdf if that's easy; a filename containing
      the DOI is recognised too.
 
-The episode then generates within about half an hour and a draft PR appears
-for review.
+The next sweep stages it for the writer, which writes the script the
+following morning; once the checker has been through it, it publishes the same
+day without needing anything more from you. This is the only email you will
+get about this paper.
 
 Over 25 MB? Both routes stop there. Shrink it first — this downsamples the
 figures, which stay legible, and usually cuts a figure-heavy paper by most of
