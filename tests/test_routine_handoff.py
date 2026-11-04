@@ -79,24 +79,24 @@ class RoutineHandoffTests(unittest.TestCase):
     def test_no_script_is_not_an_error(self):
         self.assertIsNone(ge.routine_script(7))
 
-    def test_a_valid_draft_is_used(self):
-        self.write(7, a_valid_script(7))
+    def test_a_checked_script_is_used(self):
+        self.write(7, a_valid_script(7, checked=True))
         result = ge.routine_script(7)
         self.assertIsNotNone(result)
         turns, changes, source = result
         self.assertEqual(turns[0]["speaker"], "Nadia")
-        self.assertEqual(changes, [])
+        self.assertEqual(changes, ["fixed a number"])
         self.assertEqual(source, "bundle:issue-7")
 
-    def test_a_checked_script_carries_its_corrections(self):
-        self.write(7, a_valid_script(7, checked=True))
-        _, changes, _ = ge.routine_script(7)
-        self.assertEqual(changes, ["fixed a number"])
+    def test_an_unchecked_draft_waits_for_the_checker(self):
+        # The checker's push to main is what puts an episode into production;
+        # a draft that reached main some other way must not skip it.
+        self.write(7, a_valid_script(7))
+        self.assertIsNone(ge.routine_script(7))
 
     def test_a_script_that_fails_the_validator_is_refused(self):
-        # Digits in the dialogue: the voices would read them wrong, so this
-        # must fall through to the paid path rather than be synthesised.
-        script = a_valid_script(7)
+        # Digits in the dialogue: the voices would read them wrong.
+        script = a_valid_script(7, checked=True)
         script["turns"][-1]["text"] = "The hazard ratio was 1.27 in that arm."
         self.write(7, script)
         self.assertIsNone(ge.routine_script(7))
@@ -106,8 +106,90 @@ class RoutineHandoffTests(unittest.TestCase):
         self.assertIsNone(ge.routine_script(7))
 
     def test_a_script_for_another_issue_is_not_picked_up(self):
-        self.write(7, a_valid_script(7))
+        self.write(7, a_valid_script(7, checked=True))
         self.assertIsNone(ge.routine_script(8))
+
+
+def an_issue(number: int, *labels: str) -> dict:
+    return {
+        "number": number,
+        "title": f"Paper {number}",
+        "labels": [{"name": name} for name in ("podcast-pending", *labels)],
+        "body": "",
+    }
+
+
+class ScriptedIssueTests(unittest.TestCase):
+    """A checked script on main is enough to make an episode, on its own.
+
+    Issue #90's paper reached the show as an upload to the private papers
+    repository, which the sweep's token could not open. The sweep then saw a
+    `needs-pdf` Issue with no text, skipped it, and never used the checked
+    script sitting on main.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        tmp = Path(self._tmp.name)
+        saved = {
+            name: getattr(ge, name)
+            for name in ("ROOT", "ROUTINE_DIR", "GENERATED", "subprocess")
+        }
+        self.addCleanup(lambda: [setattr(ge, k, v) for k, v in saved.items()])
+        ge.ROUTINE_DIR = tmp / "routine"
+        ge.ROUTINE_DIR.mkdir()
+        ge.GENERATED = tmp
+        ge.ROOT = tmp
+
+        class NoGit:
+            @staticmethod
+            def run(*args, **kwargs):
+                return None
+
+        ge.subprocess = NoGit  # process() checks out main before anything else
+
+        self.resolved: list[int] = []
+        saved_resolve = ge.paper_text.resolve
+
+        def no_fetching(**kwargs):
+            self.resolved.append(kwargs.get("issue_number"))
+            return None
+
+        ge.paper_text.resolve = no_fetching
+        self.addCleanup(lambda: setattr(ge.paper_text, "resolve", saved_resolve))
+
+    def write(self, issue: int, script: dict) -> None:
+        ge.routine_script_path(issue).write_text(json.dumps(script), encoding="utf-8")
+
+    def test_a_scripted_needs_pdf_issue_is_eligible_and_first(self):
+        self.write(90, a_valid_script(90, checked=True))
+        issues = [
+            an_issue(40, "needs-pdf", "pdf-requested"),
+            an_issue(85),
+            an_issue(90, "needs-pdf", "pdf-requested"),
+        ]
+        saved = ge.paper_text.from_local_pdf
+        ge.paper_text.from_local_pdf = lambda doi, number: None
+        self.addCleanup(lambda: setattr(ge.paper_text, "from_local_pdf", saved))
+        chosen = [i["number"] for i in ge.eligible_issues(issues, None, set())]
+        self.assertEqual(chosen, [90, 85])
+
+    def test_a_scripted_issue_needs_no_paper_text(self):
+        self.write(90, a_valid_script(90, checked=True))
+        outcome = ge.process(an_issue(90, "needs-pdf"), None, dry_run=True)
+        self.assertEqual(outcome, ge.DRAFTED_UNPAID)
+        self.assertEqual(self.resolved, [])
+
+    def test_no_paid_attempt_left_means_no_fetch_and_no_spend(self):
+        # An invalid script is no script. With the cap at zero the paid path
+        # must not run, and there is no point fetching text it would feed.
+        script = a_valid_script(85, checked=True)
+        script["turns"][-1]["text"] = "It was 12 percent."
+        self.write(85, script)
+        outcome = ge.process(an_issue(85), None, dry_run=True, allow_paid=False)
+        self.assertEqual(outcome, ge.WAITING)
+        self.assertEqual(self.resolved, [])
 
 
 class PublishSlotTests(unittest.TestCase):

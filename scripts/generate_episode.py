@@ -78,6 +78,7 @@ DRAFTED = "drafted"
 DRAFTED_UNPAID = "drafted-unpaid"  # a routine wrote it; nothing was billed
 NEEDS_PDF = "needs-pdf"
 DEFERRED = "deferred"  # a source was rate-limited or down; try again next run
+WAITING = "waiting"  # no checked script yet and the paid path is capped out
 
 NEEDS_PDF_COMMENT = """No open-access full text could be reached for this paper \
 automatically{reason}.
@@ -175,7 +176,7 @@ def eligible_issues(
             raise SystemExit(f"Issue #{explicit} is not an open {LABEL_PENDING} issue")
         return chosen
 
-    with_pdf, uploaded, rest = [], [], []
+    scripted, with_pdf, uploaded, rest = [], [], [], []
     for issue in issues:
         labels = issue_labels(issue)
         number = issue["number"]
@@ -187,6 +188,12 @@ def eligible_issues(
             with_pdf.append(issue)
             continue
         if labels & SKIP_LABELS:
+            continue
+        if routine_script(number) is not None:
+            # A checked script is the finished product: it needs no paper
+            # text here and bills nothing, so it goes first — whatever the
+            # paper's labels say about how hard its text was to reach.
+            scripted.append(issue)
             continue
         meta = github_issue.parse_metadata(issue["body"]) or {}
         if number in bundled:
@@ -201,7 +208,7 @@ def eligible_issues(
         ):
             continue  # still waiting on the human
         rest.append(issue)
-    return with_pdf + uploaded + rest
+    return scripted + with_pdf + uploaded + rest
 
 
 def request_pdf(issue: dict, metadata: dict) -> None:
@@ -413,24 +420,24 @@ def routine_script(number: int) -> tuple[list[dict], list[str], str] | None:
 
     The routines run on the subscription, so a script that already exists is
     free to use, and the two Opus passes it replaces are the most expensive
-    part of a run. Only a script the validator accepts is used: a malformed
-    one falls through to the paid path rather than taking the episode down.
+    part of a run. Only a *checked* script the validator accepts is used: the
+    checker's push to main is what puts an episode into production, so a
+    draft that reached main some other way waits for it. A malformed script
+    is treated as no script; whether the paid path may then run is the cap's
+    decision, not this function's.
     """
     path = routine_script_path(number)
     if not path.is_file():
         return None
     try:
         script = json.loads(path.read_text(encoding="utf-8-sig"))
-        stage = "checked" if script.get("checked") else "draft"
-        errors, _ = routine_tools.validate(script, stage)
-        if errors:
-            print(
-                f"  [episode] {path.name} does not validate, so the paid path "
-                f"runs instead: {errors[0]}"
-            )
+        if not script.get("checked"):
+            print(f"  [episode] {path.name} has not been through the checker yet")
             return None
-        if stage == "draft":
-            print(f"  [episode] {path.name} has not been through the checker")
+        errors, _ = routine_tools.validate(script, "checked")
+        if errors:
+            print(f"  [episode] {path.name} does not validate: {errors[0]}")
+            return None
         return (
             script["turns"],
             script.get("verification_changes") or [],
@@ -441,11 +448,24 @@ def routine_script(number: int) -> tuple[list[dict], list[str], str] | None:
         return None
 
 
-def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
+def process(
+    issue: dict,
+    client: anthropic.Anthropic,
+    *,
+    dry_run: bool,
+    allow_paid: bool = True,
+) -> str:
     """Attempt one Issue.
 
-    Returns NEEDS_PDF when no full text was reachable (nothing was spent), or
-    DRAFTED once a draft (or dry-run script) exists. Anything else raises.
+    A checked routine script is used as it stands: the paper was read when the
+    script was written and checked, so nothing here needs its text — which
+    matters, because the text often lives only in the private papers
+    repository. Without one, the paid path runs only if `allow_paid`.
+
+    Returns NEEDS_PDF when no full text was reachable (nothing was spent),
+    WAITING when the paid path was not allowed (nothing was spent), or a
+    DRAFTED outcome once a draft (or dry-run script) exists. Anything else
+    raises.
     """
     subprocess.run(["git", "checkout", "-q", BASE_BRANCH], check=True)
     number = issue["number"]
@@ -454,33 +474,35 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
     doi = metadata.get("doi") or ""
     print(f"\n[episode] Issue #{number}: {title[:70]}")
 
-    try:
-        resolved = paper_text.resolve(
-            doi=doi, pdf_url=metadata.get("pdf_url") or "", issue_number=number
-        )
-    except paper_text.TransientFetchError as exc:
-        print(f"  [episode] full text temporarily unreachable; retrying next run ({exc})")
-        return DEFERRED
-    if not resolved:
-        print("  [episode] no full text reachable; requesting a PDF")
-        if not dry_run:
-            request_pdf(issue, metadata)
-        return NEEDS_PDF
-    full_text, provenance = resolved
-    full_text = generate_script.prepare_paper_text(full_text)
-
     written = routine_script(number)
     if written:
-        turns, changes, script_source = written
-        provenance = f"{provenance}; script {script_source}"
+        turns, changes, provenance = written
         outcome = DRAFTED_UNPAID
-        print(f"  [episode] using the routine's script — no paid passes this issue")
-    elif client is None:
-        raise RuntimeError(
-            "no Anthropic client and no routine script at "
-            f"{routine_script_path(number).relative_to(ROOT)}; nothing to write with"
-        )
+        print("  [episode] using the routine's checked script — no paid passes, "
+              "no paper text needed")
+    elif not allow_paid:
+        print("  [episode] no checked routine script and no paid attempts left; waiting")
+        return WAITING
     else:
+        try:
+            resolved = paper_text.resolve(
+                doi=doi, pdf_url=metadata.get("pdf_url") or "", issue_number=number
+            )
+        except paper_text.TransientFetchError as exc:
+            print(f"  [episode] full text temporarily unreachable; retrying next run ({exc})")
+            return DEFERRED
+        if not resolved:
+            print("  [episode] no full text reachable; requesting a PDF")
+            if not dry_run:
+                request_pdf(issue, metadata)
+            return NEEDS_PDF
+        full_text, provenance = resolved
+        full_text = generate_script.prepare_paper_text(full_text)
+        if client is None:
+            raise RuntimeError(
+                "no Anthropic client and no routine script at "
+                f"{routine_script_path(number).relative_to(ROOT)}; nothing to write with"
+            )
         outcome = DRAFTED
         context = memory.memory_context(
             " ".join(
@@ -688,14 +710,19 @@ def main() -> None:
     for issue in issues:
         number = issue["number"]
         from_email = number in emailed
-        free = routine_script_path(number).is_file()
-        # Emailed PDFs are deliberate requests, and a routine-written script
-        # bills nothing at all; neither sits under the cap.
-        if not from_email and not free and attempts >= MAX_PER_RUN:
+        # Emailed PDFs are deliberate requests, and a checked routine script
+        # bills nothing at all; neither sits under the cap. "Free" means a
+        # script that will actually be used: a file that fails validation
+        # must not carry its Issue past the cap into the paid path.
+        free = routine_script(number) is not None
+        allow_paid = from_email or attempts < MAX_PER_RUN
+        if not free and not allow_paid:
             continue
         fatal = False
         try:
-            outcome = process(issue, client, dry_run=args.dry_run)
+            outcome = process(
+                issue, client, dry_run=args.dry_run, allow_paid=allow_paid
+            )
             if outcome == DRAFTED and not from_email:
                 attempts += 1
             if outcome in (DRAFTED, DRAFTED_UNPAID):
