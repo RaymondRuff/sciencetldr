@@ -155,6 +155,19 @@ def europe_pmc_record(doi: str) -> Optional[dict]:
     return results[0] if results else None
 
 
+def europe_pmc_xml(pmcid: str) -> Optional[tuple[str, str]]:
+    """The body text of a PMC article's full-text XML. Raises on a failed request."""
+    full = requests.get(f"{EUROPEPMC}/{pmcid}/fullTextXML", timeout=TIMEOUT)
+    full.raise_for_status()
+    body = ET.fromstring(full.content).find(".//body")
+    if body is None:
+        return None
+    text = _clean("\n\n".join(t.strip() for t in body.itertext() if t.strip()))
+    if len(text) < MIN_USEFUL_CHARS:
+        return None
+    return text, f"europepmc:{pmcid}"
+
+
 def from_europe_pmc(doi: str) -> Optional[tuple[str, str]]:
     """Full text XML from Europe PMC, for papers in the PMC OA subset."""
     if not doi:
@@ -167,16 +180,7 @@ def from_europe_pmc(doi: str) -> Optional[tuple[str, str]]:
         if not pmcid or record.get("inPMC") != "Y":
             print("  [paper] Europe PMC: metadata only, no full text")
             return None
-        full = requests.get(f"{EUROPEPMC}/{pmcid}/fullTextXML", timeout=TIMEOUT)
-        full.raise_for_status()
-        root = ET.fromstring(full.content)
-        body = root.find(".//body")
-        if body is None:
-            return None
-        text = _clean("\n\n".join(t.strip() for t in body.itertext() if t.strip()))
-        if len(text) < MIN_USEFUL_CHARS:
-            return None
-        return text, f"europepmc:{pmcid}"
+        return europe_pmc_xml(pmcid)
     except Exception as exc:  # noqa: BLE001
         _record(exc)
         print(f"  [paper] Europe PMC lookup failed: {exc}")
@@ -354,7 +358,12 @@ def fetch_open_text(*, doi: str = "", pdf_url: str = "") -> Optional[Fetched]:
             )
             if found:
                 return found
-        xml = from_europe_pmc(doi)
+        try:
+            xml = europe_pmc_xml(pmcid)
+        except Exception as exc:  # noqa: BLE001
+            _record(exc)
+            print(f"  [paper] Europe PMC full text failed: {exc}")
+            xml = None
         if xml and looks_like_full_text(xml[0]):
             return Fetched(*xml)
 
