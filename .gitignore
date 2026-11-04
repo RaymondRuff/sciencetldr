@@ -10,6 +10,10 @@ venv/
 .DS_Store
 .idea/
 .vscode/
-.claude/
+# Claude Code's local state stays private, but the project's permission grants
+# are shared, so every session and every routine starts with the same ones.
+# Machine-specific overrides go in .claude/settings.local.json, still ignored.
+.claude/*
+!.claude/settings.json
 .uv-cache/
 *.tmp

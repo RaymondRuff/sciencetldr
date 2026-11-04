@@ -251,3 +251,9 @@ that path has carried a few papers.
 - `uv run python ...` for anything in `scripts/`.
 - End commits with `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>` and
   PR bodies with `🤖 Generated with [Claude Code](https://claude.com/claude-code)`.
+- `.claude/settings.json` is **committed** (`.gitignore` un-ignores just that
+  file) and grants `Bash(gh pr merge:*)`. So any session in this repo, local or
+  routine, can merge a pull request without being asked — deliberately, because
+  an unmerged PR was the last thing in the pipeline that needed a human. The
+  gate on publishing is the `AUTO_PUBLISH` variable, not a person. Put
+  machine-specific grants in `.claude/settings.local.json`, which stays ignored.
