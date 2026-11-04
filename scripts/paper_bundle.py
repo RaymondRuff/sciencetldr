@@ -76,6 +76,9 @@ PNG_PREFERENCE = 1.6
 # figures are downsampled again rather than dropped.
 BUNDLE_BUDGET = 8_000_000
 
+# A font descriptor may embed its program under any one of these keys.
+FONT_FILE_KEYS = ("/FontFile", "/FontFile2", "/FontFile3")
+
 CAPTION_RE = re.compile(
     r"^[ \t]*((?:Fig(?:ure)?|Table|Extended Data Fig(?:ure)?|Supplementary "
     r"(?:Fig(?:ure)?|Table))\.?[ \t]*(\d+)[.:]?)(?=[ \t])",
@@ -108,11 +111,60 @@ def figures_heading() -> str:
 # --------------------------------------------------------------------------- #
 
 
+def _drop_duplicate_font_files(reader) -> int:
+    """Leave one /FontFile* per descriptor so pypdf will read the page at all.
+
+    The spec allows a font descriptor only one embedded program, and pypdf
+    raises if it finds two. Publishers ship them anyway: Cell Chemical Biology
+    embeds HelveticaNeue with both /FontFile and /FontFile3, which cost us a
+    whole 61-page paper. Which program stays is irrelevant to us — the glyph
+    to unicode mapping lives in the encoding and /ToUnicode, not in the font
+    program — so the first one pypdf would have preferred is kept.
+    """
+    dropped = 0
+    for page in reader.pages:
+        try:
+            fonts = page["/Resources"]["/Font"]
+        except Exception:  # noqa: BLE001 - no fonts on this page, or an odd tree
+            continue
+        for key in list(fonts):
+            try:
+                descriptor = fonts[key].get_object()["/FontDescriptor"].get_object()
+            except Exception:  # noqa: BLE001 - a Type 0/3 font, or no descriptor
+                continue
+            present = [k for k in FONT_FILE_KEYS if k in descriptor]
+            for redundant in present[1:]:
+                del descriptor[redundant]
+                dropped += 1
+    return dropped
+
+
 def page_texts(pdf_bytes: bytes) -> list[str]:
+    """Text per page, losing at most the pages that genuinely cannot be read."""
     from pypdf import PdfReader
 
     reader = PdfReader(io.BytesIO(pdf_bytes))
-    return [page.extract_text() or "" for page in reader.pages]
+    dropped = _drop_duplicate_font_files(reader)
+    if dropped:
+        print(f"[bundle] ignored {dropped} duplicate embedded font program(s)")
+
+    pages: list[str] = []
+    failed: list[int] = []
+    for number, page in enumerate(reader.pages, start=1):
+        try:
+            pages.append(page.extract_text() or "")
+        except Exception as exc:  # noqa: BLE001 - one bad page must not cost the paper
+            pages.append("")
+            failed.append(number)
+            if len(failed) == 1:
+                print(f"[bundle] page {number} would not extract: {exc}")
+    if failed:
+        print(
+            f"[bundle] {len(failed)} of {len(reader.pages)} page(s) unreadable "
+            f"({', '.join(str(n) for n in failed[:12])}"
+            f"{', ...' if len(failed) > 12 else ''})"
+        )
+    return pages
 
 
 def find_captions(pages: Iterable[str]) -> list[dict]:
