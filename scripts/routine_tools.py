@@ -426,10 +426,17 @@ def cmd_context(issue_number: int, out_dir: Path) -> int:
             issue_number=issue_number,
         )
     except paper_text.TransientFetchError as exc:
-        print(f"[context] PAPER NOT FETCHED (temporary failure): {exc}")
-        return 2
+        resolved = None
+        if "proxy" in str(exc).lower():
+            print("[context] (the direct sources are refused from this sandbox, as expected)")
+        else:
+            print(f"[context] a direct source failed: {str(exc)[:300]}")
     if not resolved:
-        print("[context] PAPER NOT FETCHED: no open full text reachable from here")
+        print(
+            "[context] PAPER NOT FETCHED: it is not staged in the papers repository, "
+            "and nothing open was reachable from here. Try the PubMed and bioRxiv "
+            "connectors; do not retry the direct sources."
+        )
         return 2
     text, source = resolved
     text = paper_text.prepare_paper_text(text)
