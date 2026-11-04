@@ -54,6 +54,28 @@ parks a broken one.
 3. **Action** — validates, synthesizes audio, publishes, rebuilds the feed.
    Unchanged machinery; it just stops calling Claude.
 
+Step 3 exists as of this change. `generate_episode.process()` looks for
+`generated/routine/issue-<N>.script.json` before it writes anything, and uses
+it when the validator accepts it, skipping both Opus passes. A script that
+does not validate, or will not parse, falls through to the paid path rather
+than taking the episode down, and the run says which. Because a routine script
+bills nothing, those Issues sit outside `MAX_EPISODES_PER_RUN` and do not count
+as attempts — and a run with no `ANTHROPIC_API_KEY` at all now starts, draft
+whatever has a script waiting, and says so for the rest.
+
+That leaves audio as the only unavoidable spend in an episode: roughly
+nineteen cents of Gemini synthesis against the dollar thirty-five to dollar
+ninety the two Opus passes cost.
+
+One consequence worth knowing about. A routine now opens a pull request that
+carries a script and no audio, and `publish_next_draft` used to pick the
+oldest open `episode/*` branch — so such a PR could win the daily publish slot,
+merge, publish nothing, and leave the real draft waiting another day. The
+publish slot now requires the PR to actually add audio under `inbox/`, which is
+what the publish workflow triggers on. Branch names are no longer evidence of
+anything, but keep giving the routines `claude/routine-issue-<N>` anyway: it
+reads correctly in the PR list.
+
 Two routines rather than one is deliberate: it is genuinely two sets of eyes,
 and it makes the prototype's worst failure (below) structurally impossible.
 
@@ -140,11 +162,71 @@ Measure: wall-clock, whether safeguards fire, whether the validator passes
 first try, whether the checker finds anything real, and plan usage before and
 after.
 
+## The schedule, as it now runs
+
+Three routines, all on the subscription, created 2026-11-04:
+
+| Routine | Trigger | When |
+|---|---|---|
+| writer (daily) | `trig_01VBSoyKHPFYpDDMQnTuK7iX` | `0 8 * * *` UTC |
+| checker (daily) | `trig_01WAWFF3Sqwd4GLnWquPKe6f` | `0 11 * * *` UTC |
+| checker (issue 90, one-shot) | `trig_013iTMLgNkBh9YKhYmJPt152` | fired 2026-11-04 05:40 UTC |
+
+The cadence is set by the Actions sweep at 14:00 UTC: writer, checker three
+hours later, sweep three hours after that. The writer picks its own Issue —
+oldest open `podcast-pending` first, skipping anything labelled
+`episode-in-review`, anything with a script already on `main`, and anything
+with `issue-<N>` in a remote branch or open PR head. Nothing hands it a number.
+
+**The checker pushes the checked script straight to `main`**, as the digest
+routine does, and that push is what puts an episode into production: the sweep
+reads the script from `main`, synthesises it, and `AUTO_PUBLISH` merges the
+audio PR in the same run. No human looks at it in between. That is deliberate
+— the goal is a show that does not need reviewing — but it is worth saying out
+loud, because four things are now carrying the quality on their own: the
+writer, an independent checker that never sees the writer's reasoning,
+`validate --stage checked`, and `generate_episode.routine_script()` revalidating
+before it will use anything. The checker is told to hold a script back and
+notify rather than push if it judges it unpublishable.
+
+To put a human back in the loop, set the `AUTO_PUBLISH` variable to anything
+but `true`: the audio PR is then left open for a listen. To stop the pipeline
+spending on drafts at all, `MAX_EPISODES_PER_RUN` is `0` as of 2026-11-04,
+which blocks every paid attempt while leaving routine-written scripts free to
+run, since those bypass the cap. That is the stop-loss rule expressed as
+config.
+
+## What a routine can actually do (tested 2026-11-03)
+
+A capability routine (`trig_0132enLut5dmfJrHikpQorWN`) ran four tests. All four
+passed, and two of them change what is worth building:
+
+1. **The private papers repository is cloned and readable.** List it as a
+   second source and it appears at `/home/user/sciencetldr-papers`, on `main`.
+2. **A routine can push to it.**
+3. **A routine can read a PDF natively** with `Read` and its `pages` parameter,
+   twenty pages at a time, and *see the plotted data* — it read hazard ratios
+   off a dot plot and a forest plot that appear nowhere in the pypdf text.
+   This is why both routine prompts tell the checker and writer to read
+   `figures/` as images rather than trusting `paper.txt`.
+4. **A PDF attached to a reply mid-session arrives as a file on disk** under
+   `/root/.claude/uploads/<uuid>/`, with a `.saved-uploads.jsonl` beside it
+   recording name, size and sha256. The routine read it and pushed it into the
+   papers repository with a matching checksum.
+
+Test 4 is the way out of the PDF bottleneck, and it is better than email: a
+routine that cannot reach a paper now sends a push notification and waits, and
+a PDF replied into that session goes straight into the papers repository. No
+IMAP, no app password, no polling. `scripts/pdf_mailbox.py` can be retired once
+that path has carried a few papers.
+
 ## Also outstanding
 
-- **Memory is 9 episodes stale.** Cards stop at 84; `memory/threads.md` has not
-  changed since 2026-10-03. Episodes 85–93 are missing. The API limit resets
-  2026-11-01 00:00 UTC, but prefer to backfill with a routine rather than spend.
+- ~~**Memory is 9 episodes stale.**~~ Done on 2026-11-01: the prototype routine
+  wrote cards 85–93 and revised `memory/threads.md`, on the subscription. Only
+  card 094 is missing, which `memory.yml` builds on the next publish. Worth
+  rechecking after a few unattended episodes, because the writer draws its
+  callbacks from these files and stale memory degrades them quietly.
 - **`.github/workflows/memory.yml` discards its work on failure.** The commit
   step does not run when the script dies partway, so every failed run rebuilt
   and threw away the same cards. If that workflow survives the migration, give

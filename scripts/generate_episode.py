@@ -51,11 +51,17 @@ import github_issue
 import memory
 import paper_text
 import pdf_mailbox
+import routine_tools
 import tts_dialogue
 
 ROOT = Path(__file__).resolve().parent.parent
 INBOX = ROOT / "inbox"
 GENERATED = ROOT / "generated"
+# The audio extensions publish.yml triggers on; a draft PR has to carry one.
+AUDIO_SUFFIXES = (".mp3", ".m4a", ".mp4a", ".wav")
+
+# Where the Claude Code routines leave a script they have already written.
+ROUTINE_DIR = GENERATED / "routine"
 
 LABEL_PENDING = "podcast-pending"
 LABEL_NEEDS_PDF = "needs-pdf"
@@ -69,6 +75,7 @@ BASE_BRANCH = "main"
 
 # Outcomes of process(); failures raise instead.
 DRAFTED = "drafted"
+DRAFTED_UNPAID = "drafted-unpaid"  # a routine wrote it; nothing was billed
 NEEDS_PDF = "needs-pdf"
 DEFERRED = "deferred"  # a source was rate-limited or down; try again next run
 
@@ -397,6 +404,43 @@ The full script is in `{files[-1].relative_to(ROOT).as_posix()}` in this PR.
     return url
 
 
+def routine_script_path(number: int) -> Path:
+    return ROUTINE_DIR / f"issue-{number}.script.json"
+
+
+def routine_script(number: int) -> tuple[list[dict], list[str], str] | None:
+    """A script a Claude Code routine already wrote, if one is waiting.
+
+    The routines run on the subscription, so a script that already exists is
+    free to use, and the two Opus passes it replaces are the most expensive
+    part of a run. Only a script the validator accepts is used: a malformed
+    one falls through to the paid path rather than taking the episode down.
+    """
+    path = routine_script_path(number)
+    if not path.is_file():
+        return None
+    try:
+        script = json.loads(path.read_text(encoding="utf-8-sig"))
+        stage = "checked" if script.get("checked") else "draft"
+        errors, _ = routine_tools.validate(script, stage)
+        if errors:
+            print(
+                f"  [episode] {path.name} does not validate, so the paid path "
+                f"runs instead: {errors[0]}"
+            )
+            return None
+        if stage == "draft":
+            print(f"  [episode] {path.name} has not been through the checker")
+        return (
+            script["turns"],
+            script.get("verification_changes") or [],
+            script.get("paper_source") or "routine",
+        )
+    except Exception as exc:  # noqa: BLE001 - never let a bad file stop a sweep
+        print(f"  [episode] could not read {path.name}: {exc}")
+        return None
+
+
 def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
     """Attempt one Issue.
 
@@ -425,22 +469,35 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
     full_text, provenance = resolved
     full_text = generate_script.prepare_paper_text(full_text)
 
-    context = memory.memory_context(
-        " ".join(
-            [
-                title,
-                metadata.get("digest_excerpt") or "",
-                full_text[:4000],
-            ]
-        ),
-        client=client,
-    )
-    turns = generate_script.draft(
-        client, paper_text=full_text, metadata=metadata, memory=context
-    )
-    turns, changes = generate_script.verify(
-        client, turns=turns, paper_text=full_text, metadata=metadata, memory=context
-    )
+    written = routine_script(number)
+    if written:
+        turns, changes, script_source = written
+        provenance = f"{provenance}; script {script_source}"
+        outcome = DRAFTED_UNPAID
+        print(f"  [episode] using the routine's script — no paid passes this issue")
+    elif client is None:
+        raise RuntimeError(
+            "no Anthropic client and no routine script at "
+            f"{routine_script_path(number).relative_to(ROOT)}; nothing to write with"
+        )
+    else:
+        outcome = DRAFTED
+        context = memory.memory_context(
+            " ".join(
+                [
+                    title,
+                    metadata.get("digest_excerpt") or "",
+                    full_text[:4000],
+                ]
+            ),
+            client=client,
+        )
+        turns = generate_script.draft(
+            client, paper_text=full_text, metadata=metadata, memory=context
+        )
+        turns, changes = generate_script.verify(
+            client, turns=turns, paper_text=full_text, metadata=metadata, memory=context
+        )
 
     GENERATED.mkdir(parents=True, exist_ok=True)
     slug = slugify(title, max_length=60, word_boundary=True, save_order=True)
@@ -468,7 +525,7 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
 
     if dry_run:
         print(f"  [episode] dry run — wrote {script_md.relative_to(ROOT)}")
-        return DRAFTED
+        return outcome
 
     INBOX.mkdir(parents=True, exist_ok=True)
     wav_path = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / f"{stem}.wav"
@@ -504,7 +561,33 @@ def process(issue: dict, client: anthropic.Anthropic, *, dry_run: bool) -> str:
         "Listen to the audio in the PR, then merge to publish or close to discard.",
     )
     print(f"  [episode] review PR: {url}")
-    return DRAFTED
+    return outcome
+
+
+def carries_audio(number: int) -> bool:
+    """Whether this PR actually adds an episode's audio to inbox/.
+
+    A branch name is not evidence. The routines commit a written script on a
+    branch of their own, and a PR carrying only a script publishes nothing if
+    it is merged in the publish slot — it consumes the slot and leaves the real
+    draft waiting another day. So the audio is what makes a draft a draft.
+
+    A confident "nothing matches" skips the PR. A lookup that *fails* falls
+    back to trusting the branch name, because silently never publishing again
+    is worse than merging one PR too eagerly.
+    """
+    try:
+        files = json.loads(gh(["pr", "view", str(number), "--json", "files"]))["files"]
+    except Exception as exc:  # noqa: BLE001 - an older gh, or a transient API error
+        print(
+            f"[publish] could not list the files on #{number} ({exc}); "
+            "falling back to the branch name"
+        )
+        return True
+    return any(
+        f["path"].startswith("inbox/") and f["path"].lower().endswith(AUDIO_SUFFIXES)
+        for f in files
+    )
 
 
 def publish_next_draft() -> None:
@@ -523,10 +606,16 @@ def publish_next_draft() -> None:
             ]
         )
     )
-    drafts = sorted(
+    candidates = sorted(
         (p for p in prs if p["headRefName"].startswith("episode/")),
         key=lambda p: p["createdAt"],
     )
+    drafts = []
+    for pr in candidates:
+        if carries_audio(pr["number"]):
+            drafts.append(pr)
+        else:
+            print(f"[publish] #{pr['number']} carries no audio, so it is not a draft")
     if not drafts:
         print("[publish] no episode drafts waiting")
         return
@@ -588,20 +677,28 @@ def main() -> None:
             "'Pull requests: Read and write' on this repository."
         )
 
-    client = anthropic.Anthropic() if issues else None
+    client = None
+    if issues:
+        try:
+            client = anthropic.Anthropic()
+        except Exception as exc:  # noqa: BLE001 - routine scripts need no client
+            print(f"[episode] no Anthropic client ({exc}); only issues with a "
+                  "routine-written script can be drafted this run")
     attempts = drafts = failures = 0
     for issue in issues:
         number = issue["number"]
         from_email = number in emailed
-        # Emailed PDFs are deliberate requests and sit outside the cap.
-        if not from_email and attempts >= MAX_PER_RUN:
+        free = routine_script_path(number).is_file()
+        # Emailed PDFs are deliberate requests, and a routine-written script
+        # bills nothing at all; neither sits under the cap.
+        if not from_email and not free and attempts >= MAX_PER_RUN:
             continue
         fatal = False
         try:
             outcome = process(issue, client, dry_run=args.dry_run)
             if outcome == DRAFTED and not from_email:
                 attempts += 1
-            if outcome == DRAFTED:
+            if outcome in (DRAFTED, DRAFTED_UNPAID):
                 drafts += 1
         except Exception as exc:  # noqa: BLE001 - one bad paper shouldn't stop the sweep
             failures += 1
