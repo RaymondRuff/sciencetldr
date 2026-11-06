@@ -35,4 +35,8 @@ jobs:
           # Contents: Read and write there.
           GH_PAT: ${{ secrets.GH_PAT }}
           PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
+          # A paywalled top pick is asked for at once, with its deadline and
+          # runner-up, rather than whenever the next sweep happens to run.
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
         run: uv run python scripts/select_monday_paper.py

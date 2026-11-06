@@ -17,6 +17,7 @@ remembered by a **label on the Issue**, so the next run already knows:
 |---|---|---|
 | No Issue is eligible today | Stop and report | **No.** The queue refills on Mondays and Fridays. |
 | You cannot get an Issue's paper | Park it `needs-pdf` (step 2) and move on | **No.** The daily sweep emails one request for its PDF, and that one email is the only ask. |
+| An Issue is in its PDF window (`awaiting-pdf`) | Nothing: the queue skips it | **No.** Ray was asked at pick time, with a deadline; Actions opens the runner-up when it passes. |
 | Something about one Issue only Ray can fix — the staged paper is the wrong paper, or unreadable, or the Issue itself is broken | Park it `generation-failed` with a note saying what and why | **Once**: one push notification, sent after the label is on. Neither routine touches a `generation-failed` Issue again, so it cannot repeat. |
 
 Never send a push notification for anything else, and never one per paper.

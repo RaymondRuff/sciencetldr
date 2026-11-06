@@ -8,6 +8,10 @@ name: generate-episode
 #     private papers repository for the writer routine, emails one PDF request
 #     for each paper nobody can get, and synthesises any checked routine
 #     script on main. A checked script landing on main also starts a sweep.
+#   - 05:17 UTC: the same sweep, timed for PDF windows (see pdf_window.py).
+#     A window closes at 9 pm Pacific (04:00 or 05:00 UTC); this run opens the
+#     runner-up and stages it before the writer routine starts at 08:00. Off
+#     the hour, because GitHub delays on-the-hour schedules the most.
 #   - every 30 min: a mailbox check for PDFs you've emailed back. It uses only
 #     the standard library and stops before installing anything if the inbox
 #     has nothing new, so a quiet poll costs seconds.
@@ -25,6 +29,7 @@ on:
       - 'generated/routine/*.script.json'
   schedule:
     - cron: '0 14 * * *'      # full sweep
+    - cron: '17 5 * * *'      # full sweep that closes expired PDF windows
     - cron: '*/30 * * * *'    # mailbox poll
   workflow_dispatch:
     inputs:
