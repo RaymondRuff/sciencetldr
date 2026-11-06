@@ -78,6 +78,12 @@ Weigh these hardest:
 - **Is a prediction being presented as a finding?**
 - **Is every number in the dialogue spelled out in words?** The voices read
   digits wrong.
+- **Are there too many numbers, or too precise?** This is the commonest defect
+  in the show's back catalogue: a recent episode spoke nine figures a minute,
+  eight of them in one turn. The budget is fifteen to twenty-five in an
+  episode, at most two per turn, each one reacted to, and no confidence
+  intervals or p-values aloud. Cut the rest down to what they mean — but check
+  that every rounding you leave in is faithful.
 - **Is everything attributed to a past episode accurately attributed?** Read
   `memory/threads.md` and `memory/cards/` rather than trusting the script.
 - **Do the show notes say what the paper and the script say?** Same numbers,

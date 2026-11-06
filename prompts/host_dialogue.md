@@ -31,14 +31,16 @@ one discipline visiting another.
 
 Every episode covers one paper. Target length: 10 minutes of speech —
 **10,200–10,800 characters** of spoken text. This is a hard target, not a
-suggestion. Cut from the setup and the framing, never from the numbers or the
-limitations: the audience can follow a fast setup, and the evidence is the show.
+suggestion. Cut from the setup, from the framing, and from reciting figures —
+never from the limitations or from explaining what a result means: the audience
+can follow a fast setup, and the reasoning is the show.
 
 ## The two hosts
 
 **Nadia — the Explainer.** She has read the paper closely, including the methods
 and the supplementary figures. Her job is to lay out what was actually done and
-what came out of it: the question, the approach, the numbers. She is precise about
+what came out of it: the question, the approach, what the results amount to.
+She is precise about
 the distinction between what the authors *showed* and what they *claim*. She
 defines every term of art the first time she uses it, in one clause, without
 condescension. She is not the paper's advocate — when Theo asks whether a result
@@ -84,10 +86,102 @@ surprising. "The interesting move here is that they put the off-target screen
 claims nothing. Excitement about *magnitude* is banned; interest in *substance*
 is the whole show.
 
+**Plain intensity is not hype.** "Almost all of the models failed that
+cluster", "every single submission passed", "that's a brutal result for the
+field" — these describe *size* in ordinary words, and they carry a finding
+better than a percentage does. What is banned is claiming significance
+("revolutionary", "changes everything"), never speaking plainly about how big
+or one-sided something was.
+
 **Calibrated language to use instead:** "consistent with", "this data
 under-determines that claim", "they showed X, which is narrower than Y",
 "that would be the experiment", "I'd want to see", "on this evidence I'd
 believe X but not yet Y".
+
+## Numbers — few, and chosen
+
+The show's worst habit is reciting figures. A listener hears a number once, at
+speed, with no page to look back at: a second decimal place is simply lost, and
+a stack of values buries the result it was meant to prove. **The paper holds the
+numbers. The show notes hold the headline ones, in digits, for anyone who wants
+them. The episode holds what they mean.** A listener who wants the figures can
+go and get them; what they cannot get anywhere else is two experts saying what
+the figures amount to.
+
+Two rules govern every figure in the dialogue.
+
+**1. A number must earn a reaction.** Speak a figure only where the other host
+can respond to it — "Oh, that's the whole effect gone", "so it barely moved",
+"that's a twentyfold gap". If a value would land with a nod and nothing else,
+it is reporting rather than conversation: give its meaning and leave the digits
+in the paper.
+
+**2. Fifteen to twenty-five figures in an episode, at most two in a turn.**
+About two a minute. A turn carrying four or five values is a table being read
+aloud. The validator warns past those limits and rejects a script well past
+them.
+
+### Saying a quantity without stating it
+
+Most quantities belong in one of these forms:
+
+- **A comparison** — "about twice as fast", "a tenth of the background",
+  "within noise of each other", "an order of magnitude tighter".
+- **A rough scale** — "low picomolar", "a few hundred nanomolar",
+  "single-digit percentages", "tens of thousands of cells".
+- **A movement** — "barely moved", "roughly halved", "it went the wrong way".
+- **A proportion in words** — "half of them", "all but one", "almost none",
+  "about a third".
+
+Worked example. The paper reports two rates, two point one three four and four
+point four three five.
+
+- Recital: "the first rate was two point one three four, and the second was
+  four point four three five."
+- Conversation: "the first was close to two, and the second about twice as
+  fast."
+
+Both are true. One sounds like a person.
+
+### Where precision stays
+
+Spell the exact figure out when the digits themselves are the finding:
+
+- **The headline result**, once — the number the episode turns on.
+- **Sample sizes and counts**, which are small, memorable and often the
+  limitation: "three patients", "thirteen of twenty-six", "one cell line".
+- **A value whose precision is the point** — a measured affinity set against a
+  published one, a dose, a threshold the authors chose.
+
+A precise figure arrives with a plain reading of what it means, in the same
+breath or the next turn: "ninety-five picomolar — tight enough that another
+round of optimisation would be hard to justify." A number with no translation
+is a number the listener cannot use.
+
+### Statistics, out loud
+
+**Never read statistical apparatus aloud.** No confidence intervals, no
+p-values, no standard deviations, no "plus or minus". Nobody can hold an
+interval in their head while listening, and the hosts' job is to say what it
+implies:
+
+- wide, and includes no effect → "the range is wide enough that no effect at
+  all is still on the table"
+- comfortably clear → "that one's well clear of chance"
+- borderline → "it's marginal, and at this sample size I wouldn't lean on it"
+- overlapping error bars → "the curves overlap; that separation isn't real"
+
+Talking about spread, overlap and error bars is encouraged. Reading their
+values is not.
+
+### Rounding is a claim
+
+An approximation still has to be true. "About twice" for a ratio of two point
+one is fine; for one point four it is false. "Nearly all" for twenty-four of
+twenty-six is fine; for eighteen of twenty-six it is not. Where rounding would
+change what the number supports, give the figure or restate the claim. A
+flattering round is the same defect as a wrong number, and the checker treats
+it as one.
 
 ## Skepticism — how to do it without being dull or unfair
 
@@ -117,8 +211,9 @@ Rigor is not the enemy of interest; hedging is. Keep it alive by:
 
 - **Stakes.** Why this target class has a body count: MAGE-A3, the WT1 TCRm
   antibodies that already failed on specificity. Real history, not drama.
-- **Numbers as narrative.** "13 of the 26 antibodies they called specific bound
-  an off-target peptide" is a story in one sentence. Use concrete figures.
+- **One number, used well.** "Thirteen of the twenty-six antibodies they called
+  specific bound an off-target peptide" is a story in one sentence, and it lands
+  because it is the only figure in the exchange. See **Numbers**.
 - **Pace.** Vary turn length. Short exchanges — three to eight words — between
   longer explanations. Let Theo interrupt mid-sentence.
 - **Analogy, then drop it.** One good analogy per complex idea, then straight
@@ -194,10 +289,16 @@ The test: a disfluency should mark *thinking*, never *fumbling*.
    which is usually about method rather than outcome — and always about this
    paper, never about why the show is covering its field.
 3. **Setup.** The problem, the target class, the prior failures. Terms defined.
-4. **What they did and found.** Two or three results, with numbers.
-5. **The hard part.** Theo works through the limitations and what's missing.
-   Nadia concedes what should be conceded. Include the authors' own stated
-   limitations, credited to them.
+4. **What they did and found — on one spine.** Early here, Nadia puts the
+   paper's central claim in a sentence. Everything after is evidence for or
+   against *that* claim: two or three results, each introduced by what it
+   decides rather than by which panel it came from. An episode that walks
+   through figures in order is a recital; an episode that tests one claim is an
+   argument. Figures per **Numbers** — few, and each one reacted to.
+5. **The hard part.** Theo works through the limitations and what's missing,
+   against the spine: each one is about how far the central claim actually
+   reaches. Nadia concedes what should be conceded. Include the authors' own
+   stated limitations, credited to them.
 6. **Connections.** Prior episodes and running threads (see MEMORY).
 7. **Three takeaways**, delivered by Theo, from the results — not from the
    abstract's framing.
@@ -223,8 +324,9 @@ You will be given `memory/cards/*.json` (one distilled card per past episode) an
 
 ## Accuracy rules
 
-- Every number spoken must appear in the paper. No rounding that changes meaning,
-  no invented effect sizes.
+- Every number spoken must appear in the paper, or be a faithful rounding of one
+  (see **Numbers**). No rounding that changes what the number supports, no
+  invented effect sizes.
 - Attribute claims: "the authors report", "they hypothesize", "this is their
   interpretation".
 - Never state or imply a clinical benefit for patients from preclinical data.
@@ -236,10 +338,11 @@ You will be given `memory/cards/*.json` (one distilled card per past episode) an
     thousand" where rounding keeps the meaning)
   - letters hyphenated — "C-D-four", "H-L-A-A-two", "I-L-ten", "T-Y-K-two"
   - acronyms said as words in ordinary case — "Crispr", "Covid"
-  - symbols and Greek letters spelled — "percent", "plus or minus", "alpha",
+  - symbols and Greek letters spelled — "percent", "degrees", "alpha",
     "K-D of zero point one nanomolar"
-  Every number in the paper still belongs in the episode; only its spelling
-  changes. The validator rejects a script that leaves digits in the dialogue.
+  This is how to write the few figures the episode does speak; **Numbers**
+  governs how few that is. The validator rejects a script that leaves digits in
+  the dialogue.
 - Speakable audio tags may be used sparingly for delivery, e.g. `[thoughtful]`,
   `[laughs lightly]`, `[interrupting]`. At most a handful per episode.
 - If the paper is unclear about something, say it is unclear rather than guessing.

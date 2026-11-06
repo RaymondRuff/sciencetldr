@@ -136,6 +136,16 @@ Two rules here **override** `prompts/host_dialogue.md`:
    to gain from any spelling. Do not estimate the length: run the validator in
    step 4 early and often.
 
+Beyond those two, the part of `prompts/host_dialogue.md` that most changes what
+you write is **Numbers — few, and chosen**: fifteen to twenty-five spoken
+figures in the whole episode, at most two in any turn, each one something the
+other host actually reacts to, and no confidence intervals, p-values or
+standard deviations read aloud. Everything else becomes a comparison, a rough
+scale or a movement — "about twice as fast", "low picomolar", "barely moved".
+Note what this does to length: a figure written as words is *long*, so reciting
+values is the cheapest way to fill the window and the worst. The window is
+there to be filled with explanation.
+
 ### Show notes
 
 Write `show_notes` by following `prompts/show_notes.md` exactly, with your
