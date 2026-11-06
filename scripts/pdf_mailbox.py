@@ -73,8 +73,20 @@ def allowed_senders() -> set[str]:
 # --------------------------------------------------------------------------- #
 
 
-def request(issue_number: int, *, title: str, doi: str, journal: str = "") -> bool:
+def request(
+    issue_number: int,
+    *,
+    title: str,
+    doi: str,
+    journal: str = "",
+    deadline: str = "",
+    runner_up: str = "",
+) -> bool:
     """Email a request for the PDF. Returns False if no recipient is configured.
+
+    With `deadline` this is a PDF window (see pdf_window.py): the email says
+    when the window closes and what stands in if nothing arrives, so the
+    answer can be "the runner-up is fine" without opening anything.
 
     Two routes, because a reply from a phone is the easiest thing in the world
     until the paper is bigger than Gmail's 25 MB attachment limit. The upload
@@ -90,12 +102,26 @@ def request(issue_number: int, *, title: str, doi: str, journal: str = "") -> bo
     repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
     papers_repo = os.environ.get("PAPERS_REPO", "RaymondRuff/sciencetldr-papers")
     upload = f"https://github.com/{papers_repo}/upload/main/papers"
-    body = f"""No open-access full text could be found for this paper, so its episode is waiting on a PDF.
-
-  {title}
-  {journal}
-  {link}
-
+    if deadline:
+        fallback = (
+            f"If it hasn't arrived by then, this runner-up takes the slot instead — its full\n"
+            f"text is open, so if it is good enough there is nothing to do:\n\n  {runner_up}\n"
+            if runner_up
+            else "If it hasn't arrived by then, the slot is skipped: no paper of the same\n"
+            "standard is open, and a weaker one is not used instead.\n"
+        )
+        opening = (
+            f"This week's top pick has no open-access full text. It is wanted by\n"
+            f"{deadline}.\n\n"
+            f"  {title}\n  {journal}\n  {link}\n\n{fallback}\n"
+            "Either way the Issue stays open, and a PDF sent later still becomes an episode.\n"
+        )
+    else:
+        opening = (
+            "No open-access full text could be found for this paper, so its episode is "
+            f"waiting on a PDF.\n\n  {title}\n  {journal}\n  {link}\n"
+        )
+    body = f"""{opening}
 Either route works — whichever is to hand:
 
   1. Reply to this email with the PDF attached.
@@ -123,7 +149,12 @@ papers repository, and the original is deleted.
 Issue: https://github.com/{repo}/issues/{issue_number}
 """
     send_email.send(
-        subject=f"[{SUBJECT_TAG}{issue_number}] PDF needed: {title[:90]}",
+        subject=(
+            f"[{SUBJECT_TAG}{issue_number}] PDF wanted by "
+            f"{deadline.split(' on ')[0] if deadline else ''}: {title[:80]}"
+            if deadline
+            else f"[{SUBJECT_TAG}{issue_number}] PDF needed: {title[:90]}"
+        ),
         body_text=body,
         recipients=[to],
     )

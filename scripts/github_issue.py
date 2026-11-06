@@ -138,6 +138,21 @@ def parse_metadata(body: str) -> dict | None:
     return json.loads(match.group(1))
 
 
+def add_labels(issue_number: int, labels: list[str]) -> None:
+    for label in labels:
+        ensure_label(label)
+    _run(["gh", "issue", "edit", str(issue_number), "--add-label", ",".join(labels)])
+
+
+def remove_label(issue_number: int, label: str) -> None:
+    """Remove a label; a label that is not there is not an error."""
+    subprocess.run(
+        ["gh", "issue", "edit", str(issue_number), "--remove-label", label],
+        capture_output=True,
+        text=True,
+    )
+
+
 def comment(issue_number: int, body: str) -> None:
     _run(["gh", "issue", "comment", str(issue_number), "--body", body])
 

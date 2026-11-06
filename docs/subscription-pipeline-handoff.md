@@ -16,15 +16,14 @@ paper, though Actions had already emailed a request for every one of them.
 **Actions fetches, routines read.** The fix puts every fetch where the network
 is:
 
-- **The pickers stage at pick time.** `select_monday_paper.py` walks the
-  digest best-first and takes the first peer-reviewed paper whose full text it
-  can get, down to one DICE point below the top. `select_friday_paper.py` does
-  the same over the first eight usable r/science papers. The text goes into
-  `sciencetldr-papers` as a bundle (from a PDF, with figures, when one is
-  open; from Europe PMC XML or the publisher page otherwise). A landing page
-  that is only an abstract and references is refused: a staged paper needs
-  12,000 characters of body before its last references heading. Only when
-  nothing that good is open does the top pick go ahead without its text.
+- **The pickers stage at pick time.** When the week's top paper is open, its
+  text goes into `sciencetldr-papers` as a bundle as the Issue opens (from a
+  PDF, with figures, when one is open; from Europe PMC XML or the publisher
+  page otherwise). A landing page that is only an abstract and references is
+  refused: a staged paper needs 12,000 characters of body before its last
+  references heading. When the top paper is *not* open, a PDF window decides
+  — see the 2026-11-06 update below. (As first built, the pickers silently
+  took the best open paper instead; the owner preferred to be asked.)
 - **The daily sweep stages the rest.** `bundle_waiting_papers()` bundles any
   emailed or uploaded PDF, then fetches open text for every waiting Issue that
   has neither a bundle nor a checked script — including `needs-pdf` ones, since
@@ -77,6 +76,40 @@ the routine (`show_notes` in the script, checked by the checker, validated),
 so publishing makes no Anthropic call and `publish.yml` no longer has the key.
 A failing workflow opens one `pipeline-alert` Issue assigned to the owner,
 which repeat failures edit silently and the next success closes.
+
+## Update, 2026-11-06: the PDF window
+
+Quality is the owner's call, not the picker's. When the week's top paper has
+no open full text, `scripts/pdf_window.py` takes over:
+
+1. **Same standard, no question.** Monday only: if another paper with the same
+   DICE score is open, it takes the slot silently. r/science rank is
+   popularity, not a score two papers can tie on, so Friday always asks.
+2. **Otherwise one email, at pick time.** The Issue opens for the top paper,
+   labelled `awaiting-pdf` and `needs-pdf`, and the picker emails at once. The
+   email gives the deadline, 9 pm Pacific that day, and names the runner-up:
+   the best open paper within one DICE point (Monday) or among the first eight
+   (Friday). Answering "the runner-up is fine" takes no action at all. The
+   deadline and the runner-up are kept in the Issue's METADATA
+   (`pdf_deadline`, `runner_up`).
+3. **A PDF in time** is staged by the next sweep or mailbox poll, which also
+   clears `awaiting-pdf`; the writer takes the top paper next morning.
+4. **At the deadline** a sweep opens the runner-up as its own Issue, stages
+   it, and comments on the original. The `17 5 * * *` sweep exists for this:
+   the deadline is 04:00 or 05:00 UTC and the writer starts at 08:00, so a
+   missed deadline costs no time. If GitHub starts that sweep late, the
+   worst case is a one-day delay.
+5. **No runner-up** (nothing open within the floor): the slot is skipped
+   rather than filled with a weaker paper.
+6. **The original stays open** with `needs-pdf`. A PDF sent later still
+   becomes an episode; the sweep never asks a second time.
+
+The writer's queue skips an Issue in its window ("Actions decides at the
+deadline") unless its PDF has already been staged. Evidence behind the
+frequency: in the ten Mondays to 2026-11-02, four top picks had no open full
+text (#43, #48, #85, #90); on Fridays three (#40, #44, #58). Expect roughly one
+ask a week. The one PDF the owner did supply (#90) arrived about 27 hours
+after its request, which is why the window covers a whole working day.
 
 ## The decision
 

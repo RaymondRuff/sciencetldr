@@ -59,6 +59,7 @@ import github_issue
 import memory
 import paper_text
 import pdf_mailbox
+import pdf_window
 import routine_tools
 import tts_dialogue
 
@@ -224,10 +225,11 @@ def bundle_waiting_papers(issues: list[dict]) -> dict[int, dict]:
 def clear_pdf_request(issue: dict, meta: dict) -> None:
     """A waiting Issue's paper has arrived: say so once, and drop the labels."""
     labels = issue_labels(issue)
-    if not labels & {LABEL_NEEDS_PDF, LABEL_PDF_REQUESTED}:
+    stale = labels & {LABEL_NEEDS_PDF, LABEL_PDF_REQUESTED, pdf_window.LABEL_AWAITING}
+    if not stale:
         return
-    for stale in (LABEL_NEEDS_PDF, LABEL_PDF_REQUESTED):
-        remove_label(issue["number"], stale)
+    for label in sorted(stale):
+        remove_label(issue["number"], label)
     source = meta.get("provenance") or "a supplied PDF"
     try:
         github_issue.comment(
@@ -347,7 +349,9 @@ def request_missing_pdfs(issues: list[dict], bundled: dict[int, dict]) -> None:
     for issue in issues:
         number = issue["number"]
         labels = issue_labels(issue)
-        if labels & {LABEL_IN_REVIEW, LABEL_PDF_REQUESTED}:
+        # An open PDF window is the picker's request, already sent with its
+        # deadline; asking again would be the second message about one paper.
+        if labels & {LABEL_IN_REVIEW, LABEL_PDF_REQUESTED, pdf_window.LABEL_AWAITING}:
             continue
         if number in bundled or number in PapersState.transient:
             continue
@@ -777,6 +781,9 @@ def main() -> None:
     emailed = pdf_mailbox.received()
     all_pending = github_issue.list_pending_issues()
     bundled = bundle_waiting_papers(all_pending)
+    # After staging, so a PDF that arrived in its window counts, and before
+    # anything else, so a runner-up opened here is staged for the writer.
+    window_errors = [] if args.dry_run else pdf_window.resolve(all_pending, bundled)
     issues = eligible_issues(all_pending, args.issue, set(emailed), set(bundled))
     eligible_numbers = {i["number"] for i in issues}
     if args.mailbox_only:
@@ -855,6 +862,7 @@ def main() -> None:
         problems.append(f"{failures} issue(s) failed")
     if PapersState.denied:
         problems.append(PAPERS_DENIED_MESSAGE)
+    problems += window_errors
     if problems:
         sys.exit("; ".join(problems))
 

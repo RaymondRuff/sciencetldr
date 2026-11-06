@@ -35,13 +35,15 @@ class DecideTests(unittest.TestCase):
 
 
 class RunTests(unittest.TestCase):
-    def run_alert(self, conclusion, open_alerts):
+    def run_alert(self, conclusion, open_alerts, steps=("success", "success")):
         calls = []
 
         def fake_gh(*args):
             calls.append(args)
             if args[:2] == ("issue", "list"):
                 return json.dumps(open_alerts)
+            if args[:2] == ("run", "view") and "--json" in args:
+                return json.dumps({"jobs": [{"steps": [{"conclusion": c} for c in steps]}]})
             if args[:2] == ("run", "view"):
                 return "generate\tstep\t2026-11-04T14:00:00Z boom\n"
             return "https://github.com/x/y/issues/9\n"
@@ -81,6 +83,12 @@ class RunTests(unittest.TestCase):
         other = {"number": 3, "title": "Pipeline failing: generate-episode", "body": ""}
         calls = self.run_alert("success", [other])
         self.assertFalse(any(c[:2] == ("issue", "close") for c in calls))
+
+    def test_a_poll_that_skipped_its_work_is_not_a_recovery(self):
+        # The mailbox poll succeeds without running the sweep that failed.
+        existing = {"number": 9, "title": "Pipeline failing: publish", "body": ""}
+        calls = self.run_alert("success", [existing], steps=("success", "success", "skipped"))
+        self.assertFalse(any(c[:2] in {("issue", "close"), ("issue", "comment")} for c in calls))
 
     def test_recovery_comments_and_closes(self):
         existing = {"number": 9, "title": "Pipeline failing: publish", "body": ""}

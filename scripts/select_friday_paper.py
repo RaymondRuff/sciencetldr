@@ -9,9 +9,10 @@ Source order:
 
 The full text matters because the routine that writes the script cannot
 reach any paper source: the text is staged in the private papers repository
-here, while Actions can still reach it. A paywalled paper is passed over for
-the next one down; only when none of the first few can be had does the top
-one go ahead, and the sweep then asks for its PDF once.
+here, while Actions can still reach it. A paywalled top paper opens a PDF
+window (see pdf_window.py): Ray is emailed once with a deadline and the
+runner-up — the best of the next few that can be had — which stands in if no
+PDF arrives.
 
 Reddit picks are enriched via Crossref so the issue title and metadata
 come from the journal record, not the redditor's editorialised headline.
@@ -250,24 +251,22 @@ def main() -> None:
         print("[select-friday] no candidates — nothing new to publish this week.")
         return
 
-    chosen, pdf_url, fetched, notes = select_monday_paper.choose_obtainable(candidates)
+    # r/science rank is popularity, not a score two papers can tie on, so any
+    # stand-in for the top paper is Ray's call: a paywalled top pick always
+    # opens a PDF window, with the best open candidate named as the runner-up.
+    plan = select_monday_paper.plan_pick(candidates)
+    chosen = plan.chosen
     print(f"[select-friday] picking {primary_label} #{chosen['rank']}: {chosen['title'][:80]}")
-    for note in notes:
-        print(f"[select-friday]  passed over: {note}")
-    print(
-        "[select-friday] full text: "
-        + (fetched.provenance if fetched else "none open; the sweep will ask for the PDF")
-    )
+    for note in plan.notes:
+        print(f"[select-friday]  also tried: {note}")
+    if plan.fetched is not None:
+        print(f"[select-friday] full text: {plan.fetched.provenance}")
+    elif plan.runner_up:
+        print(f"[select-friday] no open full text; runner-up #{plan.runner_up['rank']}: "
+              f"{plan.runner_up['title'][:80]}")
+    else:
+        print(f"[select-friday] no open full text among the first {len(candidates)} candidates")
 
-    paper = {
-        "title": chosen["title"],
-        "doi": chosen["doi"],
-        "dice": None,
-        "raw": chosen["raw"],
-    }
-    body = select_monday_paper.render_issue_body(
-        paper, pdf_url, primary_label, fetched=fetched, notes=notes
-    )
     title_emoji = "🔥" if primary_label == "friday-reddit" else "📈"
     issue_title = f"{title_emoji} {chosen['title'][:160]}"
 
@@ -276,6 +275,7 @@ def main() -> None:
         labels.append("friday-reddit-failed")
 
     if args.dry_run:
+        _, body, _, _ = select_monday_paper.render_pick(plan, primary_label)
         print("[select-friday] DRY RUN — would open issue:")
         print(f"  title: {issue_title}")
         print(f"  labels: {', '.join(labels)}")
@@ -283,10 +283,12 @@ def main() -> None:
         print("  " + body.replace("\n", "\n  "))
         return
 
-    issue_number = github_issue.open_issue(title=issue_title, body=body, labels=labels)
-    print(f"[select-friday] opened issue #{issue_number}")
-    select_monday_paper.stage_for_writer(
-        issue_number, paper, fetched, journal=chosen.get("journal_citation", "")
+    select_monday_paper.open_pick(
+        plan,
+        source=primary_label,
+        title=issue_title,
+        labels=labels,
+        journal=chosen.get("journal_citation", ""),
     )
 
 

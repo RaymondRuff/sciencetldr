@@ -324,6 +324,20 @@ class SweepTests(unittest.TestCase):
         ge.request_missing_pdfs(issues, bundled)
         self.assertEqual([c for c in self.calls if c[0] == "ask"], [("ask", 40)])
 
+    def test_a_pdf_arriving_in_its_window_closes_the_window(self):
+        issues = [an_issue(43, "needs-pdf", "pdf-requested", "awaiting-pdf")]
+        self.sweep(issues, synced={43: {"provenance": "emailed-pdf"}})
+        for label in ("needs-pdf", "pdf-requested", "awaiting-pdf"):
+            self.assertIn(("unlabel", 43, label), self.calls)
+
+    def test_an_open_window_is_never_asked_about_a_second_time(self):
+        # The picker sent the one request, with its deadline; even if that
+        # email failed, the sweep does not send another while the window runs.
+        issues = [an_issue(43, "needs-pdf", "awaiting-pdf")]
+        bundled = self.sweep(issues)
+        ge.request_missing_pdfs(issues, bundled)
+        self.assertEqual([c for c in self.calls if c[0] == "ask"], [])
+
     def test_no_pdf_is_asked_for_while_the_papers_repository_is_shut(self):
         # A supplied PDF could not reach the routine either, so the one useful
         # message is the token fix, which the run's exit carries.

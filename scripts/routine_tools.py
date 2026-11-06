@@ -454,6 +454,7 @@ LABEL_PENDING = "podcast-pending"
 LABEL_IN_REVIEW = "episode-in-review"
 LABEL_NEEDS_PDF = "needs-pdf"
 LABEL_FAILED = "generation-failed"
+LABEL_AWAITING = "awaiting-pdf"
 PARK_LABELS = (LABEL_NEEDS_PDF, LABEL_FAILED)
 
 
@@ -528,6 +529,8 @@ def rank_queue(
             skipped.append((number, f"a script is already in flight on {in_flight[0]}"))
         elif number in bundled:
             ready.append(number)
+        elif LABEL_AWAITING in labels:
+            skipped.append((number, "its PDF window is open; Actions decides at the deadline"))
         elif LABEL_NEEDS_PDF in labels:
             skipped.append((number, "waiting for its PDF (already asked for once)"))
         else:
