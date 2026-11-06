@@ -38,6 +38,7 @@ import argparse
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -76,6 +77,28 @@ SHOW_FRAMING = [
     r"not our (?:normal|usual)", r"(?:protein|immunology|antibody)[a-z ]* podcast",
     r"far from our",
 ]
+
+# Numbers in the dialogue (prompts/host_dialogue.md, "Numbers — few, and
+# chosen"). A listener hears a figure once, with no page to look back at, so
+# the show speaks few of them and says what the rest amount to. The budget is
+# the warning; the ceiling is what a recital looks like. Measured: episode 95
+# spoke about nine figures a minute with eight in one turn, against under one
+# and a half a minute for the episode this register is modelled on.
+NUMBER_BUDGET = 25
+NUMBER_CEILING = 40
+PER_TURN_BUDGET = 2
+PER_TURN_CEILING = 5
+DECIMAL_BUDGET = 6
+DECIMAL_CEILING = 12
+
+# Statistical apparatus nobody can hold in their head while listening. The
+# hosts say what it implies instead; talking about spread and overlap in words
+# is fine, which is why "error bars" is not here.
+APPARATUS_RE = re.compile(
+    r"confidence interval|\bp[ -]values?\b|standard deviations?|standard errors?"
+    r"|plus or minus|\binterquartile\b",
+    re.IGNORECASE,
+)
 
 _UNITS = {
     "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
@@ -279,9 +302,25 @@ PAPER_NUMBER_RE = re.compile(
 _SUFFIX_WORDS = {"m": "million", "k": "thousand", "bn": "billion", "%": "percent"}
 
 
-YEAR_PHRASE_RE = re.compile(
-    r"(?:nineteen|twenty)(?: (?:oh )?[a-z-]+)?|two thousand(?: [a-z-]+)?", re.IGNORECASE
-)
+TWO_THOUSANDS_RE = re.compile(r"two thousand(?: and)?(?: [a-z-]+){0,2}", re.IGNORECASE)
+
+
+def looks_like_year(phrase: str) -> bool:
+    """Whether a spoken phrase is a date rather than a finding.
+
+    A spoken year runs "nineteen ninety-six", "twenty twenty-four", "twenty oh
+    nine" or "two thousand nine": after the century the next word is always a
+    tens word or "oh". That is what keeps a real figure — "twenty three
+    percent", "twenty five thousand cells" — from being mistaken for a year.
+    """
+    if TWO_THOUSANDS_RE.fullmatch(phrase):
+        return True
+    words = phrase.lower().split()
+    return (
+        len(words) > 1
+        and words[0] in ("nineteen", "twenty")
+        and (words[1] == "oh" or words[1] in _TENS)
+    )
 
 
 def _normalise_spoken(phrase: str) -> str:
@@ -310,33 +349,92 @@ def paper_spoken_numbers(paper_text: str) -> set[str]:
     return spoken
 
 
-def numbers_not_in_paper(turns: list[dict], paper_text: str) -> list[str]:
-    """Spoken figures with no matching number in the paper, in order, deduped.
+def figure_phrases(turns: list[dict]) -> list[tuple[int, str]]:
+    """Every spoken figure in the dialogue, as (turn index, spoken phrase).
 
-    Single small words are skipped: "one line", "two guides" and "the third
-    act" are prose, not findings, and flagging them would bury the real hits.
+    A "figure" is a quantity a listener would hear as data. Single small words
+    are skipped: "one line", "two guides" and "the third act" are prose, not
+    findings. The DOI in the sign-off and episode callbacks are not findings
+    either, and years are dates.
     """
-    known = paper_spoken_numbers(paper_text)
-    missing: list[str] = []
-    for turn in turns:
+    found: list[tuple[int, str]] = []
+    for index, turn in enumerate(turns):
         text = AUDIO_TAG_RE.sub("", str(turn.get("text", "")))
-        # The sign-off reads the DOI aloud; its digits are not findings, and
-        # episode callbacks are checked against memory/cards instead.
         if "D-O-I" in text:
             text = text.split("D-O-I")[0]
-        # Episode callbacks are verified against memory/cards, not the paper.
         text = EPISODE_REF_RE.sub(" ", text)
         for match in SPOKEN_NUMBER_RE.finditer(text):
             phrase = _normalise_spoken(match.group(0))
-            if phrase in known or phrase in missing:
-                continue
-            words = phrase.split()
-            if len(words) == 1:
+            if len(phrase.split()) == 1:
                 value = spoken_number(phrase)
                 if value is None or value < 20:
                     continue  # prose, not a figure
-            if YEAR_PHRASE_RE.fullmatch(phrase):
+            if looks_like_year(phrase):
                 continue  # "twenty twenty-six" is a date, not a result
+            found.append((index, phrase))
+    return found
+
+
+def check_number_register(turns: list[dict]) -> tuple[list[str], list[str]]:
+    """(errors, warnings) on how many figures the dialogue speaks, and how dense.
+
+    Over budget is a warning: the writer should cut, but one figure too many
+    does not break an episode. Past the ceiling it is a table being read
+    aloud, and the validator refuses it. Judgment — whether each figure earns
+    the reaction it gets — stays with the checker; only the counting is here.
+    """
+    errors: list[str] = []
+    warnings: list[str] = []
+    figures = figure_phrases(turns)
+    decimals = [phrase for _, phrase in figures if "point" in phrase.split()]
+    per_turn = Counter(index for index, _ in figures)
+    crowded = sorted(i for i, n in per_turn.items() if n > PER_TURN_BUDGET)
+
+    def judge(count: int, budget: int, ceiling: int, message: str) -> None:
+        if count > ceiling:
+            errors.append(message)
+        elif count > budget:
+            warnings.append(message)
+
+    judge(
+        len(figures), NUMBER_BUDGET, NUMBER_CEILING,
+        f"{len(figures)} spoken figures, against a budget of {NUMBER_BUDGET} "
+        "for the episode: say what the rest amount to instead — a comparison "
+        "('about twice as fast'), a scale ('low picomolar') or a movement "
+        "('barely moved')",
+    )
+    judge(
+        len(decimals), DECIMAL_BUDGET, DECIMAL_CEILING,
+        f"{len(decimals)} decimals spoken ({', '.join(repr(d) for d in decimals[:6])}"
+        f"{' …' if len(decimals) > 6 else ''}), against a budget of "
+        f"{DECIMAL_BUDGET}: a decimal place cannot be held by ear, so round it "
+        "or give the comparison",
+    )
+    worst = max(per_turn.values(), default=0)
+    if crowded:
+        judge(
+            worst, PER_TURN_BUDGET, PER_TURN_CEILING,
+            f"turn(s) {', '.join(str(i) for i in crowded)} carry more than "
+            f"{PER_TURN_BUDGET} figures (worst: {worst}); a turn that stacks "
+            "values is a table read aloud",
+        )
+    spoken = "\n".join(AUDIO_TAG_RE.sub("", str(t.get("text", ""))) for t in turns)
+    apparatus = sorted({m.group(0).lower() for m in APPARATUS_RE.finditer(spoken)})
+    if apparatus:
+        errors.append(
+            f"statistical apparatus read aloud ({', '.join(apparatus)}): say what "
+            "it implies — 'the range is wide enough that no effect is still on "
+            "the table', 'that one's well clear of chance'"
+        )
+    return errors, warnings
+
+
+def numbers_not_in_paper(turns: list[dict], paper_text: str) -> list[str]:
+    """Spoken figures with no matching number in the paper, in order, deduped."""
+    known = paper_spoken_numbers(paper_text)
+    missing: list[str] = []
+    for _, phrase in figure_phrases(turns):
+        if phrase not in known and phrase not in missing:
             missing.append(phrase)
     return missing
 
@@ -735,6 +833,10 @@ def validate(
                 + ", ".join(repr(p) for p in unmatched[:12])
                 + (" …" if len(unmatched) > 12 else "")
             )
+
+    number_errors, number_warnings = check_number_register(turns)
+    errors += number_errors
+    warnings += number_warnings
 
     total = spoken_chars(turns)
     if not TARGET_MIN_CHARS <= total <= TARGET_MAX_CHARS:

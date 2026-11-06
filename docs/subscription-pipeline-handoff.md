@@ -111,6 +111,50 @@ text (#43, #48, #85, #90); on Fridays three (#40, #44, #58). Expect roughly one
 ask a week. The one PDF the owner did supply (#90) arrived about 27 hours
 after its request, which is why the window covers a whole working day.
 
+## Update, 2026-11-06: the hosts stopped reciting numbers
+
+Episode 95 spoke about nine figures a minute — forty-four of them, twenty-two
+decimals, eight stacked in a single turn — because the show's rules asked for
+it: "every number in the paper still belongs in the episode", "cut from the
+setup, never from the numbers". Measured against episode 81, the NotebookLM
+episode whose register the owner prefers (about one and a half figures a
+minute, five decimals in twenty-three minutes, no statistical apparatus at
+all), that is the main thing making the dialogue feel dry.
+
+`prompts/host_dialogue.md` now has a **Numbers — few, and chosen** section.
+What changed, in order of effect:
+
+- **The paper holds the numbers; the episode holds what they mean.** A figure
+  is spoken only where the other host can react to it. Fifteen to twenty-five
+  an episode, at most two in a turn.
+- **Quantities become comparisons, scales and movements** — "about twice as
+  fast", "low picomolar", "barely moved" — except for the headline result,
+  sample sizes and counts, and values whose precision is the point. Each
+  precise figure comes with a plain reading of what it means.
+- **No statistical apparatus aloud.** No confidence intervals, p-values,
+  standard deviations or "plus or minus"; the hosts say what these imply.
+  Talking about spread and overlap in words is encouraged.
+- **A rounding is a claim.** "About twice" for a ratio of one point four is a
+  defect, and the checker treats it as one.
+- **One spine per episode.** Nadia states the paper's central claim early and
+  the results are evidence for or against it, rather than a walk through the
+  panels. Limitations attach to the spine.
+- **Plain intensity words are allowed** ("almost all of them failed", "every
+  single submission passed"); the hype ban is about claiming significance, not
+  about describing size.
+- **The checker's job flipped.** It used to add figures for completeness — two
+  of its eight corrections on episode 95 did exactly that. Now over-precision
+  and recital are defects it fixes by cutting, and an omission means a missing
+  caveat, never a missing number.
+- **The show notes keep the precision**, in digits, restored from the paper
+  where the dialogue rounded.
+
+`routine_tools.py check_number_register()` is the backstop: it warns past the
+budget (25 figures, 2 per turn, 6 decimals) and rejects past a ceiling (40, 5,
+12), and refuses apparatus read aloud. Episode 95's script fails all three
+ceilings, which is the regression test. The counting is mechanical; whether a
+figure earns its reaction stays with the checker.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions

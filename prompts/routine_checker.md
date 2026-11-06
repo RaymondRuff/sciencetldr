@@ -64,11 +64,23 @@ script cites.
 
 ## 2. Check it line by line
 
-1. **Numbers.** Every figure spoken must appear in the paper with that meaning:
-   right value, right denominator, right population, right condition. Fix any
-   that don't, and any rounding that changes the claim. Numbers set against
-   each other must share units and time frame. The numbers are written in
-   words, so read them carefully.
+1. **Numbers: right, faithfully rounded, and few.** Every figure spoken must
+   appear in the paper with that meaning: right value, right denominator, right
+   population, right condition. Numbers set against each other must share units
+   and time frame. They are written in words, so read them carefully.
+
+   A **rounding is a claim**. "About twice" for a ratio of one point four, or
+   "nearly all" for eighteen of twenty-six, is as much a defect as a wrong
+   value: correct the rounding, or put the figure back.
+
+   The show speaks few numbers on purpose — see `prompts/host_dialogue.md`,
+   **Numbers**: fifteen to twenty-five in an episode, at most two in a turn,
+   each one something the other host reacts to. A turn that stacks values, a
+   decimal place nobody could hold while listening, or a confidence interval,
+   p-value or standard deviation read aloud, is a defect you fix **by cutting**:
+   replace it with the comparison, scale or movement it implies. And **never add
+   a figure for completeness.** If leaving a number out flatters the paper, put
+   the limitation back in words.
 2. **Claim strength.** Where the script says the paper *showed* something,
    confirm it showed it rather than suggested, modelled or claimed it.
    Correlational designs must not be described causally.
@@ -82,7 +94,8 @@ script cites.
 6. **Attribution.** The authors' claims, interpretations and limitations are
    attributed to the authors.
 7. **Omissions.** A limitation the authors state, or a control the design
-   lacks, that changes how far a result goes and that the script leaves out.
+   lacks, that changes how far a result goes and that the script leaves out. An
+   omission is a missing *caveat*, never a missing figure: fix it in words.
 8. **Show framing.** Science TLDR is a general science podcast: no line ties it
    to one field or treats this paper's field as unusual for the show.
 9. **Show notes.** `show_notes` is held to the same standard as the dialogue:
@@ -99,8 +112,10 @@ is a valid result when it is true.
 
 Edit `generated/routine/issue-<N>.script.json` directly, keeping the hosts'
 voices and the rules in `prompts/routine_writer.md` step 3 (every word written
-as spoken; 11,000 to 11,600 spoken characters). Corrections usually add length,
-so trim setup and framing to pay for them, never evidence or limitations.
+as spoken; 11,000 to 11,600 spoken characters; few figures, each one reacted
+to). Corrections usually add length, so trim to pay for them — recited figures
+first, then setup and framing, never a limitation or an explanation of what a
+result means.
 
 Record each correction in `verification_changes`, one line each, naming the
 specific problem, for example: `Nadia said eight of twenty-six bound M-thirteen-L;
