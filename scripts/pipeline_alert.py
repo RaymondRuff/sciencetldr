@@ -3,9 +3,10 @@
 Run by .github/workflows/alert-on-failure.yml after every completed run of the
 pipeline's workflows. A failure opens one Issue, assigned to the repository
 owner so GitHub notifies them. Further failures of the same workflow only edit
-that Issue's body, and an edit notifies nobody. The next success closes it
-with a one-line comment. So a workflow that breaks and stays broken costs one
-notification, and its recovery one more.
+that Issue's body, and an edit notifies nobody. The next success that really
+ran — not a poll that skipped its work — closes it with a one-line comment. So
+a workflow that breaks and stays broken costs one notification, and its
+recovery one more.
 
 Standard library and the `gh` CLI only, so the job needs no dependency install.
 
@@ -89,6 +90,26 @@ def failed_log(run_id: str) -> str:
     return "\n".join(lines[-LOG_LINES:])
 
 
+def did_its_work(run_id: str) -> bool:
+    """Whether a successful run actually ran its steps.
+
+    generate-episode's half-hourly mailbox poll succeeds by skipping every
+    step after the mailbox check, so its success says nothing about the daily
+    sweep that failed. On 2026-11-04 and 11-05 such a poll closed the alert
+    an hour after it opened, and the next day's identical failure opened a
+    fresh one: a notification a day, plus a false recovery, for one problem.
+    So a run that skipped any step does not count, and neither does one that
+    cannot be inspected.
+    """
+    try:
+        jobs = json.loads(gh("run", "view", run_id, "--json", "jobs"))["jobs"]
+    except (RuntimeError, ValueError, KeyError) as exc:
+        print(f"[alert] could not inspect run {run_id} ({exc}); not treating it as a recovery")
+        return False
+    conclusions = [step.get("conclusion") for job in jobs for step in job.get("steps", [])]
+    return bool(conclusions) and "skipped" not in conclusions
+
+
 def first_failed(body: str) -> str:
     for line in body.splitlines():
         if line.startswith("**First failed:**"):
@@ -108,6 +129,9 @@ def main() -> None:
     action = decide(conclusion, existing)
     print(f"[alert] {workflow}: {conclusion} -> {action}")
     if action == NOTHING:
+        return
+    if action == CLOSE and not (run_id and did_its_work(run_id)):
+        print(f"[alert] {workflow}: this success skipped its work, so the alert stays open")
         return
     if action == CLOSE:
         gh("issue", "comment", str(existing["number"]),
