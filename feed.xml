@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Wed, 02 Apr 2025 03:42:50 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jan 2025 00:25:35 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -2493,6 +2493,43 @@
       <podcast:episode>95</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 04 Nov 2026 19:04:09 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 96: Reddit Trending — The dietary fibre content of fruit and vegetable kitchen preparation waste and UK consumers’ dietary fibre-related attitudes regarding its consumption]]></title>
+      <itunes:title><![CDATA[Reddit Trending — The dietary fibre content of fruit and vegetable kitchen preparation waste and UK consumers’ dietary fibre-related attitudes regarding its consumption]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1080/09637486.2026.2734852">The dietary fibre content of fruit and vegetable kitchen preparation waste and UK consumers' dietary fibre-related attitudes regarding its consumption</a></strong></p>
+<p><em>International Journal of Food Sciences and Nutrition, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1080/09637486.2026.2734852">10.1080/09637486.2026.2734852</a></p>
+<p><strong>Question:</strong> Do discarded peels, stalks, cores and seeds of 12 fruits and vegetables hold more fibre than the parts we eat, and would consumers eat them?</p>
+<p><strong>Answer:</strong> Trimmings measured 2.10 to 9.26 g fibre/100 g and beat database flesh values in 10 of 12, but from one specimen each against an unpaired reference. Forty campus focus-group participants preferred a health pitch to a sustainability one.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Trimmings were fibre-richer in 10 of 12 (pineapple 6.64 vs 1.2 g/100 g), mostly insoluble; broccoli stalk and fennel core were lower.</li>
+<li>One specimen per item versus database flesh values: kale's +6.6% is a tie, and its fibre fractions don't sum.</li>
+<li>Participants favoured health messaging and dishes that feel like normal food, but knew the study's aims.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1080/09637486.2026.2734852">The dietary fibre content of fruit and vegetable kitchen preparation waste and UK consumers' dietary fibre-related attitudes regarding its consumption</a></strong></p>
+<p><em>International Journal of Food Sciences and Nutrition, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1080/09637486.2026.2734852">10.1080/09637486.2026.2734852</a></p>
+<p><strong>Question:</strong> Do discarded peels, stalks, cores and seeds of 12 fruits and vegetables hold more fibre than the parts we eat, and would consumers eat them?</p>
+<p><strong>Answer:</strong> Trimmings measured 2.10 to 9.26 g fibre/100 g and beat database flesh values in 10 of 12, but from one specimen each against an unpaired reference. Forty campus focus-group participants preferred a health pitch to a sustainability one.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Trimmings were fibre-richer in 10 of 12 (pineapple 6.64 vs 1.2 g/100 g), mostly insoluble; broccoli stalk and fennel core were lower.</li>
+<li>One specimen per item versus database flesh values: kale's +6.6% is a tie, and its fibre fractions don't sum.</li>
+<li>Participants favoured health messaging and dishes that feel like normal food, but knew the study's aims.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-096</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/096-the-dietary-fibre-content-of-fruit-and-vegetable-kitchen.mp3" length="7604895" type="audio/mpeg"/>
+      <guid isPermaLink="false">5c60c56d-9bee-4eb4-96e9-9c73cb30d0b2</guid>
+      <itunes:duration>633</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>96</itunes:episode>
+      <podcast:episode>96</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Sat, 07 Nov 2026 11:20:23 +0000</pubDate>
     </item>
   </channel>
 </rss>
