@@ -1,0 +1,183 @@
+# Issue #106 — script (routine writer)
+
+**Length:** 11,178 spoken chars (~10.4 min)  
+**Episodes cited:** [91, 93]  
+**Paper text from:** bundle:issue-106 (supplied PDF, emailed, staged in the papers repository and normalised by scripts/paper_bundle.py)
+
+| Run | Started (UTC) | Finished (UTC) | Safeguard stops |
+|---|---|---|---|
+| writer | 2026-11-07T08:06:35Z | 2026-11-07T08:09:44Z | 0 |
+
+## Show notes
+
+**[The dietary fibre content of fruit and vegetable kitchen preparation waste and UK consumers' dietary fibre-related attitudes regarding its consumption](https://doi.org/10.1080/09637486.2026.2734852)**
+
+*International Journal of Food Sciences and Nutrition, 2026*
+
+DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.2734852)
+
+**Question:** Do discarded peels, stalks, cores and seeds of 12 fruits and vegetables hold more fibre than the parts we eat, and would consumers eat them?
+
+**Answer:** Trimmings measured 2.10 to 9.26 g fibre/100 g and beat database flesh values in 10 of 12, but from one specimen each against an unpaired reference. Forty campus focus-group participants preferred a health pitch to a sustainability one.
+
+**Three takeaways**
+
+1. Trimmings were fibre-richer in 10 of 12 (pineapple 6.64 vs 1.2 g/100 g), mostly insoluble; broccoli stalk and fennel core were lower.
+2. One specimen per item versus database flesh values: kale's +6.6% is a tie, and its fibre fractions don't sum.
+3. Participants favoured health messaging and hidden, normal-looking dishes, but knew the study's aims.
+
+---
+
+**Nadia:** Hi, and welcome to Science TLDR. I'm Nadia.
+
+**Theo:** And I'm Theo. And I'm told today involves eating the bits of the vegetable that usually go in the bin.
+
+**Nadia:** It does. In the International Journal of Food Sciences and Nutrition, Browne and colleagues at King's College London: "The dietary fibre content of fruit and vegetable kitchen preparation waste and U-K consumers' dietary fibre-related attitudes regarding its consumption." The short version: they measured the fibre in peels, stalks, cores and seeds of twelve kinds of produce, and ran focus groups on whether people would eat them.
+
+**Theo:** So why is that worth ten minutes? Eat your broccoli stalks is advice my grandmother gave for free.
+
+**Nadia:** Because your grandmother never had a number for it, and neither did the reference databases. The U-K composition tables mostly don't list these parts, on the assumption nobody eats them, and where the literature has values, they were measured for industry and reported per dry weight.
+
+**Theo:** Which is the wrong unit for someone holding a raw pineapple skin. It's mostly water.
+
+**Nadia:** Exactly. And it matters because fibre intake in the U-K is low: the authors cite national data that only about four percent of adults reach the thirty gram a day recommendation.
+
+**Theo:** Four percent. So nearly everyone misses it.
+
+**Nadia:** Nearly everyone; the average is around sixteen grams. Meanwhile fresh produce is a big slice of food waste. Root-to-tip eating, the term of art, means cooking with the parts normally discarded, and promises to chip at both.
+
+**Theo:** Okay. What did they actually do?
+
+**Nadia:** Two studies in one paper. First, chemistry. The university's catering team picked twelve items that could go on a menu, from beetroot and kale to kiwi and pineapple. A professional chef prepared one of each, and the trimmings were weighed, freeze-dried and analysed.
+
+**Theo:** One of each. One butternut squash.
+
+**Nadia:** One butternut squash. I'll come back to that. The assay is the standard enzymatic-gravimetric method: digest away the starch and protein, and what survives, corrected for protein and ash, is fibre. It splits into insoluble fibre, the cellulose-type scaffold, and soluble fibre, like some pectins.
+
+**Theo:** So the claim is?
+
+**Nadia:** The central claim is that the discarded parts are richer in fibre than the parts we normally eat, in ten of the twelve, and so cooking with them is a viable way to raise intake.
+
+**Theo:** Ten of twelve. How big are the numbers?
+
+**Nadia:** The discarded parts ran from about two grams of fibre per hundred grams, watermelon rind, up to about nine and a quarter, butternut squash skin and seeds. Kiwi skin was close to eight.
+
+**Theo:** And the flesh, for comparison?
+
+**Nadia:** Pineapple is the extreme. The skin and core came in at about six and a half grams, against about one point two for the flesh.
+
+**Theo:** Oh, so that's more than five times as much.
+
+**Nadia:** That's the four hundred and fifty percent in the paper. Watermelon is similar in proportion, but the flesh has almost none, so the rind wins while still being the lowest value in the set.
+
+**Theo:** Hmm. A big percentage off a tiny denominator.
+
+**Nadia:** Yes, though the absolute numbers are in the table. The two that went the other way were broccoli and fennel: broccoli stalk had less fibre than the florets, by more than a quarter. The authors' explanation is moisture. The stalk is wetter, so per fresh gram there's less of everything.
+
+**Theo:** That's a nice honest result to report, actually. It cuts against the folk wisdom.
+
+**Nadia:** And how much of the vegetable are we talking about? The trimmings were between a quarter and nearly half of each item by weight, leek at the top. So it's not a garnish; it's a real fraction of what you buy.
+
+**Theo:** Though even the richest one is under ten grams of fibre per hundred. When the average intake is barely more than half the target, that's helpful, not a fix.
+
+**Nadia:** Agreed. And credit where due: for celeriac skin, kale stalk and fennel core, they found no published values at all, so those rows are new.
+
+**Nadia:** It does, and they don't bury it. The other consistent pattern is the type of fibre: in every one, insoluble outweighed soluble, from only slightly more in kale to more than eight to one in watermelon rind. That fits what these tissues are for. Peels and stalks are structural and protective.
+
+**Theo:** Okay, now the reviewer question. Ten of twelve higher than what? Who measured the flesh?
+
+**Nadia:** Uh, nobody, in this study. The discarded parts were measured in their lab. The eaten parts weren't measured at all; their values come from a national food composition database.
+
+**Theo:** Wait. So it's one specimen of one squash, measured in-house, against a database average for squash flesh.
+
+**Nadia:** That's right. Different specimens, different lab. The database isn't bad; the comparison just isn't paired.
+
+**Theo:** And the clean version was sitting on the chopping board. The flesh of the same squash, same assay, same day. Another dozen samples.
+
+**Nadia:** And it matters most where the gap is small. Curly kale stalk beat the leaf by under seven percent. With one specimen and an unpaired reference, I'd call that a tie.
+
+**Theo:** So the honest count is more like nine clear wins, one tie, two losses.
+
+**Nadia:** I think that's fair for kale. The big ones, pineapple, squash, kiwi, pepper, are large enough that I doubt the pairing would flip them. The direction there I believe.
+
+**Theo:** And the duplicates they report?
+
+**Nadia:** Um, those are two measurements of the same dried powder. Repeatable assay; nothing about how one squash differs from the next. The authors say themselves that multiple samples would strengthen the study.
+
+**Theo:** How much can one squash differ from the next?
+
+**Nadia:** Their own literature table answers that. Published values for pineapple peel, per dry weight, run from the mid-twenties to over eighty grams per hundred, about threefold.
+
+**Theo:** Huh. So the literature is all over the place.
+
+**Nadia:** Partly variety and growing conditions, partly method. Some studies used crude fibre, which destroys most of the non-cellulose fibre; others neutral detergent fibre, which loses the soluble part. The authors are careful to say these aren't measuring the same thing.
+
+**Theo:** This is the instrument problem again. In episode ninety-one, the young men's consent interviews, the guide never asked about pleasure, so of course nobody described it. Here, pick crude fibre and you get a low number before you've touched a vegetable.
+
+**Nadia:** Yeah, same lesson, different bench. And it's a point in this paper's favour: they used the method recommendations are built on, so their numbers mean what a consumer would assume.
+
+**Theo:** There was something odd in one of the tables, though, wasn't there?
+
+**Nadia:** There is. Total fibre is supposed to be the sum of the insoluble and soluble fractions, and for most rows it is. For curly kale the fractions add up to over ten grams, against a total of about four. Something in that row is wrong, and the table can't tell you what.
+
+**Theo:** And I noticed the literature table gives a second set of totals for the same samples, which don't match the main table. Pineapple drops about a gram.
+
+**Nadia:** Right, and the paper doesn't explain it. None of it reverses the headline, but a reader shouldn't have to reconcile it.
+
+**Theo:** Okay. Energy. You said they measured that too.
+
+**Nadia:** By bomb calorimetry, which burns the sample completely, fibre included. The trimmings came out higher than the flesh in eight of twelve.
+
+**Theo:** Against database flesh values again, which are meant to be energy you can actually use. A calorimeter counts the fibre you can't digest. I wouldn't read much into that comparison.
+
+**Nadia:** Nor would I. The authors themselves argue that energy locked in intact plant cells isn't all absorbed.
+
+**Theo:** Right. Let's do the people part. The focus groups.
+
+**Nadia:** Six groups, forty participants, staff and students who eat at the university's outlets, recruited by convenience and paid a voucher. Three quarters were women, many with postgraduate degrees. One researcher coded the transcripts.
+
+**Theo:** Forty is reasonable for focus groups. We had five undergraduates in an A-D-H-D study once and that was thin.
+
+**Nadia:** Forty is fine for finding the range of views, not their frequency. The headline is that nutrition persuaded more than sustainability. Taste, price and health drove most people's purchases often or always; in the chart, not one person said sustainability always did.
+
+**Theo:** Not one. On a university campus, which I'd have guessed was the friendliest audience for that pitch.
+
+**Nadia:** Mm-hm. The most useful finding is a quote. Someone said they wouldn't pick a dish because it advertised peels and stalks, but if they ate what they normally ate and were told it had two grams more fibre, they'd think, oh great, I feel healthy.
+
+**Theo:** That's a design spec, really. Don't sell it, hide it in the normal food.
+
+**Nadia:** Which is what the authors take from it: make root-to-tip as natural as possible.
+
+**Theo:** Do I worry about the setup, though? Did the participants know what the study was for?
+
+**Nadia:** Well... yes. The paper says participants knew the study's aims. So the room that said fibre was a good selling point for peels knew that was the hypothesis.
+
+**Theo:** Plus one coder, no pilot of the guide, an educated campus sample, which the authors flag. And it was registered a few months after the last focus group. I'd treat the themes as a starting list for a menu trial, not a finding about U-K consumers.
+
+**Theo:** What's not in here at all?
+
+**Nadia:** Three things the authors name. Everything was raw, and cooking changes fibre. Safety: peels can carry more pesticide residue, and pineapple skin has cyanogenic compounds. And whether people given a root-to-tip menu eat more fibre and waste less. That trial exists; its results aren't here.
+
+**Theo:** So the conclusion that this is a viable strategy is really a prediction.
+
+**Nadia:** It's a plausibility argument. They've shown the fibre is there. Not that it gets eaten, not that it's tolerated, not what it does once eaten.
+
+**Theo:** On what it does, episode ninety-three is the fair context. In that colorectal cancer cohort, fibre was one of the components that looked protective, but it came mostly from grains and was measured by questionnaire. Peel fibre is mostly insoluble, and the authors note fibre type changes how it behaves in the gut.
+
+**Nadia:** Right, and they don't claim health benefits from their own data.
+
+**Theo:** Okay, my three takeaways. One: in most of these twelve items, the trimmings carry more fibre per gram than the part we eat, sometimes several times more, and it's mostly insoluble fibre. Broccoli stalk and fennel go the other way.
+
+**Theo:** Two: that comparison is one specimen measured in-house against database values for the flesh. Big gaps like pineapple probably survive; small ones like kale don't count, and the kale row has an arithmetic problem.
+
+**Theo:** Three: the focus groups suggest health beats sustainability as a pitch, and that people want it hidden in normal food, but they come from a campus sample that knew the hypothesis.
+
+**Nadia:** What would change my mind: paired measurements, several specimens of each, raw and cooked. If the pineapple and squash gaps hold up across five or six of each, that's a useful table for every dietitian.
+
+**Theo:** For me it's the menu trial. Show me the fibre actually eaten and the plate waste, not the fibre on the chopping board.
+
+**Nadia:** That's the International Journal of Food Sciences and Nutrition, Browne and colleagues, D-O-I ten dot one zero eight zero slash zero nine six three seven four eight six dot two zero two six dot two seven three four eight five two.
+
+**Theo:** Thanks for listening.
+
+**Nadia:** Take care, and see you next time.
