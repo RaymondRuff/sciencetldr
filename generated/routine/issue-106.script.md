@@ -1,12 +1,27 @@
 # Issue #106 — script (routine writer)
 
-**Length:** 11,178 spoken chars (~10.4 min)  
+**Length:** 11,302 spoken chars (~10.5 min)  
 **Episodes cited:** [91, 93]  
 **Paper text from:** bundle:issue-106 (supplied PDF, emailed, staged in the papers repository and normalised by scripts/paper_bundle.py)
 
 | Run | Started (UTC) | Finished (UTC) | Safeguard stops |
 |---|---|---|---|
 | writer | 2026-11-07T08:06:35Z | 2026-11-07T08:09:44Z | 0 |
+| checker | 2026-11-07T11:09:42Z | 2026-11-07T11:12:14Z | 0 |
+
+## Corrections made by the fact-check pass
+
+- Theo cited episode ninety-three as fibre coming mostly from grains; card 93 says the protective fibre signal was from ultra-processed sources, with whole-grain fibre only the authors' interpretation
+- Theo said hosts should hide root-to-tip in normal food and takeaway three and the show notes said people want it hidden; participants also asked for the health benefits to be advertised, and the paper says only 'as natural as possible'
+- The kale insoluble-to-soluble ratio (slightly more insoluble) comes from the row whose fractions do not sum to its total; replaced with beetroot's under two to one (Table 3)
+- Nadia stated broccoli stalk is wetter as fact; the authors suggest moisture citing Campas-Baypoli et al., not their own measurement
+- Nadia said the literature table answers how much one specimen differs from the next; the table mixes AOAC, crude and neutral detergent fibre, so it only hints; dropped the derived threefold
+- Nadia said the paper used the method recommendations are built on, which the paper never states; now the authors' argument that total fibre is the relevant measure for consumers
+- Theo said episode ninety-one's men 'nobody' described pleasure; card 91 says they rarely did
+- 'Tissues are structural and protective' is the authors' interpretation; attributed to them
+- The flesh values came from the GB23 database in Nutritics; dropped the unsupported 'national'
+- Cut kiwi's 'close to eight' from a turn already carrying two figures
+- Turns 26-27 were both Nadia, with 27 answering a question nobody asked, and turns 62-63 were both Theo; merged each pair
 
 ## Show notes
 
@@ -24,7 +39,7 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 1. Trimmings were fibre-richer in 10 of 12 (pineapple 6.64 vs 1.2 g/100 g), mostly insoluble; broccoli stalk and fennel core were lower.
 2. One specimen per item versus database flesh values: kale's +6.6% is a tie, and its fibre fractions don't sum.
-3. Participants favoured health messaging and hidden, normal-looking dishes, but knew the study's aims.
+3. Participants favoured health messaging and dishes that feel like normal food, but knew the study's aims.
 
 ---
 
@@ -60,7 +75,7 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 **Theo:** Ten of twelve. How big are the numbers?
 
-**Nadia:** The discarded parts ran from about two grams of fibre per hundred grams, watermelon rind, up to about nine and a quarter, butternut squash skin and seeds. Kiwi skin was close to eight.
+**Nadia:** The discarded parts ran from about two grams of fibre per hundred grams, watermelon rind, up to about nine and a quarter, butternut squash skin and seeds.
 
 **Theo:** And the flesh, for comparison?
 
@@ -72,7 +87,7 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 **Theo:** Hmm. A big percentage off a tiny denominator.
 
-**Nadia:** Yes, though the absolute numbers are in the table. The two that went the other way were broccoli and fennel: broccoli stalk had less fibre than the florets, by more than a quarter. The authors' explanation is moisture. The stalk is wetter, so per fresh gram there's less of everything.
+**Nadia:** Yes, though the absolute numbers are in the table. The two that went the other way were broccoli and fennel: broccoli stalk had less fibre than the florets, by more than a quarter. The authors suggest moisture, citing another study where the stalk was wetter, so per fresh gram there's less of everything.
 
 **Theo:** That's a nice honest result to report, actually. It cuts against the folk wisdom.
 
@@ -80,13 +95,11 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 **Theo:** Though even the richest one is under ten grams of fibre per hundred. When the average intake is barely more than half the target, that's helpful, not a fix.
 
-**Nadia:** Agreed. And credit where due: for celeriac skin, kale stalk and fennel core, they found no published values at all, so those rows are new.
-
-**Nadia:** It does, and they don't bury it. The other consistent pattern is the type of fibre: in every one, insoluble outweighed soluble, from only slightly more in kale to more than eight to one in watermelon rind. That fits what these tissues are for. Peels and stalks are structural and protective.
+**Nadia:** Agreed. And credit where due: for celeriac skin, kale stalk and fennel core, they found no published values at all, so those rows are new. The other consistent pattern is the type of fibre: in every one, insoluble outweighed soluble, from under two to one in beetroot to more than eight to one in watermelon rind. The authors read that as fitting what these tissues are for: peels and stalks are structural and protective.
 
 **Theo:** Okay, now the reviewer question. Ten of twelve higher than what? Who measured the flesh?
 
-**Nadia:** Uh, nobody, in this study. The discarded parts were measured in their lab. The eaten parts weren't measured at all; their values come from a national food composition database.
+**Nadia:** Uh, nobody, in this study. The discarded parts were measured in their lab. The eaten parts weren't measured at all; their values come from a food composition database.
 
 **Theo:** Wait. So it's one specimen of one squash, measured in-house, against a database average for squash flesh.
 
@@ -106,15 +119,15 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 **Theo:** How much can one squash differ from the next?
 
-**Nadia:** Their own literature table answers that. Published values for pineapple peel, per dry weight, run from the mid-twenties to over eighty grams per hundred, about threefold.
+**Nadia:** Their own literature table hints at it, though it mixes methods. Published values for pineapple peel, per dry weight, run from the mid-twenties to over eighty grams per hundred.
 
 **Theo:** Huh. So the literature is all over the place.
 
 **Nadia:** Partly variety and growing conditions, partly method. Some studies used crude fibre, which destroys most of the non-cellulose fibre; others neutral detergent fibre, which loses the soluble part. The authors are careful to say these aren't measuring the same thing.
 
-**Theo:** This is the instrument problem again. In episode ninety-one, the young men's consent interviews, the guide never asked about pleasure, so of course nobody described it. Here, pick crude fibre and you get a low number before you've touched a vegetable.
+**Theo:** This is the instrument problem again. In episode ninety-one, the young men's consent interviews, the guide never asked about pleasure, so of course few described it. Here, pick crude fibre and you get a low number before you've touched a vegetable.
 
-**Nadia:** Yeah, same lesson, different bench. And it's a point in this paper's favour: they used the method recommendations are built on, so their numbers mean what a consumer would assume.
+**Nadia:** Yeah, same lesson, different bench. And it's a point in this paper's favour: they used the standard total-fibre method, which the authors argue is the relevant one for what people actually eat.
 
 **Theo:** There was something odd in one of the tables, though, wasn't there?
 
@@ -144,17 +157,15 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 **Nadia:** Mm-hm. The most useful finding is a quote. Someone said they wouldn't pick a dish because it advertised peels and stalks, but if they ate what they normally ate and were told it had two grams more fibre, they'd think, oh great, I feel healthy.
 
-**Theo:** That's a design spec, really. Don't sell it, hide it in the normal food.
+**Theo:** That's a design spec, really. Make it normal food first, and mention the fibre after.
 
-**Nadia:** Which is what the authors take from it: make root-to-tip as natural as possible.
+**Nadia:** Which the authors take on board: participants did want the health benefits advertised, from reputable sources, but root-to-tip should feel as natural as possible.
 
 **Theo:** Do I worry about the setup, though? Did the participants know what the study was for?
 
 **Nadia:** Well... yes. The paper says participants knew the study's aims. So the room that said fibre was a good selling point for peels knew that was the hypothesis.
 
-**Theo:** Plus one coder, no pilot of the guide, an educated campus sample, which the authors flag. And it was registered a few months after the last focus group. I'd treat the themes as a starting list for a menu trial, not a finding about U-K consumers.
-
-**Theo:** What's not in here at all?
+**Theo:** Plus one coder, no pilot of the guide, an educated campus sample, which the authors flag. And it was registered a few months after the last focus group. I'd treat the themes as a starting list for a menu trial, not a finding about U-K consumers. What's not in here at all?
 
 **Nadia:** Three things the authors name. Everything was raw, and cooking changes fibre. Safety: peels can carry more pesticide residue, and pineapple skin has cyanogenic compounds. And whether people given a root-to-tip menu eat more fibre and waste less. That trial exists; its results aren't here.
 
@@ -162,7 +173,7 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 **Nadia:** It's a plausibility argument. They've shown the fibre is there. Not that it gets eaten, not that it's tolerated, not what it does once eaten.
 
-**Theo:** On what it does, episode ninety-three is the fair context. In that colorectal cancer cohort, fibre was one of the components that looked protective, but it came mostly from grains and was measured by questionnaire. Peel fibre is mostly insoluble, and the authors note fibre type changes how it behaves in the gut.
+**Theo:** On what it does, episode ninety-three is the fair context. In that colorectal cancer cohort, fibre looked protective only when it came from ultra-processed sources, which the authors read as whole-grain fibre, and it was measured by questionnaire. Peel fibre is mostly insoluble, and the authors note fibre type changes how it behaves in the gut.
 
 **Nadia:** Right, and they don't claim health benefits from their own data.
 
@@ -170,7 +181,7 @@ DOI: [10.1080/09637486.2026.2734852](https://doi.org/10.1080/09637486.2026.27348
 
 **Theo:** Two: that comparison is one specimen measured in-house against database values for the flesh. Big gaps like pineapple probably survive; small ones like kale don't count, and the kale row has an arithmetic problem.
 
-**Theo:** Three: the focus groups suggest health beats sustainability as a pitch, and that people want it hidden in normal food, but they come from a campus sample that knew the hypothesis.
+**Theo:** Three: the focus groups suggest health beats sustainability as a pitch, and that the dishes should feel like normal food, but they come from a campus sample that knew the hypothesis.
 
 **Nadia:** What would change my mind: paired measurements, several specimens of each, raw and cooked. If the pineapple and squash gaps hold up across five or six of each, that's a useful table for every dietitian.
 
