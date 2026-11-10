@@ -2,8 +2,13 @@ name: friday-podcast
 
 on:
   schedule:
-    # Fridays 06:00 ET (= 11:00 UTC during EST, 10:00 UTC during EDT)
-    - cron: '0 11 * * 5'
+    # THURSDAY, for a Friday episode. The pipeline takes a day: a pick made on
+    # day D is written by the routine at 08:00 UTC on D+1, checked at 11:00,
+    # and published about 11:25 UTC — so the pick has to run the day before
+    # the drop. Episode 96 was picked on a Friday and published on Saturday,
+    # which is what this fixes. Thursday 11:00 UTC also leaves hours of slack
+    # for GitHub, which has lately started this schedule four to six hours late.
+    - cron: '0 11 * * 4'
   workflow_dispatch: {}
 
 permissions:

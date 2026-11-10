@@ -12,6 +12,11 @@ name: generate-episode
 #     A window closes at 9 pm Pacific (04:00 or 05:00 UTC); this run opens the
 #     runner-up and stages it before the writer routine starts at 08:00. Off
 #     the hour, because GitHub delays on-the-hour schedules the most.
+#   - 07:28 UTC: the same again, half an hour before the writer. A window
+#     closes at 05:00 UTC in winter, which leaves the 05:17 sweep only minutes
+#     of slack — and GitHub routinely starts a schedule hours late. Two
+#     chances make a Monday or Friday drop far likelier to hold. Sweeps cost
+#     nothing and are idempotent, so running one twice is free.
 #   - every 30 min: a mailbox check for PDFs you've emailed back. It uses only
 #     the standard library and stops before installing anything if the inbox
 #     has nothing new, so a quiet poll costs seconds.
@@ -30,6 +35,7 @@ on:
   schedule:
     - cron: '0 14 * * *'      # full sweep
     - cron: '17 5 * * *'      # full sweep that closes expired PDF windows
+    - cron: '28 7 * * *'      # second chance at that, just before the writer
     - cron: '*/30 * * * *'    # mailbox poll
   workflow_dispatch:
     inputs:

@@ -155,6 +155,53 @@ budget (25 figures, 2 per turn, 6 decimals) and rejects past a ceiling (40, 5,
 ceilings, which is the regression test. The counting is mechanical; whether a
 figure earns its reaction stays with the checker.
 
+## Update, 2026-11-10: timing, strand call-outs, one-offs
+
+**The register change worked.** Episodes 96 and 97, the first two written under
+the Numbers section, speak 1.0 and 0.9 figures a minute against episode 95's
+4.3 — eleven and ten figures each, nought and one decimal, no validator
+warnings. The owner's verdict: "a considerable improvement, much more
+enjoyable to listen to."
+
+Three things changed on the back of it.
+
+**1. The picks moved a day earlier, because the pipeline takes a day.** A pick
+on day D is written at 08:00 UTC on D+1, checked at 11:00, and published about
+11:25 (03:25 Pacific). Episode 96 was picked on a Friday and published on
+Saturday; episode 97's digest ran Monday and published Tuesday. So:
+
+| Strand | Pick | Episode |
+|---|---|---|
+| digest | **Sunday** 06:00 Pacific (the `WeeklyDigestGenerator` routine) | Monday morning |
+| r/science | **Thursday** 11:00 UTC (`friday-podcast.yml`) | Friday morning |
+
+The morning of the pick day matters when the top paper is paywalled: a PDF
+window closes at 9 pm Pacific *that day*, which is 05:00 UTC the next, and the
+runner-up has to be staged before the writer runs at 08:00. Sweeps now run at
+05:17 **and 07:28** UTC to give that two chances, because GitHub starts
+schedules hours late often enough to matter. A pick made in the evening
+Pacific rolls its deadline to the following night and so slips the episode a
+day — another reason the digest belongs in the Sunday morning slot.
+
+**2. The hosts say which strand they are on.** `prompts/host_dialogue.md` has a
+**The strands** section: the cold open names the Monday digest pairing or the
+Friday r/science crawl, in the hosts' own words, varied each episode. The
+distinction that keeps this from colliding with the show's field-neutrality
+rule is **provenance, not field**: where the paper came from is required, while
+characterising the show by discipline is still banned. `routine_tools.py
+context` now prints the strand so the writer cannot miss it, and
+`describe_strand()` is the single source for what each `source` means.
+
+**3. One-off papers have a path.** There was none: queueing a paper by hand
+meant writing an Issue METADATA block by hand. `scripts/add_paper.py`, run from
+the **add-paper** workflow with a DOI, does what the pickers do — Crossref
+lookup, fetch and stage the open full text, open the `podcast-pending` Issue
+labelled `one-off` — and asks once for a PDF when nothing open has the paper.
+No window and no runner-up: a one-off is that paper or nothing. It carries no
+series branding, and the hosts give it no strand framing. The writer takes the
+oldest eligible Issue, so a one-off queued Monday to Wednesday has no
+competition; queued on a pick day it waits a day behind the strand.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions

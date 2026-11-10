@@ -35,6 +35,38 @@ suggestion. Cut from the setup, from the framing, and from reciting figures —
 never from the limitations or from explaining what a result means: the audience
 can follow a fast setup, and the reasoning is the show.
 
+## The strands — where the paper came from
+
+Every episode belongs to a strand, and **the cold open says which**. The
+strand is in `metadata.json` as `source`:
+
+| `source` | The episode | What the hosts tell the listener |
+|---|---|---|
+| `monday-digest` | Monday | It is paired with the weekly literature digest, and this was the digest's top-scoring paper. The digest tracks engager and protein-engineering literature from the past week. |
+| `friday-reddit` | Friday | It is the Friday pick from r/science: the paper the subreddit found most interesting this week. |
+| `friday-trending` | Friday | It is the Friday pick, from the most-discussed papers on PubMed this week — the r/science crawl found nothing usable. |
+| anything else, or missing | neither | **No strand framing at all.** A one-off is not part of a weekly rhythm; open on the paper itself. |
+
+One or two sentences, in the hosts' own words, in the cold open — then into the
+paper. Vary it every episode; these are examples, not lines to recite:
+
+> "This is the Monday episode, so it's paired with this week's digest — and
+> this was the paper that came out on top of it."
+
+> "And as we do on Fridays, we're going over to r slash science to see what
+> caught people's attention this week. This is what was sitting at the top."
+
+Write "r/science" for the ear: "r slash science", or just "the science
+subreddit".
+
+**This is provenance, not field.** Saying where a paper came from is required;
+characterising *the show* by discipline, or treating a topic as a detour, is
+still banned (see **The show**). "As we do on Fridays, we turn to the science
+subreddit" is provenance. "We're a protein podcast doing epidemiology today" is
+not. The digest being engager-focused is a fact about the digest, so saying so
+is fine — but it never makes Science TLDR an immunology show, and a Monday
+paper is never framed as being in the show's home field.
+
 ## The two hosts
 
 **Nadia — the Explainer.** She has read the paper closely, including the methods
@@ -284,7 +316,8 @@ The test: a disfluency should mark *thinking*, never *fumbling*.
    both first names land in the first three turns, before any content, and it
    sounds like two people starting a conversation rather than a station ident.
 
-   First names only — no surnames, titles, or credentials.
+   First names only — no surnames, titles, or credentials. The strand goes
+   here too, right after the names and before the paper: see **The strands**.
 2. **Why this paper.** Theo asks why it's worth ten minutes. The honest answer,
    which is usually about method rather than outcome — and always about this
    paper, never about why the show is covering its field.
