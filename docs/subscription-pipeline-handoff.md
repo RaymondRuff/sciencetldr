@@ -249,6 +249,43 @@ Failures are deliberately asymmetric: anything the owner should answer gets a
 reply and the email is consumed, while an unexpected error leaves the email
 unlabelled so the next sweep retries it.
 
+## Update, 2026-11-10: papers with no DOI, and exact audio pairing
+
+A white paper was the first thing queued by hand, and it exposed two gaps.
+
+**A DOI was load-bearing.** `add_paper` keyed everything off it: Crossref for
+the title, the DOI for duplicate detection, the DOI in the Issue header. An
+industry white paper has none. The rest of the pipeline was already built for
+the case — `prompts/show_notes.md` says to write `Source: [url]` when there is
+no DOI, and `White paper — {organisation}` for the journal line — so only the
+front door was too narrow. Now a paper can be identified by its **URL**
+instead: `add_paper.add(url=..., title=..., publisher=...)`, or by email with
+the link and a `Title:` line. The Issue's METADATA carries `doi: null` and
+`source_url`, duplicate detection falls back to
+`select_friday_paper.already_seen_urls()`, and the hosts name the organisation
+instead of reading a DOI aloud — never the URL, which is miserable to listen
+to. With no title given, the PDF's own front matter is read for one; that is a
+guess, so it is printed in the log and lands in an Issue that can be corrected
+before the writer runs in the morning.
+
+**The audio would have been misfiled.** `tts_dialogue.to_mp3` stamped only the
+DOI into the mp3's comment tag, and `publish_episode.resolve_metadata` used
+that tag to find the episode's Issue. With no DOI the tag was empty and
+publishing fell through to pairing with the **oldest open Issue** — which is
+#40, stalled since August. The white paper would have published under the
+Whitehall diet paper's title and closed its Issue. The comment in `to_mp3`
+warned about exactly this; nothing had hit it because every episode so far had
+a DOI.
+
+So the audio now carries `Issue: 112; DOI: ...` and publishing pairs on the
+number first. That is strictly better for every episode, not just DOI-less
+ones: a generated episode always knows its own Issue, so the guess is gone.
+Where the Issue does have a DOI, Crossref still supplies the canonical title
+and authors — a digest title arrives as "1. Shared alpha-helix..." — while the
+strand (`source`) and `source_url` stay as the Issue recorded them, because
+Crossref would otherwise overwrite `source` with "crossref". The DOI branch
+and the oldest-pending fallback both remain for audio dropped in by hand.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions

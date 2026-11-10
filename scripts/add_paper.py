@@ -22,10 +22,18 @@ credentials, or locally with GH_TOKEN set:
 
   uv run python scripts/add_paper.py --doi 10.1016/j.chembiol.2026.09.022
   uv run python scripts/add_paper.py --doi 10.1/x --note "the spacer claim"
+  uv run python scripts/add_paper.py --url https://example.org/paper.pdf \\
+      --title "A white paper" --publisher "Example Lab"
+
+A paper with no DOI — an industry white paper — is identified by its URL
+instead. Give the title too, or leave it out and the PDF's own front matter is
+read for one, which is a guess worth checking on the Issue before the writer
+runs in the morning.
 """
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 from typing import NamedTuple
@@ -92,6 +100,11 @@ def excerpt(paper: dict, note: str) -> str:
         lines.append(f"Reason given: {note}")
     if paper.get("journal"):
         lines.append(f"Journal: {paper['journal']}")
+    if paper.get("source_url") and not paper.get("doi"):
+        lines.append(
+            f"No DOI: this is a white paper, published at {paper['source_url']}. "
+            "The hosts name the organisation instead of reading a DOI."
+        )
     if paper.get("is_preprint"):
         lines.append("This is a preprint: it has not been peer reviewed.")
     return "\n".join(lines)
@@ -105,23 +118,76 @@ def normalise(doi: str) -> str:
     return doi
 
 
-def doi_from_pdf(path: Path) -> str | None:
-    """The DOI printed on a paper's first pages, if it is there."""
+def check_url(url: str) -> str:
+    url = url.strip()
+    if not url.lower().startswith(("http://", "https://")):
+        raise Refused(f"{url!r} does not look like a link — it needs to start with https.")
+    return url
+
+
+def _front_matter(data: bytes) -> tuple[str, str]:
+    """(the PDF's own title, the text of its first pages). Blank on failure."""
     try:
+        import io
+
         from pypdf import PdfReader
 
-        reader = PdfReader(str(path))
+        reader = PdfReader(io.BytesIO(data))
+        recorded = ""
+        if reader.metadata is not None:
+            recorded = str(reader.metadata.title or "").strip()
         text = "\n".join(
             page.extract_text() or "" for page in reader.pages[:DOI_SEARCH_PAGES]
         )
+        return recorded, text
     except Exception as exc:  # noqa: BLE001 - an unreadable PDF just yields nothing
-        print(f"[add] could not read the PDF for a DOI ({exc})")
+        print(f"[add] could not read the PDF ({exc})")
+        return "", ""
+
+
+def doi_from_pdf(path: Path) -> str | None:
+    """The DOI printed on a paper's first pages, if it is there."""
+    try:
+        data = Path(path).read_bytes()
+    except OSError as exc:
+        print(f"[add] could not open the PDF ({exc})")
         return None
-    found = pdf_mailbox.dois_in(text)
+    found = pdf_mailbox.dois_in(_front_matter(data)[1])
     if len(found) == 1:
         return found[0]
     if found:
         print(f"[add] the PDF's first pages carry {len(found)} DOIs; not guessing")
+    return None
+
+
+def plausible_title(line: str) -> bool:
+    """Whether a line off a PDF's front page could be the paper's title."""
+    line = line.strip()
+    if not 15 <= len(line) <= 300:
+        return False
+    if "@" in line or line.count(" ") < 2:
+        return False  # an email address, or too few words to be a title
+    if not any(c.isalpha() for c in line):
+        return False
+    lowered = line.lower()
+    return not lowered.startswith(
+        ("http", "www.", "doi:", "arxiv", "abstract", "preprint", "copyright", "©")
+    )
+
+
+def title_from_pdf(data: bytes) -> str | None:
+    """The paper's title, from the PDF's own metadata or its first lines.
+
+    A white paper has no Crossref record to ask, so this is the only source
+    besides the requester. It is a guess: it is printed in the log and lands
+    in an Issue that can be corrected before the writer runs.
+    """
+    recorded, text = _front_matter(data)
+    if plausible_title(recorded):
+        return re.sub(r"\s+", " ", recorded).strip()
+    for line in text.splitlines():
+        if plausible_title(line):
+            return re.sub(r"\s+", " ", line).strip()
     return None
 
 
@@ -149,39 +215,70 @@ class Queued(NamedTuple):
     staged: bool  # its full text is already in the papers repository
 
 
+def white_paper(url: str, title: str, publisher: str) -> dict:
+    """The record for a paper with no DOI, identified by where it was published."""
+    return {
+        "title": title,
+        "doi": "",
+        "dice": None,
+        "pmid": "",
+        "source_url": url,
+        "pdf_url": url,
+        "journal": f"White paper — {publisher}" if publisher else "White paper",
+        "is_preprint": False,
+    }
+
+
+def check_duplicate(paper: dict, force: bool) -> None:
+    if force:
+        return
+    doi, url = paper.get("doi", ""), paper.get("source_url", "")
+    try:
+        seen = (
+            select_friday_paper.already_seen_dois() if doi
+            else select_friday_paper.already_seen_urls()
+        )
+    except Exception as exc:  # noqa: BLE001 - the guard is a courtesy
+        print(f"[add] could not check for duplicates ({exc})")
+        return
+    if (doi or url).lower() in seen:
+        raise Refused(
+            f"{doi or url} is already published, or already queued in an open Issue."
+        )
+
+
 def add(
-    doi: str,
+    doi: str = "",
     *,
+    url: str = "",
     title: str = "",
+    publisher: str = "",
     note: str = "",
     force: bool = False,
-    supplied_pdf: bool = False,
+    pdf: Path | None = None,
     email_request: bool = True,
 ) -> Queued:
-    """Open the Issue for one paper. Raises Refused with a reason if it will not.
+    """Open the Issue for one paper, found by DOI or, failing that, by URL.
 
-    With `supplied_pdf` the caller already holds the paper, so no source is
-    fetched and no PDF is asked for; the caller stages it.
+    With `pdf` the caller already holds the paper, so no source is fetched and
+    no PDF is asked for; the caller stages it. The file is still read for the
+    paper's title when nothing else can supply one.
     """
-    doi = normalise(doi)
+    supplied = pdf is not None
     github_issue.ensure_auth()
-    paper = describe(doi, title)
-    print(f"[add] {paper['title'][:80]}")
+    if doi:
+        doi = normalise(doi)
+        paper = describe(doi, title)
+    elif url:
+        paper = white_paper(check_url(url), title, publisher)
+    else:
+        raise Refused("I need either a DOI or a link to the paper.")
 
-    if not force:
-        try:
-            seen = select_friday_paper.already_seen_dois()
-        except Exception as exc:  # noqa: BLE001 - the guard is a courtesy
-            print(f"[add] could not check for duplicates ({exc})")
-            seen = set()
-        if doi.lower() in seen:
-            raise Refused(
-                f"{doi} is already published, or already queued in an open Issue."
-            )
+    check_duplicate(paper, force)
     check_room(force)
 
     pdf_url, fetched = None, None
-    if supplied_pdf:
+    if supplied:
         print("[add] full text: the PDF came with the request")
     else:
         try:
@@ -193,12 +290,38 @@ def add(
             + (fetched.provenance if fetched else "none open; a PDF is needed")
         )
 
+    if not paper["title"]:
+        # No DOI means no Crossref record, so the PDF itself is the only place
+        # left to look. It is a guess: say so loudly.
+        data = fetched.pdf if fetched and fetched.pdf else None
+        if data is None and pdf is not None:
+            try:
+                data = Path(pdf).read_bytes()
+            except OSError as exc:
+                print(f"[add] could not read the supplied PDF ({exc})")
+        guess = title_from_pdf(data) if data else None
+        if not guess:
+            raise Refused(
+                "I could not work out the paper's title — there is no DOI to look "
+                "up and no readable PDF to take it from. Send the title with the link."
+            )
+        paper["title"] = guess
+        print(f"[add] title taken from the PDF (check it): {guess!r}")
+    print(f"[add] {paper['title'][:80]}")
+
     body = select_monday_paper.render_issue_body(
-        {"title": paper["title"], "doi": doi, "dice": None, "raw": excerpt(paper, note)},
+        {
+            "title": paper["title"],
+            "doi": paper.get("doi", ""),
+            "dice": None,
+            "raw": excerpt(paper, note),
+            "source_url": paper.get("source_url", ""),
+            "journal": paper.get("journal", ""),
+        },
         pdf_url,
         SOURCE,
         fetched=fetched,
-        supplied=supplied_pdf,
+        supplied=supplied,
     )
     number = github_issue.open_issue(
         title=f"🎧 {paper['title'][:160]}",
@@ -207,20 +330,22 @@ def add(
     )
     print(f"[add] opened issue #{number}")
 
+    identifier = paper.get("doi") or paper.get("source_url", "")
     if fetched is not None:
         select_monday_paper.stage_for_writer(
             number, paper, fetched, journal=paper.get("journal", "")
         )
         print("[add] the writer will take it at its next run")
-        return Queued(number, paper["title"], doi, True)
-    if supplied_pdf:
-        return Queued(number, paper["title"], doi, True)
+        return Queued(number, paper["title"], identifier, True)
+    if supplied:
+        return Queued(number, paper["title"], identifier, True)
 
     labels = [LABEL_NEEDS_PDF]
     if email_request:
         try:
             if pdf_mailbox.request(
-                number, title=paper["title"], doi=doi, journal=paper.get("journal", "")
+                number, title=paper["title"], doi=paper.get("doi", ""),
+                journal=paper.get("journal", ""),
             ):
                 labels.append(LABEL_REQUESTED)
         except Exception as exc:  # noqa: BLE001 - the Issue says what is needed anyway
@@ -230,41 +355,74 @@ def add(
         labels.append(LABEL_REQUESTED)
     github_issue.add_labels(number, labels)
     print(f"[add] labelled {', '.join(labels)}; the episode waits for the PDF")
-    return Queued(number, paper["title"], doi, False)
+    return Queued(number, paper["title"], identifier, False)
 
 
 def from_email(request: dict) -> Queued:
     """Queue the paper an emailed one-off request names. Raises Refused.
 
-    The DOI comes from the body when it names exactly one, and otherwise from
-    the first pages of an attached PDF. Several DOIs and no DOI are both
-    refused rather than guessed at: the wrong paper is worse than a question.
+    A DOI is preferred: it brings a Crossref record with it. Failing that, a
+    single link identifies the paper — that is the white-paper case, where the
+    title comes from a "Title:" line or from the PDF itself. Several DOIs or
+    several links are refused rather than guessed at: the wrong paper is worse
+    than a question.
     """
     dois = request.get("dois") or []
+    urls = request.get("urls") or []
+    fields = {k.lower(): v for k, v in (request.get("fields") or {}).items()}
     pdf = Path(request["pdf"]) if request.get("pdf") else None
+    note = request.get("note", "")
+
     if len(dois) > 1:
         raise Refused(
             "the email names several DOIs (" + ", ".join(dois[:4])
             + "), so I could not tell which paper you meant. Send just the one."
         )
     doi = dois[0] if dois else (doi_from_pdf(pdf) if pdf else None)
-    if not doi:
+    if doi:
+        return add(doi, note=note, pdf=pdf, email_request=False)
+
+    url = fields.get("url") or fields.get("link") or ""
+    if not url and len(urls) == 1:
+        url = urls[0]
+    elif not url and urls:
+        raise Refused(
+            f"the email has {len(urls)} links in it, so I could not tell which is "
+            "the paper. Put it on a line of its own starting 'URL:'."
+        )
+    if not url:
         where = " or on the first pages of the attached PDF" if pdf else ""
         raise Refused(
-            f"I could not find a DOI in the email{where}. Reply with the DOI and "
-            "I will queue it."
+            f"I could not find a DOI in the email{where}. Send the DOI — or, for a "
+            "paper that has none, a link to it and a line starting 'Title:'."
         )
     return add(
-        doi,
-        note=request.get("note", ""),
-        supplied_pdf=pdf is not None,
+        url=url,
+        title=fields.get("title", ""),
+        publisher=(
+            fields.get("publisher")
+            or fields.get("organisation")
+            or fields.get("organization")
+            or fields.get("org")
+            or ""
+        ),
+        note=note,
+        pdf=pdf,
         email_request=False,
     )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--doi", required=True, help="the paper's DOI")
+    parser.add_argument("--doi", default="", help="the paper's DOI")
+    parser.add_argument(
+        "--url",
+        default="",
+        help="where the paper is published, for one with no DOI (a white paper)",
+    )
+    parser.add_argument(
+        "--publisher", default="", help="the organisation behind a white paper"
+    )
     parser.add_argument("--title", default="", help="override the Crossref title")
     parser.add_argument("--note", default="", help="why you want this paper (context for the writer)")
     parser.add_argument(
@@ -272,7 +430,14 @@ def main() -> None:
     )
     args = parser.parse_args()
     try:
-        add(args.doi, title=args.title, note=args.note, force=args.force)
+        add(
+            args.doi,
+            url=args.url,
+            title=args.title,
+            publisher=args.publisher,
+            note=args.note,
+            force=args.force,
+        )
     except Refused as exc:
         sys.exit(f"Not queued: {exc}")
 

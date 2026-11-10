@@ -111,23 +111,34 @@ def synthesize(turns: list[dict], wav_path: Path) -> float:
     return seconds
 
 
-def to_mp3(wav_path: Path, mp3_path: Path, *, doi: str = "", title: str = "") -> None:
-    """Encode to mp3, stamping the DOI in the comment tag.
+def to_mp3(
+    wav_path: Path, mp3_path: Path, *, doi: str = "", title: str = "", issue: int | None = None
+) -> None:
+    """Encode to mp3, stamping the Issue number and the DOI in the comment tag.
 
     publish_episode.py reads that comment to pair the audio with its Issue and
     to pull canonical metadata from CrossRef, so the tag is what links this
-    episode back to its paper.
+    episode back to its paper. The Issue number is what makes the pairing
+    exact: a paper with no DOI — a white paper — used to leave the comment
+    empty, and publishing then fell back to the *oldest* open Issue, which
+    would have published under the wrong paper's title and closed the wrong
+    Issue.
     """
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav_path)]
     if title:
         cmd += ["-metadata", f"title={title}"]
     cmd += ["-b:a", "128k", "-ac", "1", str(mp3_path)]
     subprocess.run(cmd, check=True)
-    if doi:
+    stamped = [f"Issue: {issue}"] if issue is not None else []
+    stamped += [f"DOI: {doi}"] if doi else []
+    if stamped:
         # Not via ffmpeg's `-metadata comment=`: for mp3 it writes a TXXX frame,
         # which publish_episode (reading COMM, as media players do) never saw —
         # the episode would have been paired with the oldest pending Issue.
         tags = ID3(mp3_path)
-        tags.setall("COMM", [COMM(encoding=3, lang="eng", desc="", text=[f"DOI: {doi}"])])
+        tags.setall(
+            "COMM",
+            [COMM(encoding=3, lang="eng", desc="", text=["; ".join(stamped)])],
+        )
         tags.save(mp3_path)
     print(f"  [tts] encoded {mp3_path.name} ({mp3_path.stat().st_size / 1e6:.1f} MB)")

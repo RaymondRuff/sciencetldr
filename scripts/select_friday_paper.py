@@ -133,6 +133,30 @@ def reddit_candidates(seen: set[str], limit: int = MAX_CANDIDATES) -> list[dict]
     return found
 
 
+def already_seen_urls() -> set[str]:
+    """Source URLs of papers already published or queued, for DOI-less papers."""
+    seen: set[str] = set()
+    for path in EPISODES_DIR.glob("*.json"):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            continue
+        url = ((data.get("source_metadata") or {}).get("source_url") or "").strip()
+        if url:
+            seen.add(url.lower())
+    try:
+        pending = github_issue.list_pending_issues()
+    except Exception as exc:  # noqa: BLE001
+        print(f"[select-friday] warning: could not list pending issues: {exc}")
+        pending = []
+    for issue in pending:
+        meta = github_issue.parse_metadata(issue.get("body") or "") or {}
+        url = (meta.get("source_url") or "").strip()
+        if url:
+            seen.add(url.lower())
+    return seen
+
+
 def pick_from_reddit(seen: set[str]) -> dict | None:
     """The top surviving r/science candidate, without checking its full text."""
     found = reddit_candidates(seen, limit=1)

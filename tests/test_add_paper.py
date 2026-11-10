@@ -13,7 +13,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 import add_paper  # noqa: E402
-import paper_text  # noqa: E402
+import paper_text  # noqa: E402  (Fetched)
 import routine_tools  # noqa: E402
 
 TEXT = paper_text.Fetched("full text " * 3000, "europepmc-pdf:PMC7", b"%PDF")
@@ -194,7 +194,8 @@ class FromEmailTests(unittest.TestCase):
         self.added = []
         patch = mock.patch.object(
             add_paper, "add",
-            lambda doi, **kw: self.added.append((doi, kw)) or add_paper.Queued(7, "T", doi, True),
+            lambda doi="", **kw: self.added.append((doi, kw))
+            or add_paper.Queued(7, "T", doi or kw.get("url", ""), True),
         )
         patch.start()
         self.addCleanup(patch.stop)
@@ -204,7 +205,7 @@ class FromEmailTests(unittest.TestCase):
         doi, kw = self.added[0]
         self.assertEqual(doi, DOI)
         self.assertEqual(kw["note"], "why")
-        self.assertFalse(kw["supplied_pdf"])
+        self.assertIsNone(kw["pdf"])
         self.assertFalse(kw["email_request"])  # the confirmation covers it
 
     def test_several_dois_are_refused_rather_than_guessed(self):
@@ -223,7 +224,49 @@ class FromEmailTests(unittest.TestCase):
             add_paper.from_email({"dois": [], "pdf": "/tmp/x.pdf", "note": ""})
         doi, kw = self.added[0]
         self.assertEqual(doi, DOI)
-        self.assertTrue(kw["supplied_pdf"])
+        self.assertEqual(kw["pdf"], Path("/tmp/x.pdf"))
+
+    def test_a_single_link_identifies_a_paper_with_no_doi(self):
+        add_paper.from_email({
+            "dois": [], "urls": ["https://example.org/wp.pdf"], "pdf": None,
+            "fields": {"title": "A white paper", "publisher": "Example Lab"},
+            "note": "worth a look",
+        })
+        doi, kw = self.added[0]
+        self.assertEqual(doi, "")
+        self.assertEqual(kw["url"], "https://example.org/wp.pdf")
+        self.assertEqual(kw["title"], "A white paper")
+        self.assertEqual(kw["publisher"], "Example Lab")
+
+    def test_an_explicit_url_line_beats_a_forest_of_links(self):
+        add_paper.from_email({
+            "dois": [], "pdf": None,
+            "urls": ["https://news.example/x", "https://unsubscribe.example/y"],
+            "fields": {"url": "https://example.org/wp.pdf"},
+        })
+        self.assertEqual(self.added[0][1]["url"], "https://example.org/wp.pdf")
+
+    def test_several_links_and_no_url_line_is_refused(self):
+        with self.assertRaises(add_paper.Refused) as caught:
+            add_paper.from_email({
+                "dois": [], "pdf": None,
+                "urls": ["https://a.example/x", "https://b.example/y"],
+            })
+        self.assertIn("'URL:'", str(caught.exception))
+
+    def test_a_doi_still_wins_over_a_link(self):
+        add_paper.from_email({"dois": [DOI], "urls": ["https://example.org/wp.pdf"], "pdf": None})
+        self.assertEqual(self.added[0][0], DOI)
+        self.assertNotIn("url", self.added[0][1])
+
+    def test_organisation_is_spelled_either_way(self):
+        for key in ("publisher", "organisation", "organization", "org"):
+            self.added.clear()
+            add_paper.from_email({
+                "dois": [], "pdf": None, "urls": ["https://example.org/wp.pdf"],
+                "fields": {"title": "A white paper", key: "Example Lab"},
+            })
+            self.assertEqual(self.added[0][1]["publisher"], "Example Lab", key)
 
     def test_a_pdf_with_no_readable_doi_is_refused(self):
         with mock.patch.object(add_paper, "doi_from_pdf", lambda path: None):
@@ -235,6 +278,86 @@ class FromEmailTests(unittest.TestCase):
         with mock.patch.object(add_paper, "doi_from_pdf", lambda path: "10.1/from-pdf"):
             add_paper.from_email({"dois": [DOI], "pdf": "/tmp/x.pdf"})
         self.assertEqual(self.added[0][0], DOI)
+
+
+class WhitePaperTests(unittest.TestCase):
+    """A paper with no DOI is identified by where it was published."""
+
+    def setUp(self):
+        self.calls = []
+        self.fetched = paper_text.Fetched("text " * 4000, "pdf-url", b"%PDF-1.7")
+        patches = [
+            mock.patch.object(add_paper.github_issue, "ensure_auth", lambda: None),
+            mock.patch.object(add_paper.github_issue, "open_issues_with_label", lambda l: []),
+            mock.patch.object(add_paper.select_friday_paper, "already_seen_urls", lambda: set()),
+            mock.patch.object(add_paper.select_monday_paper, "obtain",
+                              lambda p: (p.get("pdf_url"), self.fetched)),
+            mock.patch.object(add_paper.select_monday_paper, "stage_for_writer",
+                              lambda n, p, f, journal="": self.calls.append(("stage", journal))),
+            mock.patch.object(add_paper.github_issue, "open_issue",
+                              lambda **kw: self.calls.append(("open", kw)) or 55),
+            mock.patch.object(add_paper.crossref_lookup, "crossref_metadata",
+                              lambda doi: self.fail("a white paper has no Crossref record")),
+        ]
+        for p in patches:
+            p.start()
+            self.addCleanup(p.stop)
+
+    def body(self) -> str:
+        return next(c[1]["body"] for c in self.calls if c[0] == "open")
+
+    def metadata(self) -> dict:
+        return json.loads(self.body().split("```json")[1].split("```")[0])
+
+    def test_it_is_queued_with_its_url_and_no_doi(self):
+        queued = add_paper.add(
+            url="https://example.org/wp.pdf", title="A white paper", publisher="Example Lab"
+        )
+        self.assertEqual((queued.number, queued.doi, queued.staged),
+                         (55, "https://example.org/wp.pdf", True))
+        meta = self.metadata()
+        self.assertIsNone(meta["doi"])
+        self.assertEqual(meta["source_url"], "https://example.org/wp.pdf")
+        self.assertEqual(meta["journal"], "White paper — Example Lab")
+        self.assertIn("**Paper:** [https://example.org/wp.pdf]", self.body())
+        self.assertIn("No DOI: this is a white paper", meta["digest_excerpt"])
+
+    def test_the_title_is_read_off_the_pdf_when_it_is_not_given(self):
+        with mock.patch.object(add_paper, "title_from_pdf", lambda data: "Read off the page"):
+            queued = add_paper.add(url="https://example.org/wp.pdf")
+        self.assertEqual(queued.title, "Read off the page")
+        self.assertEqual(self.metadata()["title"], "Read off the page")
+
+    def test_an_untitled_unreadable_paper_is_refused_rather_than_guessed(self):
+        with mock.patch.object(add_paper, "title_from_pdf", lambda data: None):
+            with self.assertRaises(add_paper.Refused) as caught:
+                add_paper.add(url="https://example.org/wp.pdf")
+        self.assertIn("Send the title", str(caught.exception))
+        self.assertEqual(self.calls, [])
+
+    def test_a_link_that_is_not_a_link_is_refused(self):
+        with self.assertRaises(add_paper.Refused):
+            add_paper.add(url="rfd4-proteina.org/paper.pdf")
+
+    def test_neither_a_doi_nor_a_url_is_refused(self):
+        with self.assertRaises(add_paper.Refused) as caught:
+            add_paper.add()
+        self.assertIn("either a DOI or a link", str(caught.exception))
+
+    def test_a_url_already_queued_is_refused(self):
+        with mock.patch.object(add_paper.select_friday_paper, "already_seen_urls",
+                               lambda: {"https://example.org/wp.pdf"}):
+            with self.assertRaises(add_paper.Refused):
+                add_paper.add(url="https://example.org/wp.pdf", title="A white paper")
+
+    def test_a_url_that_serves_no_pdf_asks_for_one(self):
+        self.fetched = None
+        with mock.patch.object(add_paper.pdf_mailbox, "request", lambda n, **kw: True), \
+             mock.patch.object(add_paper.github_issue, "add_labels",
+                               lambda n, labels: self.calls.append(("label", labels))):
+            queued = add_paper.add(url="https://example.org/page.html", title="A white paper")
+        self.assertFalse(queued.staged)
+        self.assertIn(("label", ["needs-pdf", "pdf-requested"]), self.calls)
 
 
 class StrandTests(unittest.TestCase):

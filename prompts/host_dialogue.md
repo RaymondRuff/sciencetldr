@@ -337,6 +337,9 @@ The test: a disfluency should mark *thinking*, never *fumbling*.
    abstract's framing.
 8. **What I'd watch for.** One line each: the thing that would change their mind.
 9. **Sign-off.** Brief. Journal, DOI mentioned once, no promotional language.
+   A paper with **no DOI** — an industry white paper — has no such line: name
+   the organisation that published it instead ("it's a white paper, up on
+   Example Lab's site"). Never read a URL aloud.
 
 ## MEMORY — cross-episode continuity
 

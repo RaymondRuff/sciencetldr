@@ -58,6 +58,8 @@ SHOW_NOTES_EFFORT = "medium"
 
 INBOX_AUDIO_EXTS = (".mp3", ".m4a", ".mp4a", ".wav")
 DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
+# generate_episode stamps "Issue: 112; DOI: 10.x/y" into the mp3's comment.
+ISSUE_TAG_RE = re.compile(r"\bIssue:\s*(\d+)")
 URL_RE = re.compile(r"https?://\S+", re.IGNORECASE)
 DATE_PREFIX_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 NCBI_KEY = os.environ.get("NCBI_API_KEY")
@@ -150,6 +152,42 @@ def extract_doi(text: str) -> str | None:
     if not match:
         return None
     return match.group(0).rstrip(".,);")
+
+
+def extract_issue(text: str) -> int | None:
+    match = ISSUE_TAG_RE.search(text)
+    return int(match.group(1)) if match else None
+
+
+def issue_metadata(issue: dict) -> dict:
+    """An Issue's own metadata, with CrossRef's canonical record over the top.
+
+    The Issue holds which strand picked the paper and, for a white paper, the
+    URL that identifies it. CrossRef holds the better title and the authors —
+    a digest-derived title arrives as "1. Shared alpha-helix..." — so where
+    there is a DOI it wins, except on the fields only the Issue knows.
+    """
+    meta = github_issue.parse_metadata(issue["body"]) or {}
+    source, source_url = meta.get("source"), meta.get("source_url")
+    doi = (meta.get("doi") or "").strip()
+    if doi:
+        try:
+            canonical = crossref_metadata(doi)
+            if canonical.get("title"):
+                meta = {**meta, **canonical}
+                print(f"  [metadata] CrossRef title: {canonical['title'][:60]}")
+        except Exception as exc:  # noqa: BLE001 - the Issue alone is enough to publish
+            print(f"  [metadata] CrossRef lookup failed: {exc}")
+        if not meta.get("abstract"):
+            abstract = pubmed_abstract_for_doi(doi)
+            if abstract:
+                meta["abstract"] = abstract
+        meta["source_url"] = source_url or f"https://doi.org/{doi}"
+    elif source_url:
+        meta["source_url"] = source_url
+    if source:
+        meta["source"] = source  # CrossRef sets source="crossref"; the strand wins
+    return meta
 
 
 def extract_url(text: str) -> str | None:
@@ -284,6 +322,18 @@ def resolve_metadata(audio_path: Path, pending: list[dict]) -> tuple[dict, dict 
     """Return (metadata, paired_issue_or_none)."""
     comment = extract_comment(audio_path)
     if comment:
+        number = extract_issue(comment)
+        if number is not None:
+            paired = next((i for i in pending if i["number"] == number), None)
+            if paired is not None:
+                print(f"  [metadata] paired with Issue #{number} from the audio tag")
+                meta = issue_metadata(paired)
+                print(f"  [metadata] source={meta.get('source')}")
+                return meta, paired
+            print(
+                f"  [metadata] the audio names Issue #{number}, which is not open; "
+                "falling through"
+            )
         doi = extract_doi(comment)
         if doi:
             print(f"  [metadata] DOI from tag: {doi}")
