@@ -478,6 +478,27 @@ def fetch_issue(number: int) -> dict:
     return resp.json()
 
 
+STRANDS = {
+    "monday-digest": "Monday episode — paired with the weekly digest; this was its top-scoring paper",
+    "friday-reddit": "Friday episode — the week's top paper on r/science",
+    "friday-trending": "Friday episode — the week's most-discussed paper on PubMed",
+    "one-off": "no strand — queued by hand; do not frame it as a weekly slot",
+}
+
+
+def describe_strand(source: str | None) -> str:
+    """What the cold open should say about where this paper came from."""
+    known = STRANDS.get(source or "")
+    if known:
+        return f"{known} (source={source})"
+    return (
+        f"unrecognised source={source!r}; treat it as a one-off and give it no "
+        "strand framing"
+        if source
+        else "no source recorded; treat it as a one-off and give it no strand framing"
+    )
+
+
 def cmd_context(issue_number: int, out_dir: Path) -> int:
     import paper_text
 
@@ -489,6 +510,8 @@ def cmd_context(issue_number: int, out_dir: Path) -> int:
     (out_dir / "metadata.json").write_text(
         json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8"
     )
+
+    print(f"[context] strand: {describe_strand(metadata.get('source'))}")
 
     cards = load_cards()
     index = "\n".join(

@@ -1,0 +1,68 @@
+name: add-paper
+
+# Queue one paper for an episode, by DOI — for something you came across
+# yourself, outside the Monday digest and the Friday r/science crawl.
+#
+# Actions → add-paper → Run workflow, paste the DOI. It looks the paper up,
+# stages its full text in the private papers repository if anything open has
+# it, and opens the podcast-pending Issue. The writer routine takes it at the
+# next 08:00 UTC, so a paper queued today is an episode tomorrow morning.
+# See scripts/add_paper.py.
+
+on:
+  workflow_dispatch:
+    inputs:
+      doi:
+        description: 'DOI, e.g. 10.1016/j.chembiol.2026.09.022'
+        required: true
+        type: string
+      note:
+        description: 'Why you want it (optional; context for the writer, not for broadcast)'
+        required: false
+        type: string
+      title:
+        description: 'Title override (optional; only if Crossref has it wrong)'
+        required: false
+        type: string
+      force:
+        description: 'Queue it even if the DOI is already published or pending'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - run: uv sync
+
+      - name: Queue the paper
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          # Staging the full text needs the private papers repository, and a
+          # paper with none needs the PDF request email.
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
+          DOI: ${{ inputs.doi }}
+          NOTE: ${{ inputs.note }}
+          TITLE: ${{ inputs.title }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          ARGS=(--doi "$DOI")
+          if [ -n "$NOTE" ]; then ARGS+=(--note "$NOTE"); fi
+          if [ -n "$TITLE" ]; then ARGS+=(--title "$TITLE"); fi
+          if [ "$FORCE" = "true" ]; then ARGS+=(--force); fi
+          uv run python scripts/add_paper.py "${ARGS[@]}"

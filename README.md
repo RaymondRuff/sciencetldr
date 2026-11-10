@@ -4,8 +4,11 @@ Automation pipeline for the [Science TLDR](https://raymondruff.github.io/science
 
 ## What this repo does
 
-- **Mondays:** runs a literature digest across PubMed, bioRxiv, and the web; emails it to a coworker list; picks the top-DICE-scored paper and opens a GitHub Issue with the PDF and prompt ready for [NotebookLM](https://notebooklm.google.com).
-- **Fridays:** picks the top trending paper on PubMed (any field) and opens a similar Issue.
+- **Mondays:** an episode paired with the weekly literature digest. The digest runs across PubMed, bioRxiv and the web on **Sunday**, is emailed to a coworker list, and its top-DICE-scored paper becomes Monday morning's episode.
+- **Fridays:** an episode on the week's most interesting paper from r/science (with PubMed trending as a fallback). The crawl runs **Thursday**.
+- **Any day:** one paper you came across yourself — Actions → **add-paper**, paste the DOI ([`scripts/add_paper.py`](scripts/add_paper.py)). It is an episode the next morning.
+
+The picks run a day ahead of the drop because the pipeline takes a day: a pick on day D is written by a Claude Code routine at 08:00 UTC on D+1, fact-checked by a second routine at 11:00, and published about 11:25.
 - **On a new Issue:** the generate-episode workflow fetches the paper's full text, has Claude write and then fact-check a two-host script, synthesizes it with Gemini multi-speaker TTS, and opens a **review PR** carrying the finished audio.
 - **On merging that PR:** the MP3 lands in [`inbox/`](inbox/) and the publish workflow normalizes the audio, generates show notes, updates [`feed.xml`](feed.xml), and GitHub Pages auto-deploys.
 - **After publishing:** the memory workflow distils the episode into a card under [`memory/cards/`](memory/) and updates [`memory/threads.md`](memory/threads.md), so later episodes can draw accurate connections across the back catalogue.
