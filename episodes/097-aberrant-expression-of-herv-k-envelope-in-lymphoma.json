@@ -1,0 +1,42 @@
+{
+  "guid": "f950bc67-b2f3-47b9-b3b3-bed335796d87",
+  "title": "Episode 97: Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments.",
+  "itunes_title": "Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments.",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**[Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments](https://doi.org/10.1158/1535-7163.MCT-25-1542)**\n\n*Molecular Cancer Therapeutics, 2026*\n\nDOI: [10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-1542)\n\n**Question:** Does HERV-K (HML-2) envelope mark clinically relevant DLBCL states, and is it a usable surface target?\n\n**Answer:** HERV expression mirrors the ABC/GCB split but adds nothing independent of cell of origin, and Env reaches the surface of only 2 of 8 lines; a humanized VHH-Fc, FF-01, drives NK killing and internalizes, with no Env-negative control in the 3D assay and no in vivo data.\n\n**Three takeaways**\n\n1. Discarded multi-mapping reads split ~340 DLBCLs into 4 survival-distinct clusters mirroring ABC/GCB; not offered as prognostic.\n2. Env was detected by qPCR in 8 of 8 lines, by immunoblot in 5, on the surface in 2; every functional result rests on RCK8.\n3. FF-01 (Kd 142 nM, peptide 3) gave ~2.7x ADCC signal at 6 h, NK killing in 2D and 3D, and ~1.5-fold selective internalization.",
+  "pub_date": "Tue, 10 Nov 2026 11:30:32 +0000",
+  "duration_seconds": 655,
+  "episode_number": 97,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "097-aberrant-expression-of-herv-k-envelope-in-lymphoma.mp3",
+  "enclosure_length_bytes": 7870789,
+  "source_metadata": {
+    "title": "Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments.",
+    "doi": "10.1158/1535-7163.MCT-25-1542",
+    "authors": [
+      "Filippo Spriano",
+      "Luciano Cascione",
+      "Jacopo Sgrignani",
+      "Nikolai Bendik",
+      "Alex Zadro",
+      "Sara Napoli",
+      "Giulio Sartori",
+      "Concetta Guerra",
+      "Eleonora Cannas",
+      "Tao Gong",
+      "Alberto J. Arribas",
+      "Marco Pizzi",
+      "David W. Scott",
+      "Matteo Moretti",
+      "Davide Rossi",
+      "Davide F. Robbiani",
+      "Andrea Cavalli",
+      "Francesco Bertoni"
+    ],
+    "journal": "Molecular Cancer Therapeutics",
+    "abstract": "Abstract\n                  Purpose: Human endogenous retrovirus K (HERV-K/HML-2) is a human-specific endogenous retrovirus family that maintains intact open reading frames and is aberrantly expressed in multiple cancers. We tested whether HERV-K, specifically its envelope (Env) protein, marks clinically relevant diffuse large B-cell lymphoma (DLBCL) states and serves as a tractable immunotherapeutic target. Experimental Design: Locus-level transposable element (TE) and HERV expression was quantified in two independent DLBCL RNA-seq cohorts using curated TE annotation and a uniform alignment/counting workflow. Env transcript and protein expression (including cell-surface localization) was validated in lymphoma cell lines using RT-qPCR, immunoblotting, and flow cytometry. Functional relevance was assessed by siRNA-mediated Env knockdown. Candidate extracellular linear epitopes were predicted in silico and synthesized for serological and phage display assays. Anti-Env camelid VHHs were isolated, humanized, and tested for binding, antibody-dependent cellular cytotoxicity (ADCC), and antigen-dependent internalization. Results: TE transcripts stratified DLBCL into clinically distinct subgroups, and high HERV-K expression associated with an interferon/viral-mimicry program. Env RNA was detected in patient tumors and cell lines, and the protein was detected on the surface of a subset of lymphoma cell lines, in which Env knockdown reduced proliferation. A humanized heavy-chain antibody (FF-01) bound surface Env, induced selective ADCC in Env-positive models (reporter and primary NK-cell assays), and underwent rapid antigen-dependent internalization. Conclusions: HERV-K activity identifies biologically meaningful DLBCL states and exposes a targetable surface antigen. FF-01 provides proof of principle for antibody-based strategies against HERV-K Env, including ADCC- and ADC-oriented approaches.",
+    "source": "monday-digest",
+    "source_url": "https://doi.org/10.1158/1535-7163.MCT-25-1542"
+  },
+  "source_issue": 108
+}

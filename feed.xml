@@ -2531,5 +2531,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Sat, 07 Nov 2026 11:20:23 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 97: Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments.]]></title>
+      <itunes:title><![CDATA[Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments.]]></itunes:title>
+      <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1158/1535-7163.MCT-25-1542">Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments</a></strong></p>
+<p><em>Molecular Cancer Therapeutics, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1158/1535-7163.MCT-25-1542">10.1158/1535-7163.MCT-25-1542</a></p>
+<p><strong>Question:</strong> Does HERV-K (HML-2) envelope mark clinically relevant DLBCL states, and is it a usable surface target?</p>
+<p><strong>Answer:</strong> HERV expression mirrors the ABC/GCB split but adds nothing independent of cell of origin, and Env reaches the surface of only 2 of 8 lines; a humanized VHH-Fc, FF-01, drives NK killing and internalizes, with no Env-negative control in the 3D assay and no in vivo data.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Discarded multi-mapping reads split ~340 DLBCLs into 4 survival-distinct clusters mirroring ABC/GCB; not offered as prognostic.</li>
+<li>Env was detected by qPCR in 8 of 8 lines, by immunoblot in 5, on the surface in 2; every functional result rests on RCK8.</li>
+<li>FF-01 (Kd 142 nM, peptide 3) gave ~2.7x ADCC signal at 6 h, NK killing in 2D and 3D, and ~1.5-fold selective internalization.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1158/1535-7163.MCT-25-1542">Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments</a></strong></p>
+<p><em>Molecular Cancer Therapeutics, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1158/1535-7163.MCT-25-1542">10.1158/1535-7163.MCT-25-1542</a></p>
+<p><strong>Question:</strong> Does HERV-K (HML-2) envelope mark clinically relevant DLBCL states, and is it a usable surface target?</p>
+<p><strong>Answer:</strong> HERV expression mirrors the ABC/GCB split but adds nothing independent of cell of origin, and Env reaches the surface of only 2 of 8 lines; a humanized VHH-Fc, FF-01, drives NK killing and internalizes, with no Env-negative control in the 3D assay and no in vivo data.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Discarded multi-mapping reads split ~340 DLBCLs into 4 survival-distinct clusters mirroring ABC/GCB; not offered as prognostic.</li>
+<li>Env was detected by qPCR in 8 of 8 lines, by immunoblot in 5, on the surface in 2; every functional result rests on RCK8.</li>
+<li>FF-01 (Kd 142 nM, peptide 3) gave ~2.7x ADCC signal at 6 h, NK killing in 2D and 3D, and ~1.5-fold selective internalization.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-097</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/097-aberrant-expression-of-herv-k-envelope-in-lymphoma.mp3" length="7870789" type="audio/mpeg"/>
+      <guid isPermaLink="false">f950bc67-b2f3-47b9-b3b3-bed335796d87</guid>
+      <itunes:duration>655</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>97</itunes:episode>
+      <podcast:episode>97</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Tue, 10 Nov 2026 11:30:32 +0000</pubDate>
+    </item>
   </channel>
 </rss>
