@@ -202,6 +202,53 @@ series branding, and the hosts give it no strand framing. The writer takes the
 oldest eligible Issue, so a one-off queued Monday to Wednesday has no
 competition; queued on a pick day it waits a day behind the strand.
 
+## Update, 2026-11-10: a one-off by email
+
+The add-paper workflow wanted a browser and a DOI in hand. The lighter way in
+is the mailbox that is already polled every thirty minutes: **email the podcast
+address with "one-off" starting the subject**, and either name the DOI in the
+body or attach the PDF. The whole exchange is one email out and one back.
+
+How it is put together, in `pdf_mailbox.py` and `add_paper.py`:
+
+- **A second pass over the same IMAP session.** The reply pass (PDFs replied to
+  a numbered request) is untouched. The one-off pass searches by sender and
+  freshness only — Gmail's query parser reads the hyphen in "one-off" as an
+  exclusion — then matches subjects on *headers alone*, so an unrelated
+  message's body is never fetched. The subject must *start* with the phrase,
+  or an ordinary sentence would commission an episode.
+- **Only the owner.** `owner_address()` is `PDF_REQUEST_TO` alone, deliberately
+  narrower than `allowed_senders()`: replying to a request supplies a paper the
+  show already chose, while a one-off chooses the paper, so
+  `PDF_SENDER_ALLOWLIST` does not grant it. Gmail's own DKIM/DMARC verdict
+  still decides whether the From line is real, and an unauthenticated message
+  is labelled and **never answered** — a reply would make the show a
+  backscatter source.
+- **The DOI, or a question.** Exactly one DOI in the body wins; otherwise the
+  first three pages of the attached PDF are read for one. Several DOIs, or
+  none, are refused with a reply rather than guessed at — a forwarded
+  table-of-contents alert would otherwise commission the wrong paper.
+- **The confirmation is the PDF thread.** The reply's subject carries the new
+  Issue's `[Science TLDR #N]` tag, so replying to it with the PDF attached
+  lands in the ordinary reply pass. One email covers both jobs, and
+  `add_paper.add(email_request=False)` suppresses the second.
+- **An attached PDF rejoins the proven path.** It arrives before its Issue
+  exists, so it cannot be saved under the Issue's name. Once the Issue is open
+  the file is moved to `issue-N.pdf` and `record_reply()` adds it to the
+  mailbox manifest — from there it is indistinguishable from a replied PDF, so
+  the existing bundling stages it and `consume_replies()` only consumes the
+  email once it can no longer be lost.
+- **Capped at four waiting.** Each one-off costs a writer session, a checker
+  session and about nineteen cents of audio, and the writer writes one script
+  a day — so an easy way in is an easy way to spend the week's plan capacity.
+  A fifth is refused, by name, until one publishes. `--force` overrides it.
+  The owner's weekly usage has not passed eighty percent, which is the
+  headroom this number is set against.
+
+Failures are deliberately asymmetric: anything the owner should answer gets a
+reply and the email is consumed, while an unexpected error leaves the email
+unlabelled so the next sweep retries it.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions

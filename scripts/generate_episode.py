@@ -13,6 +13,12 @@ Issue label states:
   episode-in-review      a draft PR is open
   generation-failed      the run errored; needs a look before retrying
 
+A paper can also be queued by hand, by DOI from the add-paper workflow or by
+emailing the podcast address with "one-off" in the subject (add_paper.py,
+pdf_mailbox.py). Those Issues carry the `one-off` label, take no series
+branding, and are capped so an easy way in cannot spend the week's plan
+capacity.
+
 Most scripts are now written by Claude Code routines on the subscription, in
 a sandbox that cannot reach any paper source. So the sweep's other job is to
 put each paper where a routine *can* read it: it fetches what is open, takes
@@ -41,6 +47,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -359,6 +366,89 @@ def request_missing_pdfs(issues: list[dict], bundled: dict[int, dict]) -> None:
             continue
         print(f"[episode] #{number}: no full text anywhere open; requesting a PDF")
         request_pdf(issue, github_issue.parse_metadata(issue["body"]) or {})
+
+
+ONE_OFF_QUEUED = """Queued as Issue #{number}.
+
+  {title}
+  https://doi.org/{doi}
+
+{status}
+
+Issue: https://github.com/{repo}/issues/{number}
+"""
+
+ONE_OFF_STAGED = (
+    "The full text is in hand, so the writer takes it at its next run, 08:00 UTC, "
+    "and it should publish the morning after that. A Monday or Friday pick ahead "
+    "of it in the queue would put it a day later."
+)
+
+ONE_OFF_WANTS_PDF = (
+    "I could not reach the full text anywhere open. **Reply to this email with "
+    "the PDF attached** and the next sweep stages it, with the episode the "
+    "morning after. Uploading it to the papers repository as "
+    "papers/issue-{number}.pdf works too. It never enters the public repository."
+)
+
+
+def queue_one_offs() -> list[str]:
+    """Turn each emailed one-off request into an Issue, and answer every one.
+
+    One reply per request, whatever the outcome, with the Issue's tag in the
+    subject so that replying to it with a PDF lands in the ordinary reply
+    pass. Returns problems worth failing the run over; an email is left
+    unlabelled when it should be retried rather than answered.
+    """
+    requests = pdf_mailbox.one_offs_received()
+    if not requests:
+        return []
+    import add_paper
+
+    repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
+    problems: list[str] = []
+    print(f"[one-off] {len(requests)} emailed request(s)")
+    for request in requests:
+        uid = request.get("uid") or ""
+        subject = request.get("subject") or "one-off"
+        try:
+            queued = add_paper.from_email(request)
+        except add_paper.Refused as exc:
+            print(f"[one-off] not queued: {exc}")
+            pdf_mailbox.answer(f"Re: {subject}", f"I did not queue that paper: {exc}\n")
+            pdf_mailbox.mark_uid(uid)
+            continue
+        except Exception as exc:  # noqa: BLE001 - keep the email for the next sweep
+            problems.append(f"one-off {subject[:60]!r} could not be queued ({exc})")
+            print(f"[one-off] FAILED on {subject[:60]!r}: {exc}")
+            continue
+
+        staged = queued.staged
+        if request.get("pdf"):
+            try:
+                target = pdf_mailbox.drop_dir() / f"issue-{queued.number}.pdf"
+                shutil.move(request["pdf"], target)
+                # The bundling pass below stages it, and consume_replies()
+                # marks the email used once it can no longer be lost.
+                pdf_mailbox.record_reply(queued.number, uid, target)
+            except Exception as exc:  # noqa: BLE001
+                staged = False
+                problems.append(
+                    f"#{queued.number}: the emailed PDF could not be handed over ({exc})"
+                )
+        else:
+            pdf_mailbox.mark_uid(uid)
+
+        status = ONE_OFF_STAGED if staged else ONE_OFF_WANTS_PDF.format(number=queued.number)
+        pdf_mailbox.answer(
+            f"[{pdf_mailbox.SUBJECT_TAG}{queued.number}] one-off: "
+            f"{request.get('note') or queued.title}",
+            ONE_OFF_QUEUED.format(
+                number=queued.number, title=queued.title, doi=queued.doi,
+                status=status, repo=repo,
+            ),
+        )
+    return problems
 
 
 def can_open_prs() -> bool:
@@ -778,6 +868,9 @@ def main() -> None:
     args = parser.parse_args()
 
     github_issue.ensure_auth()
+    # Before the mailbox manifest is read: a request that arrives with its PDF
+    # joins that manifest as though it had been replied to a request.
+    one_off_errors = [] if args.dry_run else queue_one_offs()
     emailed = pdf_mailbox.received()
     all_pending = github_issue.list_pending_issues()
     bundled = bundle_waiting_papers(all_pending)
@@ -862,7 +955,7 @@ def main() -> None:
         problems.append(f"{failures} issue(s) failed")
     if PapersState.denied:
         problems.append(PAPERS_DENIED_MESSAGE)
-    problems += window_errors
+    problems += window_errors + one_off_errors
     if problems:
         sys.exit("; ".join(problems))
 

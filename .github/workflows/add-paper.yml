@@ -3,6 +3,10 @@ name: add-paper
 # Queue one paper for an episode, by DOI — for something you came across
 # yourself, outside the Monday digest and the Friday r/science crawl.
 #
+# Emailing works too and needs no browser: send the podcast address a message
+# with "one-off" starting the subject, and either the DOI in the body or the
+# PDF attached. See scripts/pdf_mailbox.py.
+#
 # Actions → add-paper → Run workflow, paste the DOI. It looks the paper up,
 # stages its full text in the private papers repository if anything open has
 # it, and opens the podcast-pending Issue. The writer routine takes it at the

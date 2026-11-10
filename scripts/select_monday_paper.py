@@ -221,8 +221,14 @@ def availability_section(
     deadline=None,
     runner_up: Optional[dict] = None,
     unchecked: bool = False,
+    supplied: bool = False,
 ) -> str:
-    if fetched is not None:
+    if supplied and fetched is None:
+        lines = [
+            "📄 **The PDF came with the request** and is being staged for the "
+            "writer. It is never committed to this public repository."
+        ]
+    elif fetched is not None:
         lines = [f"📚 **Full text:** staged for the writer from `{fetched.provenance}`."]
     elif deadline is not None:
         lines = [
@@ -274,12 +280,13 @@ def render_issue_body(
     deadline=None,
     runner_up: Optional[dict] = None,
     stand_ins: Optional[list[dict]] = None,
+    supplied: bool = False,
 ) -> str:
     intro_prompt = (PROMPTS_DIR / "notebooklm_intro.md").read_text(encoding="utf-8").strip()
 
     pdf_section = availability_section(
         fetched, notes or [], deadline=deadline, runner_up=runner_up,
-        unchecked=bool(stand_ins) and not runner_up,
+        unchecked=bool(stand_ins) and not runner_up, supplied=supplied,
     )
     if pdf_url:
         pdf_section = f"📎 **PDF (open-access):** {pdf_url}\n\n{pdf_section}"
