@@ -175,19 +175,53 @@ def plausible_title(line: str) -> bool:
     )
 
 
+def looks_like_authors(line: str) -> bool:
+    """Whether a line is the author list that ends a title.
+
+    Affiliation markers give it away: a dagger, or a name carrying a
+    superscript number next to a comma ("Corley1,2,3"). A title that merely
+    contains a number — "12,000 designs" — has no letter against a digit, so
+    it is not mistaken for one.
+    """
+    if "†" in line or "‡" in line:
+        return True
+    return "," in line and bool(re.search(r"[A-Za-z]\d", line))
+
+
 def title_from_pdf(data: bytes) -> str | None:
     """The paper's title, from the PDF's own metadata or its first lines.
 
     A white paper has no Crossref record to ask, so this is the only source
-    besides the requester. It is a guess: it is printed in the log and lands
-    in an Issue that can be corrected before the writer runs.
+    besides the requester. A title usually wraps, so the lines after the
+    first are taken too, as far as the author list — "Biomolecular design
+    through latent reasoning with" alone is not a title. It is still a guess:
+    it is printed in the log and lands in an Issue that can be corrected
+    before the writer runs.
     """
+    def tidy(text: str) -> str:
+        return re.sub(r"\s+", " ", text).strip()
+
     recorded, text = _front_matter(data)
     if plausible_title(recorded):
-        return re.sub(r"\s+", " ", recorded).strip()
-    for line in text.splitlines():
-        if plausible_title(line):
-            return re.sub(r"\s+", " ", line).strip()
+        return tidy(recorded)
+
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        if not plausible_title(line):
+            continue
+        title = [line.strip()]
+        for following in lines[index + 1 :]:
+            following = following.strip()
+            if not following or looks_like_authors(following):
+                break
+            if following.lower().startswith(("abstract", "introduction", "summary")):
+                break
+            if title[-1].endswith((".", "?", "!")):
+                break
+            if len(" ".join(title)) + len(following) > 300:
+                break
+            title.append(following)
+        return tidy(" ".join(title))
     return None
 
 
@@ -323,39 +357,41 @@ def add(
         fetched=fetched,
         supplied=supplied,
     )
-    number = github_issue.open_issue(
+    identifier = paper.get("doi") or paper.get("source_url", "")
+    outcome = {"staged": fetched is not None or supplied}
+
+    def finish(number: int) -> None:
+        if fetched is not None:
+            select_monday_paper.stage_for_writer(
+                number, paper, fetched, journal=paper.get("journal", "")
+            )
+            print("[add] the writer will take it at its next run")
+            return
+        if supplied:
+            return
+        labels = [LABEL_NEEDS_PDF]
+        if email_request:
+            try:
+                if pdf_mailbox.request(
+                    number, title=paper["title"], doi=paper.get("doi", ""),
+                    journal=paper.get("journal", ""),
+                ):
+                    labels.append(LABEL_REQUESTED)
+            except Exception as exc:  # noqa: BLE001 - the Issue says what is needed
+                print(f"[add] could not email the PDF request ({exc})")
+        else:
+            # The caller writes to the owner itself; a second email is noise.
+            labels.append(LABEL_REQUESTED)
+        github_issue.add_labels(number, labels)
+        print(f"[add] labelled {', '.join(labels)}; the episode waits for the PDF")
+
+    number = select_monday_paper.open_staged(
         title=f"🎧 {paper['title'][:160]}",
         body=body,
         labels=[github_issue.PENDING_LABEL, SOURCE],
+        stage=finish,
     )
-    print(f"[add] opened issue #{number}")
-
-    identifier = paper.get("doi") or paper.get("source_url", "")
-    if fetched is not None:
-        select_monday_paper.stage_for_writer(
-            number, paper, fetched, journal=paper.get("journal", "")
-        )
-        print("[add] the writer will take it at its next run")
-        return Queued(number, paper["title"], identifier, True)
-    if supplied:
-        return Queued(number, paper["title"], identifier, True)
-
-    labels = [LABEL_NEEDS_PDF]
-    if email_request:
-        try:
-            if pdf_mailbox.request(
-                number, title=paper["title"], doi=paper.get("doi", ""),
-                journal=paper.get("journal", ""),
-            ):
-                labels.append(LABEL_REQUESTED)
-        except Exception as exc:  # noqa: BLE001 - the Issue says what is needed anyway
-            print(f"[add] could not email the PDF request ({exc})")
-    else:
-        # The caller is writing to the owner itself; a second email would be noise.
-        labels.append(LABEL_REQUESTED)
-    github_issue.add_labels(number, labels)
-    print(f"[add] labelled {', '.join(labels)}; the episode waits for the PDF")
-    return Queued(number, paper["title"], identifier, False)
+    return Queued(number, paper["title"], identifier, outcome["staged"])
 
 
 def from_email(request: dict) -> Queued:

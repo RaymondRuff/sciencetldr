@@ -217,6 +217,10 @@ class OpenPickTests(unittest.TestCase):
         self.assertEqual(email[2]["runner_up"], "The runner-up")
         self.assertIn(("label", 43, ["pdf-requested"]), calls)
         self.assertNotIn(("stage",), calls)
+        # podcast-pending goes on last, so no sweep sees the Issue before its
+        # paper is settled (see select_monday_paper.open_staged).
+        self.assertNotIn("podcast-pending", calls[0][1])
+        self.assertEqual(calls[-1], ("label", 43, ["podcast-pending"]))
 
 
 class EmailTests(unittest.TestCase):

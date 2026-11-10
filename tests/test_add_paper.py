@@ -68,10 +68,18 @@ class AddTests(unittest.TestCase):
     def test_an_open_paper_is_staged_and_nobody_is_emailed(self):
         queued = add_paper.add(DOI, note="the spacer claim")
         self.assertEqual((queued.number, queued.staged, queued.doi), (42, True, DOI))
-        self.assertEqual(self.opened()["labels"], ["podcast-pending", "one-off"])
         self.assertTrue(self.opened()["title"].startswith("🎧 A real paper"))
         self.assertIn(("stage", 42, "europepmc-pdf:PMC7"), self.calls)
         self.assertNotIn("email", self.kinds())
+
+    def test_the_paper_is_staged_before_the_issue_becomes_eligible(self):
+        # Issue #113 was opened with podcast-pending, a sweep started three
+        # seconds later, and it emailed for a PDF that was already arriving.
+        add_paper.add(DOI)
+        self.assertEqual(self.opened()["labels"], ["one-off"])
+        kinds = self.kinds()
+        self.assertLess(kinds.index("stage"), kinds.index("label"))
+        self.assertIn(("label", 42, ["podcast-pending"]), self.calls)
 
     def test_the_metadata_block_marks_it_a_one_off(self):
         add_paper.add(DOI, note="the spacer claim")
@@ -157,6 +165,7 @@ class CapTests(unittest.TestCase):
             mock.patch.object(add_paper.select_monday_paper, "obtain", lambda p: (None, TEXT)),
             mock.patch.object(add_paper.select_monday_paper, "stage_for_writer",
                               lambda *a, **k: None),
+            mock.patch.object(add_paper.github_issue, "add_labels", lambda n, labels: None),
             mock.patch.object(add_paper.github_issue, "open_issue", lambda **kw: 42),
         ]
         for p in patches:
@@ -294,6 +303,8 @@ class WhitePaperTests(unittest.TestCase):
                               lambda p: (p.get("pdf_url"), self.fetched)),
             mock.patch.object(add_paper.select_monday_paper, "stage_for_writer",
                               lambda n, p, f, journal="": self.calls.append(("stage", journal))),
+            mock.patch.object(add_paper.github_issue, "add_labels",
+                              lambda n, labels: self.calls.append(("label", labels))),
             mock.patch.object(add_paper.github_issue, "open_issue",
                               lambda **kw: self.calls.append(("open", kw)) or 55),
             mock.patch.object(add_paper.crossref_lookup, "crossref_metadata",
@@ -352,9 +363,7 @@ class WhitePaperTests(unittest.TestCase):
 
     def test_a_url_that_serves_no_pdf_asks_for_one(self):
         self.fetched = None
-        with mock.patch.object(add_paper.pdf_mailbox, "request", lambda n, **kw: True), \
-             mock.patch.object(add_paper.github_issue, "add_labels",
-                               lambda n, labels: self.calls.append(("label", labels))):
+        with mock.patch.object(add_paper.pdf_mailbox, "request", lambda n, **kw: True):
             queued = add_paper.add(url="https://example.org/page.html", title="A white paper")
         self.assertFalse(queued.staged)
         self.assertIn(("label", ["needs-pdf", "pdf-requested"]), self.calls)

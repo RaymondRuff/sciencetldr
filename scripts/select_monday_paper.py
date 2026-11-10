@@ -403,6 +403,34 @@ def render_pick(plan: PickPlan, source: str, *, picked_at=None):
     return paper, body, deadline, runner
 
 
+def open_staged(*, title: str, body: str, labels: list[str], stage=None) -> int:
+    """Open an Issue, put its paper in place, and only then make it eligible.
+
+    `podcast-pending` is both what the sweep looks for and what the workflow's
+    `issues: labeled` trigger fires on, so adding it last is what stops a
+    sweep seeing the Issue before its paper is staged. Issue #113 was opened
+    with the label, a sweep started three seconds later, found no bundle —
+    staging the paper took eighty — and emailed a request for a PDF that was
+    already arriving.
+
+    The label is added even when staging fails, so a half-finished paper is
+    visible to the pipeline rather than lost; the sweep then asks for its PDF
+    for the right reason.
+    """
+    deferred = [label for label in labels if label != github_issue.PENDING_LABEL]
+    number = github_issue.open_issue(
+        title=title, body=body, labels=deferred or [github_issue.PENDING_LABEL]
+    )
+    print(f"[pick] opened issue #{number}")
+    try:
+        if stage is not None:
+            stage(number)
+    finally:
+        if deferred:
+            github_issue.add_labels(number, [github_issue.PENDING_LABEL])
+    return number
+
+
 def open_pick(plan: PickPlan, *, source: str, title: str, labels: list[str], journal: str = "") -> int:
     """Open the week's Issue, stage its paper, or ask for it once with a deadline."""
     import pdf_mailbox
@@ -412,11 +440,12 @@ def open_pick(plan: PickPlan, *, source: str, title: str, labels: list[str], jou
         # awaiting-pdf tells the sweep this request is the picker's, so it
         # never sends a second one; needs-pdf keeps the writer away from it.
         labels = [*labels, "needs-pdf", pdf_window.LABEL_AWAITING]
-    number = github_issue.open_issue(title=title, body=body, labels=labels)
-    print(f"[pick] opened issue #{number}")
-    if plan.fetched is not None:
-        stage_for_writer(number, paper, plan.fetched, journal=journal)
-    if plan.window:
+
+    def finish(number: int) -> None:
+        if plan.fetched is not None:
+            stage_for_writer(number, paper, plan.fetched, journal=journal)
+        if not plan.window:
+            return
         try:
             sent = pdf_mailbox.request(
                 number,
@@ -431,7 +460,8 @@ def open_pick(plan: PickPlan, *, source: str, title: str, labels: list[str], jou
             sent = False
         if sent:
             github_issue.add_labels(number, ["pdf-requested"])
-    return number
+
+    return open_staged(title=title, body=body, labels=labels, stage=finish)
 
 
 def main() -> None:
