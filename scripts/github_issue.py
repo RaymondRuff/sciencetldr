@@ -6,6 +6,7 @@ automatically when GH_TOKEN or GITHUB_TOKEN is in the environment.
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -129,6 +130,16 @@ def list_pending_issues() -> list[dict]:
     issues = json.loads(out)
     issues.sort(key=lambda i: i["createdAt"])
     return issues
+
+
+def open_issues_with_label(label: str) -> list[int]:
+    """Numbers of the open Issues carrying this label. REST, so a routine can call it."""
+    repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
+    out = _run([
+        "gh", "api",
+        f"repos/{repo}/issues?labels={label}&state=open&per_page=100",
+    ])
+    return [i["number"] for i in json.loads(out) if "pull_request" not in i]
 
 
 def parse_metadata(body: str) -> dict | None:

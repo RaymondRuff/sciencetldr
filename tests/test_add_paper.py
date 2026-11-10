@@ -26,6 +26,7 @@ class AddTests(unittest.TestCase):
         self.fetched = TEXT
         self.seen = set()
         self.emailed = True
+        self.outstanding = []
 
         def obtain(paper):
             if isinstance(self.fetched, Exception):
@@ -34,6 +35,8 @@ class AddTests(unittest.TestCase):
 
         patches = [
             mock.patch.object(add_paper.github_issue, "ensure_auth", lambda: None),
+            mock.patch.object(add_paper.github_issue, "open_issues_with_label",
+                              lambda label: list(self.outstanding)),
             mock.patch.object(add_paper.crossref_lookup, "crossref_metadata",
                               lambda doi: {"title": "A real paper", "journal": "Cell"}),
             mock.patch.object(add_paper.crossref_lookup, "pmid_for_doi", lambda doi: "123"),
@@ -63,8 +66,8 @@ class AddTests(unittest.TestCase):
         return json.loads(body.split("```json")[1].split("```")[0])
 
     def test_an_open_paper_is_staged_and_nobody_is_emailed(self):
-        number = add_paper.add(DOI, note="the spacer claim")
-        self.assertEqual(number, 42)
+        queued = add_paper.add(DOI, note="the spacer claim")
+        self.assertEqual((queued.number, queued.staged, queued.doi), (42, True, DOI))
         self.assertEqual(self.opened()["labels"], ["podcast-pending", "one-off"])
         self.assertTrue(self.opened()["title"].startswith("🎧 A real paper"))
         self.assertIn(("stage", 42, "europepmc-pdf:PMC7"), self.calls)
@@ -107,13 +110,13 @@ class AddTests(unittest.TestCase):
             self.assertEqual(self.metadata()["doi"], DOI)
 
     def test_something_that_is_not_a_doi_is_refused(self):
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(add_paper.Refused):
             add_paper.add("the one about chimeraffibodies")
         self.assertEqual(self.calls, [])
 
     def test_a_paper_already_published_or_queued_is_refused(self):
         self.seen = {DOI.lower()}
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(add_paper.Refused):
             add_paper.add(DOI)
         self.assertEqual(self.calls, [])
 
@@ -130,12 +133,108 @@ class AddTests(unittest.TestCase):
 
     def test_no_title_anywhere_is_refused(self):
         with mock.patch.object(add_paper.crossref_lookup, "crossref_metadata", lambda doi: {}):
-            with self.assertRaises(SystemExit):
+            with self.assertRaises(add_paper.Refused):
                 add_paper.add(DOI)
 
     def test_a_title_override_wins(self):
         add_paper.add(DOI, title="The title I want")
         self.assertEqual(self.metadata()["title"], "The title I want")
+
+
+class CapTests(unittest.TestCase):
+    """An easy way in must not be an easy way to spend the week's capacity."""
+
+    def setUp(self):
+        self.outstanding = []
+        patches = [
+            mock.patch.object(add_paper.github_issue, "ensure_auth", lambda: None),
+            mock.patch.object(add_paper.github_issue, "open_issues_with_label",
+                              lambda label: list(self.outstanding)),
+            mock.patch.object(add_paper.crossref_lookup, "crossref_metadata",
+                              lambda doi: {"title": "A paper"}),
+            mock.patch.object(add_paper.crossref_lookup, "pmid_for_doi", lambda doi: ""),
+            mock.patch.object(add_paper.select_friday_paper, "already_seen_dois", lambda: set()),
+            mock.patch.object(add_paper.select_monday_paper, "obtain", lambda p: (None, TEXT)),
+            mock.patch.object(add_paper.select_monday_paper, "stage_for_writer",
+                              lambda *a, **k: None),
+            mock.patch.object(add_paper.github_issue, "open_issue", lambda **kw: 42),
+        ]
+        for p in patches:
+            p.start()
+            self.addCleanup(p.stop)
+
+    def test_four_waiting_is_allowed_to_become_four(self):
+        self.outstanding = [101, 102, 103]
+        self.assertEqual(add_paper.add(DOI).number, 42)
+
+    def test_a_fifth_is_refused_and_says_which_are_waiting(self):
+        self.outstanding = [101, 102, 103, 104]
+        with self.assertRaises(add_paper.Refused) as caught:
+            add_paper.add(DOI)
+        message = str(caught.exception)
+        self.assertIn("#101", message)
+        self.assertIn("limit of 4", message)
+
+    def test_force_gets_past_the_cap(self):
+        self.outstanding = [101, 102, 103, 104, 105]
+        self.assertEqual(add_paper.add(DOI, force=True).number, 42)
+
+    def test_a_count_that_fails_does_not_block_the_queue(self):
+        def broken(label):
+            raise RuntimeError("gh is down")
+
+        with mock.patch.object(add_paper.github_issue, "open_issues_with_label", broken):
+            self.assertEqual(add_paper.add(DOI).number, 42)
+
+
+class FromEmailTests(unittest.TestCase):
+    """What an emailed request has to say before it becomes an episode."""
+
+    def setUp(self):
+        self.added = []
+        patch = mock.patch.object(
+            add_paper, "add",
+            lambda doi, **kw: self.added.append((doi, kw)) or add_paper.Queued(7, "T", doi, True),
+        )
+        patch.start()
+        self.addCleanup(patch.stop)
+
+    def test_one_doi_in_the_body_is_used(self):
+        add_paper.from_email({"dois": [DOI], "note": "why", "pdf": None})
+        doi, kw = self.added[0]
+        self.assertEqual(doi, DOI)
+        self.assertEqual(kw["note"], "why")
+        self.assertFalse(kw["supplied_pdf"])
+        self.assertFalse(kw["email_request"])  # the confirmation covers it
+
+    def test_several_dois_are_refused_rather_than_guessed(self):
+        with self.assertRaises(add_paper.Refused) as caught:
+            add_paper.from_email({"dois": [DOI, "10.1/other"], "pdf": None})
+        self.assertIn("several DOIs", str(caught.exception))
+        self.assertEqual(self.added, [])
+
+    def test_no_doi_and_no_pdf_asks_for_the_doi(self):
+        with self.assertRaises(add_paper.Refused) as caught:
+            add_paper.from_email({"dois": [], "pdf": None})
+        self.assertIn("could not find a DOI", str(caught.exception))
+
+    def test_a_pdf_is_read_for_its_doi(self):
+        with mock.patch.object(add_paper, "doi_from_pdf", lambda path: DOI):
+            add_paper.from_email({"dois": [], "pdf": "/tmp/x.pdf", "note": ""})
+        doi, kw = self.added[0]
+        self.assertEqual(doi, DOI)
+        self.assertTrue(kw["supplied_pdf"])
+
+    def test_a_pdf_with_no_readable_doi_is_refused(self):
+        with mock.patch.object(add_paper, "doi_from_pdf", lambda path: None):
+            with self.assertRaises(add_paper.Refused) as caught:
+                add_paper.from_email({"dois": [], "pdf": "/tmp/x.pdf"})
+        self.assertIn("attached PDF", str(caught.exception))
+
+    def test_a_doi_in_the_body_beats_the_pdf(self):
+        with mock.patch.object(add_paper, "doi_from_pdf", lambda path: "10.1/from-pdf"):
+            add_paper.from_email({"dois": [DOI], "pdf": "/tmp/x.pdf"})
+        self.assertEqual(self.added[0][0], DOI)
 
 
 class StrandTests(unittest.TestCase):

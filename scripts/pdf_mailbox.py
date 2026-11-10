@@ -17,6 +17,13 @@ knows the podcast address could have a document narrated and published.
 Deliberately standard-library only: the workflow runs `check` before installing
 dependencies, so a poll that finds nothing costs seconds.
 
+It makes a second pass for **one-off requests**: an email from the owner whose
+subject starts with "one-off", carrying a DOI in the body or a PDF attached, or
+both. Those become their own `podcast-pending` Issue (see add_paper.py) and get
+one reply saying so. Only the owner's own address may commission an episode —
+replying to a request supplies a paper the show already chose, while a one-off
+chooses the paper, so PDF_SENDER_ALLOWLIST does not grant it.
+
 Usage:
   python scripts/pdf_mailbox.py check    # save waiting PDFs to $RUNNER_TEMP/tldr-pdfs
                                          # (or $PDF_DROP_DIR); writes found=true|false
@@ -33,6 +40,7 @@ import re
 import sys
 from email.message import EmailMessage
 from email.utils import parseaddr
+from html import unescape
 from pathlib import Path
 
 import send_email
@@ -46,12 +54,54 @@ LABEL_REJECTED = "tldr-rejected"
 MANIFEST = "manifest.json"
 MAX_AGE_DAYS = 60
 
+# A one-off request: a paper the owner wants an episode on, emailed in rather
+# than picked by the Monday digest or the Friday crawl. The subject starts with
+# "one-off"; everything after it is a note. A request older than this is stale.
+ONEOFF_MANIFEST = "one-offs.json"
+ONEOFF_MAX_AGE_DAYS = 14
+ONEOFF_RE = re.compile(
+    r"^(?:(?:re|fwd?|fw)\s*:\s*)*\s*one[-\s]?off\b[\s:.\-\u2013\u2014]*(?P<note>.*)",
+    re.IGNORECASE | re.DOTALL,
+)
+DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
+
 
 def drop_dir() -> Path:
     base = os.environ.get("PDF_DROP_DIR") or os.path.join(
         os.environ.get("RUNNER_TEMP", "/tmp"), "tldr-pdfs"
     )
     return Path(base)
+
+
+def owner_address() -> str:
+    """The one address that may commission an episode.
+
+    Deliberately narrower than `allowed_senders()`. Replying to a request only
+    supplies a paper the show already chose; a one-off *chooses the paper*, so
+    PDF_SENDER_ALLOWLIST does not grant it.
+    """
+    raw = os.environ.get("PDF_REQUEST_TO", "").split(",")[0]
+    return parseaddr(raw)[1].strip().lower()
+
+
+def one_off_note(subject: str) -> str | None:
+    """The note after "one-off" in a subject, or None if it is not a request."""
+    match = ONEOFF_RE.match(subject.strip())
+    if match is None:
+        return None
+    return re.sub(r"\s+", " ", match.group("note")).strip()
+
+
+def dois_in(text: str) -> list[str]:
+    """Every distinct DOI in some text, in the order they appear."""
+    seen: set[str] = set()
+    found: list[str] = []
+    for match in DOI_RE.finditer(text or ""):
+        doi = match.group(0).rstrip(".,;:)>]}\"'")
+        if doi.lower() not in seen:
+            seen.add(doi.lower())
+            found.append(doi)
+    return found
 
 
 def allowed_senders() -> set[str]:
@@ -210,8 +260,43 @@ def _label(imap: imaplib.IMAP4_SSL, uid: bytes, label: str) -> None:
     imap.uid("STORE", uid, "+X-GM-LABELS", f"({label})")
 
 
-def collect() -> dict[int, dict]:
-    """Save waiting PDFs to the drop directory; return {issue: {uid, path}}."""
+def _search(imap: imaplib.IMAP4_SSL, query: str) -> list[bytes]:
+    """Gmail search syntax, sent as one IMAP quoted string — so no inner quotes."""
+    status, data = imap.uid("SEARCH", "X-GM-RAW", f'"{query}"')
+    return data[0].split() if status == "OK" and data and data[0] else []
+
+
+def _fetch(imap: imaplib.IMAP4_SSL, uid: bytes, what: str) -> EmailMessage | None:
+    status, fetched = imap.uid("FETCH", uid, what)
+    if status != "OK" or not fetched or not isinstance(fetched[0], tuple):
+        return None
+    return email.message_from_bytes(fetched[0][1], policy=email.policy.default)
+
+
+def _body_text(msg: EmailMessage) -> str:
+    """The message body as plain text, for finding a DOI in it."""
+    try:
+        part = msg.get_body(preferencelist=("plain", "html"))
+        if part is None:
+            return ""
+        text = part.get_content()
+    except Exception:  # noqa: BLE001 - an odd body is not worth failing over
+        return ""
+    if not isinstance(text, str):
+        return ""
+    if part.get_content_type() == "text/html":
+        text = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", text, flags=re.S | re.I)
+        text = re.sub(r"<[^>]+>", " ", text)
+    return unescape(text)
+
+
+def collect() -> tuple[dict[int, dict], list[dict]]:
+    """Read the mailbox once. Returns (replies, one-off requests).
+
+    Two passes, one session: PDFs replied to a numbered request, then one-off
+    requests from the owner. Both write a manifest the sweep reads later, so
+    this stays standard-library only and a quiet poll costs seconds.
+    """
     password = os.environ.get("GMAIL_APP_PASSWORD")
     if not password:
         print("[mailbox] GMAIL_APP_PASSWORD unset; skipping mailbox")
@@ -221,6 +306,7 @@ def collect() -> dict[int, dict]:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     found: dict[int, dict] = {}
+    one_offs: list[dict] = []
     imap = imaplib.IMAP4_SSL(IMAP_HOST)
     try:
         imap.login(ACCOUNT, password)
@@ -233,15 +319,13 @@ def collect() -> dict[int, dict]:
             f"-label:{LABEL_PROCESSED} -label:{LABEL_REJECTED} "
             f"newer_than:{MAX_AGE_DAYS}d"
         )
-        status, data = imap.uid("SEARCH", "X-GM-RAW", f'"{query}"')
-        uids = data[0].split() if status == "OK" and data and data[0] else []
+        uids = _search(imap, query)
         print(f"[mailbox] {len(uids)} candidate repl(ies) in {folder}")
 
         for uid in uids:
-            status, fetched = imap.uid("FETCH", uid, "(BODY.PEEK[])")
-            if status != "OK" or not fetched or not isinstance(fetched[0], tuple):
+            msg = _fetch(imap, uid, "(BODY.PEEK[])")
+            if msg is None:
                 continue
-            msg = email.message_from_bytes(fetched[0][1], policy=email.policy.default)
             subject = str(msg.get("Subject", ""))
             sender = parseaddr(str(msg.get("From", "")))[1].lower()
             match = SUBJECT_RE.search(subject)
@@ -268,6 +352,8 @@ def collect() -> dict[int, dict]:
             path.write_bytes(pdf)
             found[issue] = {"uid": uid.decode(), "path": str(path)}
             print(f"[mailbox] #{issue}: PDF received ({len(pdf) / 1e6:.1f} MB)")
+
+        one_offs = _collect_one_offs(imap, out_dir)
     finally:
         try:
             imap.logout()
@@ -275,7 +361,87 @@ def collect() -> dict[int, dict]:
             pass
 
     (out_dir / MANIFEST).write_text(json.dumps(found), encoding="utf-8")
+    (out_dir / ONEOFF_MANIFEST).write_text(json.dumps(one_offs), encoding="utf-8")
+    return found, one_offs
+
+
+def _collect_one_offs(imap: imaplib.IMAP4_SSL, out_dir: Path) -> list[dict]:
+    """One-off requests from the owner: {uid, subject, note, dois, pdf}.
+
+    The search is by sender and freshness only, because Gmail's query parser
+    reads the hyphen in "one-off" as an exclusion. Subjects are matched here
+    instead, on headers alone, so the body of an unrelated message is never
+    fetched.
+    """
+    owner = owner_address()
+    if not owner:
+        print("[mailbox] PDF_REQUEST_TO unset; not accepting one-off requests")
+        return []
+    query = (
+        f"from:{owner} -label:{LABEL_PROCESSED} -label:{LABEL_REJECTED} "
+        f"newer_than:{ONEOFF_MAX_AGE_DAYS}d"
+    )
+    found: list[dict] = []
+    for uid in _search(imap, query):
+        header = _fetch(imap, uid, "(BODY.PEEK[HEADER])")
+        if header is None:
+            continue
+        subject = str(header.get("Subject", ""))
+        if SUBJECT_RE.search(subject):
+            continue  # a reply to a numbered request; the first pass owns it
+        note = one_off_note(subject)
+        if note is None:
+            continue
+        msg = _fetch(imap, uid, "(BODY.PEEK[])")
+        if msg is None:
+            continue
+        sender = parseaddr(str(msg.get("From", "")))[1].lower()
+        # A From line can be forged; Gmail's own verdict on it cannot.
+        if sender != owner or not _authenticated(msg, sender):
+            print("[mailbox] one-off: rejecting — not the owner, or failed authentication")
+            _label(imap, uid, LABEL_REJECTED)
+            continue
+        entry = {
+            "uid": uid.decode(),
+            "subject": subject,
+            "note": note,
+            "dois": dois_in(_body_text(msg)),
+            "pdf": None,
+        }
+        pdf = _first_pdf(msg)
+        if pdf is not None:
+            path = out_dir / f"one-off-{uid.decode()}.pdf"
+            path.write_bytes(pdf)
+            entry["pdf"] = str(path)
+        found.append(entry)
+        print(
+            f"[mailbox] one-off request {subject[:60]!r}: "
+            f"{len(entry['dois'])} DOI(s) in the body, "
+            f"{'PDF attached' if pdf else 'no PDF'}"
+        )
     return found
+
+
+def record_reply(issue_number: int, uid: str, path: Path) -> None:
+    """Treat a supplied PDF as a reply to this Issue.
+
+    A one-off arrives before its Issue exists, so it cannot be saved under the
+    Issue's name. Once the Issue is open, recording it here makes it
+    indistinguishable from a PDF replied to a request: the sweep bundles it,
+    and the email is consumed only when the PDF can no longer be lost.
+    """
+    manifest = drop_dir() / MANIFEST
+    current = json.loads(manifest.read_text()) if manifest.exists() else {}
+    current[str(issue_number)] = {"uid": uid, "path": str(path)}
+    manifest.write_text(json.dumps(current), encoding="utf-8")
+
+
+def one_offs_received() -> list[dict]:
+    """The one-off manifest written by collect() earlier in this run."""
+    manifest = drop_dir() / ONEOFF_MANIFEST
+    if not manifest.exists():
+        return []
+    return json.loads(manifest.read_text())
 
 
 def received() -> dict[int, dict]:
@@ -286,18 +452,17 @@ def received() -> dict[int, dict]:
     return {int(k): v for k, v in json.loads(manifest.read_text()).items()}
 
 
-def mark_processed(issue_number: int) -> None:
-    """Label a used reply so later polls ignore it."""
-    entry = received().get(issue_number)
+def mark_uid(uid: str, label: str = LABEL_PROCESSED) -> bool:
+    """Label one message so later polls ignore it."""
     password = os.environ.get("GMAIL_APP_PASSWORD")
-    if not entry or not password:
-        return
+    if not uid or not password:
+        return False
     imap = imaplib.IMAP4_SSL(IMAP_HOST)
     try:
         imap.login(ACCOUNT, password)
         imap.select(_all_mail(imap))
-        _label(imap, entry["uid"].encode(), LABEL_PROCESSED)
-        print(f"  [mailbox] #{issue_number}: reply marked {LABEL_PROCESSED}")
+        _label(imap, uid.encode(), label)
+        return True
     finally:
         try:
             imap.logout()
@@ -305,15 +470,42 @@ def mark_processed(issue_number: int) -> None:
             pass
 
 
+def mark_processed(issue_number: int) -> None:
+    """Label a used reply so later polls ignore it."""
+    entry = received().get(issue_number)
+    if entry and mark_uid(entry["uid"]):
+        print(f"  [mailbox] #{issue_number}: reply marked {LABEL_PROCESSED}")
+
+
+def answer(subject: str, body: str) -> bool:
+    """Write back to the owner about a one-off request.
+
+    One message per request. When the request became an Issue the subject
+    carries that Issue's tag, so replying to it with the PDF attached lands in
+    the ordinary reply pass — the confirmation doubles as the PDF thread.
+    """
+    owner = owner_address()
+    if not owner or not os.environ.get("GMAIL_APP_PASSWORD"):
+        print("[one-off] no owner address or no mail password; not answering")
+        return False
+    try:
+        send_email.send(subject=subject[:200], body_text=body, recipients=[owner])
+    except Exception as exc:  # noqa: BLE001 - the Issue is the record; mail is a courtesy
+        print(f"[one-off] could not answer the request: {exc}")
+        return False
+    print(f"[one-off] answered: {subject[:70]}")
+    return True
+
+
 def main() -> None:
     command = sys.argv[1] if len(sys.argv) > 1 else "check"
     if command != "check":
         sys.exit(f"unknown command: {command}")
-    found = collect()
+    replies, one_offs = collect()
     output = os.environ.get("GITHUB_OUTPUT")
     if output:
         with open(output, "a", encoding="utf-8") as fh:
-            fh.write(f"found={'true' if found else 'false'}\n")
+            fh.write(f"found={'true' if replies or one_offs else 'false'}\n")
 
 
 if __name__ == "__main__":
