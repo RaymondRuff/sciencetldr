@@ -127,7 +127,9 @@ Two rules here **override** `prompts/host_dialogue.md`:
    - acronyms said as words, in ordinary case: "Crispr", "Covid".
    - symbols and Greek letters spelled: "percent", "plus or minus", "alpha".
    - the DOI in the sign-off, spelled for the ear: "ten dot one two five seven
-     slash pol dot two zero two four zero eight zero six".
+     slash pol dot two zero two four zero eight zero six". A paper whose
+     `metadata.json` has no `doi` is a white paper: name the organisation that
+     published it instead, and never read its URL aloud.
    The one exception is the show's name, "Science TLDR".
 2. **Length is measured as spoken text: 11,000 to 11,600 characters** of the
    text as read aloud, about 10.2 to 10.8 minutes. This replaces the

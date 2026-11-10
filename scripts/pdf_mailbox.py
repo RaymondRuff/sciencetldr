@@ -104,6 +104,38 @@ def dois_in(text: str) -> list[str]:
     return found
 
 
+URL_RE = re.compile(r"https?://[^\s<>\"')\]]+", re.IGNORECASE)
+FIELD_RE = re.compile(
+    r"^\s*(title|url|link|publisher|organisation|organization|org)\s*:\s*(\S.*?)\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+
+def urls_in(text: str) -> list[str]:
+    """Every distinct link in some text, in the order they appear."""
+    seen: set[str] = set()
+    found: list[str] = []
+    for match in URL_RE.finditer(text or ""):
+        url = match.group(0).rstrip(".,;:)>]}\"'")
+        if url.lower() not in seen:
+            seen.add(url.lower())
+            found.append(url)
+    return found
+
+
+def fields_in(text: str) -> dict[str, str]:
+    """"Title: ...", "URL: ...", "Publisher: ..." lines, for a paper with no DOI.
+
+    The first of each wins, so a quoted reply underneath cannot override what
+    the writer typed at the top.
+    """
+    fields: dict[str, str] = {}
+    for match in FIELD_RE.finditer(text or ""):
+        key = match.group(1).lower()
+        fields.setdefault(key, match.group(2).strip())
+    return fields
+
+
 def allowed_senders() -> set[str]:
     raw = ",".join(
         filter(
@@ -401,11 +433,14 @@ def _collect_one_offs(imap: imaplib.IMAP4_SSL, out_dir: Path) -> list[dict]:
             print("[mailbox] one-off: rejecting — not the owner, or failed authentication")
             _label(imap, uid, LABEL_REJECTED)
             continue
+        body = _body_text(msg)
         entry = {
             "uid": uid.decode(),
             "subject": subject,
             "note": note,
-            "dois": dois_in(_body_text(msg)),
+            "dois": dois_in(body),
+            "urls": urls_in(body),
+            "fields": fields_in(body),
             "pdf": None,
         }
         pdf = _first_pdf(msg)

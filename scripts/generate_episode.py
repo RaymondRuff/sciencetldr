@@ -735,7 +735,7 @@ def process(
     wav_path = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / f"{stem}.wav"
     duration = tts_dialogue.synthesize(turns, wav_path)
     mp3_path = INBOX / f"{stem}.mp3"
-    tts_dialogue.to_mp3(wav_path, mp3_path, doi=doi, title=title)
+    tts_dialogue.to_mp3(wav_path, mp3_path, doi=doi, title=title, issue=number)
 
     # The script doubles as an exact transcript, so publish_episode.py can skip
     # Whisper and use text that has already been fact-checked.

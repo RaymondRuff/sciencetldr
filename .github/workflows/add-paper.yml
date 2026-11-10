@@ -5,7 +5,8 @@ name: add-paper
 #
 # Emailing works too and needs no browser: send the podcast address a message
 # with "one-off" starting the subject, and either the DOI in the body or the
-# PDF attached. See scripts/pdf_mailbox.py.
+# PDF attached. A paper with no DOI needs a link and a "Title:" line instead.
+# See scripts/pdf_mailbox.py.
 #
 # Actions → add-paper → Run workflow, paste the DOI. It looks the paper up,
 # stages its full text in the private papers repository if anything open has
@@ -17,8 +18,16 @@ on:
   workflow_dispatch:
     inputs:
       doi:
-        description: 'DOI, e.g. 10.1016/j.chembiol.2026.09.022'
-        required: true
+        description: 'DOI, e.g. 10.1016/j.chembiol.2026.09.022 (leave blank for a white paper)'
+        required: false
+        type: string
+      url:
+        description: 'Link to the paper — for one with no DOI (a white paper)'
+        required: false
+        type: string
+      publisher:
+        description: 'Organisation behind a white paper, e.g. Example Lab'
+        required: false
         type: string
       note:
         description: 'Why you want it (optional; context for the writer, not for broadcast)'
@@ -61,11 +70,16 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
           DOI: ${{ inputs.doi }}
+          URL: ${{ inputs.url }}
+          PUBLISHER: ${{ inputs.publisher }}
           NOTE: ${{ inputs.note }}
           TITLE: ${{ inputs.title }}
           FORCE: ${{ inputs.force }}
         run: |
-          ARGS=(--doi "$DOI")
+          ARGS=()
+          if [ -n "$DOI" ]; then ARGS+=(--doi "$DOI"); fi
+          if [ -n "$URL" ]; then ARGS+=(--url "$URL"); fi
+          if [ -n "$PUBLISHER" ]; then ARGS+=(--publisher "$PUBLISHER"); fi
           if [ -n "$NOTE" ]; then ARGS+=(--note "$NOTE"); fi
           if [ -n "$TITLE" ]; then ARGS+=(--title "$TITLE"); fi
           if [ "$FORCE" = "true" ]; then ARGS+=(--force); fi

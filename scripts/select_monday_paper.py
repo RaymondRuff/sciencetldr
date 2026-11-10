@@ -291,22 +291,43 @@ def render_issue_body(
     if pdf_url:
         pdf_section = f"📎 **PDF (open-access):** {pdf_url}\n\n{pdf_section}"
 
+    # A white paper has no DOI, so its source URL is what identifies it. The
+    # show notes and the hosts' sign-off both fall back to that URL, and
+    # publish_episode pairs the audio by Issue number rather than by DOI.
+    doi = (paper.get("doi") or "").strip()
+    source_url = (paper.get("source_url") or "").strip()
     metadata = {
         "title": paper["title"],
-        "doi": paper["doi"],
+        "doi": doi or None,
         "dice_score": paper.get("dice"),
         "pdf_url": pdf_url,
         "source": source,
         "digest_excerpt": paper.get("raw", ""),
     }
+    if source_url:
+        metadata["source_url"] = source_url
+    if paper.get("journal"):
+        metadata["journal"] = paper["journal"]
     if deadline is not None:
         metadata["pdf_deadline"] = pdf_window.iso(deadline)
         metadata["runner_up"] = runner_up
         metadata["stand_ins"] = stand_ins or []
 
+    if doi:
+        citation = f"**DOI:** [{doi}](https://doi.org/{doi})"
+    elif source_url:
+        citation = f"**Paper:** [{source_url}]({source_url})"
+    else:
+        citation = "**No DOI recorded**"
+    header = "  •  ".join(
+        [f"**Source:** {source}"]
+        + ([f"**DICE:** {paper['dice']}"] if paper.get("dice") is not None else [])
+        + [citation]
+    )
+
     return f"""# {paper['title']}
 
-**Source:** {source}  •  **DICE:** {paper.get('dice', '?')}  •  **DOI:** [{paper['doi']}](https://doi.org/{paper['doi']})
+{header}
 
 {pdf_section}
 
