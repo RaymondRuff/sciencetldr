@@ -1,12 +1,21 @@
 # Issue #108 — script (routine writer)
 
-**Length:** 11,595 spoken chars (~10.8 min)  
+**Length:** 11,574 spoken chars (~10.8 min)  
 **Episodes cited:** [83, 86]  
 **Paper text from:** Publisher PDF staged in the private papers repository (emailed-pdf provenance), 23 pages, 56,412 characters of extracted text plus six figure images; Molecular Cancer Therapeutics, doi 10.1158/1535-7163.MCT-25-1542
 
 | Run | Started (UTC) | Finished (UTC) | Safeguard stops |
 |---|---|---|---|
 | writer | 2026-11-10T08:09:59Z | 2026-11-10T08:21:25Z | 0 |
+| checker | 2026-11-10T11:10:21Z | 2026-11-10T11:34:00Z | 0 |
+
+## Corrections made by the fact-check pass
+
+- Nadia stacked four counts in one turn on the detection funnel (eight lines, all eight by qPCR, five of eight by blot, two of eight on the surface); trimmed to eight lines and then five and two, since Theo's next turn says the funnel back.
+- Nadia called the reporter ADCC signal 'roughly two and a half times baseline' at six hours; Figure 6A shows the Env-positive arm close to 280 per cent of time zero, so the rounding was changed to close to three times.
+- Nadia attributed the spread in the stromal-cell readout to donors; Figure 6E plots the standard deviation of six biological replicates and the BMSCs were pooled across donors, so it is spread across replicates.
+- Show notes gave the patient cohort as 342 DLBCLs; the paper states no cohort size, and the figures disagree (342 at risk in the Kaplan-Meier, 345 in the alluvial table), so it now reads about 340.
+- Show notes rounded the ADCC reporter signal to ~2.5x; corrected to ~2.7x at 6 h to match Figure 6A and the dialogue.
 
 ## Show notes
 
@@ -18,13 +27,13 @@ DOI: [10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-15
 
 **Question:** Does HERV-K (HML-2) envelope mark clinically relevant DLBCL states, and is it a usable surface target?
 
-**Answer:** HERV expression mirrors the known ABC/GCB split but adds nothing independent of cell of origin, and Env reaches the surface of only 2 of 8 DLBCL lines; a humanized VHH-Fc, FF-01, drives NK killing and internalizes, with no Env-negative control in the 3D assay and no in vivo data.
+**Answer:** HERV expression mirrors the ABC/GCB split but adds nothing independent of cell of origin, and Env reaches the surface of only 2 of 8 lines; a humanized VHH-Fc, FF-01, drives NK killing and internalizes, with no Env-negative control in the 3D assay and no in vivo data.
 
 **Three takeaways**
 
-1. Discarded multi-mapping reads split 342 DLBCLs into 4 survival-distinct clusters mirroring ABC/GCB; not offered as prognostic.
+1. Discarded multi-mapping reads split ~340 DLBCLs into 4 survival-distinct clusters mirroring ABC/GCB; not offered as prognostic.
 2. Env was detected by qPCR in 8 of 8 lines, by immunoblot in 5, on the surface in 2; every functional result rests on RCK8.
-3. FF-01 (Kd 142 nM against peptide 3) gave ~2.5x ADCC signal, NK killing in 2D and 3D, and ~1.5-fold selective internalization.
+3. FF-01 (Kd 142 nM, peptide 3) gave ~2.7x ADCC signal at 6 h, NK killing in 2D and 3D, and ~1.5-fold selective internalization.
 
 ---
 
@@ -68,7 +77,7 @@ DOI: [10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-15
 
 **Theo:** Give me the cell lines.
 
-**Nadia:** Eight D-L-B-C-L lines, three assays. By quantitative P-C-R, the envelope message is detectable in all eight. By immunoblot — total protein in the lysate — five of eight. On the surface, by flow cytometry, two of eight.
+**Nadia:** Eight D-L-B-C-L lines, three assays. By quantitative P-C-R, the envelope message is detectable in all of them. By immunoblot — total protein in the lysate — five. On the surface, by flow cytometry, two.
 
 **Theo:** Oh — that's a brutal funnel. Eight, five, two.
 
@@ -116,7 +125,7 @@ DOI: [10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-15
 
 **Theo:** So what does the antibody do?
 
-**Nadia:** Nothing alone — no direct anti-tumour activity, reported plainly. The activity is antibody-dependent cytotoxicity: in the reporter assay the envelope-high line gives roughly two and a half times baseline at six hours, and the negative line nothing.
+**Nadia:** Nothing alone — no direct anti-tumour activity, reported plainly. The activity is antibody-dependent cytotoxicity: in the reporter assay the envelope-high line gives close to three times baseline at six hours, and the negative line nothing.
 
 **Theo:** With actual N-K cells?
 
@@ -136,7 +145,7 @@ DOI: [10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-15
 
 **Theo:** I don't buy it, and it bothers me because the fix is in their own freezer. A stromal cell is a different cell type doing a different thing. The control that settles this is an envelope-negative lymphoma line in the same gel. They have those lines.
 
-**Nadia:** Agreed, that's the missing experiment. And the stromal readout is occupied area with wide spread between donors — blunt, even as the right control.
+**Nadia:** Agreed, that's the missing experiment. And the stromal readout is occupied area with wide spread across replicates — blunt, even as the right control.
 
 **Theo:** The drug-conjugate angle — internalisation.
 

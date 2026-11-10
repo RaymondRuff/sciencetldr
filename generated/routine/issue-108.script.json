@@ -2,18 +2,30 @@
   "issue": 108,
   "writer": "routine",
   "paper_source": "Publisher PDF staged in the private papers repository (emailed-pdf provenance), 23 pages, 56,412 characters of extracted text plus six figure images; Molecular Cancer Therapeutics, doi 10.1158/1535-7163.MCT-25-1542",
-  "checked": false,
+  "checked": true,
   "callbacks": [
     83,
     86
   ],
-  "show_notes": "**[Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments](https://doi.org/10.1158/1535-7163.MCT-25-1542)**\n\n*Molecular Cancer Therapeutics, 2026*\n\nDOI: [10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-1542)\n\n**Question:** Does HERV-K (HML-2) envelope mark clinically relevant DLBCL states, and is it a usable surface target?\n\n**Answer:** HERV expression mirrors the known ABC/GCB split but adds nothing independent of cell of origin, and Env reaches the surface of only 2 of 8 DLBCL lines; a humanized VHH-Fc, FF-01, drives NK killing and internalizes, with no Env-negative control in the 3D assay and no in vivo data.\n\n**Three takeaways**\n\n1. Discarded multi-mapping reads split 342 DLBCLs into 4 survival-distinct clusters mirroring ABC/GCB; not offered as prognostic.\n2. Env was detected by qPCR in 8 of 8 lines, by immunoblot in 5, on the surface in 2; every functional result rests on RCK8.\n3. FF-01 (Kd 142 nM against peptide 3) gave ~2.5x ADCC signal, NK killing in 2D and 3D, and ~1.5-fold selective internalization.\n",
-  "verification_changes": [],
+  "show_notes": "**[Aberrant expression of HERV-K envelope in lymphoma represents an opportunity for novel treatments](https://doi.org/10.1158/1535-7163.MCT-25-1542)**\n\n*Molecular Cancer Therapeutics, 2026*\n\nDOI: [10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-1542)\n\n**Question:** Does HERV-K (HML-2) envelope mark clinically relevant DLBCL states, and is it a usable surface target?\n\n**Answer:** HERV expression mirrors the ABC/GCB split but adds nothing independent of cell of origin, and Env reaches the surface of only 2 of 8 lines; a humanized VHH-Fc, FF-01, drives NK killing and internalizes, with no Env-negative control in the 3D assay and no in vivo data.\n\n**Three takeaways**\n\n1. Discarded multi-mapping reads split ~340 DLBCLs into 4 survival-distinct clusters mirroring ABC/GCB; not offered as prognostic.\n2. Env was detected by qPCR in 8 of 8 lines, by immunoblot in 5, on the surface in 2; every functional result rests on RCK8.\n3. FF-01 (Kd 142 nM, peptide 3) gave ~2.7x ADCC signal at 6 h, NK killing in 2D and 3D, and ~1.5-fold selective internalization.\n",
+  "verification_changes": [
+    "Nadia stacked four counts in one turn on the detection funnel (eight lines, all eight by qPCR, five of eight by blot, two of eight on the surface); trimmed to eight lines and then five and two, since Theo's next turn says the funnel back.",
+    "Nadia called the reporter ADCC signal 'roughly two and a half times baseline' at six hours; Figure 6A shows the Env-positive arm close to 280 per cent of time zero, so the rounding was changed to close to three times.",
+    "Nadia attributed the spread in the stromal-cell readout to donors; Figure 6E plots the standard deviation of six biological replicates and the BMSCs were pooled across donors, so it is spread across replicates.",
+    "Show notes gave the patient cohort as 342 DLBCLs; the paper states no cohort size, and the figures disagree (342 at risk in the Kaplan-Meier, 345 in the alluvial table), so it now reads about 340.",
+    "Show notes rounded the ADCC reporter signal to ~2.5x; corrected to ~2.7x at 6 h to match Figure 6A and the dialogue."
+  ],
   "runs": [
     {
       "role": "writer",
       "started": "2026-11-10T08:09:59Z",
       "finished": "2026-11-10T08:21:25Z",
+      "safeguard_stops": 0
+    },
+    {
+      "role": "checker",
+      "started": "2026-11-10T11:10:21Z",
+      "finished": "2026-11-10T11:34:00Z",
       "safeguard_stops": 0
     }
   ],
@@ -100,7 +112,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Eight D-L-B-C-L lines, three assays. By quantitative P-C-R, the envelope message is detectable in all eight. By immunoblot — total protein in the lysate — five of eight. On the surface, by flow cytometry, two of eight."
+      "text": "Eight D-L-B-C-L lines, three assays. By quantitative P-C-R, the envelope message is detectable in all of them. By immunoblot — total protein in the lysate — five. On the surface, by flow cytometry, two."
     },
     {
       "speaker": "Theo",
@@ -196,7 +208,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Nothing alone — no direct anti-tumour activity, reported plainly. The activity is antibody-dependent cytotoxicity: in the reporter assay the envelope-high line gives roughly two and a half times baseline at six hours, and the negative line nothing."
+      "text": "Nothing alone — no direct anti-tumour activity, reported plainly. The activity is antibody-dependent cytotoxicity: in the reporter assay the envelope-high line gives close to three times baseline at six hours, and the negative line nothing."
     },
     {
       "speaker": "Theo",
@@ -236,7 +248,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Agreed, that's the missing experiment. And the stromal readout is occupied area with wide spread between donors — blunt, even as the right control."
+      "text": "Agreed, that's the missing experiment. And the stromal readout is occupied area with wide spread across replicates — blunt, even as the right control."
     },
     {
       "speaker": "Theo",
