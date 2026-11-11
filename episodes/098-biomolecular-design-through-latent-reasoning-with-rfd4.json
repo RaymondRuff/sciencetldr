@@ -1,0 +1,24 @@
+{
+  "guid": "3de78e14-0516-474f-b257-119f7d0ab176",
+  "title": "Episode 98: Biomolecular design through latent reasoning with RFD4-Proteina",
+  "itunes_title": "Biomolecular design through latent reasoning with RFD4-Proteina",
+  "description": "**[Biomolecular design through latent reasoning with RFD4-Proteina](https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf)**\n\n*White paper — UW Institute for Protein Design & NVIDIA, 2026*\n\nSource: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf)\n\n**Question:** Can one generative model span proteins, sugars, DNA and RNA in a shared latent space, and does inference-time compute improve real design success?\n\n**Answer:** On the authors' own AF3-judged benchmarks it leads every baseline (10.6% vs 5.9% clustered pass rate for protein binding), and wet-lab results follow across binders, glycans and enzymes — but no evaluation was blinded or independent.\n\n**Three takeaways**\n\n1. One model matches or beats specialist tools for packing, inverse folding and refinement, with AlphaFold3 as judge throughout.\n2. Strongest evidence: 89 of 288 phosphotriesterase designs were active, against 0 of 192 from the same lab's previous model.\n3. The 158/188 TrkA hit rate is compared across other groups' campaigns, assays and hit definitions, not a controlled test.",
+  "pub_date": "Wed, 11 Nov 2026 11:32:32 +0000",
+  "duration_seconds": 636,
+  "episode_number": 98,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "098-biomolecular-design-through-latent-reasoning-with-rfd4.mp3",
+  "enclosure_length_bytes": 7639567,
+  "source_metadata": {
+    "title": "Biomolecular design through latent reasoning with RFD4-Proteina",
+    "doi": null,
+    "dice_score": null,
+    "pdf_url": "https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf",
+    "source": "one-off",
+    "digest_excerpt": "Queued by hand, outside the Monday digest and the Friday crawl.\nReason given: Ray's test case for the one-off path\nJournal: Self-published by the UW Institute for Protein Design and NVIDIA — not peer reviewed\nNo DOI: published at https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf. The hosts name the organisations instead of reading a DOI.\nA hundred and sixteen pages with a hundred and four figures, released alongside an open-source model. It has not been peer reviewed, and the hosts should say so.",
+    "source_url": "https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf",
+    "journal": "Self-published by the UW Institute for Protein Design and NVIDIA — not peer reviewed"
+  },
+  "source_issue": 113
+}
