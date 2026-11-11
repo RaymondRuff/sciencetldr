@@ -1,16 +1,18 @@
-"""Turn open `podcast-pending` Issues into review-ready episode drafts.
+"""Turn open `podcast-pending` Issues into published episodes.
 
 For each eligible Issue: fetch the paper's full text, have Claude write and then
 verify a two-host script, synthesize it with Gemini multi-speaker TTS, and open
-a pull request carrying the audio. Merging that PR lands the mp3 in `inbox/`,
-which is what the existing publish workflow watches — so review is the merge
-button and nothing reaches the feed unreviewed.
+a pull request carrying the audio. The sweep merges that PR in the next publish
+slot, which lands the mp3 in `inbox/` and fires the publish workflow. Nobody
+reviews it: the quality gate is the writer, the independent checker and the
+validator. The pull request is what keeps a backlog reaching the feed one
+episode per slot, and what there is to read afterwards.
 
 Issue label states:
   podcast-pending        eligible (set by the Monday/Friday selection scripts)
   needs-pdf              no full text reachable; waiting on a PDF
   pdf-requested          a PDF request has been emailed (see pdf_mailbox.py)
-  episode-in-review      a draft PR is open
+  episode-in-review      an episode is built and queued to publish
   generation-failed      the run errored; needs a look before retrying
 
 A paper can also be queued by hand, by DOI from the add-paper workflow or by
@@ -34,7 +36,7 @@ fails validation. At 0 the sweep makes no paid model calls at all.
 
 The run stops outright on errors that will affect every Issue (the Anthropic
 spend limit, bad credentials), and refuses to start if the GitHub token can't
-open the review PR, rather than discovering that after paying for a script.
+open the publish PR, rather than discovering that after paying for a script.
 
 Usage:
   python scripts/generate_episode.py                 # sweep eligible issues
@@ -122,8 +124,16 @@ def gh(args: list[str]) -> str:
     return result.stdout
 
 
+LABEL_NOTES = {
+    "episode-in-review": "An episode is built and queued to publish; nothing waits on a person",
+    LABEL_NEEDS_PDF: "No full text could be reached; waiting on a PDF",
+    LABEL_PDF_REQUESTED: "The one PDF request for this paper has been sent",
+    LABEL_FAILED: "Generation failed; this one needs a look before it retries",
+}
+
+
 def add_label(number: int, label: str) -> None:
-    github_issue.ensure_label(label)
+    github_issue.ensure_label(label, description=LABEL_NOTES.get(label, ""))
     gh(["issue", "edit", str(number), "--add-label", label])
 
 
@@ -499,7 +509,7 @@ def can_open_prs() -> bool:
     return "http 422" in output or "validation failed" in output
 
 
-def open_review_pr(
+def open_publish_pr(
     *,
     issue: dict,
     metadata: dict,
@@ -563,7 +573,7 @@ def _commit_push_and_open(
     # body. Merging would close the Issue before the publish run, which only
     # pairs audio with *open* Issues — the episode would lose its series
     # branding and the Issue would never get its "Published as" comment.
-    body = f"""Draft episode for #{number} — **review by listening, then merge to publish**.
+    body = f"""Episode for #{number}. **This merges itself** — nothing here waits on a review.
 
 | | |
 |---|---|
@@ -573,10 +583,15 @@ def _commit_push_and_open(
 | Length | {duration_s / 60:.1f} min ({chars} chars) |
 | Voices | Nadia = Kore, Theo = Achird ({tts_dialogue.MODEL}) |
 
-Merging this PR puts the mp3 in `inbox/`, which triggers the publish workflow:
-it normalizes the audio, writes show notes, updates `feed.xml`, and then marks the
-Issue done.
-Closing this PR without merging discards the draft.
+The sweep merges this in the next publish slot, usually within a minute of it
+being opened. That puts the mp3 in `inbox/`, which triggers the publish
+workflow: it normalizes the audio, attaches the show notes the routine wrote,
+updates `feed.xml` and marks the Issue done.
+
+It exists as a pull request so that episodes reach the feed one per publish
+slot rather than a backlog arriving at once, and so there is something to read
+afterwards. To stop one going out, close it before the next slot — or set the
+`AUTO_PUBLISH` variable to anything but `true` to hold every episode.
 
 ### Verification pass
 """
@@ -776,7 +791,7 @@ def process(
         notes_path.write_text(show_notes + "\n", encoding="utf-8")
         sidecars.append(notes_path)
 
-    url = open_review_pr(
+    url = open_publish_pr(
         issue=issue,
         metadata=metadata,
         files=[mp3_path, *sidecars, script_json, script_md],
@@ -788,15 +803,10 @@ def process(
     for stale in (LABEL_NEEDS_PDF, LABEL_PDF_REQUESTED, LABEL_FAILED):
         remove_label(number, stale)
     add_label(number, LABEL_IN_REVIEW)
-    github_issue.comment(
-        number,
-        f"Episode draft ready for review: {url}\n\n"
-        f"- Length: {duration / 60:.1f} min\n"
-        f"- Full text source: `{provenance}`\n"
-        f"- Verification corrections: {len(changes)}\n\n"
-        "Listen to the audio in the PR, then merge to publish or close to discard.",
-    )
-    print(f"  [episode] review PR: {url}")
+    # No comment here on purpose. The episode publishes about a minute later
+    # and says so in its own comment; telling Ray twice, once to ask for a
+    # review that does not happen, was two notifications for no decision.
+    print(f"  [episode] publish PR: {url}")
     return outcome
 
 
