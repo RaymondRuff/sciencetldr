@@ -286,6 +286,30 @@ strand (`source`) and `source_url` stay as the Issue recorded them, because
 Crossref would otherwise overwrite `source` with "crossref". The DOI branch
 and the oldest-pending fallback both remain for audio dropped in by hand.
 
+## Update, 2026-11-11: nothing waits on a review
+
+Ray said he no longer wants to review drafts. He already wasn't: `AUTO_PUBLISH`
+has been `true` throughout, and episodes 95 to 98 each reached the feed about a
+minute after the checker landed the script. What made him think otherwise was
+the wording. The pull request was titled "review by listening, then merge to
+publish" and the Issue got a comment saying "Listen to the audio in the PR,
+then merge to publish or close to discard" — an instruction for a decision that
+auto-publish had already taken, and a second notification per episode for
+nothing.
+
+So the copy now says what happens, and that extra comment is gone: the episode
+announces itself once, when it publishes, with the permalink. The labels carry
+descriptions now too, because `episode-in-review` reads like it is waiting on a
+person when it means "built and queued to publish".
+
+**The pull request stays**, and not out of habit. It is the rate limiter:
+`publish_next_draft` merges one per publish slot, so a backlog — three one-offs
+queued in a week, say — reaches the feed one episode at a time instead of all
+at once. It is also the only artefact that holds the audio, the script and the
+checker's corrections together after the fact. Closing one before its slot is
+still how a single episode is stopped; `AUTO_PUBLISH` set to anything but
+`true` still holds all of them.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions

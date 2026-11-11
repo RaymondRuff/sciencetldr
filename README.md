@@ -24,9 +24,9 @@ The only weekly step is listening to the draft and merging the PR. Audio generat
 | Script writing + verification pass | [`scripts/generate_script.py`](scripts/generate_script.py) |
 | Speech synthesis (Gemini multi-speaker) | [`scripts/tts_dialogue.py`](scripts/tts_dialogue.py) |
 | Cross-episode memory | [`scripts/memory.py`](scripts/memory.py) |
-| Orchestration + review PR | [`scripts/generate_episode.py`](scripts/generate_episode.py) |
+| Orchestration + publish PR | [`scripts/generate_episode.py`](scripts/generate_episode.py) |
 
-**Issue labels drive the state machine:** `podcast-pending` (eligible) → `needs-pdf` + `pdf-requested` (no reachable full text; a request was emailed) → `episode-in-review` (draft PR open) → closed on publish. A failed run gets `generation-failed`; remove the label to retry.
+**Issue labels drive the state machine:** `podcast-pending` (eligible) → `needs-pdf` + `pdf-requested` (no reachable full text; a request was emailed) → `episode-in-review` (built and queued to publish) → closed on publish. A failed run gets `generation-failed`; remove the label to retry.
 
 **The best paper, or an honest stand-in.** When the week's top paper is open, the Monday or Friday picker stages its full text in the private `sciencetldr-papers` repository, where the script-writing routine reads it (the routine's own sandbox cannot reach any paper source). When it is paywalled, the picker emails **one** request from the podcast account, with a deadline of 9 pm Pacific that day and the name of the open runner-up that will stand in. **Reply with the PDF attached**, or upload it to the papers repository as `papers/issue-NN.pdf`, and the top paper is written next morning; otherwise the runner-up is, and with no runner-up the slot is skipped rather than filled with a weaker paper ([`scripts/pdf_window.py`](scripts/pdf_window.py)). A PDF sent later still becomes an episode. Only allow-listed senders whose mail passes Gmail's authentication checks are accepted, and a paywalled PDF never enters this public repository.
 
