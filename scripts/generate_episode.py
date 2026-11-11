@@ -451,6 +451,31 @@ def queue_one_offs() -> list[str]:
     return problems
 
 
+def needs_audio() -> bool:
+    """Whether this run will synthesise anything, so ffmpeg is worth installing.
+
+    Audio only ever comes from a checked routine script: MAX_EPISODES_PER_RUN
+    is 0, so the paid path never runs. Everything else a sweep does — staging
+    papers, closing PDF windows, merging a draft PR — needs no ffmpeg. Most
+    sweeps therefore need none, and installing it anyway is a thirty-minute
+    apt timeout waiting to happen on a bad runner.
+
+    Errs towards True: if this cannot be worked out, install it.
+    """
+    try:
+        for issue in github_issue.list_pending_issues():
+            if LABEL_IN_REVIEW in issue_labels(issue):
+                continue
+            if routine_script(issue["number"]) is not None:
+                print(f"[plan] #{issue['number']} has a checked script; audio is needed")
+                return True
+    except Exception as exc:  # noqa: BLE001 - never skip ffmpeg on a guess
+        print(f"[plan] could not tell whether audio is needed ({exc}); assuming it is")
+        return True
+    print("[plan] no checked script waiting; this run makes no audio")
+    return False
+
+
 def can_open_prs() -> bool:
     """Check, before spending anything, that GH_TOKEN may create pull requests.
 
@@ -861,11 +886,24 @@ def main() -> None:
         help="write the script but skip synthesis, commits and the PR",
     )
     parser.add_argument(
+        "--needs-audio",
+        action="store_true",
+        help="print needed=true|false for the ffmpeg step, and do nothing else",
+    )
+    parser.add_argument(
         "--publish-next",
         action="store_true",
         help="after the sweep, merge the oldest waiting draft PR (auto-publish)",
     )
     args = parser.parse_args()
+
+    if args.needs_audio:
+        needed = needs_audio()
+        output = os.environ.get("GITHUB_OUTPUT")
+        if output:
+            with open(output, "a", encoding="utf-8") as fh:
+                fh.write(f"needed={'true' if needed else 'false'}\n")
+        return
 
     github_issue.ensure_auth()
     # Before the mailbox manifest is read: a request that arrives with its PDF

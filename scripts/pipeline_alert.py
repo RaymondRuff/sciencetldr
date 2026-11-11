@@ -90,24 +90,45 @@ def failed_log(run_id: str) -> str:
     return "\n".join(lines[-LOG_LINES:])
 
 
+# Steps the runner adds around the job; they say nothing about the work.
+SCAFFOLDING = ("set up job", "complete job", "post job cleanup")
+
+
+def substantive(steps: list[dict]) -> list[dict]:
+    """The job's own steps, without the runner's setup and teardown."""
+    kept = []
+    for step in steps:
+        name = str(step.get("name", "")).strip().lower()
+        if name in SCAFFOLDING or name.startswith("post "):
+            continue
+        kept.append(step)
+    return kept
+
+
 def did_its_work(run_id: str) -> bool:
-    """Whether a successful run actually ran its steps.
+    """Whether a successful run actually did the job, or only skipped past it.
 
     generate-episode's half-hourly mailbox poll succeeds by skipping every
-    step after the mailbox check, so its success says nothing about the daily
-    sweep that failed. On 2026-11-04 and 11-05 such a poll closed the alert
-    an hour after it opened, and the next day's identical failure opened a
-    fresh one: a notification a day, plus a false recovery, for one problem.
-    So a run that skipped any step does not count, and neither does one that
-    cannot be inspected.
+    step after the mailbox check, so its success says nothing about the sweep
+    that failed. On 2026-11-04 and 11-05 such a poll closed the alert an hour
+    after it opened, and the next day's identical failure opened a fresh one:
+    a notification a day plus a false recovery, for one unfixed problem.
+
+    The test is the job's **last** step, not whether anything was skipped:
+    a sweep legitimately skips installing ffmpeg when it has no audio to
+    make, and that run still proves the pipeline works. A run that cannot be
+    inspected does not count.
     """
     try:
         jobs = json.loads(gh("run", "view", run_id, "--json", "jobs"))["jobs"]
     except (RuntimeError, ValueError, KeyError) as exc:
         print(f"[alert] could not inspect run {run_id} ({exc}); not treating it as a recovery")
         return False
-    conclusions = [step.get("conclusion") for job in jobs for step in job.get("steps", [])]
-    return bool(conclusions) and "skipped" not in conclusions
+    for job in jobs:
+        steps = substantive(job.get("steps") or [])
+        if not steps or steps[-1].get("conclusion") != "success":
+            return False
+    return bool(jobs)
 
 
 def first_failed(body: str) -> str:

@@ -35,7 +35,15 @@ class DecideTests(unittest.TestCase):
 
 
 class RunTests(unittest.TestCase):
-    def run_alert(self, conclusion, open_alerts, steps=("success", "success")):
+    FULL_SWEEP = (
+        {"name": "Set up job", "conclusion": "success"},
+        {"name": "Checkout", "conclusion": "success"},
+        {"name": "Generate episode draft(s)", "conclusion": "success"},
+        {"name": "Post Checkout", "conclusion": "success"},
+        {"name": "Complete job", "conclusion": "success"},
+    )
+
+    def run_alert(self, conclusion, open_alerts, steps=FULL_SWEEP):
         calls = []
 
         def fake_gh(*args):
@@ -43,7 +51,7 @@ class RunTests(unittest.TestCase):
             if args[:2] == ("issue", "list"):
                 return json.dumps(open_alerts)
             if args[:2] == ("run", "view") and "--json" in args:
-                return json.dumps({"jobs": [{"steps": [{"conclusion": c} for c in steps]}]})
+                return json.dumps({"jobs": [{"steps": list(steps)}]})
             if args[:2] == ("run", "view"):
                 return "generate\tstep\t2026-11-04T14:00:00Z boom\n"
             return "https://github.com/x/y/issues/9\n"
@@ -86,9 +94,38 @@ class RunTests(unittest.TestCase):
 
     def test_a_poll_that_skipped_its_work_is_not_a_recovery(self):
         # The mailbox poll succeeds without running the sweep that failed.
+        poll = (
+            {"name": "Set up job", "conclusion": "success"},
+            {"name": "Check mailbox for emailed PDFs", "conclusion": "success"},
+            {"name": "Install ffmpeg", "conclusion": "skipped"},
+            {"name": "Generate episode draft(s)", "conclusion": "skipped"},
+            {"name": "Complete job", "conclusion": "success"},
+        )
         existing = {"number": 9, "title": "Pipeline failing: publish", "body": ""}
-        calls = self.run_alert("success", [existing], steps=("success", "success", "skipped"))
+        calls = self.run_alert("success", [existing], steps=poll)
         self.assertFalse(any(c[:2] in {("issue", "close"), ("issue", "comment")} for c in calls))
+
+    def test_a_sweep_that_needed_no_ffmpeg_still_counts_as_recovery(self):
+        # Skipping that install is now normal: audio only comes from a checked
+        # script. The old "nothing skipped" rule would have kept #116 open.
+        sweep = (
+            {"name": "Set up job", "conclusion": "success"},
+            {"name": "Check mailbox for emailed PDFs", "conclusion": "success"},
+            {"name": "Decide whether this run makes audio", "conclusion": "success"},
+            {"name": "Install ffmpeg", "conclusion": "skipped"},
+            {"name": "Generate episode draft(s)", "conclusion": "success"},
+            {"name": "Post Checkout", "conclusion": "success"},
+            {"name": "Complete job", "conclusion": "success"},
+        )
+        existing = {"number": 9, "title": "Pipeline failing: publish", "body": ""}
+        calls = self.run_alert("success", [existing], steps=sweep)
+        self.assertIn(("issue", "close", "9"), calls)
+
+    def test_the_runners_own_steps_are_ignored(self):
+        self.assertEqual(
+            [s["name"] for s in pa.substantive(list(self.FULL_SWEEP))],
+            ["Checkout", "Generate episode draft(s)"],
+        )
 
     def test_recovery_comments_and_closes(self):
         existing = {"number": 9, "title": "Pipeline failing: publish", "body": ""}
