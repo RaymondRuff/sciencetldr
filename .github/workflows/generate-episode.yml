@@ -85,24 +85,6 @@ jobs:
         id: mailbox
         run: python3 scripts/pdf_mailbox.py check
 
-      - name: Install ffmpeg
-        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
-        timeout-minutes: 30
-        # On 2026-11-04 the runner's Ubuntu mirror served this at about 50 kB/s
-        # and the step took well over ten minutes. Slow is fine; a failure is
-        # retried, and apt is skipped when the image already has ffmpeg.
-        run: |
-          if command -v ffmpeg >/dev/null; then ffmpeg -version | head -1; exit 0; fi
-          for attempt in 1 2 3; do
-            if sudo apt-get update -o Acquire::Retries=3 &&
-               sudo apt-get install -y -o Acquire::Retries=3 ffmpeg; then
-              exit 0
-            fi
-            echo "apt attempt $attempt failed; retrying"
-            sleep 15
-          done
-          exit 1
-
       - name: Install uv
         if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         uses: astral-sh/setup-uv@v3
@@ -112,6 +94,34 @@ jobs:
       - name: Sync dependencies
         if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         run: uv sync
+
+      - name: Decide whether this run makes audio
+        id: audio
+        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
+        run: uv run python scripts/generate_episode.py --needs-audio
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      # Only when there is a script to synthesise. On 2026-11-11 a runner could
+      # not resolve the Ubuntu mirrors at all, and this step burned its whole
+      # thirty-minute budget on a sweep that had nothing to encode. `update`
+      # fails fast so a DNS outage is a minute, not ten; `install` keeps its
+      # retries for a merely slow mirror.
+      - name: Install ffmpeg
+        if: steps.audio.outputs.needed == 'true'
+        timeout-minutes: 30
+        run: |
+          if command -v ffmpeg >/dev/null; then ffmpeg -version | head -1; exit 0; fi
+          for attempt in 1 2 3; do
+            if sudo apt-get update -o Acquire::Retries=1 &&
+               sudo apt-get install -y -o Acquire::Retries=3 ffmpeg; then
+              exit 0
+            fi
+            echo "apt attempt $attempt failed; retrying"
+            sleep 15
+          done
+          exit 1
 
       - name: Generate episode draft(s)
         if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
