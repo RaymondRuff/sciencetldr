@@ -1,12 +1,28 @@
 # Issue #113 — script (routine writer)
 
-**Length:** 11,556 spoken chars (~10.7 min)  
+**Length:** 11,599 spoken chars (~10.8 min)  
 **Episodes cited:** [81, 90]  
 **Paper text from:** Staged bundle in the private papers repository: RFD4-Proteina white paper PDF, https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf (169,995 chars of text plus 104 figure images)
 
 | Run | Started (UTC) | Finished (UTC) | Safeguard stops |
 |---|---|---|---|
 | writer | 2026-11-11T08:06:32Z | 2026-11-11T08:16:23Z | 1 |
+| checker | 2026-11-11T11:16:21Z | 2026-11-11T11:25:00Z | 0 |
+
+## Corrections made by the fact-check pass
+
+- Nadia called the paper the work of the Institute for Protein Design 'together with Nvidia', and Theo spoke of 'the two organisations on the author list'; the author list spans some twenty affiliations (Oxford, Manchester, Southampton, ETH Zurich, Tsinghua and others), so both lines now say IPD and Nvidia led it with academic collaborators, and Nadia's closing question asks for reproduction outside the collaboration.
+- Theo's first takeaway said the model 'beats each specialist'; the paper claims only that it performs 'equivalently to or better than' specialist methods, and for ensemble-based filtering it merely matched PLACER. Changed to 'matches or beats', which is also what the show notes say.
+- Nadia said the best phosphotriesterase was 'not a fast one next to the natural enzyme family'; the paper never compares the designs with a natural phosphotriesterase, only with uncatalysed hydrolysis and with the authors' earlier designs. Replaced with that stated comparison.
+- Nadia called lenacapavir 'the long-acting H-I-V prevention drug'; the paper says only that it is a highly effective HIV-prevention drug whose manufacturing cost is a barrier to access. 'Long-acting' is outside knowledge and was cut.
+- Nadia said the catalytic-cysteine knockout 'lost the activity'; the knockout panel (Fig. 6m) is vector art with no values in the text, which states only that the two best designs rely on the designed Cys nucleophile. Softened to that.
+- The script gave the ligase enantioselectivity as seventy-nine percent against 'under ten percent of the mirror-image one, with no-enzyme controls near background', which reads as clean selectivity; the (R)-amine conversion was 8.8% against a 4.3% no-enzyme control, about twofold. Theo now says the preference is real but not clean.
+- Nadia said the glycan designs shield the sugar so trimming enzymes 'can't process it'; the paper reports designs that retain predominantly Man9 and Glc1Man9, i.e. processing is restricted, not abolished. Softened to 'mostly leave it alone'.
+- The clustered pass rate was described as 'distinct passing structures per attempt'; the metric counts distinct passing structural clusters (Foldseek, TM-score 0.5) per attempt.
+- Episode ninety callback said a huge fraction of designs 'never expressed'; that episode's card records the dropout as read as failed expression, folding or solubility. Changed to 'never showed up in the pool'.
+- Episode eighty-one callback said the non-learned consensus method 'placed third'; kept the card's substance but stated it as beating most of the neural networks, to spend the figure budget on this paper's own numbers.
+- Cut roughly a dozen spoken figures to bring the episode inside the fifteen-to-twenty-five budget and the two-per-turn limit: the forty-fold throughput ratio, the low- and high-thinking pass rates, the five-hundred-trajectory count, the one- and two-residue off-target differences, the eighteen-of-sixty cross-campaign denominator left in place but the eighty-four percent restated as 'that hit rate', and the sixteen-hour incubation. The phosphotriesterase turn carried four values and was split across two turns.
+- Turn with the phosphotriesterase screen stacked three values (288 tested, 89 active, 25 of 47 scaffold families); the denominator is now spoken as just under three hundred, the scaffold-family spread moved into Theo reaction, and the exact 89 of 288 is in the show notes.
 
 ## Show notes
 
@@ -32,7 +48,7 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** And I'm Theo.
 
-**Nadia:** And today we're taking on a big one: 'Biomolecular design through latent reasoning with R-F-D-four Proteina'. It's self-published, by the Institute for Protein Design in Seattle together with Nvidia, and it has not been peer reviewed. Hold onto that for the next ten minutes.
+**Nadia:** And today we're taking on a big one: 'Biomolecular design through latent reasoning with R-F-D-four Proteina'. It's self-published — led by the Institute for Protein Design in Seattle and Nvidia, with academic collaborators — and it has not been peer reviewed. Hold onto that for the next ten minutes.
 
 **Theo:** It's a long one, too. So why this paper? Design models come out most months.
 
@@ -56,7 +72,7 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** Right, but a search that kills candidates early only helps if you can tell early. Can you?
 
-**Nadia:** That's the nicest observation in the paper. Across five hundred trajectories they asked when each property becomes predictable from a half-finished design. Interface area settles early, hydrogen bonding in the middle, the folding model's confidence in the interface only at the very end.
+**Nadia:** That's the nicest observation in the paper. Across their trajectories they asked when each property becomes predictable from a half-finished design. Interface area settles early, hydrogen bonding in the middle, the folding model's confidence in the interface only at the very end.
 
 **Theo:** Ah — so you prune on area first, then bonding, then confidence.
 
@@ -68,7 +84,7 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** Two things at once is the part I'd push on. Those usually trade.
 
-**Nadia:** The in-silico half first. Four benchmarks: protein binding, small-molecule binding, enzyme active-site scaffolding, D-N-A binding. The metric is a clustered pass rate — distinct passing structures per attempt, where passing means an independent fold prediction agrees with the intended design.
+**Nadia:** The in-silico half first. Four benchmarks: protein binding, small-molecule binding, enzyme active-site scaffolding, D-N-A binding. The metric is a clustered pass rate — distinct passing structural clusters per attempt, where passing means an independent fold prediction agrees with the intended design.
 
 **Theo:** Which fold predictor?
 
@@ -76,11 +92,11 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** Mm. So the oracle scoring the designs is the same family of model the field now designs against.
 
-**Nadia:** Yes. It's self-consistency, not truth, and that's the biggest caveat on this half of the paper. With that said: on protein binding they report about eleven percent passing clusters against roughly six for the next-best method, at something like forty-fold the throughput.
+**Nadia:** Yes. It's self-consistency, not truth, and that's the biggest caveat on this half of the paper. With that said: on protein binding they report about eleven percent passing clusters against roughly six for the next-best method, and far more designs per hour of compute.
 
 **Theo:** That's a wide margin.
 
-**Nadia:** It is. And the thinking settings do move the number — protein binding goes from under eight percent at the low setting to about eleven at the high one.
+**Nadia:** It is. And the thinking settings do move it — low thinking lands a few points below the high setting on that same benchmark.
 
 **Theo:** And what does the high setting cost?
 
@@ -88,15 +104,15 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** My problem with the throughput axis is that designs per hour of G-P-U time is an engineering number — it depends on how hard someone optimised the code, and on the hardware.
 
-**Nadia:** And one of the two organisations on the author list makes the hardware. They say so, on the first page.
+**Nadia:** And one of the groups on the author list makes the hardware. They say so, on the first page.
 
-**Theo:** I'm not implying anything by it. But that axis compares engineering effort as much as it compares models. The pass rate is the part that travels.
+**Theo:** That axis compares engineering effort as much as it compares models. The pass rate is the part that travels.
 
 **Nadia:** Agreed. And every baseline here was run by this group, with their settings and their pass criteria. That's not a question of honesty, it's just what a self-run benchmark is.
 
 **Theo:** Which is what we saw done properly in episode eighty-one — the blinded antibody challenge, where the organisers held the answers and entrants never saw the assay. Nobody has done that for structure-based design at this scale.
 
-**Nadia:** No. And it matters, because when that blinded test did happen, a non-learned consensus method placed third.
+**Nadia:** No. And it matters, because when that blinded test did happen, a non-learned consensus method beat most of the neural networks.
 
 **Theo:** Okay. The wet lab — that's where I want to spend our time.
 
@@ -108,7 +124,7 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** Good. That's the sentence I look for and usually don't find.
 
-**Nadia:** Then peptide-M-H-C binders, where the hard part is telling the right peptide from near-identical ones presented the same way. They report over a hundred-fold preference for the intended peptide in every case — and two of the off-targets differed by a single residue and by two.
+**Nadia:** Then peptide-M-H-C binders, where the hard part is telling the right peptide from near-identical ones presented the same way. They report over a hundred-fold preference for the intended peptide in every case — and the two hardest off-targets differed from their targets by only a residue or two.
 
 **Theo:** Wait — how were those affinities measured?
 
@@ -144,7 +160,7 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** And the non-protein work?
 
-**Nadia:** Two pieces. Small proteins that shield a sugar so the cell's trimming enzymes can't process it — that's a vaccine-adjuvant trick — and binders that recognise a peptide only when it carries a phosphate, and can tell one phosphorylation site from the one next door.
+**Nadia:** Two pieces. Small proteins that shield a sugar so the cell's trimming enzymes mostly leave it alone — that's a vaccine-adjuvant trick — and binders that recognise a peptide only when it carries a phosphate, and can tell one phosphorylation site from the one next door.
 
 **Theo:** Sample sizes?
 
@@ -152,41 +168,41 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Theo:** Right. Encouraging, not established. Let's do the enzymes — that's where I'd expect a model like this to break.
 
-**Nadia:** Two. So — the first hydrolyses paraoxon, an organophosphate. Their previous model scaffolded six catalytic residues around two metal ions; here they added two more, which demands a more precise active site. Of the designs they ordered, eighty-nine were active.
+**Nadia:** Two. So — the first hydrolyses paraoxon, an organophosphate. Their previous model scaffolded six catalytic residues around the bimetallic centre; here they added two more, which demands a more precise active site.
 
-**Theo:** Out of how many?
+**Theo:** And did that survive contact with a plate?
 
-**Nadia:** Two hundred and eighty-eight, and the active ones came from more than half of the scaffold families they tried.
+**Nadia:** They tested just under three hundred designs, and eighty-nine of them were active.
 
 **Theo:** And their previous model, on the same site?
 
 **Nadia:** Nothing. No active designs at all, out of the hundred and ninety-two they tested.
 
-**Theo:** Oh — that's a head-to-head. Same lab, same assay, same people pipetting. That's the number I'd build an argument on, not the bar chart.
+**Theo:** Oh — that's a head-to-head. Same lab, same assay, same people pipetting, and the hits spread over more than half the scaffold families they tried. That's the result I'd build an argument on, not the bar chart.
 
-**Nadia:** And the best one is roughly a thousandfold more efficient than their earlier designs. Keep the scale in mind, though — that's a real catalyst, but not a fast one next to the natural enzyme family.
+**Nadia:** And the best one is roughly a thousandfold more efficient than their earlier designs. Though the comparison they reach for is uncatalysed hydrolysis — they never set it beside a natural phosphotriesterase.
 
 **Theo:** And the second enzyme?
 
-**Nadia:** A ligase — it forms an amide bond, and the step they chose is from the synthesis of lenacapavir, the long-acting H-I-V prevention drug. The chemistry is awkward: the catalyst has to push an activated ester toward reaction with a bulky amine rather than letting it hydrolyse in water.
+**Nadia:** A ligase — it forms an amide bond, and the step they chose is from the synthesis of lenacapavir, an H-I-V prevention drug. The chemistry is awkward: the catalyst has to push an activated ester toward reaction with a bulky amine rather than letting it hydrolyse in water.
 
 **Theo:** And — did it?
 
-**Nadia:** Four designs out of sixty-seven worked. The best converted about seventy-nine percent of the intended amine to product, against under ten percent of the mirror-image one, with no-enzyme controls near background. They also knocked out the catalytic cysteine and lost the activity.
+**Nadia:** Four designs out of sixty-seven worked, where their previous model gave none. The best converted about eighty percent of the intended amine to product. They also knocked out the catalytic cysteine — both of the best designs depend on it.
 
 **Theo:** The knockout control matters — that tells you the designed chemistry is doing the work, not some accidental surface.
 
-**Nadia:** Yeah. What's missing is kinetics. These are endpoint measurements — product after sixteen hours — so we know it turns over, not how fast or for how long.
+**Nadia:** Yeah. Though with the mirror-image amine it still reached only about twice its own no-enzyme control, so the preference is real but not clean. And what's missing is kinetics: these are endpoint measurements, so we know it turns over, not how fast or for how long.
 
 **Theo:** Which is the whole question for anything industrial. Conversion after a long incubation says the reaction happens, not that it pays.
 
 **Nadia:** Agreed. The authors call it a proof of concept, and that is the right label for it.
 
-**Theo:** One more thread — episode ninety, the competition where twelve thousand designed binders went into a pooled cell assay. Every structure-based confidence score there failed to predict which designs would work, and a huge fraction simply never expressed.
+**Theo:** One more thread — episode ninety, the competition where twelve thousand designed binders went into a pooled cell assay. Every structure-based confidence score there failed to predict which designs would work, and a huge fraction simply never showed up in the pool.
 
 **Nadia:** Here the denominator is genes ordered, so anything that failed to express counts against them. That's the right denominator.
 
-**Theo:** It is. But these are still one lab's expression pipeline and one lab's filters. Somebody else running these weights will not get eighty-four percent.
+**Theo:** It is. But these are still one lab's expression pipeline and one lab's filters. Somebody else running these weights will not get that hit rate.
 
 **Nadia:** Almost certainly not. Though the weights and code are out under a permissive licence, so that's a testable prediction, not an argument.
 
@@ -194,16 +210,16 @@ Source: [https://rfd4-proteina.org/assets/paper/RFD4-Proteina.pdf](https://rfd4-
 
 **Nadia:** Go ahead.
 
-**Theo:** One: a single model now covers chemistry that used to need a shelf of specialist tools — packing, inverse folding, sugars, nucleic acids — and on the authors' own benchmarks it beats each specialist, with a structure predictor as judge throughout. Two: the strongest evidence is the phosphotriesterase — eighty-nine active designs where their own previous model gave none, same lab, same assay. Three: the eye-catching binder hit rate compares other people's campaigns, and isn't a controlled result.
+**Theo:** One: a single model now covers chemistry that used to need a shelf of specialist tools — packing, inverse folding, sugars, nucleic acids — and on the authors' own benchmarks it matches or beats each specialist, with a structure predictor as judge throughout. Two: the strongest evidence is the phosphotriesterase — eighty-nine active designs where their own previous model gave none, same lab, same assay. Three: the eye-catching binder hit rate compares other people's campaigns, and isn't a controlled result.
 
 **Nadia:** What would change your mind?
 
 **Theo:** Kinetics on the designed ligase. If it turns over fast enough to run a process on, this is a different paper. You?
 
-**Nadia:** Someone outside these two organisations reproducing a hit rate with the released weights, on a target the authors didn't pick. Not a benchmark — a campaign.
+**Nadia:** Someone outside this collaboration reproducing a hit rate with the released weights, on a target the authors didn't pick. Not a benchmark — a campaign.
 
 **Theo:** Agreed. Until then I'd believe the enzyme comparison and the specificity designs, and hold the rankings loosely.
 
-**Nadia:** That's where I am too. No journal and no D-O-I on this one — it's a white paper from the Institute for Protein Design and Nvidia, posted with the weights and the code. Thanks for listening.
+**Nadia:** That's where I am too. No journal and no D-O-I on this one — it's a white paper, posted with the weights and the code. Thanks for listening.
 
 **Theo:** See you next time.
