@@ -2603,5 +2603,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 11 Nov 2026 11:32:32 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 99: Reddit Trending — Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation]]></title>
+      <itunes:title><![CDATA[Reddit Trending — Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1371/journal.pmed.1004772">Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation</a></strong></p>
+<p><em>PLOS Medicine, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1371/journal.pmed.1004772">10.1371/journal.pmed.1004772</a></p>
+<p><strong>Question:</strong> Did the $79.4 billion spent developing and delivering COVID-19 vaccines in 2020–21 pay off globally in the first year of use?</p>
+<p><strong>Answer:</strong> Returns per dollar were 59.7 (cost-effectiveness, discounted) to 809 (cost-benefit), all far above 1. The size depends on valuation method and one transmission model's 14–20 million deaths averted.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Productivity ($564 billion) plus healthcare ($222 billion) savings alone were about 10 times total costs, with no price on a life.</li>
+<li>The 809 figure implies benefits of $64.3 trillion, 82.7% of global GDP; the authors caution that COVID-19 mortality risk was too large for VSL's marginal-risk logic to hold.</li>
+<li>Everything rests on one counterfactual model, whose deaths averted sit above other global estimates; the only other global economic analysis put lives saved at 4.1 million.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the top-trending paper on r/science this week.</p>
+<p><strong><a href="https://doi.org/10.1371/journal.pmed.1004772">Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation</a></strong></p>
+<p><em>PLOS Medicine, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1371/journal.pmed.1004772">10.1371/journal.pmed.1004772</a></p>
+<p><strong>Question:</strong> Did the $79.4 billion spent developing and delivering COVID-19 vaccines in 2020–21 pay off globally in the first year of use?</p>
+<p><strong>Answer:</strong> Returns per dollar were 59.7 (cost-effectiveness, discounted) to 809 (cost-benefit), all far above 1. The size depends on valuation method and one transmission model's 14–20 million deaths averted.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Productivity ($564 billion) plus healthcare ($222 billion) savings alone were about 10 times total costs, with no price on a life.</li>
+<li>The 809 figure implies benefits of $64.3 trillion, 82.7% of global GDP; the authors caution that COVID-19 mortality risk was too large for VSL's marginal-risk logic to hold.</li>
+<li>Everything rests on one counterfactual model, whose deaths averted sit above other global estimates; the only other global economic analysis put lives saved at 4.1 million.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-099</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/099-global-return-on-investment-of-covid-19-vaccines-in-the.mp3" length="7659763" type="audio/mpeg"/>
+      <guid isPermaLink="false">eaad5481-a6bb-4a40-98a6-bf663ca71660</guid>
+      <itunes:duration>638</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>99</itunes:episode>
+      <podcast:episode>99</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 13 Nov 2026 11:20:06 +0000</pubDate>
+    </item>
   </channel>
 </rss>

@@ -1,0 +1,31 @@
+{
+  "guid": "eaad5481-a6bb-4a40-98a6-bf663ca71660",
+  "title": "Episode 99: Reddit Trending — Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation",
+  "itunes_title": "Reddit Trending — Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation",
+  "description": "**Top Trending Friday** — our weekly pick of the top-trending paper on r/science this week.\n\n**[Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation](https://doi.org/10.1371/journal.pmed.1004772)**\n\n*PLOS Medicine, 2026*\n\nDOI: [10.1371/journal.pmed.1004772](https://doi.org/10.1371/journal.pmed.1004772)\n\n**Question:** Did the $79.4 billion spent developing and delivering COVID-19 vaccines in 2020–21 pay off globally in the first year of use?\n\n**Answer:** Returns per dollar were 59.7 (cost-effectiveness, discounted) to 809 (cost-benefit), all far above 1. The size depends on valuation method and one transmission model's 14–20 million deaths averted.\n\n**Three takeaways**\n\n1. Productivity ($564 billion) plus healthcare ($222 billion) savings alone were about 10 times total costs, with no price on a life.\n2. The 809 figure implies benefits of $64.3 trillion, 82.7% of global GDP; the authors caution that COVID-19 mortality risk was too large for VSL's marginal-risk logic to hold.\n3. Everything rests on one counterfactual model, whose deaths averted sit above other global estimates; the only other global economic analysis put lives saved at 4.1 million.",
+  "pub_date": "Fri, 13 Nov 2026 11:20:06 +0000",
+  "duration_seconds": 638,
+  "episode_number": 99,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "099-global-return-on-investment-of-covid-19-vaccines-in-the.mp3",
+  "enclosure_length_bytes": 7659763,
+  "source_metadata": {
+    "title": "Global return-on-investment of COVID-19 vaccines in the first year of the vaccination programme: A model-based economic evaluation",
+    "doi": "10.1371/journal.pmed.1004772",
+    "dice_score": null,
+    "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13739145/pdf/",
+    "source": "friday-reddit",
+    "digest_excerpt": "r/science top/week #17 (score 0, 0 comments)\nFlair: (none)\nReddit: https://www.reddit.com/r/science/comments/1xpxkn3/covid19_vaccinations_generated_trillions_of/\nLinked URL: https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1004772\nJournal: PLOS Medicine\nPublished: 2026-11-5",
+    "authors": [
+      "Hallie Benjamin",
+      "Gregory Barnsley",
+      "Oliver J. Watson",
+      "Mark Jit"
+    ],
+    "journal": "PLOS Medicine",
+    "abstract": "Background\n                    COVID-19 vaccines played a critical role in reducing global health burden during the COVID-19 pandemic, but their rapid development required extraordinary effort. This study aims to evaluate their global return-on-investment (ROI) during the first year of the vaccination programme (8 December 2020–8 December 2021) to provide insights into the economic benefits relative to the costs of vaccine development, manufacturing, and delivery.\n                  \n                  \n                    Methods and findings\n                    Public health outcomes of COVID-19 vaccination, including life years and quality-adjusted life years (QALYs) gained from averted deaths, infections, and hospitalizations, were estimated. Health benefits were valued using two approaches: i) cost-benefit analysis and ii) cost-effectiveness analysis. These benefits were compared to the costs of vaccine development, manufacturing, and delivery to estimate the ROI under both approaches. Probabilistic sensitivity analyses were conducted to assess the impact of parameter uncertainty on ROI estimates. Vaccine development and delivery cost $79.4 billion, but the health and economic benefits of vaccination were valued between $6.43 and $64.3 trillion. High-income countries saw the greatest health benefits per-person vaccinated, and low-income countries gained the greatest nonhealth benefits per-person vaccinated, when expressed as a proportion of gross domestic product per capita. This estimated ROIs of $59.7–$809 per dollar invested in the base case analysis. ROIs ranged between $60.3–$753 across probabilistic sensitivity analyses for both approaches. Limitations include reliance on previous analyses of COVID-19 vaccination impact and a time horizon limited to the first year of COVID-19 vaccination.\n                  \n                  \n                    Conclusions\n                    Rapid COVID-19 vaccine development and delivery were an excellent investment. Vaccine development and equitable vaccine distribution globally should be prioritized before and during global health crises.",
+    "source_url": "https://doi.org/10.1371/journal.pmed.1004772"
+  },
+  "source_issue": 119
+}
