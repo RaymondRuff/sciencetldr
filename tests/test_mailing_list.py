@@ -335,6 +335,13 @@ class LegacySecretTests(unittest.TestCase):
     def test_an_empty_secret_is_not_an_error(self):
         self.assertEqual(self._parsed(""), (set(), 0))
 
+    def test_entries_are_counted_separately_from_addresses(self):
+        # Six entries yielding five addresses means two are the same person,
+        # which is a different problem from one having gone missing.
+        with mock.patch.dict("os.environ", {"DIGEST_RECIPIENTS": "a@x.com, A@x.com, b@y.org"}):
+            kept, unreadable, entries = ml.legacy_counted()
+        self.assertEqual((sorted(kept), unreadable, entries), (["a@x.com", "b@y.org"], 0, 3))
+
 
 class SyncTests(unittest.TestCase):
     """`mailing_list.py sync` makes the roster readable without a send."""
@@ -366,6 +373,11 @@ class SyncTests(unittest.TestCase):
         # This runs in a public repository's Actions logs.
         _, log = self._sync()
         self.assertNotIn("@", log)
+
+    def test_a_repeated_address_is_explained(self):
+        _, log = self._sync("ray@example.com, Ray@example.com, anna@example.org")
+        self.assertIn("2 distinct address(es)", log)
+        self.assertIn("repeat an address already counted", log)
 
     def test_an_unreadable_entry_is_called_out(self):
         _, log = self._sync("ray@example.com, nonsense")
