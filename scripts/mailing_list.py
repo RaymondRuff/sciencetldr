@@ -35,7 +35,9 @@ from __future__ import annotations
 
 import os
 import re
+import sys
 from datetime import date, datetime, timezone
+from email.utils import parseaddr
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -61,10 +63,39 @@ def normalise(address: str) -> str:
     return (address or "").strip().lower()
 
 
+def legacy_parts() -> tuple[set[str], int]:
+    """(addresses, unreadable entries) from the DIGEST_RECIPIENTS secret.
+
+    The secret was typed by hand over a year and nobody can read it back to
+    check, so this parses generously: entries may be separated by commas or
+    semicolons, and `Ray Ruff <ray@example.com>` counts as an address. The old
+    code sent to whatever it found, because smtplib strips a display name on
+    the way out; dropping such an entry now would silently unsubscribe
+    somebody, which is the one thing this migration must not do.
+
+    Each entry is parsed on its own, deliberately. email.utils.getaddresses()
+    does the whole string at once and, since Python 3.13, answers a trailing
+    comma with [("", "")] — one malformed character would discard the entire
+    list. The count of what could not be read is returned so a send can say
+    so out loud.
+    """
+    raw = os.environ.get("DIGEST_RECIPIENTS", "")
+    kept: set[str] = set()
+    dropped = 0
+    for token in re.split(r"[,;]", raw):
+        if not token.strip():
+            continue
+        address = parseaddr(token)[1] or token
+        if valid(address):
+            kept.add(normalise(address))
+        else:
+            dropped += 1
+    return kept, dropped
+
+
 def legacy() -> set[str]:
     """Addresses still coming from the DIGEST_RECIPIENTS secret."""
-    raw = os.environ.get("DIGEST_RECIPIENTS", "")
-    return {normalise(a) for a in raw.split(",") if valid(a)}
+    return legacy_parts()[0]
 
 
 def _read(path: Path) -> set[str]:
@@ -157,6 +188,12 @@ def recipients() -> list[str]:
                 f"[list] {len(active)} subscriber(s): {len(roster.subscribers)} on file, "
                 f"{len(roster.unsubscribed)} unsubscribed"
             )
+            unreadable = legacy_parts()[1]
+            if unreadable:
+                print(
+                    f"[list] WARNING: {unreadable} entr(ies) in DIGEST_RECIPIENTS are not "
+                    "readable as an address and nobody is being sent to them"
+                )
             return active
     except Exception as exc:  # noqa: BLE001 - the digest must still go out
         fallback = sorted(legacy())
@@ -353,3 +390,56 @@ def footer(unsubscribe_to: str) -> tuple[str, str]:
 
 def chunks(addresses: list[str], size: int = CHUNK) -> list[list[str]]:
     return [addresses[i : i + size] for i in range(0, len(addresses), size)] or [[]]
+
+
+def sync() -> int:
+    """Write the secret's addresses into the file and commit. Prints counts only.
+
+    This exists so the list can be read without waiting for a send: afterwards
+    list/subscribers.txt in the papers repository is the whole roster.
+
+    **No address is ever printed.** This runs in a public repository's Actions
+    logs, which anyone can read; the addresses belong in the private papers
+    repository and nowhere else.
+    """
+    known, unreadable = legacy_parts()
+    with _repo() as repo:
+        roster = Roster(repo)
+        moved = roster.fold_in_legacy()
+        if moved:
+            roster.save(f"Add {len(moved)} subscriber(s) carried over from DIGEST_RECIPIENTS")
+        active = roster.active()
+        print(f"[list] {len(known)} address(es) in the DIGEST_RECIPIENTS secret")
+        print(f"[list] {len(moved)} of them newly written to list/subscribers.txt")
+        print(f"[list] {len(roster.subscribers)} on file, {len(roster.unsubscribed)} unsubscribed")
+        print(f"[list] {len(active)} will receive the next digest")
+        if unreadable:
+            print(
+                f"[list] WARNING: {unreadable} entr(ies) in the secret are not readable as "
+                "an address, so nobody is being sent to them — check the secret by hand"
+            )
+        summary = os.environ.get("GITHUB_STEP_SUMMARY")
+        if summary:
+            with open(summary, "a", encoding="utf-8") as fh:
+                fh.write(
+                    "### Digest list\n\n"
+                    f"- **{len(active)}** subscribers for the next digest\n"
+                    f"- {len(roster.subscribers)} on `list/subscribers.txt`, "
+                    f"{len(roster.unsubscribed)} unsubscribed\n"
+                    f"- {len(known)} readable in the `DIGEST_RECIPIENTS` secret"
+                    f"{f', **{unreadable} unreadable**' if unreadable else ''}\n\n"
+                    "Addresses are deliberately not printed here; read them in the "
+                    "private papers repository.\n"
+                )
+        return len(active)
+
+
+def main() -> None:
+    command = sys.argv[1] if len(sys.argv) > 1 else "sync"
+    if command != "sync":
+        sys.exit(f"unknown command: {command}")
+    sync()
+
+
+if __name__ == "__main__":
+    main()

@@ -333,7 +333,9 @@ currently subscribed falls off during the switch:
   shorter list;
 - the first send folds them into `list/subscribers.txt`, so the list becomes
   readable and `DIGEST_RECIPIENTS` can be deleted whenever it suits. Check the
-  file has all six first; until then it is both the seed and the fallback;
+  file has all six first; until then it is both the seed and the fallback.
+  Actions → **mailing-list** does that fold on demand, so the roster can be
+  read without waiting for a Sunday and without sending anything;
 - `list/unsubscribed.txt` beats both sources, so someone who arrived on the
   secret can still leave — which a list held only in a secret could never
   offer.
@@ -369,6 +371,21 @@ This is the third pass of the mailbox poll
 ([`scripts/pdf_mailbox.py`](../scripts/pdf_mailbox.py)), which runs every half
 hour on standard library alone, before any dependency is installed — so an
 answer arrives in minutes, and the step now needs `GH_PAT` to reach the list.
+
+**Reading the secret generously, on purpose.** The first cut of `legacy()`
+kept only bare addresses, which would have silently dropped an entry typed as
+`Ray Ruff <ray@example.com>` — a form the old code delivered to perfectly well,
+because smtplib strips the display name on the way out. Since nobody can read
+the secret back to check which forms are in it, each entry is now parsed on its
+own with `parseaddr`, commas and semicolons both separate, and anything still
+unreadable is **counted and warned about** rather than passed over. One entry at
+a time matters: `email.utils.getaddresses()` parses the whole string at once and,
+since Python 3.13, answers a trailing comma with `[("", "")]` — a single stray
+character would have discarded every subscriber.
+
+No address is ever printed by any of this. The public repository's Actions logs
+are world-readable, so the counts go in the log and the addresses stay in the
+private repository.
 
 **The digest is also blind-copied now, which fixes a leak.** Every send put all
 six addresses in `To:`, so each subscriber could read the whole list in their

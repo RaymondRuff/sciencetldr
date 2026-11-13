@@ -1,0 +1,34 @@
+name: mailing-list
+
+# Writes the addresses in the DIGEST_RECIPIENTS secret into
+# list/subscribers.txt in the private papers repository, so the roster can be
+# read without waiting for a digest to go out. A secret cannot be read back,
+# which is the whole reason the list moved; this is how you check nobody was
+# lost on the way.
+#
+# It sends no email, and it never prints an address: this repository is public
+# and so are its Actions logs. The addresses live in the private papers
+# repository and nowhere else. Safe to run as often as you like — it folds in
+# whatever the secret holds, keeps everyone already on the file, and leaves
+# anyone who has unsubscribed off it.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      # Standard library only, so there is nothing to install.
+      - name: Fold the secret into the list
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
+          DIGEST_RECIPIENTS: ${{ secrets.DIGEST_RECIPIENTS }}
+        run: python3 scripts/mailing_list.py sync

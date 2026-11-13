@@ -12,8 +12,10 @@ Run: uv run python -m unittest discover tests
 """
 from __future__ import annotations
 
+import contextlib
 import email
 import email.policy
+import io
 import sys
 import tempfile
 import unittest
@@ -289,6 +291,93 @@ class SubjectTests(unittest.TestCase):
         msg["Subject"] = "unsubscribe"
         msg["Auto-Submitted"] = "no"
         self.assertFalse(mailbox.automated(msg))
+
+
+class LegacySecretTests(unittest.TestCase):
+    """Reading the DIGEST_RECIPIENTS secret, which nobody can read back.
+
+    Dropping one of its entries would silently unsubscribe a real person, so
+    these cover the forms it might plausibly have been typed in.
+    """
+
+    def _parsed(self, raw: str):
+        with mock.patch.dict("os.environ", {"DIGEST_RECIPIENTS": raw}):
+            return ml.legacy_parts()
+
+    def test_plain_comma_separated(self):
+        self.assertEqual(self._parsed("a@x.com,b@y.org"), ({"a@x.com", "b@y.org"}, 0))
+
+    def test_a_display_name_is_still_an_address(self):
+        # smtplib strips the name on the way out, so the old code delivered to
+        # this; refusing it now would quietly drop someone.
+        self.assertEqual(
+            self._parsed("Ray Ruff <ray@x.com>, anna@y.org"),
+            ({"ray@x.com", "anna@y.org"}, 0),
+        )
+
+    def test_semicolons_separate_too(self):
+        self.assertEqual(self._parsed("ray@x.com; anna@y.org"), ({"ray@x.com", "anna@y.org"}, 0))
+
+    def test_a_trailing_comma_does_not_wipe_the_list(self):
+        # email.utils.getaddresses() answers this whole string with [("", "")]
+        # on Python 3.13, which would have discarded every subscriber. Hence
+        # one entry at a time.
+        self.assertEqual(self._parsed("a@x.com, b@y.org,"), ({"a@x.com", "b@y.org"}, 0))
+
+    def test_case_and_padding_do_not_make_a_second_person(self):
+        self.assertEqual(self._parsed("  Ray@X.com , ray@x.com "), ({"ray@x.com"}, 0))
+
+    def test_an_unreadable_entry_is_counted_not_ignored(self):
+        kept, unreadable = self._parsed("a@x.com, oops, b@y.org")
+        self.assertEqual(kept, {"a@x.com", "b@y.org"})
+        self.assertEqual(unreadable, 1)
+
+    def test_an_empty_secret_is_not_an_error(self):
+        self.assertEqual(self._parsed(""), (set(), 0))
+
+
+class SyncTests(unittest.TestCase):
+    """`mailing_list.py sync` makes the roster readable without a send."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+
+    def _sync(self, raw: str = LEGACY) -> tuple[int, str]:
+        repo = FakeRepo(self.dir)
+        out = io.StringIO()
+        with mock.patch.dict("os.environ", {"DIGEST_RECIPIENTS": raw}, clear=False):
+            with _patch_repo(repo), contextlib.redirect_stdout(out):
+                count = ml.sync()
+        self.repo = repo
+        return count, out.getvalue()
+
+    def test_it_writes_the_file_and_reports_the_count(self):
+        count, log = self._sync()
+        self.assertEqual(count, 3)
+        self.assertIn("3 will receive the next digest", log)
+        self.assertEqual(self.repo.commits[0][1], ("list",))
+        stored = (self.dir / "list" / "subscribers.txt").read_text()
+        for address in ("ray@example.com", "anna@example.org", "ben@example.net"):
+            self.assertIn(address, stored)
+
+    def test_no_address_is_ever_printed(self):
+        # This runs in a public repository's Actions logs.
+        _, log = self._sync()
+        self.assertNotIn("@", log)
+
+    def test_an_unreadable_entry_is_called_out(self):
+        _, log = self._sync("ray@example.com, nonsense")
+        self.assertIn("WARNING", log)
+        self.assertIn("not readable", log)
+
+    def test_running_it_twice_changes_nothing(self):
+        self._sync()
+        count, log = self._sync()
+        self.assertEqual(count, 3)
+        self.assertIn("0 of them newly written", log)
+        self.assertEqual(self.repo.commits, [])
 
 
 class WelcomeTests(unittest.TestCase):

@@ -38,6 +38,8 @@ The list is two files in the private `sciencetldr-papers` repository, `list/subs
 
 Only the address Gmail's own DKIM or DMARC verdict vouches for is ever added or removed, never one written in a body, so no one can subscribe or unsubscribe anybody else; automated mail is ignored rather than answered. Digests are blind-copied, so no subscriber sees another's address.
 
+**To read the list:** [`list/subscribers.txt`](https://github.com/RaymondRuff/sciencetldr-papers/blob/main/list/subscribers.txt) in the private papers repository. Actions → **mailing-list** writes the secret's addresses into it on demand, so the roster can be checked without waiting for a send; it emails nobody. No address is ever printed in an Actions log — this repository is public and so are its logs.
+
 ## Feed
 
 - **New feed:** https://raymondruff.github.io/sciencetldr/feed.xml
