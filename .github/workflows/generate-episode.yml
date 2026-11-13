@@ -90,15 +90,27 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: python3 scripts/pdf_mailbox.py check
 
+      # A poll that only has someone to welcome installs dependencies too: the
+      # welcome is the most recent digest, and rendering it needs markdown.
       - name: Install uv
-        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
+        if: >-
+          env.POLL != 'true' || steps.mailbox.outputs.found == 'true' ||
+          steps.mailbox.outputs.welcome == 'true'
         uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
 
       - name: Sync dependencies
-        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
+        if: >-
+          env.POLL != 'true' || steps.mailbox.outputs.found == 'true' ||
+          steps.mailbox.outputs.welcome == 'true'
         run: uv sync
+
+      # Their mail is labelled only once this has gone, so a failure here
+      # costs half an hour, not the confirmation.
+      - name: Welcome new subscribers with the latest digest
+        if: steps.mailbox.outputs.welcome == 'true'
+        run: uv run python scripts/pdf_mailbox.py welcome
 
       - name: Decide whether this run makes audio
         id: audio

@@ -19,10 +19,14 @@ dependencies, so a poll that finds nothing costs seconds.
 
 A third pass handles the **mailing list**: a message whose subject is
 "subscribe" or "unsubscribe" adds or removes its own sender from the weekly
-digest's list (see mailing_list.py), and gets one short reply saying so. Anyone
-may join — that is the point — but only the address Gmail's own DKIM or DMARC
-verdict vouches for, never one typed in a body, so nobody can sign up or cut
-off somebody else.
+digest's list (see mailing_list.py). Anyone may join — that is the point — but
+only the address Gmail's own DKIM or DMARC verdict vouches for, never one typed
+in a body, so nobody can sign up or cut off somebody else.
+
+Leaving gets a short note back. **Subscribing gets the most recent digest**,
+which proves the subscription works and is worth reading. Rendering it needs
+the markdown package, so this pass only records the request and the `welcome`
+command sends it in a later step, once dependencies are installed.
 
 It makes a second pass for **one-off requests**: an email from the owner whose
 subject starts with "one-off", carrying a DOI in the body or a PDF attached, or
@@ -34,7 +38,9 @@ chooses the paper, so PDF_SENDER_ALLOWLIST does not grant it.
 Usage:
   python scripts/pdf_mailbox.py check    # save waiting PDFs to $RUNNER_TEMP/tldr-pdfs
                                          # (or $PDF_DROP_DIR); writes found=true|false
-                                         # to $GITHUB_OUTPUT
+                                         # and welcome=true|false to $GITHUB_OUTPUT
+  python scripts/pdf_mailbox.py welcome  # send the latest digest to whoever just
+                                         # subscribed, and label their mail
 """
 from __future__ import annotations
 
@@ -81,6 +87,7 @@ DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
 # worth avoiding. "subscribe" has to start the subject, so an unrelated mail
 # that happens to mention subscribing never adds anyone.
 LIST_MANIFEST = "list-requests.json"
+WELCOME_MANIFEST = "welcomes.json"
 LIST_MAX_AGE_DAYS = 14
 UNSUBSCRIBE_RE = re.compile(r"\bunsubscribe\b", re.IGNORECASE)
 SUBSCRIBE_RE = re.compile(r"^(?:(?:re|fwd?|fw)\s*:\s*)*\s*subscribe\b", re.IGNORECASE)
@@ -556,32 +563,82 @@ def list_requests_received() -> list[dict]:
     return json.loads(manifest.read_text())
 
 
-def handle_list_requests(requests: list[dict] | None = None) -> int:
-    """Act on subscribe and unsubscribe mails, and answer each one.
+def handle_list_requests(requests: list[dict] | None = None) -> tuple[int, int]:
+    """Act on subscribe and unsubscribe mails. Returns (recorded, to welcome).
 
-    The order matters: the change is stored first, the message is labelled
-    next, and only then is the reply sent. A request whose change could not be
-    stored is left unlabelled and picked up by the next poll, so nobody is ever
-    told they are off a list they are still on.
+    The change is stored first, the message labelled next, and only then is
+    anything sent. A request whose change could not be stored is left
+    unlabelled and picked up by the next poll, so nobody is ever told they are
+    off a list they are still on.
+
+    Someone who has just joined is left for `send_welcomes()`, which runs once
+    the markdown package is installed and can send them the digest itself.
+    Their mail stays unlabelled until it goes, so a run that dies in between
+    simply sends it on the next poll.
     """
     requests = list_requests_received() if requests is None else requests
     if not requests:
-        return 0
-    done = 0
+        return 0, 0
+    pending: list[dict] = []
+    recorded = 0
     for answered in mailing_list.apply_requests(requests):
+        recorded += 1
+        if answered["outcome"] in mailing_list.WELCOME_OUTCOMES:
+            pending.append(answered)
+            continue
         mark_uid(answered["uid"])
         reply_to(answered["address"], answered["subject"], answered["body"])
-        done += 1
-    return done
+    drop_dir().mkdir(parents=True, exist_ok=True)
+    (drop_dir() / WELCOME_MANIFEST).write_text(json.dumps(pending), encoding="utf-8")
+    return recorded, len(pending)
 
 
-def reply_to(address: str, subject: str, body: str) -> bool:
-    """One short message to someone who wrote in. Never raises."""
+def welcomes_pending() -> list[dict]:
+    """New subscribers recorded by this run's mailbox check."""
+    manifest = drop_dir() / WELCOME_MANIFEST
+    if not manifest.exists():
+        return []
+    return json.loads(manifest.read_text())
+
+
+def send_welcomes(pending: list[dict] | None = None) -> int:
+    """Send the most recent digest to whoever just subscribed.
+
+    The mail is labelled only once its welcome has gone, so a failure here
+    costs half an hour rather than the confirmation: the next poll finds the
+    request again, reads it as "already", and sends the same digest.
+    """
+    pending = welcomes_pending() if pending is None else pending
+    if not pending:
+        return 0
+    digest = mailing_list.latest_digest()
+    if digest is None:
+        print("[list] no digest to send as a welcome; sending the short note")
+    sent = 0
+    for entry in pending:
+        try:
+            subject, text, html = mailing_list.welcome_message(
+                digest, entry["outcome"], send_email.SENDER
+            )
+        except Exception as exc:  # noqa: BLE001 - never leave a subscriber silent
+            print(f"[list] could not build the welcome ({exc}); sending the short note")
+            subject, text, html = entry["subject"], entry["body"], None
+        if reply_to(entry["address"], subject, text, html):
+            mark_uid(entry["uid"])
+            sent += 1
+            print(f"[list] welcomed a new subscriber with the {digest[0] if digest else 'short'} digest")
+    return sent
+
+
+def reply_to(address: str, subject: str, body: str, html: str | None = None) -> bool:
+    """One message to someone who wrote in. Never raises."""
     if not address or not os.environ.get("GMAIL_APP_PASSWORD"):
         print("[list] no mail password; not answering")
         return False
     try:
-        send_email.send(subject=subject[:200], body_text=body, recipients=[address])
+        send_email.send(
+            subject=subject[:200], body_text=body, recipients=[address], body_html=html
+        )
     except Exception as exc:  # noqa: BLE001 - the stored list is the record
         print(f"[list] could not answer: {exc}")
         return False
@@ -665,19 +722,23 @@ def answer(subject: str, body: str) -> bool:
 
 def main() -> None:
     command = sys.argv[1] if len(sys.argv) > 1 else "check"
+    if command == "welcome":
+        print(f"[list] {send_welcomes()} welcome(s) sent")
+        return
     if command != "check":
         sys.exit(f"unknown command: {command}")
     replies, one_offs, list_requests = collect()
-    # Done here, in the standard-library step: joining the list should not wait
-    # on a dependency install, and it is the half-hourly poll that makes the
-    # answer arrive in minutes rather than the next morning.
-    handled = handle_list_requests(list_requests)
-    if handled:
-        print(f"[list] {handled} subscription change(s) recorded")
+    # Recorded here, in the standard-library step: joining the list should not
+    # wait on a dependency install, and it is the half-hourly poll that makes
+    # the answer arrive in minutes rather than the next morning.
+    recorded, welcoming = handle_list_requests(list_requests)
+    if recorded:
+        print(f"[list] {recorded} subscription change(s) recorded")
     output = os.environ.get("GITHUB_OUTPUT")
     if output:
         with open(output, "a", encoding="utf-8") as fh:
             fh.write(f"found={'true' if replies or one_offs else 'false'}\n")
+            fh.write(f"welcome={'true' if welcoming else 'false'}\n")
 
 
 if __name__ == "__main__":

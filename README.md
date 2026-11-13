@@ -32,7 +32,7 @@ Nothing waits on a person: an episode goes from pick to feed on its own, and the
 
 ## The weekly digest list
 
-The Sunday digest goes to a list that manages itself. **To join**, mail the podcast address with `subscribe` starting the subject; **to leave**, the same with `unsubscribe` — which the footer of every digest spells out as a link. One reply comes back either way, usually within the half hour, since the mailbox is polled that often.
+The Sunday digest goes to a list that manages itself. **To join**, mail the podcast address with `subscribe` starting the subject; **to leave**, the same with `unsubscribe` — which the footer of every digest spells out as a link. Something comes back either way within the half hour, since the mailbox is polled that often: leaving gets a short note, and **joining gets the most recent digest**, so a new subscriber has something to read straight away rather than a fortnight's wait and a promise.
 
 The list is two files in the private `sciencetldr-papers` repository, `list/subscribers.txt` and `list/unsubscribed.txt`, and recipients are **(the file plus the `DIGEST_RECIPIENTS` secret) minus the unsubscribed** ([`scripts/mailing_list.py`](scripts/mailing_list.py)). So the people already on the secret stay subscribed with no action from them — the secret is still read, both as the seed the first send folds into the file and as the fallback if the private repository cannot be reached — and unsubscribing beats both sources, so an address that arrived on the secret can still leave. Once `list/subscribers.txt` holds everyone, the secret can be deleted.
 

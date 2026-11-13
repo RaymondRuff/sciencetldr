@@ -62,10 +62,7 @@ def main() -> None:
             subject=f"Science TLDR Weekly Digest — {today}",
             body_text=body_md + text_footer,
             recipients=batch,
-            body_html=(
-                "<html><body style='font-family:system-ui,sans-serif;max-width:42rem'>"
-                f"{body_html}{html_footer}</body></html>"
-            ),
+            body_html=mailing_list.wrap_html(body_html + html_footer),
             bcc=True,
         )
         print(f"[email]   batch {number}/{len(batches)}: {len(batch)} address(es)")

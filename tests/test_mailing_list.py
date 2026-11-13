@@ -291,6 +291,153 @@ class SubjectTests(unittest.TestCase):
         self.assertFalse(mailbox.automated(msg))
 
 
+class WelcomeTests(unittest.TestCase):
+    """A new subscriber's confirmation is the most recent digest itself."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+        self.digests = self.dir / "digest"
+        self.digests.mkdir()
+        (self.digests / "2026-11-02.md").write_text("# Older\n\nNot this one.\n")
+        (self.digests / "2026-11-09.md").write_text(
+            "# Weekly Literature Digest\n\n### 1. A paper about engagers\n\n"
+            "[10.1158/1535-7163.MCT-25-1542](https://doi.org/10.1158/1535-7163.MCT-25-1542)\n"
+        )
+
+    def digest(self):
+        return ml.latest_digest(self.digests)
+
+    def test_the_newest_digest_is_the_one_sent(self):
+        stamp, body = self.digest()
+        self.assertEqual(stamp, "2026-11-09")
+        self.assertIn("A paper about engagers", body)
+        self.assertNotIn("Not this one", body)
+
+    def test_no_digest_at_all_is_not_an_error(self):
+        self.assertIsNone(ml.latest_digest(self.dir / "nothing"))
+
+    def test_a_welcome_carries_the_digest_and_a_way_out(self):
+        subject, text, html = ml.welcome_message(
+            self.digest(), "added", "pod@example.com"
+        )
+        self.assertIn("2026-11-09", subject)
+        self.assertIn("You're on the list", text)
+        self.assertIn("9 November 2026", text)
+        self.assertIn("A paper about engagers", text)
+        self.assertIn("unsubscribe", text.lower())
+        # Rendered, not raw: the markdown link becomes a link.
+        self.assertIn("<h3>", html)
+        self.assertIn('href="https://doi.org/10.1158/1535-7163.MCT-25-1542"', html)
+        self.assertNotIn("### 1.", html)
+
+    def test_writing_in_twice_still_gets_the_digest(self):
+        subject, text, _ = ml.welcome_message(
+            self.digest(), "already", "pod@example.com"
+        )
+        self.assertIn("Already subscribed", subject)
+        self.assertIn("in case it went astray", text)
+        self.assertIn("A paper about engagers", text)
+
+    def test_with_no_digest_the_short_note_goes_instead(self):
+        subject, text, html = ml.welcome_message(None, "added", "pod@example.com")
+        self.assertEqual(subject, ml.SUBJECTS["added"])
+        self.assertIn("You're on the list", text)
+        self.assertIsNone(html)
+
+    def test_a_date_that_is_not_a_date_is_left_alone(self):
+        self.assertEqual(ml.spoken_date("2026-11-09"), "9 November 2026")
+        self.assertEqual(ml.spoken_date("draft"), "draft")
+
+
+class DeferredWelcomeTests(unittest.TestCase):
+    """Recording the change and sending the digest happen in different steps."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+        for patch in (
+            mock.patch.dict(
+                "os.environ",
+                {"DIGEST_RECIPIENTS": LEGACY, "GMAIL_APP_PASSWORD": "x"},
+            ),
+            mock.patch.object(mailbox, "drop_dir", lambda: self.dir / "drop"),
+        ):
+            patch.start()
+            self.addCleanup(patch.stop)
+        self.labelled: list[str] = []
+        self.sent: list[tuple] = []
+
+    def _patches(self, sending: bool = True):
+        return (
+            _patch_repo(FakeRepo(self.dir)),
+            mock.patch.object(
+                mailbox, "mark_uid", lambda uid, label=None: self.labelled.append(uid)
+            ),
+            mock.patch.object(
+                mailbox,
+                "reply_to",
+                lambda address, subject, body, html=None: (
+                    self.sent.append((address, subject, body)) or sending
+                )
+                if sending
+                else False,
+            ),
+        )
+
+    def _run(self, requests, *, sending: bool = True):
+        a, b, c = self._patches(sending=sending)
+        with a, b, c:
+            return mailbox.handle_list_requests(requests)
+
+    def test_a_new_subscriber_is_left_for_the_welcome_step(self):
+        recorded, welcoming = self._run(
+            [{"uid": "1", "address": "new@example.com", "wants": "subscribe"}]
+        )
+        self.assertEqual((recorded, welcoming), (1, 1))
+        # Nothing sent and nothing labelled yet — that is the welcome's job.
+        self.assertEqual(self.sent, [])
+        self.assertEqual(self.labelled, [])
+        self.assertEqual([e["uid"] for e in mailbox.welcomes_pending()], ["1"])
+
+    def test_someone_leaving_is_answered_at_once(self):
+        recorded, welcoming = self._run(
+            [{"uid": "2", "address": "ben@example.net", "wants": "unsubscribe"}]
+        )
+        self.assertEqual((recorded, welcoming), (1, 0))
+        self.assertEqual(self.labelled, ["2"])
+        self.assertIn("Unsubscribed", self.sent[0][1])
+        self.assertEqual(mailbox.welcomes_pending(), [])
+
+    def test_the_welcome_step_sends_the_digest_and_then_labels(self):
+        self._run([{"uid": "1", "address": "new@example.com", "wants": "subscribe"}])
+        digests = self.dir / "digest"
+        digests.mkdir()
+        (digests / "2026-11-09.md").write_text("# Digest\n\nA paper.\n")
+        a, b, c = self._patches()
+        with a, b, c, mock.patch.object(ml, "DIGEST_DIR", digests):
+            self.assertEqual(mailbox.send_welcomes(), 1)
+        self.assertEqual(self.labelled, ["1"])
+        address, subject, body = self.sent[0]
+        self.assertEqual(address, "new@example.com")
+        self.assertIn("2026-11-09", subject)
+        self.assertIn("A paper", body)
+
+    def test_a_failed_welcome_leaves_the_mail_for_the_next_poll(self):
+        # Unlabelled, so the request is found again; it reads as "already" and
+        # the same digest goes out. Better half an hour late than never.
+        self._run([{"uid": "1", "address": "new@example.com", "wants": "subscribe"}])
+        a, b, c = self._patches(sending=False)
+        with a, b, c:
+            self.assertEqual(mailbox.send_welcomes(), 0)
+        self.assertEqual(self.labelled, [])
+
+    def test_nothing_pending_sends_nothing(self):
+        self.assertEqual(mailbox.send_welcomes(), 0)
+
+
 class BlindCopyTests(unittest.TestCase):
     """The digest must not show one subscriber's address to another."""
 
