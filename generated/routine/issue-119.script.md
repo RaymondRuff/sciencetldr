@@ -1,12 +1,21 @@
 # Issue #119 — script (routine writer)
 
-**Length:** 11,315 spoken chars (~10.5 min)  
+**Length:** 11,460 spoken chars (~10.7 min)  
 **Episodes cited:** [82, 84]  
 **Paper text from:** Staged bundle in the private papers repository: PubMed Central PMC13739145 full text (fetched via Europe PMC by the GitHub Actions sweep), 80,234 chars, no figure images
 
 | Run | Started (UTC) | Finished (UTC) | Safeguard stops |
 |---|---|---|---|
 | writer | 2026-11-13T08:07:52Z | 2026-11-13T08:11:08Z | 0 |
+| checker | 2026-11-13T11:10:27Z | 2026-11-13T11:12:49Z | 0 |
+
+## Corrections made by the fact-check pass
+
+- Nadia called Sevilla and colleagues the only other global estimate of lives saved the paper discusses; it is the only other global economic analysis, and the authors concede Watson's estimates are notably higher than several other global studies (Discussion, limitations) - added, and takeaway three and show notes corrected to match
+- Theo's takeaway two and show-notes takeaway two said the authors flag the 82.7%-of-GDP benefit as outside the method's range; the authors' caveat is that COVID-19 mortality risk was too large to be marginal for VSL, so reattributed accordingly
+- Theo said basic research behind mRNA vaccines goes back decades; the paper says nothing about mRNA research history, only that pre-pandemic basic research was excluded as sunk cost - cut the outside background
+- Nadia said high-income delivery is surely more expensive; the authors say delivery costs there are assumed to be higher - softened to likely
+- Nadia called the cost-effectiveness approach the cheaper method; it is the method that values benefits lower, not one with lower costs - reworded to lower-valuing
 
 ## Show notes
 
@@ -23,8 +32,8 @@ DOI: [10.1371/journal.pmed.1004772](https://doi.org/10.1371/journal.pmed.1004772
 **Three takeaways**
 
 1. Productivity ($564 billion) plus healthcare ($222 billion) savings alone were about 10 times total costs, with no price on a life.
-2. The 809 figure implies benefits of $64.3 trillion, 82.7% of global GDP, beyond the method's marginal-risk range, as the authors note.
-3. Everything rests on one counterfactual model; another global estimate put lives saved at 4.1 million.
+2. The 809 figure implies benefits of $64.3 trillion, 82.7% of global GDP; the authors caution that COVID-19 mortality risk was too large for VSL's marginal-risk logic to hold.
+3. Everything rests on one counterfactual model, whose deaths averted sit above other global estimates; the only other global economic analysis put lives saved at 4.1 million.
 
 ---
 
@@ -92,7 +101,7 @@ DOI: [10.1371/journal.pmed.1004772](https://doi.org/10.1371/journal.pmed.1004772
 
 **Theo:** That I'd believe. But the floor still stands on one model's deaths and infections. How hard should we lean on that?
 
-**Nadia:** Um, that's the right pressure point. The only other global estimate they discuss, by Sevilla and colleagues, put lives saved at four point one million, against this model's fourteen to twenty. The authors put the gap down mainly to that study relying on officially reported Covid data, which miss a lot where death registration is weak, while Watson's model was fitted to excess deaths from all causes.
+**Nadia:** Um, that's the right pressure point. The only other global economic analysis, by Sevilla and colleagues, put lives saved at four point one million, against this model's fourteen to twenty. The authors put that gap down mainly to its reliance on officially reported Covid data, which miss a lot where death registration is weak; Watson's model was fitted to excess deaths from all causes. And they concede Watson's figures run notably higher than the other global estimates of lives saved, too.
 
 **Theo:** That's a three- to fivefold disagreement on the single most important input.
 
@@ -104,9 +113,9 @@ DOI: [10.1371/journal.pmed.1004772](https://doi.org/10.1371/journal.pmed.1004772
 
 **Theo:** Sure. Where I'd push harder is the costs. Two things. First, delivery.
 
-**Nadia:** Right. One figure everywhere: three dollars seventy per person vaccinated, taken from a study of lower-middle-income countries and applied to rich countries too. They say themselves that high-income delivery is surely more expensive, so this flatters the return.
+**Nadia:** Right. One figure everywhere: three dollars seventy per person vaccinated, taken from a study of lower-middle-income countries and applied to rich countries too. They say themselves that high-income delivery is likely more expensive, so this flatters the return.
 
-**Theo:** And second, the clock starts in twenty twenty. The basic research behind, say, M-R-N-A vaccines goes back decades.
+**Theo:** And second, the clock starts in twenty twenty. Any basic research done before the pandemic is left out.
 
 **Nadia:** Excluded as a sunk cost. For the question "was the pandemic spending worth it", that's defensible. But they also argue for funding vaccine research before the next pandemic, and that pre-pandemic science is exactly the spending being decided. It isn't priced here.
 
@@ -128,7 +137,7 @@ DOI: [10.1371/journal.pmed.1004772](https://doi.org/10.1371/journal.pmed.1004772
 
 **Theo:** Let me connect one more. Episode eighty-two, the rabies undercount from organ donors. What I liked there was the authors stating how wrong their key assumption would have to be to overturn them: donors would need about fourteen times the average risk. This paper never states its equivalent.
 
-**Nadia:** No, though you can read it off. A return of about sixty on the cheaper method means costs would have to be roughly sixty times higher, or benefits that much lower, just to break even.
+**Nadia:** No, though you can read it off. A return of about sixty on the lower-valuing method means costs would have to be roughly sixty times higher, or benefits that much lower, just to break even.
 
 **Theo:** And nothing in the limitations is that big. Not the delivery cost, not the death model, not the sunk research.
 
@@ -138,11 +147,11 @@ DOI: [10.1371/journal.pmed.1004772](https://doi.org/10.1371/journal.pmed.1004772
 
 **Nadia:** Mm-hm.
 
-**Theo:** Two: the headline returns, sixty or eight hundred, are set mainly by the valuation method, and the larger one implies a benefit worth most of the world economy, which the authors themselves flag as outside the method's range.
+**Theo:** Two: the headline returns, sixty or eight hundred, are set mainly by the valuation method, and the larger one implies a benefit worth most of the world economy. The authors themselves caution that Covid's death risk was too large for that method's marginal logic to hold.
 
 **Nadia:** Sure.
 
-**Theo:** Three: everything rests on one transmission model's counterfactual, and the only other global estimate they discuss put lives saved several times lower. On this evidence I'd believe the investment paid off. I wouldn't quote either multiple as a measured fact.
+**Theo:** Three: everything rests on one transmission model's counterfactual, and that model sits above the other global estimates of lives saved, one of them several times lower. On this evidence I'd believe the investment paid off. I wouldn't quote either multiple as a measured fact.
 
 **Nadia:** And what would you watch for?
 
