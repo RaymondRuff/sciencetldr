@@ -44,6 +44,11 @@ jobs:
         if: steps.find.outputs.file != ''
         env:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          # The subscriber list lives in the private papers repository;
+          # DIGEST_RECIPIENTS is still read, as a seed and as the fallback if
+          # that repository cannot be reached, so nobody is ever dropped.
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
           DIGEST_RECIPIENTS: ${{ secrets.DIGEST_RECIPIENTS }}
           DIGEST_FILE: ${{ steps.find.outputs.file }}
         run: uv run python scripts/email_digest.py
