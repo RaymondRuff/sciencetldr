@@ -24,6 +24,10 @@ subject, and leaving is the same with "unsubscribe". Only the **sender's own**
 address is ever added, and only when Gmail's own DKIM or DMARC verdict says
 the From line is genuine — otherwise anyone could sign up somebody else.
 
+The confirmation for a new subscriber is **the most recent digest itself**,
+with a line of preamble on top: it proves the subscription works, and it is
+worth reading, which a note saying "you're on the list" is not.
+
 Standard library only: this runs in the mailbox poll, before any dependency
 is installed.
 """
@@ -31,8 +35,11 @@ from __future__ import annotations
 
 import os
 import re
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+DIGEST_DIR = ROOT / "digest"
 
 LIST_DIR = "list"
 SUBSCRIBERS = "subscribers.txt"
@@ -231,6 +238,100 @@ def apply_requests(requests: list[dict]) -> list[dict]:
         print(f"[list] could not record the change ({exc}); it will be retried")
         return []
     return answers
+
+
+# Outcomes whose answer is the digest itself rather than a short note. Both
+# count: someone who writes in twice is asking to be sent something, and
+# treating them the same way makes a failed welcome safe to retry — the retry
+# reads as "already", and still arrives as the digest.
+WELCOME_OUTCOMES = ("added", "already")
+
+PREAMBLE = {
+    "added": (
+        "You're on the list. The Science TLDR weekly digest goes out once a week: "
+        "the most relevant recent papers on T cell engagers and multispecific "
+        "immune engagers, with a short read on each.\n\n"
+        "Here is the most recent one, from {date}, so you can see what arrives."
+    ),
+    "already": (
+        "You were already on the list, so nothing changed — the weekly digest will "
+        "keep arriving.\n\n"
+        "Here is the most recent one, from {date}, in case it went astray."
+    ),
+}
+
+
+def latest_digest(directory: Path | None = None) -> tuple[str, str] | None:
+    """(date, markdown) of the most recent digest, or None if there is none.
+
+    Digest files are named by their date, so the last one in sort order is the
+    newest — the same rule email_digest.py uses to pick what to send.
+    """
+    base = DIGEST_DIR if directory is None else directory
+    if not base.is_dir():
+        return None
+    files = sorted(p for p in base.glob("*.md") if p.is_file())
+    if not files:
+        return None
+    return files[-1].stem, files[-1].read_text(encoding="utf-8")
+
+
+def spoken_date(stamp: str) -> str:
+    """"2026-11-09" as "9 November 2026"; anything else unchanged."""
+    try:
+        when = date.fromisoformat(stamp)
+    except ValueError:
+        return stamp
+    return f"{when.day} {when:%B %Y}"
+
+
+def render_html(markdown_text: str) -> str | None:
+    """The digest as HTML, or None where the markdown package is not installed.
+
+    The mailbox poll runs before any dependency is installed, so this has to be
+    allowed to fail: a welcome that arrives as plain text is much better than
+    one that does not arrive. The workflow sends welcomes in a later step,
+    after `uv sync`, so in practice this returns HTML.
+    """
+    try:
+        import markdown
+    except ImportError:  # pragma: no cover - the pre-install mailbox step
+        return None
+    return markdown.markdown(markdown_text, extensions=["extra", "sane_lists"])
+
+
+def wrap_html(inner: str) -> str:
+    return (
+        "<html><body style='font-family:system-ui,sans-serif;max-width:42rem'>"
+        f"{inner}</body></html>"
+    )
+
+
+def welcome_message(
+    digest: tuple[str, str] | None, outcome: str, unsubscribe_to: str
+) -> tuple[str, str, str | None]:
+    """(subject, text, html) for a new subscriber: the latest digest, framed.
+
+    With no digest to hand — a fresh checkout, or the very first week — this
+    falls back to the short note, because an empty welcome is worse than a
+    plain one.
+    """
+    text_footer, html_footer = footer(unsubscribe_to)
+    if digest is None:
+        return SUBJECTS[outcome], REPLIES[outcome] + text_footer, None
+    stamp, body_md = digest
+    preamble = PREAMBLE[outcome].format(date=spoken_date(stamp))
+    lead = "Subscribed" if outcome == "added" else "Already subscribed"
+    subject = f"{lead} — Science TLDR Weekly Digest, {stamp}"
+    text = f"{preamble}\n\n---\n\n{body_md}{text_footer}"
+    rendered = render_html(body_md)
+    html = None
+    if rendered is not None:
+        paragraphs = "".join(
+            f"<p>{line}</p>" for line in preamble.split("\n\n") if line.strip()
+        )
+        html = wrap_html(f"{paragraphs}<hr>{rendered}{html_footer}")
+    return subject, text, html
 
 
 def footer(unsubscribe_to: str) -> tuple[str, str]:

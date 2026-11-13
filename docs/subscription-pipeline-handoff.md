@@ -340,8 +340,7 @@ currently subscribed falls off during the switch:
 
 **Joining:** mail the podcast address with `subscribe` starting the subject.
 **Leaving:** the same with `unsubscribe`, which the digest's own footer spells
-out as a `mailto:` link. One short reply comes back either way. The two subject
-rules are deliberately asymmetrical: `unsubscribe` counts anywhere in the
+out as a `mailto:` link. The two subject rules are deliberately asymmetrical: `unsubscribe` counts anywhere in the
 subject, because someone leaving is likely to hit reply and type it after our
 own subject line, and failing to honour that is the one failure worth avoiding;
 `subscribe` has to lead the subject, so a mail that merely mentions subscribing
@@ -354,6 +353,17 @@ somebody else, and mail carrying `Auto-Submitted`, `Precedence: bulk` or
 robots. The order of operations is: store the change, label the mail, then
 reply. A change that could not be stored leaves the mail unlabelled for the
 next poll, so nobody is ever told they are off a list they are still on.
+
+**The confirmation for a new subscriber is the most recent digest**, with a
+line of preamble on top, rather than a note saying "you're on the list". It
+proves the subscription works, it is worth reading, and it means someone who
+joins on a Tuesday is not left with a promise until Sunday. Rendering it needs
+the markdown package, so the standard-library poll only records the request and
+a later step — gated on that record, after `uv sync` — sends it. Their mail is
+labelled only once the welcome has gone, so a failure there costs half an hour
+rather than the confirmation: the next poll finds the request again, reads it
+as "already subscribed", and sends the same digest. Writing in twice is
+therefore the same as writing in once, deliberately.
 
 This is the third pass of the mailbox poll
 ([`scripts/pdf_mailbox.py`](../scripts/pdf_mailbox.py)), which runs every half
