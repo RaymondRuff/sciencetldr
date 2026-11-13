@@ -79,18 +79,32 @@ def legacy_parts() -> tuple[set[str], int]:
     list. The count of what could not be read is returned so a send can say
     so out loud.
     """
+    kept, dropped, _ = legacy_counted()
+    return kept, dropped
+
+
+def legacy_counted() -> tuple[set[str], int, int]:
+    """As legacy_parts(), plus how many entries the secret actually holds.
+
+    The entry count matters when the number of subscribers is not the number
+    expected: six entries that yield five addresses means two of them are the
+    same person (the same address twice, or in two letter cases), which is a
+    different problem from an address having gone missing.
+    """
     raw = os.environ.get("DIGEST_RECIPIENTS", "")
     kept: set[str] = set()
     dropped = 0
+    entries = 0
     for token in re.split(r"[,;]", raw):
         if not token.strip():
             continue
+        entries += 1
         address = parseaddr(token)[1] or token
         if valid(address):
             kept.add(normalise(address))
         else:
             dropped += 1
-    return kept, dropped
+    return kept, dropped, entries
 
 
 def legacy() -> set[str]:
@@ -402,14 +416,22 @@ def sync() -> int:
     logs, which anyone can read; the addresses belong in the private papers
     repository and nowhere else.
     """
-    known, unreadable = legacy_parts()
+    known, unreadable, entries = legacy_counted()
     with _repo() as repo:
         roster = Roster(repo)
         moved = roster.fold_in_legacy()
         if moved:
             roster.save(f"Add {len(moved)} subscriber(s) carried over from DIGEST_RECIPIENTS")
         active = roster.active()
-        print(f"[list] {len(known)} address(es) in the DIGEST_RECIPIENTS secret")
+        print(
+            f"[list] {entries} entr(ies) in the DIGEST_RECIPIENTS secret, "
+            f"{len(known)} distinct address(es)"
+        )
+        if entries > len(known) + unreadable:
+            print(
+                f"[list] note: {entries - len(known) - unreadable} entr(ies) repeat an "
+                "address already counted, so the list is shorter than the secret"
+            )
         print(f"[list] {len(moved)} of them newly written to list/subscribers.txt")
         print(f"[list] {len(roster.subscribers)} on file, {len(roster.unsubscribed)} unsubscribed")
         print(f"[list] {len(active)} will receive the next digest")
