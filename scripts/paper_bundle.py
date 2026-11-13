@@ -652,9 +652,10 @@ class PapersRepo:
                     return path
         return None
 
-    def commit(self, message: str) -> bool:
-        self._git("add", "-A", "papers")
-        status = self._git("status", "--porcelain", "papers").stdout.strip()
+    def commit(self, message: str, paths: tuple[str, ...] = ("papers",)) -> bool:
+        """Commit and push the given directories. `paths` also scopes the check."""
+        self._git("add", "-A", *paths)
+        status = self._git("status", "--porcelain", *paths).stdout.strip()
         if not status:
             print("[papers] nothing to commit")
             return False

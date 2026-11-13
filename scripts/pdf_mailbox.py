@@ -17,6 +17,13 @@ knows the podcast address could have a document narrated and published.
 Deliberately standard-library only: the workflow runs `check` before installing
 dependencies, so a poll that finds nothing costs seconds.
 
+A third pass handles the **mailing list**: a message whose subject is
+"subscribe" or "unsubscribe" adds or removes its own sender from the weekly
+digest's list (see mailing_list.py), and gets one short reply saying so. Anyone
+may join — that is the point — but only the address Gmail's own DKIM or DMARC
+verdict vouches for, never one typed in a body, so nobody can sign up or cut
+off somebody else.
+
 It makes a second pass for **one-off requests**: an email from the owner whose
 subject starts with "one-off", carrying a DOI in the body or a PDF attached, or
 both. Those become their own `podcast-pending` Issue (see add_paper.py) and get
@@ -43,6 +50,7 @@ from email.utils import parseaddr
 from html import unescape
 from pathlib import Path
 
+import mailing_list
 import send_email
 
 ACCOUNT = send_email.SENDER
@@ -64,6 +72,22 @@ ONEOFF_RE = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Z0-9]+", re.IGNORECASE)
+
+# Joining or leaving the digest list. The subject carries the whole request.
+#
+# The two patterns are deliberately not symmetrical. "unsubscribe" is honoured
+# anywhere in the subject, because someone leaving may well hit reply and type
+# it after the digest's own subject, and ignoring that would be the one failure
+# worth avoiding. "subscribe" has to start the subject, so an unrelated mail
+# that happens to mention subscribing never adds anyone.
+LIST_MANIFEST = "list-requests.json"
+LIST_MAX_AGE_DAYS = 14
+UNSUBSCRIBE_RE = re.compile(r"\bunsubscribe\b", re.IGNORECASE)
+SUBSCRIBE_RE = re.compile(r"^(?:(?:re|fwd?|fw)\s*:\s*)*\s*subscribe\b", re.IGNORECASE)
+
+# Headers that mark a message as machine-generated. Answering one of these can
+# start a loop between two robots, so they are never treated as requests.
+AUTOMATED_HEADERS = ("List-Id", "List-Unsubscribe", "X-Auto-Response-Suppress")
 
 
 def drop_dir() -> Path:
@@ -90,6 +114,26 @@ def one_off_note(subject: str) -> str | None:
     if match is None:
         return None
     return re.sub(r"\s+", " ", match.group("note")).strip()
+
+
+def list_request(subject: str) -> str | None:
+    """"subscribe", "unsubscribe", or None if this subject asks for neither."""
+    subject = (subject or "").strip()
+    if UNSUBSCRIBE_RE.search(subject):
+        return "unsubscribe"
+    if SUBSCRIBE_RE.match(subject):
+        return "subscribe"
+    return None
+
+
+def automated(msg: EmailMessage) -> bool:
+    """Whether this looks machine-generated, and so must not be replied to."""
+    auto = str(msg.get("Auto-Submitted", "")).strip().lower()
+    if auto and auto != "no":
+        return True
+    if str(msg.get("Precedence", "")).strip().lower() in {"bulk", "list", "junk"}:
+        return True
+    return any(msg.get(header) for header in AUTOMATED_HEADERS)
 
 
 def dois_in(text: str) -> list[str]:
@@ -322,23 +366,25 @@ def _body_text(msg: EmailMessage) -> str:
     return unescape(text)
 
 
-def collect() -> tuple[dict[int, dict], list[dict]]:
-    """Read the mailbox once. Returns (replies, one-off requests).
+def collect() -> tuple[dict[int, dict], list[dict], list[dict]]:
+    """Read the mailbox once. Returns (replies, one-offs, list requests).
 
-    Two passes, one session: PDFs replied to a numbered request, then one-off
-    requests from the owner. Both write a manifest the sweep reads later, so
-    this stays standard-library only and a quiet poll costs seconds.
+    Three passes, one session: PDFs replied to a numbered request, one-off
+    requests from the owner, then subscribe and unsubscribe mails. Each writes
+    a manifest acted on later, so this stays standard-library only and a quiet
+    poll costs seconds.
     """
     password = os.environ.get("GMAIL_APP_PASSWORD")
     if not password:
         print("[mailbox] GMAIL_APP_PASSWORD unset; skipping mailbox")
-        return {}
+        return {}, [], []
     allowed = allowed_senders()
     out_dir = drop_dir()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     found: dict[int, dict] = {}
     one_offs: list[dict] = []
+    list_requests: list[dict] = []
     imap = imaplib.IMAP4_SSL(IMAP_HOST)
     try:
         imap.login(ACCOUNT, password)
@@ -386,6 +432,7 @@ def collect() -> tuple[dict[int, dict], list[dict]]:
             print(f"[mailbox] #{issue}: PDF received ({len(pdf) / 1e6:.1f} MB)")
 
         one_offs = _collect_one_offs(imap, out_dir)
+        list_requests = _collect_list_requests(imap)
     finally:
         try:
             imap.logout()
@@ -394,7 +441,8 @@ def collect() -> tuple[dict[int, dict], list[dict]]:
 
     (out_dir / MANIFEST).write_text(json.dumps(found), encoding="utf-8")
     (out_dir / ONEOFF_MANIFEST).write_text(json.dumps(one_offs), encoding="utf-8")
-    return found, one_offs
+    (out_dir / LIST_MANIFEST).write_text(json.dumps(list_requests), encoding="utf-8")
+    return found, one_offs, list_requests
 
 
 def _collect_one_offs(imap: imaplib.IMAP4_SSL, out_dir: Path) -> list[dict]:
@@ -455,6 +503,89 @@ def _collect_one_offs(imap: imaplib.IMAP4_SSL, out_dir: Path) -> list[dict]:
             f"{'PDF attached' if pdf else 'no PDF'}"
         )
     return found
+
+
+def _collect_list_requests(imap: imaplib.IMAP4_SSL) -> list[dict]:
+    """Subscribe and unsubscribe mails: {uid, address, wants, subject}.
+
+    Headers only — the body is never fetched, because the subject carries the
+    whole request and the address can only be the verified sender. A message
+    the first two passes own (a numbered reply, a one-off) is left to them.
+    """
+    query = (
+        "subject:(subscribe OR unsubscribe) "
+        f"-label:{LABEL_PROCESSED} -label:{LABEL_REJECTED} "
+        f"newer_than:{LIST_MAX_AGE_DAYS}d"
+    )
+    found: list[dict] = []
+    for uid in _search(imap, query):
+        header = _fetch(imap, uid, "(BODY.PEEK[HEADER])")
+        if header is None:
+            continue
+        subject = str(header.get("Subject", ""))
+        if SUBJECT_RE.search(subject) or one_off_note(subject) is not None:
+            continue
+        wants = list_request(subject)
+        if wants is None:
+            continue
+        sender = parseaddr(str(header.get("From", "")))[1].lower()
+        if not sender or sender == ACCOUNT:
+            continue  # our own digest, bounced or forwarded back to us
+        if automated(header):
+            print(f"[list] ignoring an automated {wants} message")
+            _label(imap, uid, LABEL_REJECTED)
+            continue
+        # A From line can be forged; Gmail's own verdict on it cannot. Without
+        # this, one message could sign up — or cut off — anybody.
+        if not mailing_list.valid(sender) or not _authenticated(header, sender):
+            print(f"[list] rejecting a {wants}: the sender could not be verified")
+            _label(imap, uid, LABEL_REJECTED)
+            continue
+        found.append(
+            {"uid": uid.decode(), "address": sender, "wants": wants, "subject": subject}
+        )
+        print(f"[list] {wants} request received")
+    return found
+
+
+def list_requests_received() -> list[dict]:
+    """The list manifest written by collect() earlier in this run."""
+    manifest = drop_dir() / LIST_MANIFEST
+    if not manifest.exists():
+        return []
+    return json.loads(manifest.read_text())
+
+
+def handle_list_requests(requests: list[dict] | None = None) -> int:
+    """Act on subscribe and unsubscribe mails, and answer each one.
+
+    The order matters: the change is stored first, the message is labelled
+    next, and only then is the reply sent. A request whose change could not be
+    stored is left unlabelled and picked up by the next poll, so nobody is ever
+    told they are off a list they are still on.
+    """
+    requests = list_requests_received() if requests is None else requests
+    if not requests:
+        return 0
+    done = 0
+    for answered in mailing_list.apply_requests(requests):
+        mark_uid(answered["uid"])
+        reply_to(answered["address"], answered["subject"], answered["body"])
+        done += 1
+    return done
+
+
+def reply_to(address: str, subject: str, body: str) -> bool:
+    """One short message to someone who wrote in. Never raises."""
+    if not address or not os.environ.get("GMAIL_APP_PASSWORD"):
+        print("[list] no mail password; not answering")
+        return False
+    try:
+        send_email.send(subject=subject[:200], body_text=body, recipients=[address])
+    except Exception as exc:  # noqa: BLE001 - the stored list is the record
+        print(f"[list] could not answer: {exc}")
+        return False
+    return True
 
 
 def record_reply(issue_number: int, uid: str, path: Path) -> None:
@@ -536,7 +667,13 @@ def main() -> None:
     command = sys.argv[1] if len(sys.argv) > 1 else "check"
     if command != "check":
         sys.exit(f"unknown command: {command}")
-    replies, one_offs = collect()
+    replies, one_offs, list_requests = collect()
+    # Done here, in the standard-library step: joining the list should not wait
+    # on a dependency install, and it is the half-hourly poll that makes the
+    # answer arrive in minutes rather than the next morning.
+    handled = handle_list_requests(list_requests)
+    if handled:
+        print(f"[list] {handled} subscription change(s) recorded")
     output = os.environ.get("GITHUB_OUTPUT")
     if output:
         with open(output, "a", encoding="utf-8") as fh:

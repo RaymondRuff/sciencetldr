@@ -10,12 +10,26 @@ from email.mime.text import MIMEText
 SENDER = "sciencetldrpod@gmail.com"
 
 
-def send(subject: str, body_text: str, recipients: list[str], body_html: str | None = None) -> None:
+def send(
+    subject: str,
+    body_text: str,
+    recipients: list[str],
+    body_html: str | None = None,
+    *,
+    bcc: bool = False,
+) -> None:
+    """Send one message. With `bcc`, recipients cannot see each other.
+
+    Delivery is decided by the envelope — sendmail's recipient list — not by
+    the headers, so blind copying is simply a matter of not naming anyone in
+    a header. Before this, the digest put every subscriber in `To`, which
+    showed the whole list to everyone on it.
+    """
     password = os.environ["GMAIL_APP_PASSWORD"]
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"] = SENDER
-    msg["To"] = ", ".join(recipients)
+    msg["To"] = SENDER if bcc else ", ".join(recipients)
     msg.attach(MIMEText(body_text, "plain", "utf-8"))
     if body_html:
         msg.attach(MIMEText(body_html, "html", "utf-8"))
@@ -26,6 +40,12 @@ def send(subject: str, body_text: str, recipients: list[str], body_html: str | N
 
 
 def recipients_from_env() -> list[str]:
+    """The DIGEST_RECIPIENTS secret, as a list.
+
+    Superseded by mailing_list.recipients(), which folds this in and lets
+    people subscribe and unsubscribe themselves. Kept because it is still the
+    fallback when the papers repository cannot be read.
+    """
     raw = os.environ.get("DIGEST_RECIPIENTS", "").strip()
     if not raw:
         raise RuntimeError("DIGEST_RECIPIENTS env var is empty")

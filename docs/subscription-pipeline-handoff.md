@@ -310,6 +310,63 @@ checker's corrections together after the fact. Closing one before its slot is
 still how a single episode is stopped; `AUTO_PUBLISH` set to anything but
 `true` still holds all of them.
 
+## Update, 2026-11-13: the digest list manages itself
+
+Several people had asked Ray to add them to the weekly digest, and each one
+meant editing the `DIGEST_RECIPIENTS` secret — which cannot be read back, so
+adding one person meant retyping all six from memory. The list now lives in the
+private papers repository and people put themselves on it.
+
+**Two plain files, in `sciencetldr-papers`:**
+
+    list/subscribers.txt    one address per line; `#` starts a comment
+    list/unsubscribed.txt   addresses that must never be sent to again
+
+Recipients are **(the file plus the old secret) minus the unsubscribed**
+([`scripts/mailing_list.py`](../scripts/mailing_list.py)). The arithmetic is
+the point, because it answers the one thing Ray asked for — that nobody
+currently subscribed falls off during the switch:
+
+- the six on the secret keep receiving the digest with no action from anyone,
+  including on a send where the papers repository cannot be reached at all:
+  `recipients()` falls back to the secret alone rather than sending to a
+  shorter list;
+- the first send folds them into `list/subscribers.txt`, so the list becomes
+  readable and `DIGEST_RECIPIENTS` can be deleted whenever it suits. Check the
+  file has all six first; until then it is both the seed and the fallback;
+- `list/unsubscribed.txt` beats both sources, so someone who arrived on the
+  secret can still leave — which a list held only in a secret could never
+  offer.
+
+**Joining:** mail the podcast address with `subscribe` starting the subject.
+**Leaving:** the same with `unsubscribe`, which the digest's own footer spells
+out as a `mailto:` link. One short reply comes back either way. The two subject
+rules are deliberately asymmetrical: `unsubscribe` counts anywhere in the
+subject, because someone leaving is likely to hit reply and type it after our
+own subject line, and failing to honour that is the one failure worth avoiding;
+`subscribe` has to lead the subject, so a mail that merely mentions subscribing
+never adds anyone.
+
+Only the address **Gmail's own DKIM or DMARC verdict vouches for** is ever
+added or removed — never one typed in a body — so nobody can sign up or cut off
+somebody else, and mail carrying `Auto-Submitted`, `Precedence: bulk` or
+`List-Id` is rejected unanswered rather than starting a loop between two
+robots. The order of operations is: store the change, label the mail, then
+reply. A change that could not be stored leaves the mail unlabelled for the
+next poll, so nobody is ever told they are off a list they are still on.
+
+This is the third pass of the mailbox poll
+([`scripts/pdf_mailbox.py`](../scripts/pdf_mailbox.py)), which runs every half
+hour on standard library alone, before any dependency is installed — so an
+answer arrives in minutes, and the step now needs `GH_PAT` to reach the list.
+
+**The digest is also blind-copied now, which fixes a leak.** Every send put all
+six addresses in `To:`, so each subscriber could read the whole list in their
+own copy; with the list open to anyone who asks, that gets worse with every
+person added. Delivery is decided by the SMTP envelope, not the headers, so
+blind copying is simply a matter of naming nobody — and sends go out in batches
+of ninety, well inside Gmail's per-message limits.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
