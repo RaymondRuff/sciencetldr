@@ -113,6 +113,127 @@ class SenderTests(unittest.TestCase):
         self.assertFalse(mailbox._authenticated(forged, OWNER))
 
 
+class AuthenticationTests(unittest.TestCase):
+    """_authenticated() is the whole gate, on this path and on the list's.
+
+    It decides whether a message may commission an episode, supply a PDF, or
+    put an address on the weekly digest, and the only thing it can trust is a
+    verdict Gmail stamped itself. Every case below is one way a sender could
+    write a verdict of their own.
+    """
+
+    GMAIL = "mx.google.com; dkim=pass header.i=@victim.com header.b=abc; spf=pass "
+    VICTIM = "someone@victim.com"
+
+    def message(self, *results: str, sender: str = VICTIM) -> EmailMessage:
+        msg = EmailMessage()
+        msg["From"] = f"Somebody <{sender}>"
+        for result in results:
+            msg["Authentication-Results"] = result
+        return msg
+
+    def check(self, *results: str, sender: str = VICTIM) -> bool:
+        return mailbox._authenticated(self.message(*results, sender=sender), sender)
+
+    # ----- what has to keep working ---------------------------------------
+
+    def test_an_ordinary_gmail_sender_is_accepted(self):
+        self.assertTrue(
+            self.check(
+                "mx.google.com; dkim=pass header.i=@gmail.com header.s=20230601; "
+                "spf=pass smtp.mailfrom=someone@gmail.com; "
+                "dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com",
+                sender="someone@gmail.com",
+            )
+        )
+
+    def test_a_dkim_pass_alone_is_enough(self):
+        # Plenty of real senders publish no DMARC policy at all.
+        self.assertTrue(
+            self.check("mx.google.com; dkim=pass header.i=@victim.com; dmarc=none")
+        )
+
+    def test_header_d_is_read_as_well_as_header_i(self):
+        self.assertTrue(self.check("mx.google.com; dkim=pass header.d=victim.com"))
+
+    def test_our_own_mail_has_no_verdict_and_needs_none(self):
+        # Nothing Gmail received from outside; it can only have been sent by
+        # the account itself.
+        msg = EmailMessage()
+        msg["From"] = mailbox.ACCOUNT
+        self.assertTrue(mailbox._authenticated(msg, mailbox.ACCOUNT))
+        self.assertFalse(mailbox._authenticated(msg, self.VICTIM))
+
+    def test_a_failed_verdict_is_still_a_refusal(self):
+        self.assertFalse(
+            self.check("mx.google.com; dkim=fail header.i=@victim.com; dmarc=fail")
+        )
+
+    # ----- the three forgeries --------------------------------------------
+
+    def test_a_verdict_from_another_host_does_not_authorise(self):
+        # Gmail strips headers claiming its own authserv-id and adds its own;
+        # anything else in there was written by whoever sent the message.
+        self.assertFalse(
+            self.check("mail.attacker.net; dmarc=pass header.from=victim.com")
+        )
+
+    def test_gmails_own_verdict_is_the_one_read_even_with_others_present(self):
+        self.assertFalse(
+            self.check(
+                "mail.attacker.net; dmarc=pass header.from=victim.com",
+                "mx.google.com; dkim=fail; spf=fail; dmarc=fail",
+            )
+        )
+        self.assertTrue(
+            self.check(
+                "mail.attacker.net; dmarc=fail",
+                "mx.google.com; dmarc=pass header.from=victim.com",
+            )
+        )
+
+    def test_a_subdomain_of_the_attacker_is_not_the_senders_domain(self):
+        # `f"header.i=@{domain}" in result` was a substring test, so
+        # victim.com.attacker.net satisfied victim.com.
+        self.assertFalse(
+            self.check("mx.google.com; dkim=pass header.i=@victim.com.attacker.net")
+        )
+        self.assertFalse(
+            self.check("mx.google.com; dkim=pass header.d=victim.com.attacker.net")
+        )
+
+    def test_a_dmarc_pass_for_another_domain_authorises_nobody(self):
+        # dmarc=pass was never tied to header.from, so a pass for the
+        # attacker's own domain vouched for any From line.
+        self.assertFalse(
+            self.check("mx.google.com; dmarc=pass header.from=attacker.net")
+        )
+        self.assertFalse(self.check("mx.google.com; dmarc=pass"))
+
+    def test_a_pass_hidden_in_a_comment_is_not_a_verdict(self):
+        self.assertFalse(
+            self.check(
+                "mx.google.com; dmarc=fail (dmarc=pass header.from=victim.com) "
+                "header.from=victim.com"
+            )
+        )
+
+    def test_a_verdict_for_one_method_does_not_carry_to_another(self):
+        self.assertFalse(
+            self.check("mx.google.com; spf=pass smtp.mailfrom=someone@victim.com")
+        )
+
+    def test_an_only_forged_header_cannot_impersonate_the_account(self):
+        # Mail arriving from outside always carries Gmail's own stamp, so a
+        # message with somebody else's and none of Gmail's is not ours.
+        self.assertFalse(
+            self.check(
+                "mail.attacker.net; dmarc=pass header.from=gmail.com",
+                sender=mailbox.ACCOUNT,
+            )
+        )
+
+
 class QueueTests(unittest.TestCase):
     """What the sweep does with the requests the mailbox saved."""
 

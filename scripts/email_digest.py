@@ -5,9 +5,14 @@ newest file in digest/.
 
 Who it goes to comes from mailing_list.recipients(): the list in the private
 papers repository, plus anyone still on the DIGEST_RECIPIENTS secret, minus
-anyone who has unsubscribed. Every send is blind-copied — before this, each
-subscriber could read the whole list in their own copy — and carries a footer
-saying how to leave.
+anyone who has unsubscribed.
+
+One message per subscriber, addressed to them. It was one blind-copied message
+to everyone, which hid the list from the people on it but is also the shape a
+spam filter scores hardest against — and the filtered message that matters
+most is a new subscriber's welcome. Every message carries the footer saying
+how to leave, and the List-Unsubscribe headers that let a client offer it as a
+button.
 """
 from __future__ import annotations
 
@@ -52,35 +57,29 @@ def main() -> None:
     if not recipients:
         sys.exit("[email] nobody is subscribed; not sending")
     text_footer, html_footer = mailing_list.footer(send_email.SENDER)
-    batches = mailing_list.chunks(recipients)
-    print(
-        f"[email] sending {path.name} to {len(recipients)} subscriber(s) "
-        f"in {len(batches)} blind-copied message(s)"
-    )
+    html = mailing_list.wrap_html(body_html + html_footer)
+    print(f"[email] sending {path.name} to {len(recipients)} subscriber(s), one message each")
+    # A connection per message. At five subscribers the handshakes cost less
+    # than the plumbing to reuse one session would; past a few hundred this
+    # wants rewriting to log in once.
     failed = 0
-    for number, batch in enumerate(batches, start=1):
+    for address in recipients:
         try:
             send_email.send(
                 subject=f"Science TLDR Weekly Digest — {today}",
                 body_text=body_md + text_footer,
-                recipients=batch,
-                body_html=mailing_list.wrap_html(body_html + html_footer),
-                bcc=True,
+                recipients=[address],
+                body_html=html,
+                unsubscribe=send_email.SENDER,
             )
-        except Exception as exc:  # noqa: BLE001 - one bad batch is not the send
-            # Never the exception itself: smtplib puts the refused addresses in
-            # its string form, and these logs are public.
+        except Exception as exc:  # noqa: BLE001 - one bad address is not the send
+            # The reason, never the exception itself: smtplib puts the refused
+            # addresses in its string form and these logs are public.
             failed += 1
-            print(
-                f"[email]   batch {number}/{len(batches)} failed: "
-                f"{send_email.failure_reason(exc)}"
-            )
-            continue
-        print(f"[email]   batch {number}/{len(batches)}: {len(batch)} address(es)")
-    if failed == len(batches):
-        sys.exit("[email] every batch failed; nobody received the digest")
-    if failed:
-        print(f"[email] {failed} of {len(batches)} batch(es) failed")
+            print(f"[email]   one message failed: {send_email.failure_reason(exc)}")
+    if failed == len(recipients):
+        sys.exit("[email] every message failed; nobody received the digest")
+    print(f"[email] {len(recipients) - failed} of {len(recipients)} sent")
 
 
 if __name__ == "__main__":

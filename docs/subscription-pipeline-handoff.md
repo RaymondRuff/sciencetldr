@@ -314,8 +314,8 @@ still how a single episode is stopped; `AUTO_PUBLISH` set to anything but
 
 Several people had asked Ray to add them to the weekly digest, and each one
 meant editing the `DIGEST_RECIPIENTS` secret — which cannot be read back, so
-adding one person meant retyping all six from memory. The list now lives in the
-private papers repository and people put themselves on it.
+adding one person meant retyping all of them from memory. The list now lives
+in the private papers repository and people put themselves on it.
 
 **Two plain files, in `sciencetldr-papers`:**
 
@@ -327,15 +327,15 @@ Recipients are **(the file plus the old secret) minus the unsubscribed**
 the point, because it answers the one thing Ray asked for — that nobody
 currently subscribed falls off during the switch:
 
-- the six on the secret keep receiving the digest with no action from anyone,
-  including on a send where the papers repository cannot be reached at all:
-  `recipients()` falls back to the secret alone rather than sending to a
-  shorter list;
+- the five on the secret keep receiving the digest with no action from anyone
+  (the sync job's log settles the count: five entries, five distinct, five on
+  file — an earlier draft of this document said six);
 - the first send folds them into `list/subscribers.txt`, so the list becomes
   readable and `DIGEST_RECIPIENTS` can be deleted whenever it suits. Check the
-  file has all six first; until then it is both the seed and the fallback.
-  Actions → **mailing-list** does that fold on demand, so the roster can be
-  read without waiting for a Sunday and without sending anything;
+  file has all five first; until then the secret is the seed. It is **not** a
+  fallback — see the 2026-11-14 update below, which took that out. Actions →
+  **mailing-list** does the fold on demand, so the roster can be read without
+  waiting for a Sunday and without sending anything;
 - `list/unsubscribed.txt` beats both sources, so someone who arrived on the
   secret can still leave — which a list held only in a secret could never
   offer.
@@ -391,12 +391,12 @@ No address is ever printed by any of this. The public repository's Actions logs
 are world-readable, so the counts go in the log and the addresses stay in the
 private repository.
 
-**The digest is also blind-copied now, which fixes a leak.** Every send put all
-six addresses in `To:`, so each subscriber could read the whole list in their
-own copy; with the list open to anyone who asks, that gets worse with every
-person added. Delivery is decided by the SMTP envelope, not the headers, so
-blind copying is simply a matter of naming nobody — and sends go out in batches
-of ninety, well inside Gmail's per-message limits.
+**The digest no longer shows the list to the list.** Every send put all five
+addresses in `To:`, so each subscriber could read the whole list in their own
+copy; with the list open to anyone who asks, that gets worse with every person
+added. This was first fixed by blind-copying one message to everybody, which
+hid the addresses but kept the shape — and the shape was the next problem: see
+the 2026-11-14 update, which sends one message per subscriber instead.
 
 ## Update, 2026-11-14: the schedule was the bottleneck, not the code
 
@@ -425,8 +425,85 @@ Two changes:
   session, no PDF search.
 
 The episode workflow still runs the list pass as before, so there are two
-chances at every request. They cannot collide: `13,43` and `9,24,39,54` never
-fall in the same minute, and whichever gets there first labels the mail.
+chances at every request. ~~They cannot collide: `13,43` and `9,24,39,54`
+never fall in the same minute~~ — **that was wrong**, and the next update says
+why: GitHub delivers backed-up schedules in a batch, so two runs whose crons
+are eleven minutes apart were observed starting fifty-nine seconds apart. What
+makes the overlap survivable is not the minutes but that whichever gets there
+first labels the mail, and that git refuses a stale push rather than losing
+the other writer's work.
+
+## Update, 2026-11-14 evening: the congested-minute theory did not hold
+
+An independent review of the subscription path, and then the GitHub API's own
+record of this repository's runs, settled the question the previous update
+guessed at.
+
+**The numbers.** Scheduled runs here have been *delivered* **four to seven
+times a day for eighteen days**, against roughly fifty-one asked for a day —
+before *and* after last night's move off `:00` and `:30`. The minutes were
+never the cause. They are harmless, so they stay (undoing them would be churn
+for its own sake), but nothing should be built on the belief that they fixed
+anything: a subscriber waits **hours**, not minutes, unless somebody dispatches
+the workflow by hand. README now says that instead of "within the half hour".
+`tests/test_schedules.py` no longer asserts the rule over every workflow,
+where it would block a legitimate future cron in the name of a theory that did
+not survive the data; it holds the two mailbox polls to it and says why.
+
+An external scheduler is the obvious next move and is **not** taken here: that
+is the owner's call and still open.
+
+**The collision that was called impossible.** `13,43` and `9,24,39,54` do not
+share a minute, but GitHub delivers a backlog in a batch: two runs were seen
+starting fifty-nine seconds apart. On a `workflow_dispatch` it was worse —
+`poll` and `sync` ran in parallel, both cloning, writing and pushing the same
+two files. Nothing was ever lost, because `PapersRepo.commit()` pushes without
+`--force` and git refuses the stale clone, but the result was a failed run and
+an alert Issue caused by somebody clicking "Run workflow". So `sync` now
+`needs: poll`, the workflow has `concurrency: {group: mailing-list,
+cancel-in-progress: false}` so a dispatch queues instead of racing, and
+`commit()` gets **one** retry: fetch, rebase onto `main`, push again, and fail
+loudly if that is refused too.
+
+**Four defects in the list code, found by review.** All four could affect real
+mail, and all four now have tests that failed against the old code:
+
+- `recipients()` wrapped the clone, the read *and* the push in one `try`, and
+  the `except` returned the bare secret — which has no subtraction of
+  `list/unsubscribed.txt`. A rejected push was enough to mail somebody who had
+  left. The list is now computed before anything is written, the write has its
+  own `try`, and a failed *read* exits non-zero. That is why the fallback
+  promised above is gone.
+- A welcome that failed sent the whole ~100 KB digest again, because
+  `WELCOME_OUTCOMES` included `already` and because a Gmail label that Gmail
+  *declined* read as one that stuck (`imaplib` returns `NO`; it raises only on
+  `BAD`). Writing in twice gets the one-line note now, and the mail is
+  labelled before the digest goes: one missed welcome beats seventy sent.
+- `str(SMTPRecipientsRefused)` contains the refused address, and these Actions
+  logs are public — GitHub masks the whole secret, not one address out of it.
+  Failures log a class name and a count.
+- `_authenticated()`, the only gate on subscribing, trusted any
+  `Authentication-Results` header it found, including one the sender wrote;
+  accepted `dmarc=pass` without checking whose domain passed; and matched the
+  DKIM domain as a substring, so `header.i=@victim.com.attacker.net` vouched
+  for `victim.com`. It now reads only the first header carrying Gmail's own
+  authserv-id (`mx.google.com`), ties the verdict to `header.from=` or an
+  anchored DKIM domain, and has the tests it should always have had.
+
+**The mail shape.** For five people, one ~100 KB multipart message with
+`To: sciencetldrpod@gmail.com` and five undisclosed envelope recipients is
+both pointless and the shape spam filters score hardest against — and the
+message most likely to be filtered is a new subscriber's welcome, which is
+that same digest. The digest now goes out **one message per subscriber**, with
+a real `To:`, plus `List-Unsubscribe` and `List-Unsubscribe-Post:
+List-Unsubscribe=One-Click` on it and on the welcome, so a client can offer
+leaving as a button. The visible footer stays. `chunks()`/`CHUNK` and the
+`bcc` parameter are deleted rather than kept for a list that is not coming:
+five subscribers do not need batching, and a hundred-fold list would want a
+single SMTP session, which is a different piece of code. `sendmail()`'s return
+value — the recipients the server refused — is no longer dropped; the count is
+printed, never the addresses. Answers also thread now, under the `Message-ID`
+of the request they answer.
 
 ## The decision
 

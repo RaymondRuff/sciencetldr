@@ -52,10 +52,6 @@ LIST_DIR = "list"
 SUBSCRIBERS = "subscribers.txt"
 UNSUBSCRIBED = "unsubscribed.txt"
 
-# Gmail accepts far more than this, but a single message carrying every
-# address is both a bigger blast radius and closer to the per-message cap.
-CHUNK = 90
-
 ADDRESS_RE = re.compile(r"^[^@\s,;<>]+@[^@\s,;<>]+\.[^@\s,;<>]+$")
 
 
@@ -272,9 +268,10 @@ SUBJECTS = {
 def apply_requests(requests: list[dict]) -> list[dict]:
     """Act on subscribe and unsubscribe mails. Returns one answer per request.
 
-    Each answer is {uid, address, outcome, subject, body}. A request whose
-    change could not be stored is left out, so its mail stays unlabelled and
-    the next poll tries again rather than promising something untrue.
+    Each answer is {uid, address, outcome, subject, body, message_id}. A
+    request whose change could not be stored is left out — including a save
+    that stored nothing — so its mail stays unlabelled and the next poll tries
+    again rather than promising something untrue.
     """
     if not requests:
         return []
@@ -301,11 +298,18 @@ def apply_requests(requests: list[dict]) -> list[dict]:
                         "outcome": outcome,
                         "subject": SUBJECTS[outcome],
                         "body": REPLIES[outcome] + "\n",
+                        # So the answer threads under what they sent.
+                        "message_id": request.get("message_id", ""),
                     }
                 )
             if answers:
                 today = datetime.now(tz=timezone.utc).date().isoformat()
-                roster.save(f"Mailing list: {len(answers)} change(s) on {today}")
+                if not roster.save(f"Mailing list: {len(answers)} change(s) on {today}"):
+                    # save() answers False when there was nothing staged to
+                    # commit, which means the change is not on file anywhere.
+                    # Same as the exception below: promise nothing, retry.
+                    print("[list] the change did not store; it will be retried")
+                    return []
     except Exception as exc:  # noqa: BLE001 - leave the mail for the next poll
         print(f"[list] could not record the change ({exc}); it will be retried")
         return []
@@ -424,10 +428,6 @@ def footer(unsubscribe_to: str) -> tuple[str, str]:
         "with 'unsubscribe' as the subject.</p>"
     )
     return text, html
-
-
-def chunks(addresses: list[str], size: int = CHUNK) -> list[list[str]]:
-    return [addresses[i : i + size] for i in range(0, len(addresses), size)] or [[]]
 
 
 def sync() -> int:

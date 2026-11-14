@@ -63,6 +63,23 @@ class FakeIMAP:
         return "OK", [b""]
 
 
+class FakeMailbox(FakeIMAP):
+    """A mailbox holding exactly one message, for the collecting pass."""
+
+    def __init__(self, raw: bytes, uid: bytes = b"7") -> None:
+        super().__init__("OK")
+        self.raw = raw
+        self.uid_value = uid
+
+    def uid(self, command, *args):
+        self.commands.append((command, *args))
+        if command == "SEARCH":
+            return "OK", [self.uid_value]
+        if command == "FETCH":
+            return "OK", [(b"1 (BODY[HEADER] {0})", self.raw)]
+        return self.status, [b""]
+
+
 class FakeRepo:
     """Stands in for a clone of the private papers repository."""
 
@@ -229,13 +246,6 @@ class RecipientsTests(unittest.TestCase):
                             ml.recipients()
                 self.assertIn("could not read", str(caught.exception))
 
-    def test_chunks_keeps_every_address_once(self):
-        addresses = [f"p{n}@example.com" for n in range(200)]
-        batches = ml.chunks(addresses)
-        self.assertEqual(sum(len(b) for b in batches), 200)
-        self.assertEqual(max(len(b) for b in batches), ml.CHUNK)
-        self.assertEqual(sorted(a for b in batches for a in b), sorted(addresses))
-
 
 class ApplyTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -268,6 +278,18 @@ class ApplyTests(unittest.TestCase):
         # Returning no answers leaves the mail unlabelled, so the next poll
         # tries again rather than replying "you're on the list" untruthfully.
         with _patch_repo(FakeRepo(self.dir, fails=True)):
+            self.assertEqual(
+                ml.apply_requests(
+                    [{"uid": "1", "address": "new@example.com", "wants": "subscribe"}]
+                ),
+                [],
+            )
+
+    def test_a_change_that_stored_nothing_promises_nothing(self):
+        # save() answers False when commit() found nothing staged. That was
+        # read as success, so the mail was labelled and the reply sent for a
+        # change that is not on file anywhere.
+        with _patch_repo(FakeRepo(self.dir, stores=False)):
             self.assertEqual(
                 ml.apply_requests(
                     [{"uid": "1", "address": "new@example.com", "wants": "subscribe"}]
@@ -511,6 +533,7 @@ class DeferredWelcomeTests(unittest.TestCase):
             self.addCleanup(patch.stop)
         self.labelled: list[str] = []
         self.sent: list[tuple] = []
+        self.extras: list[dict] = []
 
     def _patches(self, sending: bool = True, labelling: bool = True):
         def mark(uid, label=None):
@@ -520,6 +543,7 @@ class DeferredWelcomeTests(unittest.TestCase):
 
         def reply(address, subject, body, html=None, **kwargs):
             self.sent.append((address, subject, body))
+            self.extras.append(kwargs)
             return sending
 
         return (
@@ -599,14 +623,53 @@ class DeferredWelcomeTests(unittest.TestCase):
             self.assertEqual(mailbox.send_welcomes(), 0)
         self.assertEqual(self.labelled, ["1"])
 
+    def test_a_welcome_carries_the_list_headers_and_threads(self):
+        self._run(
+            [
+                {
+                    "uid": "1",
+                    "address": "new@example.com",
+                    "wants": "subscribe",
+                    "message_id": "<abc123@mail.gmail.com>",
+                }
+            ]
+        )
+        digests = self.dir / "digest"
+        digests.mkdir()
+        (digests / "2026-11-09.md").write_text("# Digest\n\nA paper.\n")
+        a, b, c = self._patches()
+        with a, b, c, mock.patch.object(ml, "DIGEST_DIR", digests):
+            self.assertEqual(mailbox.send_welcomes(), 1)
+        self.assertEqual(self.extras[0]["unsubscribe"], send_email.SENDER)
+        self.assertEqual(self.extras[0]["in_reply_to"], "<abc123@mail.gmail.com>")
+
+    def test_an_answer_threads_under_the_request(self):
+        self._run(
+            [
+                {
+                    "uid": "2",
+                    "address": "ben@example.net",
+                    "wants": "unsubscribe",
+                    "message_id": "<xyz@mail.gmail.com>",
+                }
+            ]
+        )
+        self.assertEqual(self.extras[0]["in_reply_to"], "<xyz@mail.gmail.com>")
+
     def test_nothing_pending_sends_nothing(self):
         self.assertEqual(mailbox.send_welcomes(), 0)
 
 
-class BlindCopyTests(unittest.TestCase):
-    """The digest must not show one subscriber's address to another."""
+class MessageShapeTests(unittest.TestCase):
+    """One message per subscriber, with a real To: and a way out in the headers.
 
-    def _sent(self, **kwargs) -> dict:
+    The digest used to be one multipart message with every subscriber in a
+    blind envelope and `To: sciencetldrpod@gmail.com` — which hid nobody's
+    address from anybody who was not on it, and is the shape spam filters
+    score hardest against.
+    """
+
+    def _sent(self, refuse: dict | None = None, **kwargs) -> dict:
         captured: dict = {}
 
         class FakeSMTP:
@@ -621,40 +684,138 @@ class BlindCopyTests(unittest.TestCase):
 
             def sendmail(inner, sender, recipients, raw):  # noqa: N805
                 captured.update(sender=sender, recipients=recipients, raw=raw)
+                # What smtplib really answers with: the recipients the server
+                # would not take, and {} when it took them all.
+                return dict(refuse or {})
 
         with mock.patch.dict("os.environ", {"GMAIL_APP_PASSWORD": "x"}):
             with mock.patch.object(send_email.smtplib, "SMTP_SSL", lambda *a, **k: FakeSMTP()):
-                send_email.send(**kwargs)
+                captured["returned"] = send_email.send(**kwargs)
         return captured
 
-    def test_blind_copies_name_nobody_in_the_headers(self):
-        people = ["a@example.com", "b@example.org"]
+    def test_a_subscriber_sees_their_own_address_and_no_one_elses(self):
         sent = self._sent(
             subject="Digest",
             body_text="hello" + ml.footer(send_email.SENDER)[0],
-            recipients=people,
-            bcc=True,
+            recipients=["a@example.com"],
+            unsubscribe=send_email.SENDER,
         )
-        # Still delivered to everyone — the envelope decides that, not the
-        # headers, which is the whole mechanism.
-        self.assertEqual(sent["recipients"], people)
         parsed = email.message_from_string(sent["raw"], policy=email.policy.default)
-        self.assertEqual(parsed["To"], send_email.SENDER)
+        self.assertEqual(parsed["To"], "a@example.com")
         self.assertIsNone(parsed["Cc"])
         self.assertIsNone(parsed["Bcc"])
+        self.assertNotIn("b@example.org", sent["raw"])
         # Decoded, because the parts are base64: a header check alone would
-        # pass even if the addresses were sitting in the body.
+        # pass even if an address were sitting in the body.
         body = parsed.get_body(preferencelist=("plain",)).get_content()
-        for address in people:
-            self.assertNotIn(address, body)
         self.assertIn("unsubscribe", body.lower())
 
-    def test_without_bcc_the_recipients_are_named_as_before(self):
+    def test_one_click_unsubscribe_is_in_the_headers(self):
+        sent = self._sent(
+            subject="Digest",
+            body_text="hello",
+            recipients=["a@example.com"],
+            unsubscribe="pod@example.com",
+        )
+        parsed = email.message_from_string(sent["raw"], policy=email.policy.default)
+        self.assertEqual(
+            parsed["List-Unsubscribe"], "<mailto:pod@example.com?subject=unsubscribe>"
+        )
+        self.assertEqual(parsed["List-Unsubscribe-Post"], "List-Unsubscribe=One-Click")
+
+    def test_an_ordinary_message_carries_no_list_headers(self):
+        sent = self._sent(subject="PDF needed", body_text="hello", recipients=["ray@example.com"])
+        parsed = email.message_from_string(sent["raw"], policy=email.policy.default)
+        self.assertIsNone(parsed["List-Unsubscribe"])
+
+    def test_an_answer_threads_under_the_message_it_answers(self):
+        sent = self._sent(
+            subject="Subscribed",
+            body_text="hello",
+            recipients=["a@example.com"],
+            in_reply_to="<CAF=abc123@mail.gmail.com>",
+        )
+        parsed = email.message_from_string(sent["raw"], policy=email.policy.default)
+        self.assertEqual(parsed["In-Reply-To"], "<CAF=abc123@mail.gmail.com>")
+        self.assertEqual(parsed["References"], "<CAF=abc123@mail.gmail.com>")
+
+    def test_a_message_id_that_is_not_one_is_left_out(self):
+        # It comes off a message somebody else wrote, so the shape is checked
+        # before it goes anywhere near a header: a newline in there would be
+        # a header injection, and a threadless reply is no loss.
+        for forged in ("<a@b>\r\nBcc: victim@example.com", "not-an-id", ""):
+            with self.subTest(value=forged[:20]):
+                sent = self._sent(
+                    subject="Subscribed",
+                    body_text="hello",
+                    recipients=["a@example.com"],
+                    in_reply_to=forged,
+                )
+                parsed = email.message_from_string(sent["raw"], policy=email.policy.default)
+                self.assertIsNone(parsed["In-Reply-To"])
+                self.assertIsNone(parsed["Bcc"])
+
+    def test_a_refused_recipient_is_counted_out_loud(self):
+        # sendmail() answers with the recipients it could not deliver to; the
+        # return value was dropped, so a dead address was never noticed.
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            refused = self._sent(
+                subject="Digest",
+                body_text="hello",
+                recipients=["a@example.com", "gone@example.org"],
+                refuse={"gone@example.org": (550, b"5.1.1 no such user gone@example.org")},
+            )
+        self.assertEqual(refused["returned"], 1)
+        self.assertIn("1 of 2 recipient(s) refused", out.getvalue())
+        self.assertNotIn("@", out.getvalue())
+
+    def test_a_pdf_request_still_names_its_recipient(self):
         sent = self._sent(
             subject="PDF needed", body_text="hello", recipients=["ray@example.com"]
         )
         parsed = email.message_from_string(sent["raw"], policy=email.policy.default)
         self.assertEqual(parsed["To"], "ray@example.com")
+
+
+class DigestSendTests(unittest.TestCase):
+    """One message per subscriber, and one failure is not the whole send."""
+
+    def _run(self, recipients: list[str], refuse: set[str] = frozenset()):
+        sent: list[dict] = []
+
+        def fake_send(**kwargs):
+            if set(kwargs["recipients"]) & set(refuse):
+                raise send_email.smtplib.SMTPRecipientsRefused(
+                    {address: (550, b"5.1.1 no such user") for address in kwargs["recipients"]}
+                )
+            sent.append(kwargs)
+            return 0
+
+        out = io.StringIO()
+        with tempfile.TemporaryDirectory() as tmp:
+            digest = Path(tmp) / "2026-11-15.md"
+            digest.write_text("# Digest\n\nA paper.\n", encoding="utf-8")
+            env = {"GMAIL_APP_PASSWORD": "x", "DIGEST_FILE": str(digest)}
+            with mock.patch.dict("os.environ", env):
+                with mock.patch.object(ml, "recipients", lambda: recipients):
+                    with mock.patch.object(send_email, "send", fake_send):
+                        with contextlib.redirect_stdout(out):
+                            email_digest.main()
+        return sent, out.getvalue()
+
+    def test_each_subscriber_gets_their_own_message(self):
+        people = ["a@example.com", "b@example.org"]
+        sent, log = self._run(people)
+        self.assertEqual([call["recipients"] for call in sent], [[p] for p in people])
+        self.assertTrue(all(call["unsubscribe"] == send_email.SENDER for call in sent))
+        self.assertNotIn("@", log)
+
+    def test_one_refused_subscriber_does_not_stop_the_others(self):
+        sent, log = self._run(["a@example.com", "b@example.org"], refuse={"a@example.com"})
+        self.assertEqual([call["recipients"] for call in sent], [["b@example.org"]])
+        self.assertIn("1 of 2", log)
+        self.assertNotIn("@", log)
 
 
 class LabelTests(unittest.TestCase):
@@ -678,6 +839,40 @@ class LabelTests(unittest.TestCase):
                     ):
                         self.assertIs(mailbox.mark_uid("7"), expected)
                 self.assertEqual(fake.commands[0][0], "STORE")
+
+
+class CollectingTests(unittest.TestCase):
+    """What the standard-library pass takes off a subscribe mail."""
+
+    RAW = (
+        b"From: Someone <someone@victim.com>\r\n"
+        b"Subject: subscribe\r\n"
+        b"Message-ID: <abc123@mail.gmail.com>\r\n"
+        b"Authentication-Results: mx.google.com; dkim=pass header.i=@victim.com;\r\n"
+        b" dmarc=pass (p=NONE) header.from=victim.com\r\n"
+        b"\r\n"
+    )
+
+    def test_a_request_carries_the_message_id_so_the_answer_can_thread(self):
+        found = mailbox._collect_list_requests(FakeMailbox(self.RAW))
+        self.assertEqual(
+            found,
+            [
+                {
+                    "uid": "7",
+                    "address": "someone@victim.com",
+                    "wants": "subscribe",
+                    "subject": "subscribe",
+                    "message_id": "<abc123@mail.gmail.com>",
+                }
+            ],
+        )
+
+    def test_a_request_gmail_did_not_vouch_for_is_rejected(self):
+        forged = self.RAW.replace(b"mx.google.com", b"mail.attacker.net")
+        fake = FakeMailbox(forged)
+        self.assertEqual(mailbox._collect_list_requests(fake), [])
+        self.assertIn("STORE", [command[0] for command in fake.commands])
 
 
 class LogHygieneTests(unittest.TestCase):

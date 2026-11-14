@@ -13,17 +13,27 @@ name: mailing-list
 # anyone who has unsubscribed off it.
 
 on:
-  # Off the hour and off the half hour, on purpose. GitHub delays scheduled
-  # runs most at those minutes, and it drops them outright under load: the
-  # mailbox poll's `*/30` cron ran six times on 2026-11-13 instead of
-  # forty-eight, with gaps of four and five hours, which is why a subscriber
-  # could write in and hear nothing all evening.
+  # Off the hour and off the half hour, on purpose — though not a cure. That
+  # was the guess after the mailbox poll's `*/30` cron ran six times on
+  # 2026-11-13 instead of forty-eight; the API's record since says scheduled
+  # runs here are delivered four to seven times a day whatever minute they
+  # ask for. The odd minutes cost nothing and stay, but an answer takes hours
+  # unless somebody dispatches this workflow by hand.
   schedule:
     - cron: '9,24,39,54 * * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+# Both jobs clone, write and push the same two files in the papers
+# repository. Run at the same time they race, and git stops the lost update by
+# refusing the second push — so a dispatch while a scheduled run is going
+# turned into a failed run and an alert Issue. Queue instead; nothing here is
+# worth cancelling a run that is already answering somebody.
+concurrency:
+  group: mailing-list
+  cancel-in-progress: false
 
 jobs:
   # Answer whoever has written in. Cheap: the mailbox check is standard
@@ -59,8 +69,10 @@ jobs:
         run: uv run python scripts/pdf_mailbox.py welcome
 
   # Run by hand only: folding the secret in is a migration step, not something
-  # to repeat every quarter hour.
+  # to repeat every quarter hour. After the poll, not beside it, because the
+  # two write the same files from their own clones.
   sync:
+    needs: poll
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 5

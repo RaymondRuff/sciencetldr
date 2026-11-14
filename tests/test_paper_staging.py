@@ -219,6 +219,76 @@ class StagingTests(unittest.TestCase):
         self.assertEqual(self.published(), ["README.md"])
 
 
+class ConcurrentPushTests(unittest.TestCase):
+    """Two writers, one papers repository: the loser rebases and tries again.
+
+    Both jobs of the mailing-list workflow write list/subscribers.txt, and so
+    does a digest send that folds the secret in. commit() pushes without
+    --force, so git refuses a stale clone rather than losing what the other
+    writer did; this is what happens after that refusal.
+
+    Against a throwaway local repository, never the real one.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.tmp = Path(self._tmp.name)
+        self.remote = self.tmp / "papers.git"
+        seed = self.tmp / "seed"
+        git("init", "-q", "--bare", "-b", "main", str(self.remote), cwd=self.tmp)
+        git("clone", "-q", str(self.remote), str(seed), cwd=self.tmp)
+        (seed / "README.md").write_text("staging\n")
+        git("add", "README.md", cwd=seed)
+        git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "seed", cwd=seed)
+        git("push", "-q", "origin", "HEAD:main", cwd=seed)
+
+    def someone_else_pushes(self, name: str, content: str) -> None:
+        clone = self.tmp / f"other-{name.replace('/', '-')}"
+        git("clone", "-q", str(self.remote), str(clone), cwd=self.tmp)
+        path = clone / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content)
+        git("add", "-A", cwd=clone)
+        git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "theirs", cwd=clone)
+        git("push", "-q", "origin", "HEAD:main", cwd=clone)
+
+    def published(self) -> list[str]:
+        out = subprocess.run(
+            ["git", "--git-dir", str(self.remote), "ls-tree", "-r", "--name-only", "main"],
+            capture_output=True, text=True, check=True,
+        ).stdout
+        return out.split()
+
+    def test_a_rejected_push_is_rebased_and_retried(self):
+        with paper_bundle.PapersRepo(str(self.remote)) as repo:
+            (repo.dir / "list").mkdir()
+            (repo.dir / "list" / "subscribers.txt").write_text("mine\n")
+            self.someone_else_pushes("list/unsubscribed.txt", "theirs\n")
+            self.assertTrue(repo.commit("mine", paths=("list",)))
+        published = self.published()
+        self.assertIn("list/subscribers.txt", published)
+        self.assertIn("list/unsubscribed.txt", published)
+
+    def test_a_push_that_cannot_be_rebased_fails_clearly(self):
+        with paper_bundle.PapersRepo(str(self.remote)) as repo:
+            (repo.dir / "list").mkdir()
+            (repo.dir / "list" / "subscribers.txt").write_text("mine\n")
+            self.someone_else_pushes("list/subscribers.txt", "theirs\n")
+            with self.assertRaises(RuntimeError) as caught:
+                repo.commit("mine", paths=("list",))
+        self.assertIn("twice", str(caught.exception))
+        # Whoever got there first is still there, untouched.
+        self.assertIn("list/subscribers.txt", self.published())
+
+    def test_an_uncontested_push_still_goes_straight_out(self):
+        with paper_bundle.PapersRepo(str(self.remote)) as repo:
+            (repo.dir / "list").mkdir()
+            (repo.dir / "list" / "subscribers.txt").write_text("mine\n")
+            self.assertTrue(repo.commit("mine", paths=("list",)))
+        self.assertIn("list/subscribers.txt", self.published())
+
+
 class DeniedTests(unittest.TestCase):
     def test_a_token_without_the_repository_is_named_as_such(self):
         refused = subprocess.CompletedProcess(
