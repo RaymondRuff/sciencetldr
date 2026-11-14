@@ -8,7 +8,8 @@ on:
     # the drop. Episode 96 was picked on a Friday and published on Saturday,
     # which is what this fixes. Thursday 11:00 UTC also leaves hours of slack
     # for GitHub, which has lately started this schedule four to six hours late.
-    - cron: '0 11 * * 4'
+    # Off the hour: GitHub delays scheduled runs most at :00.
+    - cron: '8 11 * * 4'
   workflow_dispatch: {}
 
 permissions:

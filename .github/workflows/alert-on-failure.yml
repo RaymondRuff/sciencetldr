@@ -8,6 +8,7 @@ on:
   workflow_run:
     workflows:
       - generate-episode
+      - mailing-list
       - publish
       - monday-podcast
       - friday-podcast

@@ -39,6 +39,8 @@ Usage:
   python scripts/pdf_mailbox.py check    # save waiting PDFs to $RUNNER_TEMP/tldr-pdfs
                                          # (or $PDF_DROP_DIR); writes found=true|false
                                          # and welcome=true|false to $GITHUB_OUTPUT
+  python scripts/pdf_mailbox.py list     # the subscribe/unsubscribe pass alone,
+                                         # on its own schedule; writes welcome=
   python scripts/pdf_mailbox.py welcome  # send the latest digest to whoever just
                                          # subscribed, and label their mail
 """
@@ -512,6 +514,31 @@ def _collect_one_offs(imap: imaplib.IMAP4_SSL, out_dir: Path) -> list[dict]:
     return found
 
 
+def collect_list() -> list[dict]:
+    """One IMAP session for the subscribe and unsubscribe pass alone.
+
+    The episode workflow's poll does this as its third pass, but that workflow
+    is scheduled for episodes, not for people joining a mailing list. This is
+    the same work on its own schedule, so a subscription no longer waits on an
+    episode sweep happening — and it can be run by hand, which the episode
+    workflow cannot be without taking a publish slot with it.
+    """
+    password = os.environ.get("GMAIL_APP_PASSWORD")
+    if not password:
+        print("[mailbox] GMAIL_APP_PASSWORD unset; skipping mailbox")
+        return []
+    imap = imaplib.IMAP4_SSL(IMAP_HOST)
+    try:
+        imap.login(ACCOUNT, password)
+        imap.select(_all_mail(imap))
+        return _collect_list_requests(imap)
+    finally:
+        try:
+            imap.logout()
+        except Exception:  # noqa: BLE001 - logout failure is irrelevant
+            pass
+
+
 def _collect_list_requests(imap: imaplib.IMAP4_SSL) -> list[dict]:
     """Subscribe and unsubscribe mails: {uid, address, wants, subject}.
 
@@ -724,6 +751,14 @@ def main() -> None:
     command = sys.argv[1] if len(sys.argv) > 1 else "check"
     if command == "welcome":
         print(f"[list] {send_welcomes()} welcome(s) sent")
+        return
+    if command == "list":
+        recorded, welcoming = handle_list_requests(collect_list())
+        print(f"[list] {recorded} change(s) recorded, {welcoming} to welcome")
+        output = os.environ.get("GITHUB_OUTPUT")
+        if output:
+            with open(output, "a", encoding="utf-8") as fh:
+                fh.write(f"welcome={'true' if welcoming else 'false'}\n")
         return
     if command != "check":
         sys.exit(f"unknown command: {command}")
