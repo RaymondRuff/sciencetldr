@@ -660,9 +660,39 @@ class PapersRepo:
             print("[papers] nothing to commit")
             return False
         self._git("commit", "-m", message)
-        self._git("push", "origin", "HEAD:main")
+        self._push()
         print(f"[papers] pushed: {message}")
         return True
+
+    def _push(self) -> None:
+        """Push, once more on top of whoever got there first if need be.
+
+        The mailing list is written by both jobs of the mailing-list workflow
+        and by a digest send folding the secret in, so a clone can be stale by
+        the time it pushes. Nothing here uses --force: git refusing the stale
+        push is what stops the other writer's work being lost, and the right
+        answer is to rebase onto what they pushed and go again. One retry
+        only. If it is rejected twice something is contending that a third
+        attempt will not settle, and failing says so where an alert can see it.
+        """
+        try:
+            self._git("push", "origin", "HEAD:main")
+            return
+        except PapersRepoDenied:
+            raise  # a token without access; retrying changes nothing
+        except RuntimeError as rejected:
+            print(f"[papers] push rejected ({rejected}); rebasing onto main and retrying")
+        try:
+            self._git("fetch", "--depth", "50", "origin", "main")
+            self._git("rebase", "FETCH_HEAD")
+            self._git("push", "origin", "HEAD:main")
+        except PapersRepoDenied:
+            raise  # as above: keep the one failure that never fixes itself
+        except RuntimeError as again:
+            raise RuntimeError(
+                f"push to {self.repo} was rejected twice; the retry said: {again}"
+            ) from again
+        print("[papers] pushed on the second attempt, rebased onto main")
 
 
 def cache_dir() -> Path:

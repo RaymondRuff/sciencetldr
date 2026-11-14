@@ -113,8 +113,9 @@ jobs:
           steps.mailbox.outputs.welcome == 'true'
         run: uv sync
 
-      # Their mail is labelled only once this has gone, so a failure here
-      # costs half an hour, not the confirmation.
+      # Their mail is labelled before this sends, not after: an unlabelled
+      # request is found again by every poll for a fortnight, and the welcome
+      # is the whole digest. See send_welcomes() for the trade.
       - name: Welcome new subscribers with the latest digest
         if: steps.mailbox.outputs.welcome == 'true'
         run: uv run python scripts/pdf_mailbox.py welcome

@@ -313,20 +313,80 @@ def _all_mail(imap: imaplib.IMAP4_SSL) -> str:
     return "INBOX"
 
 
+# Gmail's own authserv-id. It is the only one worth reading: Gmail strips an
+# incoming Authentication-Results header that claims this id and stamps its
+# own, so anything else in a message was written by whoever sent it.
+GMAIL_AUTHSERV = "mx.google.com"
+COMMENT_RE = re.compile(r"\([^()]*\)")
+
+
+def _verdicts(msg: EmailMessage) -> list[list[str]] | None:
+    """Gmail's own Authentication-Results, as one token list per method.
+
+    None means Gmail stamped no verdict on this message. Comments are stripped
+    first — `dmarc=fail (dmarc=pass header.from=victim.com)` is a fail — and
+    only the first header carrying Gmail's authserv-id is read, because a
+    sender may have supplied the others.
+    """
+    for header in msg.get_all("Authentication-Results", []):
+        raw = str(header)
+        while True:
+            stripped = COMMENT_RE.sub(" ", raw)
+            if stripped == raw:
+                break
+            raw = stripped
+        stanzas = raw.lower().split(";")
+        if stanzas[0].strip() != GMAIL_AUTHSERV:
+            continue
+        return [stanza.split() for stanza in stanzas[1:] if stanza.split()]
+    return None
+
+
+def _domain_of(value: str) -> str:
+    """The domain in an Authentication-Results property value.
+
+    `header.i=@example.com`, `header.i=user@example.com` and
+    `header.from=example.com` all answer example.com. Taking the part after
+    the last `@` is what anchors the match: the old substring test let
+    `header.i=@victim.com.attacker.net` satisfy victim.com.
+    """
+    return value.strip().strip('"<>').rsplit("@", 1)[-1].strip()
+
+
 def _authenticated(msg: EmailMessage, sender: str) -> bool:
-    """Trust Gmail's own verdict on whether the From address was spoofed."""
-    domain = sender.rsplit("@", 1)[-1]
-    results = [str(h).lower() for h in msg.get_all("Authentication-Results", [])]
-    if not results:
-        # Gmail stamps every message arriving from outside; a message with no
-        # results header can only have originated inside the account itself.
-        return sender == ACCOUNT
-    for result in results:
-        if "dmarc=pass" in result:
+    """Trust Gmail's own verdict on whether the From address was spoofed.
+
+    This is the only gate on commissioning an episode, supplying a PDF and
+    joining or leaving the digest list, and it used to be forgeable three
+    ways: it ORed every copy of the header, including ones the sender wrote;
+    it read `dmarc=pass` without checking which domain passed; and its DKIM
+    domain test was a substring match. So a verdict now has to be Gmail's own,
+    name a method that passed, and name the sender's domain in that same
+    method's own properties.
+    """
+    domain = sender.rsplit("@", 1)[-1].strip().lower()
+    if not domain or "@" not in sender:
+        return False
+    stanzas = _verdicts(msg)
+    if stanzas is None:
+        # Mail arriving from outside always carries Gmail's stamp, so a
+        # message with no verdict of Gmail's can only have been sent by the
+        # account itself — and if somebody else's header is in there instead,
+        # that is not a message Gmail received from outside unexamined.
+        return sender == ACCOUNT and not msg.get_all("Authentication-Results")
+    for tokens in stanzas:
+        method, _, result = tokens[0].partition("=")
+        if result != "pass":
+            continue
+        properties = dict(
+            token.split("=", 1) for token in tokens[1:] if "=" in token
+        )
+        if method == "dmarc" and _domain_of(properties.get("header.from", "")) == domain:
             return True
-        if "dkim=pass" in result and (
-            f"header.i=@{domain}" in result or f"header.d={domain}" in result
-        ):
+        if method == "dkim" and domain in {
+            _domain_of(properties.get("header.i", "")),
+            _domain_of(properties.get("header.d", "")),
+        }:
             return True
     return False
 
@@ -558,7 +618,7 @@ def collect_list() -> list[dict]:
 
 
 def _collect_list_requests(imap: imaplib.IMAP4_SSL) -> list[dict]:
-    """Subscribe and unsubscribe mails: {uid, address, wants, subject}.
+    """Subscribe and unsubscribe mails: {uid, address, wants, subject, message_id}.
 
     Headers only — the body is never fetched, because the subject carries the
     whole request and the address can only be the verified sender. A message
@@ -594,7 +654,15 @@ def _collect_list_requests(imap: imaplib.IMAP4_SSL) -> list[dict]:
             _reject(imap, uid)
             continue
         found.append(
-            {"uid": uid.decode(), "address": sender, "wants": wants, "subject": subject}
+            {
+                "uid": uid.decode(),
+                "address": sender,
+                "wants": wants,
+                "subject": subject,
+                # Carried through the manifest so the answer threads under
+                # the request instead of arriving as a loose message.
+                "message_id": str(header.get("Message-ID", "")),
+            }
         )
         print(f"[list] {wants} request received")
     return found
@@ -635,7 +703,12 @@ def handle_list_requests(requests: list[dict] | None = None) -> tuple[int, int]:
             # The change is stored, so the list is right; the next poll reads
             # the same mail and sends the same one-line note again.
             print("[list] a recorded change could not be labelled; it may be answered twice")
-        reply_to(answered["address"], answered["subject"], answered["body"])
+        reply_to(
+            answered["address"],
+            answered["subject"],
+            answered["body"],
+            in_reply_to=answered.get("message_id"),
+        )
     drop_dir().mkdir(parents=True, exist_ok=True)
     (drop_dir() / WELCOME_MANIFEST).write_text(json.dumps(pending), encoding="utf-8")
     return recorded, len(pending)
@@ -678,7 +751,14 @@ def send_welcomes(pending: list[dict] | None = None) -> int:
         if not mark_uid(entry["uid"]):
             print("[list] could not label a welcome request; not sending, to avoid repeating it")
             continue
-        if reply_to(entry["address"], subject, text, html):
+        if reply_to(
+            entry["address"],
+            subject,
+            text,
+            html,
+            unsubscribe=send_email.SENDER,
+            in_reply_to=entry.get("message_id"),
+        ):
             sent += 1
             print(f"[list] welcomed a new subscriber with the {digest[0] if digest else 'short'} digest")
         else:
@@ -686,14 +766,32 @@ def send_welcomes(pending: list[dict] | None = None) -> int:
     return sent
 
 
-def reply_to(address: str, subject: str, body: str, html: str | None = None) -> bool:
-    """One message to someone who wrote in. Never raises."""
+def reply_to(
+    address: str,
+    subject: str,
+    body: str,
+    html: str | None = None,
+    *,
+    unsubscribe: str | None = None,
+    in_reply_to: str | None = None,
+) -> bool:
+    """One message to someone who wrote in. Never raises.
+
+    `in_reply_to` threads it under what they sent, so the answer arrives in
+    the conversation rather than beside it. `unsubscribe` is for the welcome,
+    which is the digest itself and so wants the list headers with it.
+    """
     if not address or not os.environ.get("GMAIL_APP_PASSWORD"):
         print("[list] no mail password; not answering")
         return False
     try:
         send_email.send(
-            subject=subject[:200], body_text=body, recipients=[address], body_html=html
+            subject=subject[:200],
+            body_text=body,
+            recipients=[address],
+            body_html=html,
+            unsubscribe=unsubscribe,
+            in_reply_to=in_reply_to,
         )
     except Exception as exc:  # noqa: BLE001 - the stored list is the record
         print(f"[list] could not answer: {send_email.failure_reason(exc)}")
@@ -797,8 +895,9 @@ def main() -> None:
         sys.exit(f"unknown command: {command}")
     replies, one_offs, list_requests = collect()
     # Recorded here, in the standard-library step: joining the list should not
-    # wait on a dependency install, and it is the half-hourly poll that makes
-    # the answer arrive in minutes rather than the next morning.
+    # wait on a dependency install. This is the second chance at a request —
+    # the mailing-list workflow is the first — and whichever gets there first
+    # labels the mail.
     recorded, welcoming = handle_list_requests(list_requests)
     if recorded:
         print(f"[list] {recorded} subscription change(s) recorded")
