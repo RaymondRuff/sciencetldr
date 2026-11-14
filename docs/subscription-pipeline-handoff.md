@@ -368,9 +368,9 @@ as "already subscribed", and sends the same digest. Writing in twice is
 therefore the same as writing in once, deliberately.
 
 This is the third pass of the mailbox poll
-([`scripts/pdf_mailbox.py`](../scripts/pdf_mailbox.py)), which runs every half
-hour on standard library alone, before any dependency is installed — so an
-answer arrives in minutes, and the step now needs `GH_PAT` to reach the list.
+([`scripts/pdf_mailbox.py`](../scripts/pdf_mailbox.py)), which runs on standard
+library alone, before any dependency is installed, and now has a workflow of
+its own — see the next update for why.
 
 **Reading the secret generously, on purpose.** The first cut of `legacy()`
 kept only bare addresses, which would have silently dropped an entry typed as
@@ -393,6 +393,36 @@ own copy; with the list open to anyone who asks, that gets worse with every
 person added. Delivery is decided by the SMTP envelope, not the headers, so
 blind copying is simply a matter of naming nobody — and sends go out in batches
 of ninety, well inside Gmail's per-message limits.
+
+## Update, 2026-11-14: the schedule was the bottleneck, not the code
+
+Ray sent a "Subscribe" mail and heard nothing for forty minutes. The code was
+fine. The mailbox poll's cron was `*/30 * * * *`, so it fired at **:00 and
+:30** — the two minutes GitHub's scheduler delays most, and drops outright
+under load. It had run **six times on 13 November instead of forty-eight**,
+with gaps of four and five hours; the last poll before his mail was nearly four
+hours earlier. This had been true for days and nobody noticed, because a PDF
+arriving six hours late looks like nothing at all.
+
+Two changes:
+
+- **Every cron moved off the congested minutes.** The mailbox poll is now
+  `13,43`, the daily sweep and publish slot `11 14`, the Friday crawl `8 11`.
+  `tests/test_schedules.py` fails if any schedule fires on the hour or the half
+  hour, and separately if the `POLL` or `PUBLISH_SLOT` comparison stops naming
+  a cron the workflow actually has — renaming a cron without its comparison
+  would silently turn every poll into a full sweep.
+- **The mailing list got its own workflow** (`mailing-list.yml`, four times an
+  hour at `9,24,39,54`), because subscribing had no business depending on an
+  episode workflow's scheduling luck. It also means the poll can be run by
+  hand: dispatching generate-episode takes a publish slot with it, so it was
+  never something to do casually. `alert-on-failure` now watches it, and
+  `pdf_mailbox.py list` is the entry point — the same third pass, its own IMAP
+  session, no PDF search.
+
+The episode workflow still runs the list pass as before, so there are two
+chances at every request. They cannot collide: `13,43` and `9,24,39,54` never
+fall in the same minute, and whichever gets there first labels the mail.
 
 ## The decision
 

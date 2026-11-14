@@ -33,10 +33,14 @@ on:
       # up to six hours late.
       - 'generated/routine/*.script.json'
   schedule:
-    - cron: '0 14 * * *'      # full sweep
+    - cron: '11 14 * * *'     # full sweep, and the day's publish slot
     - cron: '17 5 * * *'      # full sweep that closes expired PDF windows
     - cron: '28 7 * * *'      # second chance at that, just before the writer
-    - cron: '*/30 * * * *'    # mailbox poll
+    # Every half hour, but never on the hour or the half hour: GitHub delays
+    # scheduled runs most at :00 and :30 and drops them under load. On
+    # 2026-11-13 this cron ran six times instead of forty-eight, with gaps of
+    # four and five hours, so an emailed PDF could sit unread all evening.
+    - cron: '13,43 * * * *'   # mailbox poll
   workflow_dispatch:
     inputs:
       issue:
@@ -66,7 +70,10 @@ jobs:
         github.event.label.name == 'podcast-pending')
     runs-on: ubuntu-latest
     env:
-      POLL: ${{ github.event.schedule == '*/30 * * * *' }}
+      # Must name the mailbox poll's cron exactly; tests/test_schedules.py
+      # fails if the two drift apart, because a mismatch would quietly turn
+      # every poll into a full sweep.
+      POLL: ${{ github.event.schedule == '13,43 * * * *' }}
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
       PDF_SENDER_ALLOWLIST: ${{ secrets.PDF_SENDER_ALLOWLIST }}
@@ -154,7 +161,7 @@ jobs:
           # daily sweep (and a manual run with no issue named) merges the oldest
           # waiting draft PR — one a day. Any other value keeps the manual merge.
           AUTO_PUBLISH: ${{ vars.AUTO_PUBLISH }}
-          PUBLISH_SLOT: ${{ github.event.schedule == '0 14 * * *' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
+          PUBLISH_SLOT: ${{ github.event.schedule == '11 14 * * *' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
           ISSUE: ${{ inputs.issue }}
         run: |
           PUBLISH=""
