@@ -361,11 +361,15 @@ line of preamble on top, rather than a note saying "you're on the list". It
 proves the subscription works, it is worth reading, and it means someone who
 joins on a Tuesday is not left with a promise until Sunday. Rendering it needs
 the markdown package, so the standard-library poll only records the request and
-a later step — gated on that record, after `uv sync` — sends it. Their mail is
-labelled only once the welcome has gone, so a failure there costs half an hour
-rather than the confirmation: the next poll finds the request again, reads it
-as "already subscribed", and sends the same digest. Writing in twice is
-therefore the same as writing in once, deliberately.
+a later step — gated on that record, after `uv sync` — sends it.
+
+Their mail is labelled **before** the welcome goes, which is the opposite of
+how this was first built. An unlabelled request is found again by every poll
+for a fortnight, and `imaplib` returns a refusal for a label Gmail declines
+rather than raising, so sending first turned one unnoticed refusal into dozens
+of copies of a 100 KB digest. Labelling first costs at worst one welcome to
+somebody who is on the list either way and gets Sunday's digest. Writing in
+twice gets the one-line note, not the digest a second time.
 
 This is the third pass of the mailbox poll
 ([`scripts/pdf_mailbox.py`](../scripts/pdf_mailbox.py)), which runs on standard
