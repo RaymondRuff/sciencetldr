@@ -341,8 +341,26 @@ def _first_pdf(msg: EmailMessage) -> bytes | None:
     return None
 
 
-def _label(imap: imaplib.IMAP4_SSL, uid: bytes, label: str) -> None:
-    imap.uid("STORE", uid, "+X-GM-LABELS", f"({label})")
+def _label(imap: imaplib.IMAP4_SSL, uid: bytes, label: str) -> bool:
+    """Add a Gmail label. Returns whether the server actually took it.
+
+    imaplib *returns* a "NO" response for a command the server declines — it
+    raises only on "BAD" — so a call whose status is not read cannot tell a
+    stored label from a refused one. An unlabelled message is found again by
+    every later poll, which is how one welcome became a fortnight of them.
+    """
+    status, _ = imap.uid("STORE", uid, "+X-GM-LABELS", f"({label})")
+    return status == "OK"
+
+
+def _reject(imap: imaplib.IMAP4_SSL, uid: bytes) -> None:
+    """Label a message rejected, and say so when the label does not take.
+
+    Nothing is sent to a rejected message, so a refused label costs only
+    another look at it, and another rejection, on the next poll.
+    """
+    if not _label(imap, uid, LABEL_REJECTED):
+        print("[mailbox] the rejection label was refused; this mail will be looked at again")
 
 
 def _search(imap: imaplib.IMAP4_SSL, query: str) -> list[bytes]:
@@ -422,16 +440,16 @@ def collect() -> tuple[dict[int, dict], list[dict], list[dict]]:
 
             if sender not in allowed:
                 print(f"[mailbox] #{issue}: rejecting PDF from non-allow-listed sender")
-                _label(imap, uid, LABEL_REJECTED)
+                _reject(imap, uid)
                 continue
             if not _authenticated(msg, sender):
                 print(f"[mailbox] #{issue}: rejecting — sender failed authentication")
-                _label(imap, uid, LABEL_REJECTED)
+                _reject(imap, uid)
                 continue
             pdf = _first_pdf(msg)
             if pdf is None:
                 print(f"[mailbox] #{issue}: reply has no readable PDF attachment")
-                _label(imap, uid, LABEL_REJECTED)
+                _reject(imap, uid)
                 continue
 
             # A later reply for the same Issue supersedes an earlier one.
@@ -488,7 +506,7 @@ def _collect_one_offs(imap: imaplib.IMAP4_SSL, out_dir: Path) -> list[dict]:
         # A From line can be forged; Gmail's own verdict on it cannot.
         if sender != owner or not _authenticated(msg, sender):
             print("[mailbox] one-off: rejecting — not the owner, or failed authentication")
-            _label(imap, uid, LABEL_REJECTED)
+            _reject(imap, uid)
             continue
         body = _body_text(msg)
         entry = {
@@ -567,13 +585,13 @@ def _collect_list_requests(imap: imaplib.IMAP4_SSL) -> list[dict]:
             continue  # our own digest, bounced or forwarded back to us
         if automated(header):
             print(f"[list] ignoring an automated {wants} message")
-            _label(imap, uid, LABEL_REJECTED)
+            _reject(imap, uid)
             continue
         # A From line can be forged; Gmail's own verdict on it cannot. Without
         # this, one message could sign up — or cut off — anybody.
         if not mailing_list.valid(sender) or not _authenticated(header, sender):
             print(f"[list] rejecting a {wants}: the sender could not be verified")
-            _label(imap, uid, LABEL_REJECTED)
+            _reject(imap, uid)
             continue
         found.append(
             {"uid": uid.decode(), "address": sender, "wants": wants, "subject": subject}
@@ -613,7 +631,10 @@ def handle_list_requests(requests: list[dict] | None = None) -> tuple[int, int]:
         if answered["outcome"] in mailing_list.WELCOME_OUTCOMES:
             pending.append(answered)
             continue
-        mark_uid(answered["uid"])
+        if not mark_uid(answered["uid"]):
+            # The change is stored, so the list is right; the next poll reads
+            # the same mail and sends the same one-line note again.
+            print("[list] a recorded change could not be labelled; it may be answered twice")
         reply_to(answered["address"], answered["subject"], answered["body"])
     drop_dir().mkdir(parents=True, exist_ok=True)
     (drop_dir() / WELCOME_MANIFEST).write_text(json.dumps(pending), encoding="utf-8")
@@ -631,9 +652,8 @@ def welcomes_pending() -> list[dict]:
 def send_welcomes(pending: list[dict] | None = None) -> int:
     """Send the most recent digest to whoever just subscribed.
 
-    The mail is labelled only once its welcome has gone, so a failure here
-    costs half an hour rather than the confirmation: the next poll finds the
-    request again, reads it as "already", and sends the same digest.
+    The mail is labelled first and the digest sent second; the comment on that
+    line is the trade it makes.
     """
     pending = welcomes_pending() if pending is None else pending
     if not pending:
@@ -650,10 +670,19 @@ def send_welcomes(pending: list[dict] | None = None) -> int:
         except Exception as exc:  # noqa: BLE001 - never leave a subscriber silent
             print(f"[list] could not build the welcome ({exc}); sending the short note")
             subject, text, html = entry["subject"], entry["body"], None
+        # Labelled *before* sending, deliberately. The welcome is the whole
+        # digest, about 100 KB, and an unlabelled request is found again by
+        # every poll for a fortnight: sending first made one refused label
+        # cost seventy copies. Labelling first costs at worst one welcome to
+        # somebody who is on the list either way and gets Sunday's digest.
+        if not mark_uid(entry["uid"]):
+            print("[list] could not label a welcome request; not sending, to avoid repeating it")
+            continue
         if reply_to(entry["address"], subject, text, html):
-            mark_uid(entry["uid"])
             sent += 1
             print(f"[list] welcomed a new subscriber with the {digest[0] if digest else 'short'} digest")
+        else:
+            print("[list] a welcome could not be sent; they are subscribed and get the next digest")
     return sent
 
 
@@ -667,7 +696,7 @@ def reply_to(address: str, subject: str, body: str, html: str | None = None) -> 
             subject=subject[:200], body_text=body, recipients=[address], body_html=html
         )
     except Exception as exc:  # noqa: BLE001 - the stored list is the record
-        print(f"[list] could not answer: {exc}")
+        print(f"[list] could not answer: {send_email.failure_reason(exc)}")
         return False
     return True
 
@@ -703,7 +732,12 @@ def received() -> dict[int, dict]:
 
 
 def mark_uid(uid: str, label: str = LABEL_PROCESSED) -> bool:
-    """Label one message so later polls ignore it."""
+    """Label one message so later polls ignore it. False if it did not take.
+
+    Whoever calls this has to care about the answer: an unlabelled message is
+    read again by every later poll, so a refusal taken for success means the
+    same mail is answered again, and again, until it ages out of the search.
+    """
     password = os.environ.get("GMAIL_APP_PASSWORD")
     if not uid or not password:
         return False
@@ -711,8 +745,7 @@ def mark_uid(uid: str, label: str = LABEL_PROCESSED) -> bool:
     try:
         imap.login(ACCOUNT, password)
         imap.select(_all_mail(imap))
-        _label(imap, uid.encode(), label)
-        return True
+        return _label(imap, uid.encode(), label)
     finally:
         try:
             imap.logout()
@@ -741,7 +774,7 @@ def answer(subject: str, body: str) -> bool:
     try:
         send_email.send(subject=subject[:200], body_text=body, recipients=[owner])
     except Exception as exc:  # noqa: BLE001 - the Issue is the record; mail is a courtesy
-        print(f"[one-off] could not answer the request: {exc}")
+        print(f"[one-off] could not answer the request: {send_email.failure_reason(exc)}")
         return False
     print(f"[one-off] answered: {subject[:70]}")
     return True

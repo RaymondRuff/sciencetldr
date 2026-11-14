@@ -57,15 +57,30 @@ def main() -> None:
         f"[email] sending {path.name} to {len(recipients)} subscriber(s) "
         f"in {len(batches)} blind-copied message(s)"
     )
+    failed = 0
     for number, batch in enumerate(batches, start=1):
-        send_email.send(
-            subject=f"Science TLDR Weekly Digest — {today}",
-            body_text=body_md + text_footer,
-            recipients=batch,
-            body_html=mailing_list.wrap_html(body_html + html_footer),
-            bcc=True,
-        )
+        try:
+            send_email.send(
+                subject=f"Science TLDR Weekly Digest — {today}",
+                body_text=body_md + text_footer,
+                recipients=batch,
+                body_html=mailing_list.wrap_html(body_html + html_footer),
+                bcc=True,
+            )
+        except Exception as exc:  # noqa: BLE001 - one bad batch is not the send
+            # Never the exception itself: smtplib puts the refused addresses in
+            # its string form, and these logs are public.
+            failed += 1
+            print(
+                f"[email]   batch {number}/{len(batches)} failed: "
+                f"{send_email.failure_reason(exc)}"
+            )
+            continue
         print(f"[email]   batch {number}/{len(batches)}: {len(batch)} address(es)")
+    if failed == len(batches):
+        sys.exit("[email] every batch failed; nobody received the digest")
+    if failed:
+        print(f"[email] {failed} of {len(batches)} batch(es) failed")
 
 
 if __name__ == "__main__":

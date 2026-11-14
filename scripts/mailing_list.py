@@ -11,13 +11,18 @@ Recipients are **(the file plus the old secret) minus the unsubscribed**.
 Three properties fall out of that, and they are the point:
 
   * the people already on the secret keep receiving the digest without
-    anyone doing anything, including if the papers repository cannot be
-    reached — the secret alone is enough to send;
+    anyone doing anything;
   * their first send folds them into the file, so the list becomes readable
     and the secret can be deleted whenever it suits;
   * unsubscribing sticks. The suppression file beats both sources, so
     someone who came in on the secret can still leave, which a list built
     only from a secret could never offer.
+
+That last one is why there is no fallback to the secret alone. Only the
+papers repository knows who has left, so a send that cannot read it does not
+know either, and `recipients()` stops instead: a digest a day late beats one
+sent to somebody who opted out. A failed *write* is different — the list was
+read correctly, so the send goes ahead and the next one repeats the fold.
 
 Subscribing is a mail to the podcast address with "subscribe" starting the
 subject, and leaving is the same with "unsubscribe". Only the **sender's own**
@@ -187,35 +192,51 @@ def _repo():
 def recipients() -> list[str]:
     """Who to send the digest to, folding the old secret into the file as we go.
 
-    Falls back to the secret alone when the papers repository cannot be
-    reached, so an outage there delays nothing and drops nobody.
+    The list is worked out from what was read, before anything is written, and
+    the write gets a `try` of its own. Those two used to share one, and its
+    `except` answered any failure — a rejected push included — with the bare
+    secret, which has no suppression list in it. A second writer pushing first
+    was enough to mail somebody who had unsubscribed.
+
+    A read that fails exits non-zero rather than guessing: see the module
+    docstring.
     """
+    active: list[str] = []
     try:
         with _repo() as repo:
             roster = Roster(repo)
             moved = roster.fold_in_legacy()
-            if moved:
-                print(f"[list] folding {len(moved)} address(es) from the secret into the file")
-                roster.save(f"Add {len(moved)} subscriber(s) carried over from DIGEST_RECIPIENTS")
+            # Everything the send needs, decided before anything is written.
             active = roster.active()
             print(
                 f"[list] {len(active)} subscriber(s): {len(roster.subscribers)} on file, "
                 f"{len(roster.unsubscribed)} unsubscribed"
             )
-            unreadable = legacy_parts()[1]
-            if unreadable:
-                print(
-                    f"[list] WARNING: {unreadable} entr(ies) in DIGEST_RECIPIENTS are not "
-                    "readable as an address and nobody is being sent to them"
-                )
-            return active
-    except Exception as exc:  # noqa: BLE001 - the digest must still go out
-        fallback = sorted(legacy())
-        print(f"[list] could not read the list ({exc})")
-        if not fallback:
-            raise
-        print(f"[list] falling back to the {len(fallback)} address(es) in DIGEST_RECIPIENTS")
-        return fallback
+            if moved:
+                print(f"[list] folding {len(moved)} address(es) from the secret into the file")
+                try:
+                    roster.save(
+                        f"Add {len(moved)} subscriber(s) carried over from DIGEST_RECIPIENTS"
+                    )
+                except Exception as exc:  # noqa: BLE001 - the list read above is still right
+                    print(
+                        f"[list] the fold could not be written ({type(exc).__name__}); "
+                        "sending to the list as read, and the next send will try again"
+                    )
+    except Exception as exc:  # noqa: BLE001 - reported, then exited on
+        print(f"[list] could not read the list ({type(exc).__name__}: {exc})")
+        sys.exit(
+            "[list] could not read list/unsubscribed.txt, so who has left is unknown; "
+            "not sending. Fix access to the papers repository and run the digest again."
+        )
+
+    unreadable = legacy_parts()[1]
+    if unreadable:
+        print(
+            f"[list] WARNING: {unreadable} entr(ies) in DIGEST_RECIPIENTS are not "
+            "readable as an address and nobody is being sent to them"
+        )
+    return active
 
 
 REPLIES = {
@@ -291,11 +312,14 @@ def apply_requests(requests: list[dict]) -> list[dict]:
     return answers
 
 
-# Outcomes whose answer is the digest itself rather than a short note. Both
-# count: someone who writes in twice is asking to be sent something, and
-# treating them the same way makes a failed welcome safe to retry — the retry
-# reads as "already", and still arrives as the digest.
-WELCOME_OUTCOMES = ("added", "already")
+# Outcomes whose answer is the digest itself rather than a short note. Only a
+# new subscriber: "already" used to be in here so that a failed welcome could
+# be retried, but it also meant a lost race or a label that did not take sent
+# the whole ~100 KB digest again, and again. Writing in twice now gets the
+# one-line note from REPLIES["already"], which is all it needs to be.
+# welcome_message() still renders "already" — the retry that reaches it is the
+# one inside send_welcomes(), not another poll.
+WELCOME_OUTCOMES = ("added",)
 
 PREAMBLE = {
     "added": (

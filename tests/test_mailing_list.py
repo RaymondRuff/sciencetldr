@@ -26,6 +26,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
+import email_digest  # noqa: E402
 import mailing_list as ml  # noqa: E402
 import pdf_mailbox as mailbox  # noqa: E402
 import send_email  # noqa: E402
@@ -33,19 +34,51 @@ import send_email  # noqa: E402
 LEGACY = "ray@example.com,anna@example.org, ben@example.net"
 
 
+class FakeIMAP:
+    """Just enough IMAP to see what a declined command does.
+
+    imaplib *returns* a "NO" response for a command the server refuses — it
+    raises only on "BAD" — so code that does not read the status cannot tell a
+    stored label from a refused one.
+    """
+
+    def __init__(self, status: str = "OK") -> None:
+        self.status = status
+        self.commands: list[tuple] = []
+
+    def login(self, *args):
+        return "OK", [b""]
+
+    def select(self, *args):
+        return "OK", [b""]
+
+    def list(self):
+        return "OK", [br'(\HasNoChildren \All) "/" "[Gmail]/All Mail"']
+
+    def uid(self, command, *args):
+        self.commands.append((command, *args))
+        return self.status, [b""]
+
+    def logout(self):
+        return "OK", [b""]
+
+
 class FakeRepo:
     """Stands in for a clone of the private papers repository."""
 
-    def __init__(self, directory: Path, *, fails: bool = False) -> None:
+    def __init__(  # noqa: D107 - see the class docstring
+        self, directory, *, fails: bool = False, stores: bool = True
+    ) -> None:
         self.dir = directory
         self.fails = fails
-        self.commits: list[tuple[str, tuple[str, ...]]] = []
+        self.stores = stores
+        self.commits = []
 
     def commit(self, message: str, paths: tuple[str, ...] = ("papers",)) -> bool:
         if self.fails:
             raise RuntimeError("push rejected")
         self.commits.append((message, paths))
-        return True
+        return self.stores
 
 
 @contextmanager
@@ -167,26 +200,34 @@ class RecipientsTests(unittest.TestCase):
         self.assertIn("ray@example.com", (self.dir / "list" / "subscribers.txt").read_text())
         self.assertEqual(len(repo.commits), 1)
 
-    def test_an_unreachable_repository_falls_back_to_the_secret(self):
-        # An outage in the private repository must not stop the digest, and
-        # must not silently drop the people only the secret knows about.
+    def test_a_failed_write_still_subtracts_the_unsubscribed(self):
+        # The read and the write used to share one `try`, whose `except`
+        # answered with the bare secret — which has no suppression list in it.
+        # So a rejected push, which is what two writers at once look like,
+        # mailed the one person who had asked to be left alone.
+        (self.dir / "list").mkdir()
+        (self.dir / "list" / "unsubscribed.txt").write_text("ben@example.net\n")
+        out = io.StringIO()
+        with _patch_repo(FakeRepo(self.dir, fails=True)), contextlib.redirect_stdout(out):
+            found = ml.recipients()
+        self.assertEqual(found, ["anna@example.org", "ray@example.com"])
+        self.assertIn("could not be written", out.getvalue())
+
+    def test_an_unreadable_list_stops_the_send_whatever_the_secret_holds(self):
+        # Who has unsubscribed is only knowable from the papers repository, so
+        # a clone that fails means we do not know. Exiting non-zero makes
+        # alert-on-failure open an Issue: a digest a day late beats one sent to
+        # someone who opted out.
         def boom():
             raise RuntimeError("clone failed")
 
-        with mock.patch.object(ml, "_repo", boom):
-            self.assertEqual(
-                ml.recipients(),
-                ["anna@example.org", "ben@example.net", "ray@example.com"],
-            )
-
-    def test_with_no_secret_and_no_repository_it_raises(self):
-        def boom():
-            raise RuntimeError("clone failed")
-
-        with mock.patch.dict("os.environ", {"DIGEST_RECIPIENTS": ""}):
-            with mock.patch.object(ml, "_repo", boom):
-                with self.assertRaises(RuntimeError):
-                    ml.recipients()
+        for secret in (LEGACY, ""):
+            with self.subTest(secret="full" if secret else "empty"):
+                with mock.patch.dict("os.environ", {"DIGEST_RECIPIENTS": secret}):
+                    with mock.patch.object(ml, "_repo", boom):
+                        with self.assertRaises(SystemExit) as caught:
+                            ml.recipients()
+                self.assertIn("could not read", str(caught.exception))
 
     def test_chunks_keeps_every_address_once(self):
         addresses = [f"p{n}@example.com" for n in range(200)]
@@ -471,21 +512,20 @@ class DeferredWelcomeTests(unittest.TestCase):
         self.labelled: list[str] = []
         self.sent: list[tuple] = []
 
-    def _patches(self, sending: bool = True):
+    def _patches(self, sending: bool = True, labelling: bool = True):
+        def mark(uid, label=None):
+            if labelling:
+                self.labelled.append(uid)
+            return labelling
+
+        def reply(address, subject, body, html=None, **kwargs):
+            self.sent.append((address, subject, body))
+            return sending
+
         return (
             _patch_repo(FakeRepo(self.dir)),
-            mock.patch.object(
-                mailbox, "mark_uid", lambda uid, label=None: self.labelled.append(uid)
-            ),
-            mock.patch.object(
-                mailbox,
-                "reply_to",
-                lambda address, subject, body, html=None: (
-                    self.sent.append((address, subject, body)) or sending
-                )
-                if sending
-                else False,
-            ),
+            mock.patch.object(mailbox, "mark_uid", mark),
+            mock.patch.object(mailbox, "reply_to", reply),
         )
 
     def _run(self, requests, *, sending: bool = True):
@@ -502,6 +542,19 @@ class DeferredWelcomeTests(unittest.TestCase):
         self.assertEqual(self.sent, [])
         self.assertEqual(self.labelled, [])
         self.assertEqual([e["uid"] for e in mailbox.welcomes_pending()], ["1"])
+
+    def test_writing_in_twice_gets_the_note_and_not_the_digest_again(self):
+        # WELCOME_OUTCOMES used to include "already", so a retry — or a label
+        # that did not take — sent the whole ~100 KB digest a second time.
+        recorded, welcoming = self._run(
+            [{"uid": "3", "address": "ray@example.com", "wants": "subscribe"}]
+        )
+        self.assertEqual((recorded, welcoming), (1, 0))
+        self.assertEqual(self.labelled, ["3"])
+        self.assertIn("Already subscribed", self.sent[0][1])
+        self.assertIn("already on the list", self.sent[0][2].lower())
+        self.assertLess(len(self.sent[0][2]), 500, "that is a digest, not a note")
+        self.assertEqual(mailbox.welcomes_pending(), [])
 
     def test_someone_leaving_is_answered_at_once(self):
         recorded, welcoming = self._run(
@@ -526,14 +579,25 @@ class DeferredWelcomeTests(unittest.TestCase):
         self.assertIn("2026-11-09", subject)
         self.assertIn("A paper", body)
 
-    def test_a_failed_welcome_leaves_the_mail_for_the_next_poll(self):
-        # Unlabelled, so the request is found again; it reads as "already" and
-        # the same digest goes out. Better half an hour late than never.
+    def test_a_welcome_whose_mail_cannot_be_labelled_is_not_sent(self):
+        # The label comes first now. A refused label used to look like success,
+        # so the request was found again by every poll for a fortnight and the
+        # digest went out each time; not sending costs one welcome to someone
+        # who is on the list either way.
+        self._run([{"uid": "1", "address": "new@example.com", "wants": "subscribe"}])
+        a, b, c = self._patches(labelling=False)
+        with a, b, c:
+            self.assertEqual(mailbox.send_welcomes(), 0)
+        self.assertEqual(self.sent, [])
+
+    def test_a_welcome_that_cannot_be_sent_is_not_sent_again(self):
+        # Labelled before the send, so the fortnight of retries cannot happen.
+        # They are subscribed, and Sunday's digest arrives as normal.
         self._run([{"uid": "1", "address": "new@example.com", "wants": "subscribe"}])
         a, b, c = self._patches(sending=False)
         with a, b, c:
             self.assertEqual(mailbox.send_welcomes(), 0)
-        self.assertEqual(self.labelled, [])
+        self.assertEqual(self.labelled, ["1"])
 
     def test_nothing_pending_sends_nothing(self):
         self.assertEqual(mailbox.send_welcomes(), 0)
@@ -591,6 +655,80 @@ class BlindCopyTests(unittest.TestCase):
         )
         parsed = email.message_from_string(sent["raw"], policy=email.policy.default)
         self.assertEqual(parsed["To"], "ray@example.com")
+
+
+class LabelTests(unittest.TestCase):
+    """A Gmail label that was refused must not read as one that was stored.
+
+    An unlabelled message is found again by every later poll, which is how one
+    welcome became a fortnight of them.
+    """
+
+    def test_a_refused_label_is_not_reported_as_success(self):
+        self.assertTrue(mailbox._label(FakeIMAP("OK"), b"7", mailbox.LABEL_PROCESSED))
+        self.assertFalse(mailbox._label(FakeIMAP("NO"), b"7", mailbox.LABEL_PROCESSED))
+
+    def test_mark_uid_carries_the_refusal_up_to_its_caller(self):
+        for status, expected in (("OK", True), ("NO", False)):
+            with self.subTest(status=status):
+                fake = FakeIMAP(status)
+                with mock.patch.dict("os.environ", {"GMAIL_APP_PASSWORD": "x"}):
+                    with mock.patch.object(
+                        mailbox.imaplib, "IMAP4_SSL", lambda host: fake
+                    ):
+                        self.assertIs(mailbox.mark_uid("7"), expected)
+                self.assertEqual(fake.commands[0][0], "STORE")
+
+
+class LogHygieneTests(unittest.TestCase):
+    """A refused address must never reach this repository's public Actions log.
+
+    GitHub masks the whole DIGEST_RECIPIENTS secret, not one address out of it,
+    and smtplib puts every address it could not deliver to in the exception's
+    own string form: `{'someone@example.com': (550, b'...')}`.
+    """
+
+    ADDRESS = "someone@example.com"
+
+    def _refused(self, **kwargs):
+        raise send_email.smtplib.SMTPRecipientsRefused(
+            {self.ADDRESS: (550, b"5.1.1 no such user someone@example.com")}
+        )
+
+    def test_a_refused_reply_names_the_failure_not_the_recipient(self):
+        out = io.StringIO()
+        with mock.patch.dict("os.environ", {"GMAIL_APP_PASSWORD": "x"}):
+            with mock.patch.object(send_email, "send", self._refused):
+                with contextlib.redirect_stdout(out):
+                    self.assertFalse(mailbox.reply_to(self.ADDRESS, "Subscribed", "hello"))
+        self.assertNotIn("@", out.getvalue())
+        self.assertIn("SMTPRecipientsRefused", out.getvalue())
+
+    def test_a_refused_one_off_answer_names_no_address_either(self):
+        out = io.StringIO()
+        env = {"GMAIL_APP_PASSWORD": "x", "PDF_REQUEST_TO": self.ADDRESS}
+        with mock.patch.dict("os.environ", env):
+            with mock.patch.object(send_email, "send", self._refused):
+                with contextlib.redirect_stdout(out):
+                    self.assertFalse(mailbox.answer("one-off", "body"))
+        self.assertNotIn("@", out.getvalue())
+
+    def test_a_digest_nobody_accepts_fails_without_naming_anyone(self):
+        # Uncaught, this was a traceback carrying every subscriber's address.
+        with tempfile.TemporaryDirectory() as tmp:
+            digest = Path(tmp) / "2026-11-15.md"
+            digest.write_text("# Digest\n\nA paper.\n", encoding="utf-8")
+            out = io.StringIO()
+            env = {"GMAIL_APP_PASSWORD": "x", "DIGEST_FILE": str(digest)}
+            with mock.patch.dict("os.environ", env):
+                with mock.patch.object(ml, "recipients", lambda: [self.ADDRESS]):
+                    with mock.patch.object(send_email, "send", self._refused):
+                        with contextlib.redirect_stdout(out):
+                            with self.assertRaises(SystemExit) as caught:
+                                email_digest.main()
+        self.assertNotIn("@", out.getvalue())
+        self.assertNotIn("@", str(caught.exception))
+        self.assertIn("SMTPRecipientsRefused", out.getvalue())
 
 
 if __name__ == "__main__":
