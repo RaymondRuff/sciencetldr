@@ -1,0 +1,41 @@
+name: schedule-health
+
+# How many of GitHub's scheduled runs actually happen. The pipeline's latency
+# promises rest on its crons firing, and on 2026-11-14 it turned out they
+# mostly do not: about one tick in ten was delivered, daily sweeps included.
+# This measures it instead of guessing, and it is how any replacement for the
+# scheduler gets judged.
+#
+# Run it from Actions whenever you want the numbers; the weekly schedule is a
+# convenience and, fittingly, is itself subject to the thing being measured.
+# It reads the API and writes to the run summary. It sends nothing and commits
+# nothing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'How many days to measure'
+        required: false
+        default: '14'
+  schedule:
+    - cron: '23 9 * * 1'   # Monday morning, off the hour
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # Standard library and the gh CLI only; nothing to install.
+      - name: Count delivered runs
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 scripts/schedule_health.py --days "${{ inputs.days || '14' }}" --markdown
