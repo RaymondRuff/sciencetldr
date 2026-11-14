@@ -112,12 +112,24 @@ class ReportTests(unittest.TestCase):
         self.assertIn("generate-episode.yml", named)
         self.assertNotIn("publish.yml", named)  # push-triggered, no cron
 
+    def ticks_asked_for(self) -> int:
+        """What generate-episode's real crons ask for in a day.
+
+        Derived, not hard-coded: this test used to assert 51, and pulling the
+        half-hourly poll out of that workflow broke it for the right reason.
+        """
+        now = datetime.now(tz=timezone.utc)
+        return sum(
+            sh.expected(cron, now - DAY, now)
+            for cron in sh.crons_in(sh.WORKFLOWS / "generate-episode.yml")
+        )
+
     def test_the_delivery_rate_is_runs_over_ticks_asked_for(self):
+        wanted = self.ticks_asked_for()
         row = self.row(self.report(6))
-        # 48 poll ticks + 3 daily crons in a day.
-        self.assertEqual(row["expected"], 51)
+        self.assertEqual(row["expected"], wanted)
         self.assertEqual(row["delivered"], 6)
-        self.assertAlmostEqual(row["rate"], 6 / 51, places=4)
+        self.assertAlmostEqual(row["rate"], 6 / wanted, places=4)
         self.assertAlmostEqual(row["per_day"], 6.0)
 
     def test_a_workflow_with_no_runs_reads_zero_not_an_error(self):
@@ -132,9 +144,10 @@ class ReportTests(unittest.TestCase):
 
     def test_both_renderings_carry_the_numbers(self):
         data = self.report(6)
+        rate = f"{6 / self.ticks_asked_for():.1%}"
         for text in (sh.as_text(data), sh.as_markdown(data)):
             self.assertIn("generate-episode.yml", text)
-            self.assertIn("11.8%", text)   # 6 of 51
+            self.assertIn(rate, text)
         self.assertIn("| workflow |", sh.as_markdown(data))
 
     def test_runs_outside_the_window_are_not_counted(self):
@@ -172,6 +185,81 @@ class FetchTests(unittest.TestCase):
         with mock.patch.object(sh.subprocess, "run", self._gh(0, stdout=body)):
             found = sh.gh_runs("owner/repo", "generate-episode.yml")
         self.assertEqual(found, [datetime(2026, 11, 14, 9, 23, tzinfo=timezone.utc)])
+
+
+class TimesViewTests(unittest.TestCase):
+    """The view that says whether a named sweep actually happened."""
+
+    def test_only_a_once_a_day_cron_gets_a_slot(self):
+        self.assertEqual(sh.daily_slot("11 14 * * *"), (14, 11))
+        self.assertEqual(sh.daily_slot("17 5 * * *"), (5, 17))
+        # Nothing attributable: a poll, a weekly cron, a malformed one.
+        self.assertIsNone(sh.daily_slot("13,43 * * * *"))
+        self.assertIsNone(sh.daily_slot("8 11 * * 4"))
+        self.assertIsNone(sh.daily_slot("* * * *"))
+
+    def _data(self, stamps: list[datetime], crons: list[str]) -> dict:
+        return {
+            "repo": "owner/repo", "days": 1,
+            "from": NOON - DAY, "to": NOON,
+            "workflows": [
+                {"workflow": "generate-episode.yml", "crons": crons,
+                 "stamps": sorted(stamps), "expected": 3, "delivered": len(stamps),
+                 "rate": 0.0, "per_day": 0.0, "median_gap": 0.0, "p90_gap": 0.0,
+                 "max_gap": 0.0}
+            ],
+        }
+
+    def test_a_late_run_is_attributed_with_its_lateness(self):
+        at = datetime(2026, 11, 15, 14, 49, tzinfo=timezone.utc)  # 14:11 + 38 min
+        text = sh.as_times(self._data([at], ["11 14 * * *"]))
+        self.assertIn("14:49(+38m)", text)
+        self.assertIn("all fired", text)
+
+    def test_a_missed_sweep_is_named(self):
+        at = datetime(2026, 11, 15, 5, 30, tzinfo=timezone.utc)
+        text = sh.as_times(self._data([at], ["17 5 * * *", "11 14 * * *"]))
+        self.assertIn("05:30(+13m)", text)
+        self.assertIn("missed: 11 14 * * *", text)
+
+    def test_a_run_too_far_from_any_cron_is_left_unattributed(self):
+        # The original mistake was calling a 20:00 run a late 14:00 sweep.
+        # It is also what a six-hour window did to a real 10:39 run.
+        at = datetime(2026, 11, 15, 20, 0, tzinfo=timezone.utc)
+        text = sh.as_times(self._data([at], ["11 14 * * *"]))
+        self.assertIn("20:00", text)
+        self.assertNotIn("20:00(+", text)
+        self.assertIn("missed: 11 14 * * *", text)
+
+    def test_a_poll_cron_gets_times_but_no_attribution(self):
+        at = datetime(2026, 11, 15, 13, 20, tzinfo=timezone.utc)
+        text = sh.as_times(self._data([at], ["13,43 * * * *"]))
+        self.assertIn("13:20", text)
+        self.assertNotIn("(+", text)
+        self.assertNotIn("missed", text)
+
+    def test_the_window_is_tight_enough_to_refuse_a_wrong_match(self):
+        # 10:39 against a 07:28 cron is +191 minutes: not that cron's run.
+        at = datetime(2026, 11, 15, 10, 39, tzinfo=timezone.utc)
+        text = sh.as_times(self._data([at], ["28 7 * * *"]))
+        self.assertNotIn("(+", text)
+        self.assertIn("missed: 28 7 * * *", text)
+
+    def test_more_runs_than_ticks_is_called_out(self):
+        # The crons come from the working tree, the runs from history, so a
+        # window spanning a cron change reads as over-delivery. Real case:
+        # pulling the half-hourly poll out of generate-episode made three days
+        # of its history read as 211%.
+        for workflow in ("generate-episode.yml", "friday-podcast.yml"):
+            with self.subTest(workflow=workflow):
+                data = sh.report("owner/repo", 1, fetch=lambda r, w: (
+                    [datetime.now(tz=timezone.utc) - timedelta(minutes=n) for n in range(9)]
+                    if w == workflow else []
+                ))
+                self.assertIn("the crons changed inside this window", sh.as_text(data))
+
+    def test_no_runs_says_so(self):
+        self.assertIn("no scheduled runs", sh.as_times(self._data([], ["11 14 * * *"])))
 
 
 class RealWorkflowTests(unittest.TestCase):

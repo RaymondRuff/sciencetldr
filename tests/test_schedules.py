@@ -9,8 +9,14 @@ Run: uv run python -m unittest discover tests
 from __future__ import annotations
 
 import re
+import sys
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+
+import schedule_health  # noqa: E402
 
 WORKFLOWS = Path(__file__).resolve().parent.parent / ".github" / "workflows"
 CRON_RE = re.compile(r"^\s*-\s*cron:\s*[\'\"](?P<cron>[^\'\"]+)[\'\"]", re.MULTILINE)
@@ -41,11 +47,25 @@ def minutes(cron: str) -> list[int]:
     return sorted(fires)
 
 
-def poll_cron(workflow: str) -> str | None:
-    """The cron a workflow compares against to tell a mailbox poll from a sweep."""
+def schedule_comparisons(workflow: str) -> list[str]:
+    """Cron strings a workflow compares `github.event.schedule` against.
+
+    These decide behaviour — which scheduled run is the publish slot — so each
+    one has to name a cron the workflow really declares.
+    """
     text = (WORKFLOWS / workflow).read_text(encoding="utf-8")
-    named = re.search(r"POLL: \$\{\{ github\.event\.schedule == \'([^\']+)\'", text)
-    return named.group(1) if named else None
+    return re.findall(r"github\.event\.schedule == \'([^\']+)\'", text)
+
+
+def sub_daily(cron: str) -> bool:
+    """Whether this cron fires more than once a day.
+
+    Counted over a week with schedule_health's cron arithmetic rather than
+    guessed from the fields: a hand-rolled version read `0 9-17 * * *` — nine
+    times a day — as daily.
+    """
+    start = datetime(2026, 11, 16, tzinfo=timezone.utc)  # a Monday
+    return schedule_health.expected(cron, start, start + timedelta(days=7)) > 7
 
 
 class MinuteParsingTests(unittest.TestCase):
@@ -65,7 +85,7 @@ class MinuteParsingTests(unittest.TestCase):
 
 
 class CongestedMinuteTests(unittest.TestCase):
-    """The two mailbox polls stay off :00 and :30 — a preference, not a cure.
+    """The mailbox poll stays off :00 and :30 — a preference, not a cure.
 
     On 2026-11-13 the poll's `*/30` cron ran six times instead of forty-eight
     and somebody who subscribed in the evening heard nothing for hours, so
@@ -78,39 +98,69 @@ class CongestedMinuteTests(unittest.TestCase):
     legitimate cron in the name of a theory that did not hold.
     """
 
-    def polls(self) -> list[tuple[str, str]]:
-        found = [(name, cron) for name in ("mailing-list.yml",) for cron in crons(name)]
-        episode = poll_cron("generate-episode.yml")
-        self.assertIsNotNone(episode, "no POLL comparison found")
-        found.append(("generate-episode.yml", episode))
-        return found
-
-    def test_neither_mailbox_poll_fires_on_the_hour_or_the_half_hour(self):
-        for workflow, cron in self.polls():
-            with self.subTest(workflow=workflow, cron=cron):
+    def test_the_mailbox_poll_does_not_fire_on_the_hour_or_the_half_hour(self):
+        for cron in crons("mailing-list.yml"):
+            with self.subTest(cron=cron):
                 fires = minutes(cron)
                 self.assertNotIn(0, fires, "fires on the hour")
                 self.assertNotIn(30, fires, "fires on the half hour")
 
 
-class PollGateTests(unittest.TestCase):
-    """generate-episode tells a poll from a sweep by comparing cron strings."""
+class CrowdingTests(unittest.TestCase):
+    """The workflow that owns the publish slot asks for three ticks a day.
 
-    def test_the_poll_gate_names_a_cron_the_workflow_actually_has(self):
-        # If these drift apart, POLL is false on every scheduled run and each
-        # mailbox poll becomes a full sweep.
-        text = (WORKFLOWS / "generate-episode.yml").read_text(encoding="utf-8")
-        named = re.search(r"github\.event\.schedule == \'([^\']+)\'\s*\}\}", text)
-        self.assertIsNotNone(named, "no POLL comparison found")
-        self.assertIn(named.group(1), crons("generate-episode.yml"))
+    Measured over eighteen days, generate-episode was delivered 102 of the 918
+    ticks its crons asked for — about five a day, at times matching none of its
+    three sweeps — while a neighbouring workflow's single weekly cron was
+    delivered every time. GitHub appears to hand a workflow roughly five
+    scheduled runs a day however many it asks for, so a half-hourly cron
+    sharing a workflow with the daily sweeps spends the budget the sweeps need.
 
-    def test_the_publish_slot_names_one_too(self):
-        text = (WORKFLOWS / "generate-episode.yml").read_text(encoding="utf-8")
-        slots = re.findall(r"github\.event\.schedule == \'([^\']+)\'", text)
-        self.assertTrue(slots)
-        for slot in slots:
-            with self.subTest(cron=slot):
-                self.assertIn(slot, crons("generate-episode.yml"))
+    This pins the experiment: re-adding a sub-daily cron here would quietly put
+    the publish slot and the PDF windows back in the lottery. A poll belongs in
+    a workflow of its own, where the thing it starves is only itself.
+    """
+
+    def test_the_sub_daily_test_recognises_a_busy_cron(self):
+        # The guard below is only as good as this.
+        self.assertTrue(sub_daily("13,43 * * * *"))
+        self.assertTrue(sub_daily("*/30 * * * *"))
+        self.assertTrue(sub_daily("0 9-17 * * *"))
+        self.assertTrue(sub_daily("0 */4 * * *"))
+        self.assertFalse(sub_daily("11 14 * * *"))
+        self.assertFalse(sub_daily("8 11 * * 4"))
+        self.assertFalse(sub_daily("23 9 * * 1"))
+
+    def test_generate_episode_has_only_daily_schedules(self):
+        for cron in crons("generate-episode.yml"):
+            with self.subTest(cron=cron):
+                self.assertFalse(
+                    sub_daily(cron),
+                    f"{cron} fires more than once a day in the workflow that owns "
+                    "the publish slot; give it its own workflow",
+                )
+
+    def test_the_publish_slot_is_one_of_those_schedules(self):
+        self.assertIn("11 14 * * *", crons("generate-episode.yml"))
+
+
+class ScheduleComparisonTests(unittest.TestCase):
+    """A comparison against a cron string must name a cron that exists."""
+
+    def test_every_comparison_names_a_real_cron(self):
+        # Rename a cron without its comparison and the behaviour it gates —
+        # the publish slot — silently stops happening on schedule.
+        checked = 0
+        for path in sorted(WORKFLOWS.glob("*.yml")):
+            declared = crons(path.name)
+            for named in schedule_comparisons(path.name):
+                checked += 1
+                with self.subTest(workflow=path.name, cron=named):
+                    self.assertIn(named, declared)
+        self.assertGreater(checked, 0, "no schedule comparisons found at all")
+
+    def test_the_publish_slot_names_one(self):
+        self.assertIn("11 14 * * *", schedule_comparisons("generate-episode.yml"))
 
 
 class MailingListWorkflowTests(unittest.TestCase):

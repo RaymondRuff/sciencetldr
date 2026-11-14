@@ -505,6 +505,68 @@ value — the recipients the server refused — is no longer dropped; the count 
 printed, never the addresses. Answers also thread now, under the `Message-ID`
 of the request they answer.
 
+## Update, 2026-11-14 night: the crons were starving each other
+
+The forty-minute wait for a subscribe confirmation was blamed first on the
+congested `:00`/`:30` minutes. Moving every cron off them changed nothing, so
+`scripts/schedule_health.py` exists now and the guessing is over. Fourteen
+days, `generate-episode`:
+
+| date | 05:17 | 07:28 | 14:11 | runs that day |
+|---|---|---|---|---|
+| 11-01 | — | — | — | 6 |
+| 11-04 | — | — | +54m | 5 |
+| 11-08 | +71m | — | — | 7 |
+| 11-12 | — | — | — | 7 |
+| 11-13 | +38m | — | +81m | 6 |
+| 11-14 | — | +6m | +11m | 6 |
+
+**Eight of forty-two sweeps fired — nineteen per cent.** The publish slot on
+four days of fourteen; the 05:17 sweep that closes PDF windows before the
+writer starts, on two. Delivery was 5.6 runs a day, every day, whatever the
+crons asked for, at times matching none of them. Meanwhile `friday-podcast`,
+one weekly cron, was delivered three times out of three.
+
+That contrast is the whole finding: **a workflow seems to get about five
+scheduled runs a day however many ticks it asks for.** A cron every half hour
+does not get its 48; it gets a share of five, and it spends the same budget the
+daily sweeps in that workflow need. The sweeps were not merely late — most of
+them never happened.
+
+Why nobody noticed: episodes publish on the **push** trigger, when the checker
+lands a checked script, and papers are queued by the **issues** trigger. Both
+fire within seconds. The crons have been decoration, and the pipeline has been
+running on events all along.
+
+**The experiment, as of tonight:** the half-hourly poll is out of
+`generate-episode`, which now asks for three daily ticks and nothing else. The
+`POLL` flag and the `--mailbox-only` branch went with it — they existed only to
+tell that cron from a sweep, and every run is a full sweep now. Emailed PDFs are
+collected by the mailbox check at the top of each sweep and by every Issue and
+push event; a PDF arriving during the day is used by the next morning's writer
+either way, which is what the request email already promises. Subscribe and
+unsubscribe mail is unaffected: `mailing-list.yml` owns it.
+
+**Prediction:** three sweeps asked for, three delivered — against a baseline of
+19%. First signal at 05:17 UTC on 15 November, three sweeps by that afternoon,
+nine by 17 November. `tests/test_schedules.py::CrowdingTests` fails if anyone
+puts a sub-daily cron back into the workflow that owns the publish slot.
+
+**If it fails**, no cron arrangement will do, and the answer is an external
+trigger. `pg_cron` on Supabase is capable but the free plan pauses projects
+after seven days of low activity and both of this account's project slots hold
+unrelated work, so the clock would be a lodger in somebody else's project. A
+Gmail Apps Script timer is the better fit for the mailbox, because it can look
+in the mailbox first and fire `repository_dispatch` only when something is
+waiting; Cloudflare Workers is the better-behaved choice if the logic should
+live in this repository under test, at the cost of being a blind ticker. That
+decision is open.
+
+Either way the measurement stays: `schedule_health.py --days 14 --times`
+attributes a run to a daily cron only within ninety minutes, because at six
+hours it called a 10:39 run a late 07:28 sweep and reported "all fired" on a
+day when nothing fired on time.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
