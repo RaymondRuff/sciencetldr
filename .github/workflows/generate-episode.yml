@@ -3,7 +3,24 @@ name: generate-episode
 # Turns podcast-pending Issues into review PRs carrying a finished episode.
 # Merging the PR drops the mp3 into inbox/, which fires the publish workflow.
 #
-# Two schedules:
+# Three daily sweeps, and nothing more often than that. Until 2026-11-14 this
+# workflow also carried a half-hourly mailbox poll, and
+# `scripts/schedule_health.py` showed what that cost: GitHub delivered about
+# five scheduled runs a day here whatever was asked for — 102 of 918 ticks over
+# eighteen days — at scattered times that matched none of the three sweeps,
+# while a neighbouring workflow's single weekly cron was delivered every time.
+# So the poll appears to have been crowding out the sweeps that share its
+# workflow. Pulling it out is the experiment: if a workflow asking for three
+# ticks a day gets three, the publish slot and the PDF windows become real
+# times again instead of a lottery.
+#
+# Emailed PDFs are still collected — by the mailbox check at the top of every
+# one of these runs, and by every Issue and push event, which are immediate.
+# A PDF that arrives during the day is used by the next morning's writer
+# either way, which is what the request email promises. Subscribe and
+# unsubscribe mail is not affected: mailing-list.yml owns that.
+#
+# The schedules:
 #   - daily: the full sweep. It stages every waiting paper it can get in the
 #     private papers repository for the writer routine, emails one PDF request
 #     for each paper nobody can get, and synthesises any checked routine
@@ -17,9 +34,6 @@ name: generate-episode
 #     of slack — and GitHub routinely starts a schedule hours late. Two
 #     chances make a Monday or Friday drop far likelier to hold. Sweeps cost
 #     nothing and are idempotent, so running one twice is free.
-#   - every 30 min: a mailbox check for PDFs you've emailed back. It uses only
-#     the standard library and stops before installing anything if the inbox
-#     has nothing new, so a quiet poll costs seconds.
 
 on:
   issues:
@@ -36,11 +50,6 @@ on:
     - cron: '11 14 * * *'     # full sweep, and the day's publish slot
     - cron: '17 5 * * *'      # full sweep that closes expired PDF windows
     - cron: '28 7 * * *'      # second chance at that, just before the writer
-    # Every half hour, but never on the hour or the half hour: GitHub delays
-    # scheduled runs most at :00 and :30 and drops them under load. On
-    # 2026-11-13 this cron ran six times instead of forty-eight, with gaps of
-    # four and five hours, so an emailed PDF could sit unread all evening.
-    - cron: '13,43 * * * *'   # mailbox poll
   workflow_dispatch:
     inputs:
       issue:
@@ -70,10 +79,6 @@ jobs:
         github.event.label.name == 'podcast-pending')
     runs-on: ubuntu-latest
     env:
-      # Must name the mailbox poll's cron exactly; tests/test_schedules.py
-      # fails if the two drift apart, because a mismatch would quietly turn
-      # every poll into a full sweep.
-      POLL: ${{ github.event.schedule == '13,43 * * * *' }}
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       PDF_REQUEST_TO: ${{ secrets.PDF_REQUEST_TO }}
       PDF_SENDER_ALLOWLIST: ${{ secrets.PDF_SENDER_ALLOWLIST }}
@@ -100,17 +105,11 @@ jobs:
       # A poll that only has someone to welcome installs dependencies too: the
       # welcome is the most recent digest, and rendering it needs markdown.
       - name: Install uv
-        if: >-
-          env.POLL != 'true' || steps.mailbox.outputs.found == 'true' ||
-          steps.mailbox.outputs.welcome == 'true'
         uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
 
       - name: Sync dependencies
-        if: >-
-          env.POLL != 'true' || steps.mailbox.outputs.found == 'true' ||
-          steps.mailbox.outputs.welcome == 'true'
         run: uv sync
 
       # Their mail is labelled before this sends, not after: an unlabelled
@@ -122,7 +121,6 @@ jobs:
 
       - name: Decide whether this run makes audio
         id: audio
-        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         run: uv run python scripts/generate_episode.py --needs-audio
         env:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
@@ -149,7 +147,6 @@ jobs:
           exit 1
 
       - name: Generate episode draft(s)
-        if: env.POLL != 'true' || steps.mailbox.outputs.found == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -169,9 +166,7 @@ jobs:
           if [ "$AUTO_PUBLISH" = "true" ] && [ "$PUBLISH_SLOT" = "true" ]; then
             PUBLISH="--publish-next"
           fi
-          if [ "$POLL" = "true" ]; then
-            uv run python scripts/generate_episode.py --mailbox-only
-          elif [ -n "$ISSUE" ]; then
+          if [ -n "$ISSUE" ]; then
             uv run python scripts/generate_episode.py --issue "$ISSUE"
           else
             uv run python scripts/generate_episode.py $PUBLISH

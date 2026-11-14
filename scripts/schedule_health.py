@@ -170,6 +170,7 @@ def report(repo: str, days: int, fetch=gh_runs) -> dict:
             {
                 "workflow": path.name,
                 "crons": crons,
+                "stamps": sorted(stamps),
                 "expected": wanted,
                 "delivered": len(stamps),
                 "rate": (len(stamps) / wanted) if wanted else 0.0,
@@ -194,6 +195,12 @@ def as_text(data: dict) -> str:
             f"  delivered {row['delivered']} of {row['expected']} asked for "
             f"= {row['rate']:.1%}   ({row['per_day']:.1f} runs/day)"
         )
+        if row["rate"] > 1 or (row["expected"] == 0 and row["delivered"]):
+            # The crons are read from the working tree, the runs from history.
+            lines.append(
+                "  (more runs than ticks asked for: the crons changed inside this "
+                "window, so the rate is meaningless here — read the times instead)"
+            )
         lines.append(
             f"  gap between runs: median {row['median_gap']:.1f} h, "
             f"90th pct {row['p90_gap']:.1f} h, worst {row['max_gap']:.1f} h"
@@ -203,6 +210,72 @@ def as_text(data: dict) -> str:
         "A mail or a PDF waits for the next delivered run, so the gap is the "
         "latency the pipeline actually offers — not the cron interval."
     )
+    return "\n".join(lines)
+
+
+def daily_slot(cron: str) -> tuple[int, int] | None:
+    """(hour, minute) if this cron fires once a day, else None.
+
+    Only then can a run be attributed to a cron at all: with three sweeps a
+    day, well separated, a start time says which one it was. With a cron every
+    half hour it says nothing, which is why this returns None for those.
+    """
+    parts = cron.split()
+    if len(parts) != 5:
+        return None
+    minutes, hours = _field(parts[0], 0, 59), _field(parts[1], 0, 23)
+    if len(minutes) != 1 or len(hours) != 1 or parts[2] != "*" or parts[4] != "*":
+        return None
+    return next(iter(hours)), next(iter(minutes))
+
+
+def as_times(data: dict, window_minutes: float = 90) -> str:
+    """Every run, by day, with how late it was — the view that judges a change.
+
+    A run counts as a cron's only if it started within `window_minutes` after
+    it. Ninety is deliberate: observed lateness for runs that plausibly belong
+    to a cron is ten to sixty minutes, and a window of a few hours attributes
+    everything to something. At six hours this called a 10:39 run a late 07:28
+    sweep and reported "all fired" on a day when nothing fired on time — the
+    confident wrong attribution this whole exercise started with. A run no cron
+    can claim is listed bare.
+    """
+    lines = []
+    for row in data["workflows"]:
+        slots = {cron: daily_slot(cron) for cron in row["crons"]}
+        daily = {c: s for c, s in slots.items() if s}
+        lines.append(f"{row['workflow']}  crons: {', '.join(row['crons'])}")
+        if not row["stamps"]:
+            lines += ["  (no scheduled runs in the window)", ""]
+            continue
+        by_day = defaultdict(list)
+        for stamp in row["stamps"]:
+            by_day[stamp.date()].append(stamp)
+        for day, stamps in sorted(by_day.items()):
+            marks = []
+            for stamp in stamps:
+                best, late = None, None
+                for cron, (hour, minute) in daily.items():
+                    due = stamp.replace(hour=hour, minute=minute)
+                    delta = (stamp - due).total_seconds() / 60
+                    if 0 <= delta <= window_minutes and (late is None or delta < late):
+                        best, late = cron, delta
+                marks.append(
+                    f"{stamp:%H:%M}" + (f"(+{late:.0f}m)" if best else "")
+                )
+            missing = ""
+            if daily:
+                fired = {
+                    cron
+                    for stamp in stamps
+                    for cron, (hour, minute) in daily.items()
+                    if 0 <= (stamp - stamp.replace(hour=hour, minute=minute)).total_seconds() / 60
+                    <= window_minutes
+                }
+                missed = sorted(set(daily) - fired)
+                missing = f"   missed: {', '.join(missed)}" if missed else "   all fired"
+            lines.append(f"  {day}  {'  '.join(marks)}{missing}")
+        lines.append("")
     return "\n".join(lines)
 
 
@@ -234,12 +307,18 @@ def main() -> None:
     parser.add_argument("--days", type=int, default=14)
     parser.add_argument("--markdown", action="store_true")
     parser.add_argument(
+        "--times", action="store_true", help="every run by day, with how late it was"
+    )
+    parser.add_argument(
         "--repo", default=os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
     )
     args = parser.parse_args()
     data = report(args.repo, args.days)
     text = as_markdown(data) if args.markdown else as_text(data)
     print(text)
+    if args.times:
+        print()
+        print(as_times(data))
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as fh:

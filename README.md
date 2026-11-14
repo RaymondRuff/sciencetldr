@@ -30,6 +30,8 @@ Nothing waits on a person: an episode goes from pick to feed on its own, and the
 
 **The best paper, or an honest stand-in.** When the week's top paper is open, the Monday or Friday picker stages its full text in the private `sciencetldr-papers` repository, where the script-writing routine reads it (the routine's own sandbox cannot reach any paper source). When it is paywalled, the picker emails **one** request from the podcast account, with a deadline of 9 pm Pacific that day and the name of the open runner-up that will stand in. **Reply with the PDF attached**, or upload it to the papers repository as `papers/issue-NN.pdf`, and the top paper is written next morning; otherwise the runner-up is, and with no runner-up the slot is skipped rather than filled with a weaker paper ([`scripts/pdf_window.py`](scripts/pdf_window.py)). A PDF sent later still becomes an episode. Only allow-listed senders whose mail passes Gmail's authentication checks are accepted, and a paywalled PDF never enters this public repository.
 
+An emailed PDF is collected by the mailbox check at the top of every generate-episode run — the three daily sweeps, and every Issue or push event, which are immediate. It is not polled for more often than that, deliberately: see [the schedule note](#a-note-on-schedules).
+
 ## The weekly digest list
 
 The Sunday digest goes to a list that manages itself. **To join**, mail the podcast address with `subscribe` starting the subject; **to leave**, the same with `unsubscribe` — which the footer of every digest spells out as a link, and which a mail client can offer as a button, from the `List-Unsubscribe` header. Leaving gets a short note; **joining gets the most recent digest**, so a new subscriber has something to read straight away rather than a fortnight's wait and a promise.
@@ -47,6 +49,16 @@ Only the address Gmail's own DKIM or DMARC verdict vouches for is ever added or 
 Subscribe and unsubscribe mail is answered by the **mailing-list** workflow, on its own schedule — not the episode workflow's, so joining never waits on an episode sweep — and running it by hand from Actions is the only way to get an answer in minutes. A dispatch while a scheduled run is going queues behind it rather than racing it for the same two files.
 
 **To read the list:** [`list/subscribers.txt`](https://github.com/RaymondRuff/sciencetldr-papers/blob/main/list/subscribers.txt) in the private papers repository. Actions → **mailing-list** writes the secret's addresses into it on demand, so the roster can be checked without waiting for a send; it emails nobody. No address is ever printed in an Actions log — this repository is public and so are its logs.
+
+## A note on schedules
+
+GitHub's `schedule` event is best-effort, and on this repository it is much worse than that. Measured over 14 days with [`scripts/schedule_health.py`](scripts/schedule_health.py): `generate-episode` was delivered about **5.6 runs a day whatever its crons asked for**, and of the 42 daily sweeps it should have run, **8 fired** — the 14:11 publish slot on 4 days of 14, the 05:17 PDF-window sweep on 2. A neighbouring workflow's single weekly cron, meanwhile, was delivered every time.
+
+So as of 2026-11-14 the half-hourly mailbox poll no longer shares a workflow with the daily sweeps. The hypothesis under test is that a workflow gets roughly five scheduled runs a day however many it asks for, and that a half-hourly cron therefore spends the budget its own daily sweeps need. If that is right, a workflow asking for three ticks a day should get three, and the publish slot becomes a real time again.
+
+What actually keeps the pipeline moving is events, not schedules: an Issue being labelled, and the checker's script landing on `main`, both fire within seconds. Treat the crons as a safety net.
+
+Run `uv run python scripts/schedule_health.py --days 14 --times`, or Actions → **schedule-health**, for the current numbers.
 
 ## Feed
 
