@@ -584,24 +584,40 @@ def sync() -> int:
                 f"[list] WARNING: {unreadable} entr(ies) in the secret are not readable as "
                 "an address, so nobody is being sent to them — check the secret by hand"
             )
-        # Every digest already in the repository has, self-evidently, gone
-        # out. Recording them stops an edit to an old one mailing it again —
-        # the workflow fires on any push touching digest/*.md. A digest that
-        # was committed but never successfully emailed would be written off
-        # here; none is known, and a resend is one dispatch away.
-        record = repo.dir / LIST_DIR / SENT
-        known = _read_lines(record)
+        # Every digest already in the repository has, self-evidently, gone out
+        # and had an episode picked from it. Recording both stops an edit to an
+        # old one mailing it again or queueing a second episode. A digest
+        # committed but never successfully emailed would be written off here;
+        # none is known, and a resend is one dispatch away.
         stamps = {path.stem for path in DIGEST_DIR.glob("*.md")} if DIGEST_DIR.is_dir() else set()
-        if stamps - known:
-            _write_lines(
-                record,
-                known | stamps,
-                "Digests already emailed, by the digest's own date.",
-                "Managed by scripts/email_digest.py; delete a line to allow a resend.",
-            )
-            repo.commit(f"Record {len(stamps - known)} digest(s) as already emailed", paths=(LIST_DIR,))
-            print(f"[list] {len(stamps - known)} past digest(s) recorded as sent")
-        print(f"[list] {len(known | stamps)} digest(s) on the sent record")
+        for name, what, headings in (
+            (
+                SENT,
+                "emailed",
+                (
+                    "Digests already emailed, by the digest's own date.",
+                    "Managed by scripts/email_digest.py; delete a line to allow a resend.",
+                ),
+            ),
+            (
+                PICKED,
+                "picked for an episode",
+                (
+                    "Digests an episode has been queued from, by the digest's own date.",
+                    "Managed by scripts/select_monday_paper.py; delete a line to re-pick.",
+                ),
+            ),
+        ):
+            record = repo.dir / LIST_DIR / name
+            known = _read_lines(record)
+            if stamps - known:
+                _write_lines(record, known | stamps, *headings)
+                repo.commit(
+                    f"Record {len(stamps - known)} digest(s) as already {what}",
+                    paths=(LIST_DIR,),
+                )
+                print(f"[list] {len(stamps - known)} past digest(s) recorded as {what}")
+            print(f"[list] {len(known | stamps)} digest(s) on the {name} record")
 
         summary = os.environ.get("GITHUB_STEP_SUMMARY")
         if summary:
