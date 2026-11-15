@@ -48,6 +48,8 @@ Only the address Gmail's own DKIM or DMARC verdict vouches for is ever added or 
 
 Subscribe and unsubscribe mail is answered by the **mailing-list** workflow, on its own schedule — not the episode workflow's, so joining never waits on an episode sweep — and running it by hand from Actions is the only way to get an answer in minutes. A dispatch while a scheduled run is going queues behind it rather than racing it for the same two files.
 
+A digest is emailed **once**, keyed by its own date and recorded in the papers repository, because the workflow fires on any push touching `digest/*.md` — on 2026-11-15 the routine revised a digest two minutes after committing it and everyone received both versions. Actions → **email-digest** with `force` resends deliberately.
+
 **To read the list:** [`list/subscribers.txt`](https://github.com/RaymondRuff/sciencetldr-papers/blob/main/list/subscribers.txt) in the private papers repository. Actions → **mailing-list** writes the secret's addresses into it on demand, so the roster can be checked without waiting for a send; it emails nobody. No address is ever printed in an Actions log — this repository is public and so are its logs.
 
 ## A note on schedules

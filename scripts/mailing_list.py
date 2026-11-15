@@ -51,6 +51,7 @@ DIGEST_DIR = ROOT / "digest"
 LIST_DIR = "list"
 SUBSCRIBERS = "subscribers.txt"
 UNSUBSCRIBED = "unsubscribed.txt"
+SENT = "digests-sent.txt"
 
 ADDRESS_RE = re.compile(r"^[^@\s,;<>]+@[^@\s,;<>]+\.[^@\s,;<>]+$")
 
@@ -177,6 +178,62 @@ class Roster:
         moved = legacy() - self.subscribers - self.unsubscribed
         self.subscribers |= moved
         return moved
+
+
+def _read_lines(path: Path) -> set[str]:
+    """Non-comment lines of a plain record file."""
+    if not path.is_file():
+        return set()
+    found = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.split("#", 1)[0].strip()
+        if line:
+            found.add(line)
+    return found
+
+
+def _write_lines(path: Path, lines: set[str], *headings: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "\n".join([*(f"# {h}" for h in headings), "", *sorted(lines)]) + "\n",
+        encoding="utf-8",
+    )
+
+
+def sent_digests() -> set[str]:
+    """Digest dates already emailed, from the private papers repository.
+
+    Keyed by the digest's own date — its filename — not the day it was sent,
+    so a re-run tomorrow of today's digest is still a duplicate.
+
+    On 2026-11-15 the digest routine committed the digest and then revised it
+    two minutes later; the workflow fires on any push touching digest/*.md, so
+    six people received two different digests. Whether a digest has gone out is
+    a fact about the world, not something a diff can be trusted to infer.
+
+    Raises if the record cannot be read: sending blind risks a duplicate, and
+    the recipients come from the same repository anyway, so there is no case
+    where this fails and the send could still have been correct.
+    """
+    with _repo() as repo:
+        return _read_lines(repo.dir / LIST_DIR / SENT)
+
+
+def record_sent(stamp: str) -> bool:
+    """Note that this digest has gone out. Returns whether it was stored."""
+    with _repo() as repo:
+        path = repo.dir / LIST_DIR / SENT
+        stamps = _read_lines(path)
+        if stamp in stamps:
+            return True
+        stamps.add(stamp)
+        _write_lines(
+            path,
+            stamps,
+            "Digests already emailed, by the digest's own date.",
+            "Managed by scripts/email_digest.py; delete a line to allow a resend.",
+        )
+        return repo.commit(f"Digest {stamp} emailed", paths=(LIST_DIR,))
 
 
 def _repo():
@@ -464,6 +521,25 @@ def sync() -> int:
                 f"[list] WARNING: {unreadable} entr(ies) in the secret are not readable as "
                 "an address, so nobody is being sent to them — check the secret by hand"
             )
+        # Every digest already in the repository has, self-evidently, gone
+        # out. Recording them stops an edit to an old one mailing it again —
+        # the workflow fires on any push touching digest/*.md. A digest that
+        # was committed but never successfully emailed would be written off
+        # here; none is known, and a resend is one dispatch away.
+        record = repo.dir / LIST_DIR / SENT
+        known = _read_lines(record)
+        stamps = {path.stem for path in DIGEST_DIR.glob("*.md")} if DIGEST_DIR.is_dir() else set()
+        if stamps - known:
+            _write_lines(
+                record,
+                known | stamps,
+                "Digests already emailed, by the digest's own date.",
+                "Managed by scripts/email_digest.py; delete a line to allow a resend.",
+            )
+            repo.commit(f"Record {len(stamps - known)} digest(s) as already emailed", paths=(LIST_DIR,))
+            print(f"[list] {len(stamps - known)} past digest(s) recorded as sent")
+        print(f"[list] {len(known | stamps)} digest(s) on the sent record")
+
         summary = os.environ.get("GITHUB_STEP_SUMMARY")
         if summary:
             with open(summary, "a", encoding="utf-8") as fh:
