@@ -546,8 +546,16 @@ class SentOnceTests(unittest.TestCase):
             ml.sync()
         with _patch_repo(FakeRepo(self.dir)):
             self.assertEqual(ml.sent_digests(), {"2026-11-15"})
-        self.assertIn("1 past digest(s) recorded as sent", out.getvalue())
+        self.assertIn("1 past digest(s) recorded as emailed", out.getvalue())
         self.assertEqual(self._send(), [])   # and that digest is now blocked
+
+    def test_sync_seeds_the_picked_record_too(self):
+        # Otherwise a stray edit to an old digest queues a second episode of
+        # a paper that already has one.
+        with _patch_repo(FakeRepo(self.dir)), contextlib.redirect_stdout(io.StringIO()):
+            ml.sync()
+        with _patch_repo(FakeRepo(self.dir)):
+            self.assertEqual(ml.picked_digests(), {"2026-11-15"})
 
     def test_sync_does_not_rewrite_a_record_it_already_agrees_with(self):
         with _patch_repo(FakeRepo(self.dir)), contextlib.redirect_stdout(io.StringIO()):
