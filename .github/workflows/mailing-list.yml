@@ -68,6 +68,18 @@ jobs:
         if: steps.mailbox.outputs.welcome == 'true'
         run: uv run python scripts/pdf_mailbox.py welcome
 
+      # The digest is emailed by a Monday-morning schedule, and a scheduled run
+      # GitHub never delivers fails nothing — alert-on-failure would see a
+      # perfectly healthy pipeline that had quietly stopped sending. This
+      # notices, from the workflow that runs most often. It never fails the
+      # poll: a watchdog that breaks the thing it watches is worse than none.
+      - name: Warn if a digest has not been emailed
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+        run: python3 scripts/mailing_list.py pending
+
   # Run by hand only: folding the secret in is a migration step, not something
   # to repeat every quarter hour. After the poll, not beside it, because the
   # two write the same files from their own clones.

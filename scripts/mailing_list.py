@@ -38,10 +38,12 @@ is installed.
 """
 from __future__ import annotations
 
+import json
 import os
 import re
+import subprocess
 import sys
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from email.utils import parseaddr
 from pathlib import Path
 
@@ -52,6 +54,14 @@ LIST_DIR = "list"
 SUBSCRIBERS = "subscribers.txt"
 UNSUBSCRIBED = "unsubscribed.txt"
 SENT = "digests-sent.txt"
+PICKED = "digests-picked.txt"
+
+# A digest written on Sunday is emailed on Monday morning. Past this, counted
+# from midnight of the digest's own date, something has gone wrong and nobody
+# has been told — a scheduled run GitHub never delivers fails nothing, so
+# alert-on-failure sees no problem at all.
+OVERDUE_HOURS = 48
+ALERT_LABEL = "pipeline-alert"
 
 ADDRESS_RE = re.compile(r"^[^@\s,;<>]+@[^@\s,;<>]+\.[^@\s,;<>]+$")
 
@@ -200,6 +210,66 @@ def _write_lines(path: Path, lines: set[str], *headings: str) -> None:
     )
 
 
+def _records(name: str) -> set[str]:
+    with _repo() as repo:
+        return _read_lines(repo.dir / LIST_DIR / name)
+
+
+def _remember(name: str, stamp: str, message: str, *headings: str) -> bool:
+    with _repo() as repo:
+        path = repo.dir / LIST_DIR / name
+        stamps = _read_lines(path)
+        if stamp in stamps:
+            return True
+        _write_lines(path, stamps | {stamp}, *headings)
+        return repo.commit(message, paths=(LIST_DIR,))
+
+
+def picked_digests() -> set[str]:
+    """Digest dates an episode has already been queued from.
+
+    The Monday picker runs on every push touching digest/*.md, and on
+    2026-11-15 the digest routine pushed twice — so it opened two Issues for
+    the same paper, which would have published as two episodes on consecutive
+    days. One episode per digest, recorded as a fact rather than inferred from
+    a diff.
+    """
+    return _records(PICKED)
+
+
+def record_picked(stamp: str) -> bool:
+    """Note that an episode has been queued from this digest."""
+    return _remember(
+        PICKED,
+        stamp,
+        f"Digest {stamp} picked for an episode",
+        "Digests an episode has been queued from, by the digest's own date.",
+        "Managed by scripts/select_monday_paper.py; delete a line to re-pick.",
+    )
+
+
+def unsent_digests(sent: set[str] | None = None) -> list[Path]:
+    """Digest files not yet emailed, oldest first."""
+    if not DIGEST_DIR.is_dir():
+        return []
+    known = sent_digests() if sent is None else sent
+    return sorted(
+        (path for path in DIGEST_DIR.glob("*.md") if path.stem not in known),
+        key=lambda path: path.stem,
+    )
+
+
+def overdue(stamp: str, *, now: datetime | None = None, hours: int = OVERDUE_HOURS) -> bool:
+    """Whether a digest of this date should have gone out by now."""
+    try:
+        day = date.fromisoformat(stamp)
+    except ValueError:
+        return False
+    now = now or datetime.now(tz=timezone.utc)
+    due = datetime(day.year, day.month, day.day, tzinfo=timezone.utc) + timedelta(hours=hours)
+    return now > due
+
+
 def sent_digests() -> set[str]:
     """Digest dates already emailed, from the private papers repository.
 
@@ -215,25 +285,18 @@ def sent_digests() -> set[str]:
     the recipients come from the same repository anyway, so there is no case
     where this fails and the send could still have been correct.
     """
-    with _repo() as repo:
-        return _read_lines(repo.dir / LIST_DIR / SENT)
+    return _records(SENT)
 
 
 def record_sent(stamp: str) -> bool:
     """Note that this digest has gone out. Returns whether it was stored."""
-    with _repo() as repo:
-        path = repo.dir / LIST_DIR / SENT
-        stamps = _read_lines(path)
-        if stamp in stamps:
-            return True
-        stamps.add(stamp)
-        _write_lines(
-            path,
-            stamps,
-            "Digests already emailed, by the digest's own date.",
-            "Managed by scripts/email_digest.py; delete a line to allow a resend.",
-        )
-        return repo.commit(f"Digest {stamp} emailed", paths=(LIST_DIR,))
+    return _remember(
+        SENT,
+        stamp,
+        f"Digest {stamp} emailed",
+        "Digests already emailed, by the digest's own date.",
+        "Managed by scripts/email_digest.py; delete a line to allow a resend.",
+    )
 
 
 def _repo():
@@ -556,8 +619,71 @@ def sync() -> int:
         return len(active)
 
 
+def _gh(*args: str) -> str:
+    result = subprocess.run(["gh", *args], capture_output=True, text=True, encoding="utf-8")
+    if result.returncode != 0:
+        raise RuntimeError(f"gh {' '.join(args[:2])} failed: {result.stderr.strip()[:200]}")
+    return result.stdout
+
+
+def pending() -> int:
+    """Open one Issue per digest that should have been emailed and was not.
+
+    The send runs on a Monday-morning cron now, and a cron GitHub never
+    delivers is not a failure: alert-on-failure sees nothing and the digest
+    simply does not arrive. This is what notices. It is called from the
+    mailing-list poll, which runs several times a day.
+    """
+    late = [path.stem for path in unsent_digests() if overdue(path.stem)]
+    if not late:
+        print("[list] no digest is overdue")
+        return 0
+    try:
+        existing = {
+            issue["title"]
+            for issue in json.loads(
+                _gh("issue", "list", "--label", ALERT_LABEL, "--state", "open",
+                    "--json", "title", "--limit", "50")
+            )
+        }
+    except (RuntimeError, ValueError) as exc:
+        print(f"[list] could not read open alerts ({type(exc).__name__}); not opening one")
+        return 0
+    opened = 0
+    for stamp in late:
+        title = f"Digest {stamp} has not been emailed"
+        if title in existing:
+            print(f"[list] {stamp} is overdue; its Issue is already open")
+            continue
+        body = (
+            f"`digest/{stamp}.md` is in the repository but is not on the sent record in "
+            f"the papers repository, and it is more than {OVERDUE_HOURS} hours old.\n\n"
+            "The send runs on a Monday-morning schedule, and a scheduled run GitHub "
+            "never delivers fails nothing — so this Issue is the only thing that would "
+            "tell you.\n\n"
+            "To send it: Actions -> email-digest -> Run workflow. Closing this Issue "
+            "changes nothing; the next check opens it again until the digest goes out."
+        )
+        args = ["issue", "create", "--title", title, "--body", body, "--label", ALERT_LABEL]
+        owner = os.environ.get("OWNER", "")
+        if owner:
+            args += ["--assignee", owner]
+        try:
+            print(_gh(*args).strip())
+            opened += 1
+        except RuntimeError as exc:
+            print(f"[list] could not open an Issue for {stamp}: {exc}")
+    return opened
+
+
 def main() -> None:
     command = sys.argv[1] if len(sys.argv) > 1 else "sync"
+    if command == "pending":
+        try:
+            pending()
+        except Exception as exc:  # noqa: BLE001 - a watchdog must not fail the poll
+            print(f"[list] WARNING: could not check for an overdue digest ({exc})")
+        return
     if command != "sync":
         sys.exit(f"unknown command: {command}")
     sync()
