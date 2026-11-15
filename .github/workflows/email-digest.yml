@@ -1,10 +1,22 @@
 name: email-digest
 
+# Monday morning, not on the digest's push. The scout runs Sunday and is free
+# to keep researching and revise what it has already committed — on 2026-11-15
+# it did, and six people got two different digests two minutes apart. Sending
+# the next morning means whatever it settled on is what goes out, and the email
+# lands with the Monday episode about the digest's own top paper.
+#
+# Three chances an hour apart, all before 6am Pacific, where the episode is
+# already in the feed (it publishes around 11:25 UTC). Three is safe because a
+# digest is emailed once by date: whichever run GitHub actually delivers sends
+# it, the rest find it recorded and stop. Scheduled runs here are delivered
+# late and sometimes not at all — see scripts/schedule_health.py — and if all
+# three are dropped, `mailing_list.py pending` opens an Issue about it.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'digest/*.md'
+  schedule:
+    - cron: '50 11 * * 1'
+    - cron: '50 12 * * 1'
+    - cron: '50 13 * * 1'
   workflow_dispatch:
     inputs:
       digest_file:
@@ -26,8 +38,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
 
       - uses: astral-sh/setup-uv@v3
         with:
@@ -35,18 +45,9 @@ jobs:
 
       - run: uv sync
 
-      - name: Find newly-added digest file
-        id: find
-        run: |
-          if [ -n "${{ inputs.digest_file }}" ]; then
-            echo "file=${{ inputs.digest_file }}" >> "$GITHUB_OUTPUT"
-          else
-            file=$(git diff-tree --no-commit-id --name-only -r --diff-filter=AM HEAD -- 'digest/*.md' | head -1)
-            echo "file=$file" >> "$GITHUB_OUTPUT"
-          fi
-
+      # No diff to inspect any more: email_digest.py picks the newest digest
+      # that has not been sent, which is what a scheduled run wants.
       - name: Send email
-        if: steps.find.outputs.file != ''
         env:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           # The subscriber list lives in the private papers repository, which
@@ -57,7 +58,7 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
           DIGEST_RECIPIENTS: ${{ secrets.DIGEST_RECIPIENTS }}
-          DIGEST_FILE: ${{ steps.find.outputs.file }}
+          DIGEST_FILE: ${{ inputs.digest_file }}
           # A digest is emailed once, keyed by its own date. The routine
           # revising a digest it has already committed must not re-send it.
           DIGEST_FORCE: ${{ inputs.force }}

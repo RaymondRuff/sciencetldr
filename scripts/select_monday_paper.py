@@ -31,6 +31,7 @@ import paper_resolver
 import paper_text
 import pdf_window
 import github_issue
+import mailing_list
 
 ROOT = Path(__file__).resolve().parent.parent
 DIGEST_DIR = ROOT / "digest"
@@ -470,6 +471,22 @@ def main() -> None:
     digest_path = latest_digest()
     print(f"[select-monday] using digest: {digest_path.name}")
 
+    # One episode per digest. This workflow fires on every push touching
+    # digest/*.md, and the digest routine is free to revise what it has
+    # already committed — on 2026-11-15 it did, two minutes later, and the
+    # picker opened two Issues for the same paper. First pick wins: if a later
+    # revision changes the top paper, the episode covers the one picked first,
+    # which is a trade we took knowingly over re-picking.
+    stamp = digest_path.stem
+    if stamp in mailing_list.picked_digests():
+        if os.environ.get("PICK_FORCE", "").strip().lower() != "true":
+            print(
+                f"[select-monday] an episode has already been queued from {stamp}; "
+                "nothing to do. Dispatch with force to pick again."
+            )
+            return
+        print(f"[select-monday] {stamp} already picked; picking again because force is set")
+
     papers = parse_papers(digest_path.read_text(encoding="utf-8"))
     if not papers:
         sys.exit("Could not parse any papers from the digest")
@@ -491,12 +508,19 @@ def main() -> None:
     else:
         print("[select-monday] no open full text and no runner-up within one DICE point")
 
-    open_pick(
+    number = open_pick(
         plan,
         source=source_label,
         title=f"📄 {plan.chosen['title'][:160]}",
         labels=[github_issue.PENDING_LABEL, source_label],
     )
+    # Recorded after the Issue exists, so a crash before that leaves the
+    # digest pickable rather than skipped.
+    if not mailing_list.record_picked(stamp):
+        print(
+            f"[select-monday] WARNING: could not record {stamp} as picked; "
+            f"another push of this digest could queue a duplicate of #{number}"
+        )
 
 
 if __name__ == "__main__":

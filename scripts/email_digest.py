@@ -35,26 +35,30 @@ DIGEST_DIR = ROOT / "digest"
 
 
 def main() -> None:
+    sent = mailing_list.sent_digests()
     digest_file = os.environ.get("DIGEST_FILE", "").strip()
     if digest_file:
         path = Path(digest_file)
         if not path.is_absolute():
             path = ROOT / path
     else:
-        files = sorted(DIGEST_DIR.glob("*.md"))
-        if not files:
-            sys.exit("No digest files found in digest/")
-        path = files[-1]
+        # The newest digest that has not gone out, rather than simply the
+        # newest. The send runs on a Monday-morning schedule now, so if a
+        # scout run slips past it the digest is still waiting here next time
+        # instead of being skipped forever.
+        waiting = mailing_list.unsent_digests(sent)
+        if not waiting:
+            print("[email] every digest on disk has already been emailed; nothing to do")
+            return
+        path = waiting[-1]
 
     if not path.exists():
         sys.exit(f"Digest file not found: {path}")
 
-    # Has this one already gone out? The workflow fires on any push touching
-    # digest/*.md, so an edit to a digest already sent would otherwise send it
-    # again — which is exactly what happened on 2026-11-15, two minutes apart.
+    # Belt and braces for an explicitly named file: a digest goes out once.
     stamp = path.stem
     force = os.environ.get("DIGEST_FORCE", "").strip().lower() == "true"
-    if stamp in mailing_list.sent_digests():
+    if stamp in sent:
         if not force:
             print(
                 f"[email] {stamp} has already been emailed; not sending it again. "

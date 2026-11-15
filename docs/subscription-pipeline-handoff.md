@@ -610,11 +610,61 @@ that legitimately construct one with git stubbed waive it explicitly — and
 without that waiver one of them passed without reaching the code it was about,
 which is the second thing this guard caught.
 
-What this does **not** address: the routine revising a digest minutes after
+**Superseded the same evening, in the better direction.** Ray's call: let the
+model behave as it wants — if the scout decides to keep researching, let it —
+and fix the coupling instead. So the digest's push no longer drives anything.
+See the next update.
+
+What this did **not** address: the routine revising a digest minutes after
 committing it. That is reasonable editorial behaviour and the pipeline should
 tolerate it — but anyone reading the first email got a recommendation that was
 withdrawn. If that matters, the routine should settle its picks before it
 commits, which is a change to its prompt, not to this repository.
+
+## Update, 2026-11-15 evening: the digest's push drives nothing now
+
+The double-send had a second victim nobody had looked for. `monday-podcast.yml`
+fires on the same trigger as the email — any push touching `digest/*.md` — so
+the picker also ran twice and opened **two** `podcast-pending` Issues for the
+same paper, #130 and #131. Left alone, one paper would have published as two
+episodes on consecutive days. #130 is closed as a duplicate; its staged bundle
+in the papers repository is orphaned and nothing reads it.
+
+Ray's instruction was to stop constraining the scout: *"I want the model to
+behave as it wants and if it decides it wants to keep researching I say let
+it."* That is the right call, and the earlier plan — a prompt rule telling the
+routine to commit only once, when truly done — was fighting the model's
+judgement to protect downstream consumers that should never have been watching
+its commits. So:
+
+**The email is now sent by a Monday-morning schedule**, not by the push. Three
+crons, `50 11`, `50 12` and `50 13` UTC Monday: after the paired episode
+publishes (~11:25 UTC) and before 6am Pacific, which is when Ray is up and
+listening. Three chances is safe only because a digest is emailed once by date
+— whichever run GitHub actually delivers sends it, the rest find it recorded
+and stop. The scout can now take nine minutes or ninety, commit four times and
+change its mind, and no subscriber sees a draft.
+
+With no push to inspect, `email_digest.py` picks **the newest digest that has
+not been sent** rather than simply the newest, so a scout run that slips past
+the send window is still waiting next time instead of being skipped forever.
+The find step and its `git diff-tree` are gone.
+
+**The picker is idempotent per digest date**, recorded in
+`list/digests-picked.txt` beside the sent record. It stays on Sunday, because
+the PDF request for a paywalled top pick needs its 9pm Pacific deadline the
+same day — moving the picker to Monday would collapse the PDF window. First
+pick wins; if a revision ever changes the *top* paper the episode stays on the
+one picked first. Ray: *"It seems unlikely that a model would completely change
+its mind on what the top paper is and if it does we can reconsider."*
+
+**The new failure mode is silence**, so there is a watchdog. A scheduled run
+GitHub never delivers fails nothing, and `alert-on-failure` would see a
+perfectly healthy pipeline that had quietly stopped sending. `mailing_list.py
+pending` runs in the mailing-list poll — the workflow that runs most often —
+and opens one Issue per digest that is unsent more than forty-eight hours after
+its own date. It never fails the poll: a watchdog that breaks the thing it
+watches is worse than none.
 
 ## The decision
 
