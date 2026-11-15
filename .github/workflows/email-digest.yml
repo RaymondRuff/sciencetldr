@@ -11,6 +11,11 @@ on:
         description: 'Path to digest file (optional, defaults to newest in digest/)'
         required: false
         default: ''
+      force:
+        description: 'Send again even if this digest has already gone out'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -53,4 +58,7 @@ jobs:
           PAPERS_REPO: ${{ vars.PAPERS_REPO || 'RaymondRuff/sciencetldr-papers' }}
           DIGEST_RECIPIENTS: ${{ secrets.DIGEST_RECIPIENTS }}
           DIGEST_FILE: ${{ steps.find.outputs.file }}
+          # A digest is emailed once, keyed by its own date. The routine
+          # revising a digest it has already committed must not re-send it.
+          DIGEST_FORCE: ${{ inputs.force }}
         run: uv run python scripts/email_digest.py

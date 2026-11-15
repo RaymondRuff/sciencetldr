@@ -567,6 +567,41 @@ attributes a run to a daily cron only within ninety minutes, because at six
 hours it called a 10:39 run a late 07:28 sweep and reported "all fired" on a
 day when nothing fired on time.
 
+## Update, 2026-11-15: the digest went out twice
+
+Six people received the 2026-11-15 digest twice, two minutes apart, and the
+two were not the same digest. The routine committed it at 14:14 and revised it
+at 14:16 — "swap in the IgE disruptor preprint", six lines changed — and
+`email-digest.yml` fires on **any** push touching `digest/*.md`, with its find
+step matching `--diff-filter=AM`: added **or modified**. So the edit mailed the
+whole thing again, and the first email carried a paper the digest no longer
+recommends.
+
+Nothing to do with the mailing-list work; that filter has been there for
+months. It had simply never been true before that a digest was edited after it
+was committed.
+
+The fix is not a cleverer diff. Whether a digest has gone out is a fact about
+the world, so it is recorded as one: `list/digests-sent.txt` in the private
+papers repository, keyed by **the digest's own date**, not the day it was sent,
+so a re-run tomorrow of today's digest is still a duplicate. The send checks it
+first and writes it afterwards — afterwards, because a run that dies halfway is
+worth retrying by hand, and a retry that doubles up on the first few addresses
+beats a digest nobody receives. Nothing retries on its own.
+
+A `force` input on the workflow sends anyway, for the case where a resend is
+what you actually want.
+
+`mailing_list.sync()` seeds the record from every digest file already in the
+repository, since all of them have self-evidently gone out. Without that, a
+typo fix in a digest from October would mail October's digest to everyone.
+
+What this does **not** address: the routine revising a digest minutes after
+committing it. That is reasonable editorial behaviour and the pipeline should
+tolerate it — but anyone reading the first email got a recommendation that was
+withdrawn. If that matters, the routine should settle its picks before it
+commits, which is a change to its prompt, not to this repository.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions

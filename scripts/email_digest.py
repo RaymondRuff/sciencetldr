@@ -49,6 +49,20 @@ def main() -> None:
     if not path.exists():
         sys.exit(f"Digest file not found: {path}")
 
+    # Has this one already gone out? The workflow fires on any push touching
+    # digest/*.md, so an edit to a digest already sent would otherwise send it
+    # again — which is exactly what happened on 2026-11-15, two minutes apart.
+    stamp = path.stem
+    force = os.environ.get("DIGEST_FORCE", "").strip().lower() == "true"
+    if stamp in mailing_list.sent_digests():
+        if not force:
+            print(
+                f"[email] {stamp} has already been emailed; not sending it again. "
+                "Dispatch with force to override."
+            )
+            return
+        print(f"[email] {stamp} has already been emailed; sending again because force is set")
+
     body_md = path.read_text(encoding="utf-8")
     body_html = md.markdown(body_md, extensions=["extra", "sane_lists"])
     today = datetime.now(tz=timezone.utc).date().isoformat()
@@ -80,6 +94,11 @@ def main() -> None:
     if failed == len(recipients):
         sys.exit("[email] every message failed; nobody received the digest")
     print(f"[email] {len(recipients) - failed} of {len(recipients)} sent")
+    # Recorded after the send, not before: a run that dies halfway is worth
+    # retrying by hand, and a retry that doubles up on the first few addresses
+    # is better than a digest nobody receives. Nothing retries on its own.
+    if not mailing_list.record_sent(stamp):
+        print(f"[email] WARNING: could not record {stamp} as sent; a later push may resend it")
 
 
 if __name__ == "__main__":

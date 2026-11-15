@@ -455,6 +455,119 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(self.repo.commits, [])
 
 
+class SentOnceTests(unittest.TestCase):
+    """A digest goes out once, however many times its file is pushed.
+
+    On 2026-11-15 the digest routine committed the digest and revised it two
+    minutes later. The workflow fires on any push touching digest/*.md, so six
+    people received two different digests of the same date.
+    """
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+        self.digests = self.dir / "digest"
+        self.digests.mkdir()
+        (self.digests / "2026-11-15.md").write_text("# Digest\n\nA paper.\n")
+        self.sent: list[str] = []
+        for patch in (
+            mock.patch.dict(
+                "os.environ",
+                {"DIGEST_RECIPIENTS": LEGACY, "GMAIL_APP_PASSWORD": "x", "DIGEST_FORCE": ""},
+            ),
+            mock.patch.object(ml, "DIGEST_DIR", self.digests),
+        ):
+            patch.start()
+            self.addCleanup(patch.stop)
+
+    def _send(self, force: bool = False, stamp: str = "2026-11-15") -> list[str]:
+        """Run the digest the way the workflow does, with SMTP stubbed."""
+        import email_digest
+
+        sent: list[str] = []
+
+        class FakeSMTP:
+            def __enter__(inner):  # noqa: N805
+                return inner
+
+            def __exit__(inner, *exc):  # noqa: N805
+                return False
+
+            def login(inner, *a):  # noqa: N805
+                pass
+
+            def sendmail(inner, sender, recipients, raw):  # noqa: N805
+                sent.extend(recipients)
+                return {}
+
+        env = {"DIGEST_FILE": str(self.digests / f"{stamp}.md")}
+        if force:
+            env["DIGEST_FORCE"] = "true"
+        with mock.patch.dict("os.environ", env), _patch_repo(FakeRepo(self.dir)), mock.patch.object(
+            send_email.smtplib, "SMTP_SSL", lambda *a, **k: FakeSMTP()
+        ), mock.patch.object(email_digest, "DIGEST_DIR", self.digests):
+            email_digest.main()
+        return sent
+
+    def test_the_first_push_sends_it(self):
+        self.assertEqual(len(self._send()), 3)
+
+    def test_a_second_push_of_the_same_digest_sends_nothing(self):
+        # The routine editing a digest it already committed is the real case.
+        self._send()
+        self.assertEqual(self._send(), [])
+
+    def test_force_sends_it_again_on_purpose(self):
+        self._send()
+        self.assertEqual(len(self._send(force=True)), 3)
+
+    def test_the_record_is_keyed_by_the_digests_own_date(self):
+        self._send()
+        with _patch_repo(FakeRepo(self.dir)):
+            self.assertEqual(ml.sent_digests(), {"2026-11-15"})
+        # A different digest is not blocked by it.
+        (self.digests / "2026-11-22.md").write_text("# Next week\n")
+        self.assertEqual(len(self._send(stamp="2026-11-22")), 3)
+        with _patch_repo(FakeRepo(self.dir)):
+            self.assertEqual(ml.sent_digests(), {"2026-11-15", "2026-11-22"})
+
+    def test_recording_is_idempotent(self):
+        with _patch_repo(FakeRepo(self.dir)):
+            self.assertTrue(ml.record_sent("2026-11-15"))
+            self.assertTrue(ml.record_sent("2026-11-15"))
+            self.assertEqual(ml.sent_digests(), {"2026-11-15"})
+
+    def test_sync_seeds_the_record_from_the_digests_in_the_repo(self):
+        # Otherwise a typo fix in an old digest mails it to everyone again.
+        repo = FakeRepo(self.dir)
+        out = io.StringIO()
+        with _patch_repo(repo), contextlib.redirect_stdout(out):
+            ml.sync()
+        with _patch_repo(FakeRepo(self.dir)):
+            self.assertEqual(ml.sent_digests(), {"2026-11-15"})
+        self.assertIn("1 past digest(s) recorded as sent", out.getvalue())
+        self.assertEqual(self._send(), [])   # and that digest is now blocked
+
+    def test_sync_does_not_rewrite_a_record_it_already_agrees_with(self):
+        with _patch_repo(FakeRepo(self.dir)), contextlib.redirect_stdout(io.StringIO()):
+            ml.sync()
+        repo = FakeRepo(self.dir)
+        with _patch_repo(repo), contextlib.redirect_stdout(io.StringIO()):
+            ml.sync()
+        self.assertEqual([m for m, _ in repo.commits if "digest" in m.lower()], [])
+
+    def test_an_unreadable_record_stops_the_send(self):
+        # Sending blind risks the duplicate this exists to prevent, and the
+        # recipients come from the same repository anyway.
+        def boom():
+            raise RuntimeError("clone failed")
+
+        with mock.patch.object(ml, "_repo", boom):
+            with self.assertRaises(RuntimeError):
+                ml.sent_digests()
+
+
 class WelcomeTests(unittest.TestCase):
     """A new subscriber's confirmation is the most recent digest itself."""
 
@@ -798,7 +911,9 @@ class DigestSendTests(unittest.TestCase):
             digest.write_text("# Digest\n\nA paper.\n", encoding="utf-8")
             env = {"GMAIL_APP_PASSWORD": "x", "DIGEST_FILE": str(digest)}
             with mock.patch.dict("os.environ", env):
-                with mock.patch.object(ml, "recipients", lambda: recipients):
+                with mock.patch.object(ml, "recipients", lambda: recipients), \
+                        mock.patch.object(ml, "sent_digests", set), \
+                        mock.patch.object(ml, "record_sent", lambda stamp: True):
                     with mock.patch.object(send_email, "send", fake_send):
                         with contextlib.redirect_stdout(out):
                             email_digest.main()
@@ -916,7 +1031,9 @@ class LogHygieneTests(unittest.TestCase):
             out = io.StringIO()
             env = {"GMAIL_APP_PASSWORD": "x", "DIGEST_FILE": str(digest)}
             with mock.patch.dict("os.environ", env):
-                with mock.patch.object(ml, "recipients", lambda: [self.ADDRESS]):
+                with mock.patch.object(ml, "recipients", lambda: [self.ADDRESS]), \
+                        mock.patch.object(ml, "sent_digests", set), \
+                        mock.patch.object(ml, "record_sent", lambda stamp: True):
                     with mock.patch.object(send_email, "send", self._refused):
                         with contextlib.redirect_stdout(out):
                             with self.assertRaises(SystemExit) as caught:
