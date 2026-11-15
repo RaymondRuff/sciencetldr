@@ -290,6 +290,18 @@ class ConcurrentPushTests(unittest.TestCase):
 
 
 class DeniedTests(unittest.TestCase):
+    """Git is stubbed here, so the production guard is waived deliberately.
+
+    Without the waiver the guard raises first and
+    test_other_git_failures_stay_ordinary passes without ever reaching the
+    code it is about — a test that is green for the wrong reason.
+    """
+
+    def setUp(self) -> None:
+        waive = mock.patch.dict("os.environ", {"TLDR_ALLOW_REAL_PAPERS_REPO": "1"})
+        waive.start()
+        self.addCleanup(waive.stop)
+
     def test_a_token_without_the_repository_is_named_as_such(self):
         refused = subprocess.CompletedProcess(
             [], 128, "",
@@ -298,14 +310,14 @@ class DeniedTests(unittest.TestCase):
         )
         with mock.patch.object(paper_bundle.subprocess, "run", return_value=refused):
             with self.assertRaises(paper_bundle.PapersRepoDenied):
-                with paper_bundle.PapersRepo("RaymondRuff/sciencetldr-papers"):
+                with paper_bundle.PapersRepo("owner/private-papers"):
                     pass
 
     def test_other_git_failures_stay_ordinary(self):
         broken = subprocess.CompletedProcess([], 1, "", "fatal: not a git repository")
         with mock.patch.object(paper_bundle.subprocess, "run", return_value=broken):
             with self.assertRaises(RuntimeError) as caught:
-                with paper_bundle.PapersRepo("RaymondRuff/sciencetldr-papers"):
+                with paper_bundle.PapersRepo("owner/private-papers"):
                     pass
         self.assertNotIsInstance(caught.exception, paper_bundle.PapersRepoDenied)
 
@@ -437,3 +449,37 @@ class SweepTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ProductionGuardTests(unittest.TestCase):
+    """A test must not be able to reach the real papers repository.
+
+    On 2026-11-15 a test called email_digest.main() without stubbing the
+    sent-digest record. `_token()` falls back to GH_TOKEN, which a developer
+    shell usually has, so it cloned the private repository and pushed a commit
+    to it. No mail went out — SMTP was stubbed — but production state changed
+    from a unit test, which the repo's conventions forbid.
+    """
+
+    def test_a_remote_repository_is_refused_under_a_test_runner(self):
+        with self.assertRaises(RuntimeError) as caught:
+            with paper_bundle.PapersRepo("owner/private-papers"):
+                pass
+        self.assertIn("refusing to reach the real papers repository", str(caught.exception))
+
+    def test_a_local_repository_is_still_allowed(self):
+        # Which is how the tests above exercise clone, commit and push.
+        with tempfile.TemporaryDirectory() as tmp:
+            origin = Path(tmp) / "origin"
+            origin.mkdir()
+            subprocess.run(["git", "init", "--bare", "-q", str(origin)], check=True)
+            with paper_bundle.PapersRepo(str(origin)) as repo:
+                self.assertTrue(repo.dir.exists())
+
+    def test_an_explicit_override_lets_a_real_one_through(self):
+        # For a deliberate script run that happens to import unittest.
+        with mock.patch.dict("os.environ", {"TLDR_ALLOW_REAL_PAPERS_REPO": "1"}):
+            with mock.patch.object(paper_bundle.PapersRepo, "_git") as git:
+                with paper_bundle.PapersRepo("owner/private") as repo:
+                    self.assertTrue(repo.dir.exists())
+                self.assertTrue(git.called)
