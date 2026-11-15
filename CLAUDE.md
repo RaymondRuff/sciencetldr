@@ -33,6 +33,8 @@ They supersede the text a routine's trigger may still carry from before
 - `uv run python ...` for anything in `scripts/`. Tests:
   `uv run python -m unittest discover tests`. Lint workflows with `actionlint`.
 - Mock model and network clients in tests; never spend money to test plumbing.
+  `PapersRepo` refuses a remote papers repository under a test runner, because
+  a forgotten stub once pushed a commit to it from a unit test.
   `MAX_EPISODES_PER_RUN` is `0` and there is no API fallback for scripts.
 - Never commit a paper's text, a PDF, or anything under `/tmp`. The papers
   repository is a private staging area for other people's copyrighted work,

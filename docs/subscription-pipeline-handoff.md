@@ -596,6 +596,20 @@ what you actually want.
 repository, since all of them have self-evidently gone out. Without that, a
 typo fix in a digest from October would mail October's digest to everyone.
 
+**A test wrote to production while fixing this.** Before the stubs were right,
+two existing tests called `email_digest.main()` with `recipients()` stubbed but
+not the new sent-record, and `_token()` falls back to `GH_TOKEN`, which a
+developer shell has. So a unit test cloned the private papers repository and
+pushed a commit to it. No mail was sent — those tests replace
+`send_email.send` outright — and the commit happened to be true, but production
+state changed from a test run, which this repo's conventions forbid.
+
+`PapersRepo` now refuses a remote repository when `unittest` or `pytest` is in
+`sys.modules`, unless `TLDR_ALLOW_REAL_PAPERS_REPO` says otherwise. The tests
+that legitimately construct one with git stubbed waive it explicitly — and
+without that waiver one of them passed without reaching the code it was about,
+which is the second thing this guard caught.
+
 What this does **not** address: the routine revising a digest minutes after
 committing it. That is reasonable editorial behaviour and the pipeline should
 tolerate it — but anyone reading the first email got a recommendation that was

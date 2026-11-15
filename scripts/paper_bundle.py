@@ -592,7 +592,25 @@ class PapersRepo:
             return f"https://x-access-token:{token}@github.com/{self.repo}.git"
         return f"https://github.com/{self.repo}.git"
 
+    def _local(self) -> bool:
+        return "://" in self.repo or Path(self.repo).exists()
+
     def __enter__(self) -> "PapersRepo":
+        # A test that forgets to stub this would otherwise clone and push to
+        # the real private repository, because _token() falls back to GH_TOKEN
+        # and a developer shell usually has one. On 2026-11-15 a test run did
+        # exactly that: no mail was sent, since SMTP was stubbed, but it wrote
+        # a commit to production from a unit test. Tests that genuinely want a
+        # repository point PAPERS_REPO at a local path, which is allowed.
+        if (
+            not self._local()
+            and ("unittest" in sys.modules or "pytest" in sys.modules)
+            and not os.environ.get("TLDR_ALLOW_REAL_PAPERS_REPO")
+        ):
+            raise RuntimeError(
+                "refusing to reach the real papers repository from a test: stub "
+                "mailing_list._repo, or set PAPERS_REPO to a local path"
+            )
         self.dir = Path(tempfile.mkdtemp(prefix="tldr-papers-"))
         print(f"[papers] cloning {self.repo}")
         self._git("clone", "--depth", "1", self._url(), str(self.dir), cwd=None)
