@@ -2640,5 +2640,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Fri, 13 Nov 2026 11:20:06 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 100: T cell–mediated antibody-dependent cellular cytotoxicity provides a therapeutic approach for solid cancers]]></title>
+      <itunes:title><![CDATA[T cell–mediated antibody-dependent cellular cytotoxicity provides a therapeutic approach for solid cancers]]></itunes:title>
+      <description><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1172/jci.insight.205984">T cell–mediated antibody-dependent cellular cytotoxicity provides a therapeutic approach for solid cancers</a></strong></p>
+<p><em>JCI Insight, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1172/jci.insight.205984">10.1172/jci.insight.205984</a></p>
+<p><strong>Question:</strong> Can the native FcγRI signalling module's antigen-density threshold make redirected T cell killing tumour-selective?</p>
+<p><strong>Answer:</strong> AG2G T cells signalled only above ~50 HER2 molecules/µm² on bilayers and spared primary human epithelium that matched HER2 CAR T cells killed; in vitro and NSG xenografts only, no immunocompetent safety data.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>FcγRI clustering needs ~50 molecules/µm²; TCR signals at 10–20 and the matched HER2 CAR down to 10 — a 2.5- to 5-fold higher bar.</li>
+<li>On one HT29 line, cetuximab (high EGFR) killed, trastuzumab (borderline HER2) killed weakly, anti-MUC16 (low) not at all; matched HER2 CAR T cells killed primary human epithelium where AG2G did not.</li>
+<li>Selectivity is shown in dishes and immunodeficient mice, and the stated threshold is 30/µm² in the abstract but ~50 in the results.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Monday Immune Engager</strong> — our weekly pick from the latest immune-engager digest.</p>
+<p><strong><a href="https://doi.org/10.1172/jci.insight.205984">T cell–mediated antibody-dependent cellular cytotoxicity provides a therapeutic approach for solid cancers</a></strong></p>
+<p><em>JCI Insight, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1172/jci.insight.205984">10.1172/jci.insight.205984</a></p>
+<p><strong>Question:</strong> Can the native FcγRI signalling module's antigen-density threshold make redirected T cell killing tumour-selective?</p>
+<p><strong>Answer:</strong> AG2G T cells signalled only above ~50 HER2 molecules/µm² on bilayers and spared primary human epithelium that matched HER2 CAR T cells killed; in vitro and NSG xenografts only, no immunocompetent safety data.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>FcγRI clustering needs ~50 molecules/µm²; TCR signals at 10–20 and the matched HER2 CAR down to 10 — a 2.5- to 5-fold higher bar.</li>
+<li>On one HT29 line, cetuximab (high EGFR) killed, trastuzumab (borderline HER2) killed weakly, anti-MUC16 (low) not at all; matched HER2 CAR T cells killed primary human epithelium where AG2G did not.</li>
+<li>Selectivity is shown in dishes and immunodeficient mice, and the stated threshold is 30/µm² in the abstract but ~50 in the results.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-100</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/100-t-cell-mediated-antibody-dependent-cellular-cytotoxicity.mp3" length="7898835" type="audio/mpeg"/>
+      <guid isPermaLink="false">c940b979-e33e-45ca-a17d-59e2ac24424f</guid>
+      <itunes:duration>658</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>100</itunes:episode>
+      <podcast:episode>100</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Mon, 16 Nov 2026 11:25:54 +0000</pubDate>
+    </item>
   </channel>
 </rss>
