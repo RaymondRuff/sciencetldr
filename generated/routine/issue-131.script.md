@@ -1,12 +1,23 @@
 # Issue #131 — script (routine writer)
 
-**Length:** 11,562 spoken chars (~10.8 min)  
+**Length:** 11,532 spoken chars (~10.7 min)  
 **Episodes cited:** [69, 92]  
 **Paper text from:** JCI Insight publisher HTML (jci.org), full text staged in the papers repository for Issue #131; DOI 10.1172/jci.insight.205984
 
 | Run | Started (UTC) | Finished (UTC) | Safeguard stops |
 |---|---|---|---|
 | writer | 2026-11-16T08:10:25Z | 2026-11-16T08:52:00Z | 0 |
+| checker | 2026-11-16T11:10:21Z | 2026-11-16T11:55:00Z | 0 |
+
+## Corrections made by the fact-check pass
+
+- Turn 34 called 1.375 mg/mL soluble antibody 'an absurd concentration'; the paper makes no such claim and FcgammaRI binds any IgG1, so the figure was left plain and tied to total circulating antibody rather than to the trastuzumab dose.
+- Turn 30 named 'primary human kidney and lung epithelium' for the CAR comparison; Figure 6F reports only 'epithelial cells' (both types appear in Methods, neither is assigned to that experiment), so the tissue names were cut.
+- Turn 42 said the ten- and twenty-million-cell doses were given 'in one go'; the paper says only that mice received escalating numbers of cells (Figure 10A), so the unstated detail was cut.
+- Turn 53 put Episode 92's density margin at 'only a few fold'; card 092 and memory/threads.md record 2- to 18-fold, so it now reads as narrow and cell-type dependent without a wrong figure.
+- Show notes answer said AG2G 'killed only targets above ~50 HER2 molecules/um2', conflating the bilayer signalling threshold with the killing assays; split into signalling threshold and killing/sparing.
+- Show notes takeaway 1 claimed a '~5-fold higher bar' against TCR and CAR at 10-20 molecules/um2; against that range it is 2.5- to 5-fold, so the range is now stated.
+- Show notes takeaway 2 omitted the matched-CAR/primary-epithelium comparison that the hosts give as their second takeaway; added.
 
 ## Show notes
 
@@ -16,14 +27,14 @@
 
 DOI: [10.1172/jci.insight.205984](https://doi.org/10.1172/jci.insight.205984)
 
-**Question:** Can the antigen-density threshold of the native FcγRI signalling module be used to make redirected T cell killing tumour-selective?
+**Question:** Can the native FcγRI signalling module's antigen-density threshold make redirected T cell killing tumour-selective?
 
-**Answer:** In vitro and in NSG xenografts, FcγRI-engineered CD8 T cells (AG2G) killed only targets above ~50 HER2 molecules/µm², sparing primary human epithelium that matched HER2 CAR T cells killed; no immunocompetent safety data.
+**Answer:** AG2G T cells signalled only above ~50 HER2 molecules/µm² on bilayers and spared primary human epithelium that matched HER2 CAR T cells killed; in vitro and NSG xenografts only, no immunocompetent safety data.
 
 **Three takeaways**
 
-1. FcγRI clustering needs ~50 molecules/µm²; TCR and HER2 CAR signal at 10–20, so the native scaffold sets a ~5-fold higher bar.
-2. On one HT29 line, cetuximab (high EGFR) killed, trastuzumab (borderline HER2) killed weakly, anti-MUC16 (low) not at all.
+1. FcγRI clustering needs ~50 molecules/µm²; TCR signals at 10–20 and the matched HER2 CAR down to 10 — a 2.5- to 5-fold higher bar.
+2. On one HT29 line, cetuximab (high EGFR) killed, trastuzumab (borderline HER2) killed weakly, anti-MUC16 (low) not at all; matched HER2 CAR T cells killed primary human epithelium where AG2G did not.
 3. Selectivity is shown in dishes and immunodeficient mice, and the stated threshold is 30/µm² in the abstract but ~50 in the results.
 
 ---
@@ -32,7 +43,7 @@ DOI: [10.1172/jci.insight.205984](https://doi.org/10.1172/jci.insight.205984)
 
 **Theo:** And I'm Theo. It's Monday, so we're riding alongside this week's digest — and this was the paper sitting right at the top of it.
 
-**Nadia:** It was. "T cell-mediated antibody-dependent cellular cytotoxicity provides a therapeutic approach for solid cancers", in J-C-I Insight, from Yaron Carmi's lab in Tel Aviv with collaborators at Oxford and in San Francisco. They take an antibody receptor that normally lives on myeloid cells, put it into human T cells, and the killing you get depends on how densely the antigen is packed on the target rather than on which antigen it is.
+**Nadia:** It was. "T cell-mediated antibody-dependent cellular cytotoxicity provides a therapeutic approach for solid cancers", in J-C-I Insight, from Yaron Carmi's lab in Tel Aviv. They take an antibody receptor that normally lives on myeloid cells, put it into human T cells, and the killing you get depends on how densely the antigen is packed on the target rather than on which antigen it is.
 
 **Theo:** So why is that worth ten minutes? We have done a lot of redirected killing on this show.
 
@@ -88,7 +99,7 @@ DOI: [10.1172/jci.insight.205984](https://doi.org/10.1172/jci.insight.205984)
 
 **Theo:** Same effector, same target cell, same assay. So the only thing varying is density.
 
-**Nadia:** About as clean a demonstration of the principle as you get in a dish. Then the comparison that matters: donor-matched H-E-R-two C-A-R T cells against theirs, on tumour cells and on primary human kidney and lung epithelium. The C-A-R killed both. Theirs killed the tumour and left the epithelium alone.
+**Nadia:** About as clean a demonstration of the principle as you get in a dish. Then the comparison that matters: donor-matched H-E-R-two C-A-R T cells against theirs, on tumour cells and on primary human epithelium. The C-A-R killed both. Theirs killed the tumour and left the epithelium alone.
 
 **Theo:** Hold on. There's a version of that result that's trivially true — make a worse killer and you also spare normal cells.
 
@@ -96,7 +107,7 @@ DOI: [10.1172/jci.insight.205984](https://doi.org/10.1172/jci.insight.205984)
 
 **Theo:** What about free antibody? There's a lot of it floating around in a person.
 
-**Nadia:** That's the other half, and the argument for the natural scaffold. A conventional Fc receptor C-A-R — the receptor's outside on standard T-cell signalling tails — fired on soluble, irrelevant antibody. Killing, cytokines, the lot. Theirs did essentially nothing until free antibody passed a milligram per millilitre, an absurd concentration.
+**Nadia:** That's the other half, and the argument for the natural scaffold. A conventional Fc receptor C-A-R — the receptor's outside on standard T-cell signalling tails — fired on soluble, irrelevant antibody. Killing, cytokines, the lot. Theirs did essentially nothing until free antibody passed about a milligram per millilitre. And since the receptor takes any I-g-G, that is the number to hold against everything circulating, not just against the dose of the drug.
 
 **Theo:** Why not? It's the same binding event.
 
@@ -112,7 +123,7 @@ DOI: [10.1172/jci.insight.205984](https://doi.org/10.1172/jci.insight.205984)
 
 **Theo:** So it's cumulative dose rather than anything clever.
 
-**Nadia:** Looks that way. Ten million or twenty million cells in one go gave complete regression as well, and a tenth of that barely did anything.
+**Nadia:** Looks that way. Ten million or twenty million cells gave complete regression as well, and a tenth of that barely did anything.
 
 **Theo:** And the cells that stick around?
 
@@ -134,9 +145,9 @@ DOI: [10.1172/jci.insight.205984](https://doi.org/10.1172/jci.insight.205984)
 
 **Nadia:** And that's the measurement this paper owes us, in its own units. Per cell is not per square micrometre — a big flat epithelial cell can carry plenty of receptor at low density, so those don't compare directly. But the experiment that settles it is density, measured the same way, on the normal human tissues these antibodies reach.
 
-**Theo:** It also rhymes with episode ninety-two, where the selectivity came from receptor density too, through binding geometry rather than a threshold — and the honest margin there was only a few fold.
+**Theo:** It also rhymes with episode ninety-two, where the selectivity came from receptor density too, through binding geometry rather than a threshold — and the margin there was narrow too, and varied a lot by cell type.
 
-**Nadia:** Which is the right frame. Density gating is becoming a real design lever across formats, but the reported margins tend to be narrower than the headline suggests, and they're nearly always measured against the strong comparator rather than a detuned one.
+**Nadia:** Which is the right frame. Density gating is becoming a real design lever across formats, but the reported margins tend to be narrower than the headline suggests.
 
 **Theo:** There's a second half to this paper, on tumour infiltration, that we can't do justice to.
 
