@@ -666,6 +666,85 @@ and opens one Issue per digest that is unsent more than forty-eight hours after
 its own date. It never fails the poll: a watchdog that breaks the thing it
 watches is worse than none.
 
+## Update, 2026-11-17: Theo gets room, and the hosts get a verdict
+
+Monday's episode was good, and two things about it were not. Measured, rather
+than felt:
+
+| | turns | words | share | median turn |
+|---|---|---|---|---|
+| Nadia | 34 | 1,421 | 73% | 44 words |
+| Theo | 34 | 516 | **27%** | **11 words** |
+
+Equal turn counts means strict alternation: Nadia forty-four words, Theo eleven,
+for ten minutes. A metronome. His shortest turns were "Which model?" and
+"Nibbling. And it's functional?" — an interviewer working down a list.
+
+The diagnosis was in the prompt, not the model. **Nadia had a described voice;
+Theo had a described job.** She is "precise about the distinction between what
+the authors showed and what they claim"; he got four numbered duties. So the
+model gave him the shortest utterance that discharged each one. A checklist
+produces interjections because a checklist is what it was handed.
+
+He now has a manner, a share (a third to two fifths, about twenty turns at
+thirty-five to forty words), a rhythm rule against strict alternation, and three
+worked exchanges in the register Ray picked — the expansive one, which lays out
+the competing readings and asks which the data supports. The counter-intuitive
+part: a longer Theo is *cheaper* than it looks, because naming the competing
+explanations is framing, and framing was Nadia's setup. Those words move rather
+than being added.
+
+The line that keeps it safe: **he never asserts what the paper found.** He may
+pose alternatives, say what follows from each, and restate Nadia's claim more
+precisely. "There are two readings that fit" is Theo; "they're tearing membrane
+off the monocytes" is Nadia. Every checkable claim keeps coming out of one
+mouth. `check_balance()` reports his share as a *warning* — a good episode must
+not be blocked over a number nobody can dial precisely.
+
+### The hype ban was too broad, and Ray was right about it
+
+The register section banned the vocabulary (good: specific, unfalsifiable
+marketing words, enforced mechanically) **and** the speech act — "what is banned
+is claiming significance". That left the hosts no way to say the true thing when
+the true thing is that a paper matters. And a sceptic who can never say "this
+one holds up" has no credibility when they say "this one doesn't": the listener
+learns only that the hosts always find a limitation, which is a mannerism, not
+an assessment. The ban undermined the scepticism it existed to protect.
+
+There was also an inconsistency inside the pipeline. The DICE score *is* a
+significance ranking, and the digest prompt happily writes "the rate-limiting
+input for new engager programmes rather than an incremental format tweak". The
+upstream stage had a verdict; the hosts were the only ones muzzled.
+
+So: **one verdict an episode, and it must name its comparison** — better than
+what, stuck on what, impossible until when. The test is whether the checker
+could verify it: "the first demonstration of X without Y" has a referent and can
+be found wrong, which is the point; "groundbreaking" cannot. The slot may be
+negative and usually is, which is what stops the slide — a positive verdict
+means something only because the honest answer is normally "competent, moves
+nothing". Surprise is allowed as a statement about the *speaker* ("I didn't
+expect that to work"), never about the paper. The one bright line stays: no leap
+to patients, no comparison earns it. `prompts/routine_checker_daily.md` now
+tells the checker to test the comparison like a number.
+
+### Two things found while in there
+
+**"See you Friday" was a promise the pipeline had not made.** Nothing in the
+prompt asked for a day; the model inferred it from the weekly rhythm in the cold
+open, and a one-off can land on any day. `check_sign_off()` rejects a weekday in
+the closing two turns — scoped there deliberately, because "as we do on Fridays"
+is *required* framing in the cold open, and a paper that sampled on Tuesdays
+must still be describable. Run against Monday's real script it produces exactly
+one error, which is the line.
+
+**The length target was wrong by seven hundred characters.** The prompt said
+10,200–10,800 spoken characters; the validator demanded 11,000–11,600. Those
+figures are the *minutes* — eleven thousand over one thousand and seventy-five
+characters a minute is ten point two — written down as characters. Every script
+was failing short and then being stretched to a target nobody had stated.
+`PromptContractTests` now fails if the prompt's window and the validator's
+constants ever drift apart again.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
