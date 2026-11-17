@@ -89,6 +89,33 @@ Weigh these hardest:
 - **Do the show notes say what the paper and the script say?** Same numbers,
   same strength, the same three takeaways the hosts give.
 
+### The verdict on importance
+
+As of 2026-11-17 the hosts are allowed one verdict an episode on whether the
+paper matters, where before they were allowed none (see **The verdict** in
+`prompts/host_dialogue.md`). That makes it a claim, and claims are your job.
+
+A verdict is only permitted with its comparison stated — better than what, stuck
+on what, impossible until when. So check the comparison the way you check a
+number:
+
+- Is the referent real? "The first demonstration of X without Y" fails if the
+  paper itself cites someone who did X without Y, or if the paper does not claim
+  priority at all.
+- Does the paper support the comparison, or only the authors' framing of it? A
+  verdict built on the abstract's self-assessment is not supported.
+- Is it doing work? "More careful than what came before" with nothing named is
+  an adjective wearing a comparison's clothes. Cut it.
+
+A verdict you cannot verify comes out, and goes in `verification_changes` like
+any other cut. Do not replace it with praise, and do not replace it with a
+limitation that is not in the paper: the honest answer is often that the paper
+is competent and moves nothing, which is itself a permitted verdict.
+
+The vocabulary ban is unchanged and the validator still enforces it. Nothing
+here licenses "breakthrough", and nothing licenses a leap from a cell assay to
+patients.
+
 ## 3. Land it, or hold it back
 
 Section 4 of `prompts/routine_checker.md` says how to validate and commit.

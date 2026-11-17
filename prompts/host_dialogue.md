@@ -30,7 +30,12 @@ are at home in every field — they never position themselves as specialists of
 one discipline visiting another.
 
 Every episode covers one paper. Target length: 10 minutes of speech —
-**10,200–10,800 characters** of spoken text. This is a hard target, not a
+**11,000–11,600 characters** of spoken text — *spoken*, as
+`routine_tools.spoken_chars` counts it, with numbers, letters and DOIs expanded
+the way the voices say them. (This said 10,200–10,800 until 2026-11-17, which
+was the ten-point-two-to-ten-point-eight *minutes* written down as characters.
+Scripts were failing validation for being short and then being stretched.)
+This is a hard target, not a
 suggestion. Cut from the setup, from the framing, and from reciting figures —
 never from the limitations or from explaining what a result means: the audience
 can follow a fast setup, and the reasoning is the show.
@@ -90,6 +95,70 @@ colleague from an adjacent lab who has not read the paper. He does four things:
 4. Closes the episode with the three takeaways and a plain statement of what he
    would and would not yet believe.
 
+**His manner — take the room.** Theo thinks out loud, and a terse Theo is this
+show's worst habit. A run of five-word questions — "Which model?", "And what
+about in vivo?" — sounds like an interviewer working down a list, not like two
+scientists talking. When a step doesn't follow, he lays out the readings that
+fit it and what each would imply, then asks which one the data supports. He
+restates a claim more sharply than it was made and checks whether the sharper
+version still holds. He is exact about words — "transcribed" is not
+"displayed", "selective" is not "safe" — and much of his value is in refusing a
+loose one.
+
+**Build his long turns from short sentences.** Three or four, each doing one
+thing, ending on the question. One long sentence carrying subordinate clauses
+sags in a synthesised voice; stacked short ones do not.
+
+**His share.** About a third of the spoken words, up to two fifths — roughly
+twenty turns at thirty-five to forty words each. Not a quarter of the words
+across forty turns of eleven, which is what this show did before. Take the
+difference from the setup and the framing, never from the limitations.
+
+A long Theo turn is cheaper than it looks: naming the competing explanations is
+framing, and framing is his job, so those words come off Nadia's setup rather
+than being added to the episode.
+
+**Rhythm.** Do not alternate strictly. Nadia may hold two turns together while
+laying out a result; Theo may take a long turn to work through one objection
+properly. Never more than two short turns of his in a row.
+
+**What he never does.** He never asserts what the paper found. He may pose
+alternatives, say what would follow from each, restate Nadia's claim more
+precisely, and say what he would and would not believe — all of that is
+reasoning, and it is his. "There are two readings that fit what you've
+described" is Theo. "They're tearing membrane off the monocytes" is Nadia.
+Every checkable claim comes out of one mouth, which is what keeps the
+fact-checking honest.
+
+**Worked exchanges.** The register, not lines to reuse. The paper is the one
+about antibody receptors turning up on killer T cells.
+
+> Nadia: By mass cytometry on mouse melanomas they find a small population of
+> killer T cells inside the tumour carrying F-c gamma R one — the high-affinity
+> receptor for antibody. Not in the lymph nodes, not in blood.
+>
+> Theo: Hold on. There are two very different stories that fit that. In one,
+> these cells have been quietly transcribing an Fc receptor all along and the
+> textbook is simply wrong. In the other, they aren't making it at all — they're
+> getting it from somewhere else. Those point in completely different directions
+> for whether you could ever engineer this deliberately. Which one does the data
+> support?
+
+> Nadia: Killing tracked antigen density rather than which antibody was used.
+>
+> Theo: Then the threshold is the product, not the binder. That's a more
+> interesting claim than the one in the abstract, and a harder one to stand
+> behind. It rests on one cell line and three antibodies. What's the experiment
+> that would break it?
+
+> Nadia: In fairness, the selectivity work is all in dishes, or in a mouse with
+> no immune system of its own.
+>
+> Theo: Mm. Then what I can take from this is narrower than what the paper takes
+> from it. I'll believe the threshold is real. I won't yet believe it's a
+> therapeutic window, because nothing here has had to survive a working immune
+> system.
+
 The hosts are peers. They may disagree with each other and leave a disagreement
 unresolved. Neither one is a foil whose job is to be corrected.
 
@@ -121,14 +190,47 @@ is the whole show.
 **Plain intensity is not hype.** "Almost all of the models failed that
 cluster", "every single submission passed", "that's a brutal result for the
 field" — these describe *size* in ordinary words, and they carry a finding
-better than a percentage does. What is banned is claiming significance
-("revolutionary", "changes everything"), never speaking plainly about how big
-or one-sided something was.
+better than a percentage does. What is banned is the vocabulary above,
+and significance asserted in the air with nothing to measure it against — never
+speaking plainly about how big or one-sided something was.
 
 **Calibrated language to use instead:** "consistent with", "this data
 under-determines that claim", "they showed X, which is narrower than Y",
 "that would be the experiment", "I'd want to see", "on this evidence I'd
 believe X but not yet Y".
+
+### The verdict — one an episode, and usually unexciting
+
+Scepticism that can never return a positive verdict is not scepticism, it is a
+mannerism. Hosts who always find a limitation teach the listener only that they
+always find one, and from then on their criticism carries no information. So the
+hosts do reach a verdict on whether a paper matters — once an episode, in a form
+that can be checked.
+
+**A verdict names its comparison.** Better than what, stuck on what, impossible
+until when. "The first demonstration that you get this selectivity without
+engineering the receptor" is a verdict: it has a referent, so the checker can
+test it, and can find it wrong. That is the point. "Groundbreaking" has no
+referent and cannot be wrong. If you cannot name the thing it beats, you do not
+have a verdict — you have an adjective, and the adjectives are listed above.
+
+**The verdict may be negative, and usually is.** "A competent paper that moves
+nothing", "the fourth group to show this, and the most careful" — both are
+verdicts. The slot is for the honest answer, not for praise. It is precisely
+because it usually comes back unexciting that a positive one means something.
+
+**Surprise belongs to the speaker, not to the paper.** "I didn't expect that to
+work at all" claims nothing about the world and is one of the most useful things
+a host can say. "An astonishing result" claims something about the world, and
+is banned.
+
+**One line stays bright: never leap to patients.** Enthusiasm may attach to a
+method, a design, a control, a result, a number that genuinely surprised
+someone. It may never attach to what this might mean for people who have the
+disease. No comparison earns that leap.
+
+The checker tests the verdict like any other claim — see
+`prompts/routine_checker_daily.md`.
 
 ## Numbers — few, and chosen
 
@@ -286,6 +388,9 @@ more than twice in an episode.
   choosing words carefully, especially when conceding a limitation.
 - Put them at real cognitive moments: before a concession, on a surprising
   number, when reaching for the precise term, when changing their mind.
+- Theo's long turns are where spontaneity is hardest to fake, so that is where
+  his markers belong: a "Hold on." or an "Mm." *opening* the objection, never
+  sprinkled through it.
 
 **Where they must never go:**
 
@@ -337,6 +442,12 @@ The test: a disfluency should mark *thinking*, never *fumbling*.
    abstract's framing.
 8. **What I'd watch for.** One line each: the thing that would change their mind.
 9. **Sign-off.** Brief. Journal, DOI mentioned once, no promotional language.
+   **Never name a day of the week and never promise the next episode.** An
+   episode cannot know what comes next: a one-off can land on any day, and the
+   Friday crawl sometimes finds nothing. "See you Friday" went out on
+   2026-11-16 and was a promise the pipeline had not made. Name the present —
+   the strand, in the cold open — and leave the future alone. The validator
+   rejects a weekday in the closing turns.
    A paper with **no DOI** — an industry white paper — has no such line: name
    the organisation that published it instead ("it's a white paper, up on
    Example Lab's site"). Never read a URL aloud.

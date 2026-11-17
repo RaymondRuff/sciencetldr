@@ -770,6 +770,66 @@ SHOW_NOTES_MAX_WORDS = 130
 SHOW_NOTES_PARTS = ("**Question:**", "**Answer:**", "**Three takeaways**")
 
 
+# Theo sat at twenty-seven per cent of the spoken words on 2026-11-16, across
+# thirty-four turns with a median of eleven words: an interviewer working down a
+# list rather than the second half of a conversation. The prompt now asks for a
+# third to two fifths across about twenty turns. This is a warning, not an
+# error — the exact share is not something a writer can dial precisely, and a
+# good episode should never be blocked over it.
+THEO_SHARE_FLOOR = 0.28
+
+WEEKDAYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+SIGN_OFF_TURNS = 2
+
+
+def check_balance(turns: list[dict]) -> list[str]:
+    """Warn when Theo has shrunk back to prompting rather than reasoning."""
+    words: dict[str, int] = {}
+    for turn in turns:
+        words[turn["speaker"]] = words.get(turn["speaker"], 0) + len(turn["text"].split())
+    total = sum(words.values())
+    if not total:
+        return []
+    said = words.get("Theo", 0)
+    if said / total >= THEO_SHARE_FLOOR:
+        return []
+    theo_turns = [t for t in turns if t["speaker"] == "Theo"]
+    median = 0
+    if theo_turns:
+        lengths = sorted(len(t["text"].split()) for t in theo_turns)
+        median = lengths[len(lengths) // 2]
+    return [
+        f"Theo has {said / total:.0%} of the spoken words across {len(theo_turns)} turns "
+        f"(median {median} words). The prompt asks for a third to two fifths across about "
+        "twenty turns: fewer, longer interventions, with the difference taken out of the "
+        "setup rather than the limitations"
+    ]
+
+
+def check_sign_off(turns: list[dict]) -> list[str]:
+    """The close may not name a day, because an episode cannot know what is next.
+
+    Episode ninety-nine signed off with "See you Friday." It is a good line and
+    it was a promise the pipeline had not made: a one-off can land on any day,
+    and the Friday crawl sometimes finds nothing usable. Nothing in the prompt
+    asked for a day — the model inferred it from the weekly rhythm in the cold
+    open, which is exactly the kind of gap a mechanical check closes for good.
+
+    Scoped to the closing turns on purpose. "As we do on Fridays, we turn to the
+    science subreddit" is required framing in the cold open, and a paper whose
+    methods sampled on Tuesdays must still be describable.
+    """
+    errors: list[str] = []
+    for turn in turns[-SIGN_OFF_TURNS:]:
+        for day in WEEKDAYS:
+            if re.search(rf"\b{day}s?\b", turn["text"], re.IGNORECASE):
+                errors.append(
+                    f"sign-off names a day ({day.title()}): the close cannot promise the "
+                    "next episode — a one-off can land on any day"
+                )
+    return sorted(set(errors))
+
+
 def validate_show_notes(notes) -> list[str]:
     """The show notes a routine writes for the episode page, per prompts/show_notes.md.
 
@@ -874,6 +934,9 @@ def validate(
     for name in SPEAKERS:
         if name not in opening:
             errors.append(f"cold open: {name} must be named in the first three turns")
+
+    errors += check_sign_off(turns)
+    warnings += check_balance(turns)
 
     full = "\n".join(t["text"] for t in turns)
     for pattern in HYPE:
