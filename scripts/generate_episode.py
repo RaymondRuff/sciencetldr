@@ -351,7 +351,9 @@ def request_pdf(issue: dict, metadata: dict) -> None:
         )
 
 
-def request_missing_pdfs(issues: list[dict], bundled: dict[int, dict]) -> None:
+def request_missing_pdfs(
+    issues: list[dict], bundled: dict[int, dict], considered: set[int] | None = None
+) -> None:
     """Ask once for each paper that no open source has and nobody supplied.
 
     The staging pass has already tried every open source, so an Issue left
@@ -359,12 +361,21 @@ def request_missing_pdfs(issues: list[dict], bundled: dict[int, dict]) -> None:
     the staging pass never reached the papers repository, in which case a
     supplied PDF could not reach the routine either and asking would only be
     noise. The pdf-requested label is the memory: each paper is asked for once.
+
+    `considered` is what the staging pass actually looked at. This list is
+    re-fetched, so it can contain an Issue the staging pass never saw — and
+    asking for a PDF nobody tried to find is how #138 got a request for the
+    PDF that had come attached to the very email that opened it. Never ask
+    about an Issue you did not try to stage.
     """
     if not PapersState.reached:
         print("[episode] not requesting PDFs: the papers repository was not reached")
         return
     for issue in issues:
         number = issue["number"]
+        if considered is not None and number not in considered:
+            print(f"[episode] #{number}: opened after staging ran; leaving it for the next sweep")
+            continue
         labels = issue_labels(issue)
         # An open PDF window is the picker's request, already sent with its
         # deadline; asking again would be the second message about one paper.
@@ -402,21 +413,25 @@ ONE_OFF_WANTS_PDF = (
 )
 
 
-def queue_one_offs() -> list[str]:
+def queue_one_offs() -> tuple[list[str], list[int]]:
     """Turn each emailed one-off request into an Issue, and answer every one.
 
     One reply per request, whatever the outcome, with the Issue's tag in the
     subject so that replying to it with a PDF lands in the ordinary reply
-    pass. Returns problems worth failing the run over; an email is left
-    unlabelled when it should be retried rather than answered.
+    pass. Returns (problems worth failing the run over, the Issues opened); an
+    email is left unlabelled when it should be retried rather than answered.
+
+    The caller needs those numbers because the Issue list will not have them
+    yet — see github_issue.ensure_listed().
     """
     requests = pdf_mailbox.one_offs_received()
     if not requests:
-        return []
+        return [], []
     import add_paper
 
     repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
     problems: list[str] = []
+    opened: list[int] = []
     print(f"[one-off] {len(requests)} emailed request(s)")
     for request in requests:
         uid = request.get("uid") or ""
@@ -433,6 +448,7 @@ def queue_one_offs() -> list[str]:
             print(f"[one-off] FAILED on {subject[:60]!r}: {exc}")
             continue
 
+        opened.append(queued.number)
         staged = queued.staged
         if request.get("pdf"):
             try:
@@ -458,7 +474,7 @@ def queue_one_offs() -> list[str]:
                 status=status, repo=repo,
             ),
         )
-    return problems
+    return problems, opened
 
 
 def needs_audio() -> bool:
@@ -918,9 +934,15 @@ def main() -> None:
     github_issue.ensure_auth()
     # Before the mailbox manifest is read: a request that arrives with its PDF
     # joins that manifest as though it had been replied to a request.
-    one_off_errors = [] if args.dry_run else queue_one_offs()
+    one_off_errors, just_opened = ([], []) if args.dry_run else queue_one_offs()
     emailed = pdf_mailbox.received()
-    all_pending = github_issue.list_pending_issues()
+    # An Issue opened moments ago, or one holding a PDF we already have, must
+    # be in this list before anything stages or consumes anything — the list
+    # endpoint lags behind by seconds and #138 was lost in that gap.
+    all_pending = github_issue.ensure_listed(
+        github_issue.list_pending_issues(), set(just_opened) | set(emailed)
+    )
+    considered = {i["number"] for i in all_pending}
     bundled = bundle_waiting_papers(all_pending)
     # After staging, so a PDF that arrived in its window counts, and before
     # anything else, so a runner-up opened here is staged for the writer.
@@ -991,7 +1013,7 @@ def main() -> None:
         consume_replies(emailed, eligible_numbers, bundled)
 
     if not args.mailbox_only and args.issue is None and not args.dry_run:
-        request_missing_pdfs(github_issue.list_pending_issues(), bundled)
+        request_missing_pdfs(github_issue.list_pending_issues(), bundled, considered)
 
     print(f"\n{drafts} draft(s) produced, {attempts} paid attempt(s), {failures} failure(s)")
     # After generation, so a draft made in this run can publish in this run

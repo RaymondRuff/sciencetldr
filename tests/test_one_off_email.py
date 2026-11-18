@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 import add_paper  # noqa: E402
 import generate_episode as ge  # noqa: E402
+import github_issue  # noqa: E402
 import pdf_mailbox as mailbox  # noqa: E402
 
 DOI = "10.1016/j.chembiol.2026.09.022"
@@ -270,13 +271,13 @@ class QueueTests(unittest.TestCase):
         return found[1], found[2]
 
     def test_nothing_waiting_does_nothing(self):
-        self.assertEqual(ge.queue_one_offs(), [])
+        self.assertEqual(ge.queue_one_offs()[0], [])
         self.assertEqual(self.calls, [])
 
     def test_a_doi_only_request_is_answered_and_the_email_consumed(self):
         self.requests = [{"uid": "9", "subject": "one-off: spacers", "note": "spacers",
                           "dois": [DOI], "pdf": None}]
-        self.assertEqual(ge.queue_one_offs(), [])
+        self.assertEqual(ge.queue_one_offs()[0], [])
         subject, body = self.answer()
         self.assertEqual(subject, f"[{mailbox.SUBJECT_TAG}112] one-off: spacers")
         self.assertIn("Queued as Issue #112", body)
@@ -308,7 +309,7 @@ class QueueTests(unittest.TestCase):
         self.result = add_paper.Refused("that paper is already published")
         self.requests = [{"uid": "9", "subject": "one-off: dupe", "note": "dupe",
                           "dois": [DOI], "pdf": None}]
-        self.assertEqual(ge.queue_one_offs(), [])
+        self.assertEqual(ge.queue_one_offs()[0], [])
         subject, body = self.answer()
         self.assertEqual(subject, "Re: one-off: dupe")
         self.assertIn("already published", body)
@@ -317,7 +318,7 @@ class QueueTests(unittest.TestCase):
     def test_an_unexpected_failure_keeps_the_email_for_the_next_sweep(self):
         self.result = RuntimeError("gh is down")
         self.requests = [{"uid": "9", "subject": "one-off", "note": "", "dois": [DOI], "pdf": None}]
-        problems = ge.queue_one_offs()
+        problems, _ = ge.queue_one_offs()
         self.assertEqual(len(problems), 1)
         self.assertIn("could not be queued", problems[0])
         self.assertEqual(self.calls, [])  # no answer, no label: it is retried
@@ -334,3 +335,105 @@ class QueueTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ListLagTests(unittest.TestCase):
+    """An Issue opened seconds ago is not in the Issue list yet.
+
+    2026-11-18, the first one-off to arrive with its PDF attached. The sweep
+    opened #138, then listed the pending Issues in the very next call and did
+    not get it back. So the PDF was never staged; `consume_replies` decided the
+    Issue "isn't waiting" and threw the reply away; and `request_missing_pdfs`,
+    which re-fetches the list and by then *could* see #138, emailed a request
+    for the PDF that had come attached to the email that opened it.
+
+    Two fetches in one run, two different answers. The list endpoint is
+    eventually consistent; a direct GET is not.
+    """
+
+    def setUp(self) -> None:
+        self.fetched: list[int] = []
+
+        def get_issue(number):
+            self.fetched.append(number)
+            if number == 404:
+                return None
+            return {
+                "number": number,
+                "title": f"paper {number}",
+                "body": "",
+                "createdAt": f"2026-11-18T01:0{number % 10}:00Z",
+                "labels": [{"name": "podcast-pending"}],
+            }
+
+        patch = mock.patch.object(github_issue, "get_issue", get_issue)
+        patch.start()
+        self.addCleanup(patch.stop)
+
+    def listed(self, *numbers: int) -> list[dict]:
+        return [
+            {"number": n, "title": "", "body": "", "createdAt": "2026-11-01T00:00:00Z",
+             "labels": []}
+            for n in numbers
+        ]
+
+    def test_an_issue_the_list_has_not_caught_up_with_is_fetched_directly(self):
+        found = github_issue.ensure_listed(self.listed(40, 43), {138})
+        self.assertEqual([i["number"] for i in found], [40, 43, 138])
+        self.assertEqual(self.fetched, [138])
+
+    def test_nothing_is_fetched_when_the_list_is_already_complete(self):
+        found = github_issue.ensure_listed(self.listed(40, 138), {138})
+        self.assertEqual([i["number"] for i in found], [40, 138])
+        self.assertEqual(self.fetched, [])
+
+    def test_the_merged_list_stays_in_creation_order(self):
+        found = github_issue.ensure_listed(self.listed(40), {138})
+        stamps = [i["createdAt"] for i in found]
+        self.assertEqual(stamps, sorted(stamps))
+
+    def test_an_issue_that_cannot_be_read_is_skipped_not_fatal(self):
+        found = github_issue.ensure_listed(self.listed(40), {404})
+        self.assertEqual([i["number"] for i in found], [40])
+
+    def test_queue_one_offs_hands_back_what_it_opened(self):
+        # Which is how the sweep knows to go and fetch it.
+        with mock.patch.object(mailbox, "one_offs_received", lambda: []):
+            self.assertEqual(ge.queue_one_offs(), ([], []))
+
+
+class NeverAskForAPaperNobodyTriedTests(unittest.TestCase):
+    """request_missing_pdfs re-fetches, so it can see Issues staging never did."""
+
+    def setUp(self) -> None:
+        self.asked: list[int] = []
+        patches = [
+            mock.patch.object(ge.PapersState, "reached", True),
+            mock.patch.object(ge.PapersState, "transient", set()),
+            mock.patch.object(
+                ge, "request_pdf",
+                lambda issue, meta: self.asked.append(issue["number"]),
+            ),
+        ]
+        for p in patches:
+            p.start()
+            self.addCleanup(p.stop)
+
+    def issue(self, number: int) -> dict:
+        return {"number": number, "title": "t", "body": "", "createdAt": "2026-11-18T01:00:00Z",
+                "labels": []}
+
+    def test_an_issue_opened_after_staging_is_left_for_the_next_sweep(self):
+        issues = [self.issue(138)]
+        ge.request_missing_pdfs(issues, {}, considered=set())
+        self.assertEqual(self.asked, [], "asked for a PDF nobody tried to find")
+
+    def test_an_issue_staging_did_look_at_is_still_asked_about(self):
+        issues = [self.issue(40)]
+        ge.request_missing_pdfs(issues, {}, considered={40})
+        self.assertEqual(self.asked, [40])
+
+    def test_without_the_argument_nothing_changes(self):
+        # The old two-argument call still behaves as it did.
+        ge.request_missing_pdfs([self.issue(40)], {})
+        self.assertEqual(self.asked, [40])
