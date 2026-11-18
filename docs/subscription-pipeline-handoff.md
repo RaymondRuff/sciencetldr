@@ -745,6 +745,65 @@ was failing short and then being stretched to a target nobody had stated.
 `PromptContractTests` now fails if the prompt's window and the validator's
 constants ever drift apart again.
 
+## Update, 2026-11-18: a doorbell, because the schedule never rings before eight
+
+Ray emailed a one-off at 01:00 UTC and asked whether it would land the next
+day. It would not have, and finding out why cost two bugs.
+
+**The schedule.** `schedule_health.py --times` over seven days: since the
+crons were split on the fourteenth, `generate-episode` gets exactly the three
+runs a day it asks for — but **not one of them has started before 08:00 UTC**,
+which is when the writer picks its paper. Before the split there were five or
+six scattered runs a day, so one often landed early by luck. Tightening the
+schedule removed the luck, which nobody predicted: an emailed paper was
+collected by an afternoon sweep and written the *following* morning. Two days
+from sending to hearing.
+
+So `tools/gmail-doorbell/` — an Apps Script on the podcast's own Gmail
+account, on a five-minute timer, that fires a `repository_dispatch` when mail
+the pipeline cares about arrives. It is a **doorbell, not a gatekeeper**: it
+parses nothing and labels nothing, the Python still decides what every message
+means, and the asymmetry is deliberate. A false ring costs one workflow run
+that finds nothing; a missed ring costs nothing at all, because the daily
+sweeps still collect the mail. The token lives in Script Properties, scoped to
+this repository with Contents: write, and the script can do exactly one thing
+with it.
+
+`tests/test_doorbell.py` pins the contract from the Python side: every subject
+`pdf_mailbox` acts on must also ring. Writing it caught the first drift
+immediately — the doorbell anchored "unsubscribe" to the start of a subject
+while `pdf_mailbox` honours it anywhere, on purpose, so "Please unsubscribe
+me" would have been acted on by the pipeline and never woken it.
+
+**Running the sweep by hand no longer publishes.** `PUBLISH_SLOT` counted
+`workflow_dispatch`, so collecting an emailed paper early also pushed a
+finished episode out hours before its slot. It is now an opt-in checkbox, and
+a doorbell run never takes the slot at all.
+
+### The two bugs
+
+**A one-off's PDF was thrown away and then asked for.** The first one-off ever
+to arrive with a PDF attached opened Issue #138, and the sweep lost it. Two
+fetches of the Issue list in one run disagreed: `queue_one_offs()` created the
+Issue, `list_pending_issues()` called immediately after did not return it —
+GitHub's list endpoints are eventually consistent — so the staging pass never
+saw it, `consume_replies()` decided the Issue "isn't waiting" and marked the
+email used, and `request_missing_pdfs()`, which re-fetches and by then *could*
+see #138, emailed asking for the PDF that had come attached to the email that
+opened it. The writer skips `needs-pdf` Issues silently, so the episode would
+simply never have been written.
+
+`github_issue.get_issue()` fetches one Issue directly, which is strongly
+consistent; `ensure_listed()` fills in whatever the list has not caught up
+with. And `request_missing_pdfs()` now takes what the staging pass actually
+considered and never asks about anything outside it — *do not ask anyone for a
+paper nobody tried to find* — which alone would have prevented the email.
+
+**The hosts read the DOI aloud.** Forty seconds of digits in a synthesised
+voice that nobody writes down, when the show notes already carry it as a link.
+Matching it needed the *spoken* spelling: by the time a script exists the DOI
+has been expanded for the ear, so `DOI_RE` never sees one.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
