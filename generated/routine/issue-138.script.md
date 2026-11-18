@@ -1,0 +1,131 @@
+# Issue #138 — script (routine writer)
+
+**Length:** 11,224 spoken chars (~10.4 min)  
+**Episodes cited:** [34, 94]  
+**Paper text from:** Publisher PDF (emailed-pdf provenance) staged in the private papers repository as the Issue 138 bundle; doi 10.1038/s41598-023-43152-4
+
+| Run | Started (UTC) | Finished (UTC) | Safeguard stops |
+|---|---|---|---|
+| writer | 2026-11-18T08:07:37Z | 2026-11-18T08:09:47Z | 0 |
+
+## Show notes
+
+**[Seasonal variations of functional connectivity of human brains](https://doi.org/10.1038/s41598-023-43152-4)**
+
+*Scientific Reports, 2023*
+
+DOI: [10.1038/s41598-023-43152-4](https://doi.org/10.1038/s41598-023-43152-4)
+
+**Question:** Does resting-state fMRI activity and connectivity differ with the season in which a person is scanned?
+
+**Answer:** In 410 Human Connectome Project adults, each measured at one time of year, low-frequency signal power (fALFF) and some connectivity measures peaked in autumn. Global connectivity failed its omnibus test, no multiple-comparison correction is reported, and scanner stability was unchecked.
+
+**Three takeaways**
+
+1. fALFF differed by season in grey and white matter (p = 0.013 and 0.017), highest in autumn.
+2. Global GM-WM connectivity was not significant overall (p = 0.089); 3 of 14 networks passed, uncorrected, about 20% above their lowest season.
+3. Group means look like one high autumn quarter, not a smooth cycle, and the authors could not check scanner calibration.
+
+---
+
+**Nadia:** Hello, and welcome to Science TLDR. I'm Nadia.
+
+**Theo:** And I'm Theo. Today it's a question I've half-wondered about every time I've sat in a scanner in January.
+
+**Nadia:** Whether your brain is a different brain depending on the season. The paper is called Seasonal variations of functional connectivity of human brains, from a group at Vanderbilt, in Scientific Reports. The short version: they took resting brain scans from about four hundred young adults, sorted them by the season each person was scanned in, and report that several measures of brain activity peak in autumn.
+
+**Theo:** So why is this worth ten minutes? Seasonal mood effects are old news. What does this add, and who should actually care?
+
+**Nadia:** Two groups. Anyone curious whether the seasonal patterns in mood and cognition show up in the brain's own signals. And, more practically, anyone who runs imaging studies over months. If the season moves these measures, it's a confound nobody records. That second audience is the one I'd take seriously.
+
+**Theo:** Okay. Then set up the measurement for me, because resting-state imaging gets talked about as if everyone knows what it measures.
+
+**Nadia:** Right. Functional M-R-I tracks a blood-oxygen signal that rises and falls with local activity. At rest, with no task, those signals drift slowly, and regions that drift together are called functionally connected. They measured two things. One is how much of each region's signal sits in those slow fluctuations, a quantity with the unfortunate name fractional amplitude of low-frequency fluctuations. I'll just call it slow-wave power. The other is connectivity: how tightly regions correlate.
+
+**Nadia:** Um, and one unusual choice: they include white matter, the wiring, and correlate it against grey matter. White-matter signal used to be treated as noise. A growing literature says it isn't.
+
+**Theo:** Fine. And the data?
+
+**Nadia:** The Human Connectome Project, a large public dataset. They kept four hundred ten people in a narrow age band, healthy adults in their late twenties and early thirties, scanned over two years.
+
+**Nadia:** Those are binned into four seasons of roughly a hundred people each. The central claim, in one sentence: resting brain activity varies with the season, and it's highest in autumn.
+
+**Theo:** Hold on, because the design matters more than any result here. Those are four different groups of people. Nobody was followed through the year. So the claim that a brain changes with the seasons is being made from a comparison between strangers. Is that a fair description?
+
+**Nadia:** It's exact. Every person is measured at a single moment in the year, over a day or two. Whatever the paper says about variation, it's variation between the people who happened to come in during autumn and the people who came in during summer.
+
+**Theo:** Then let's see what the comparison shows. Start with the strongest result.
+
+**Nadia:** Slow-wave power. In both grey and white matter, it differs across the four seasons, and that test is reasonably clear of chance. It drifts down from winter to summer and then jumps up in autumn. The autumn-versus-summer gap is the biggest, and it's a moderate effect by the usual yardsticks rather than a tiny one.
+
+**Theo:** A moderate gap between groups of a hundred is not nothing. What happens with connectivity, which is the word in the title?
+
+**Nadia:** Hmm. Weaker. The overall test across all four seasons doesn't reach significance. They then compare pairs of seasons anyway, and autumn comes out above the other three, by about a tenth. And when they try to fit a smooth yearly cycle to it, the fit fails.
+
+**Theo:** Oh — so the headline measure in the title fails its own omnibus test, and the significance arrives afterwards in the pairwise comparisons. That's the order of operations a reviewer flags first.
+
+**Nadia:** It is. Then they break connectivity into fourteen brain networks. Three of them show a seasonal difference: a sensorimotor network, part of the default mode network, which is the set of regions active when you're not doing anything in particular, and the posterior insula. In those three, autumn is about twenty percent above the lowest season.
+
+**Theo:** Three of fourteen. Let me lay out the two readings. In one, these three networks are where the season actually acts, and the twenty percent is real. In the other, you ran fourteen tests at the usual threshold, and some will pass by luck. Do they correct for the number of tests?
+
+**Nadia:** Uh, the paper doesn't report any correction. Not for the fourteen networks, not across the dozens of tests overall. And the effect sizes they do report are small by the usual conventions. The three networks also fail the test for a smooth yearly cycle.
+
+**Theo:** Mm. So I can't tell those two readings apart on this paper. I'm not saying the three networks are noise. I'm saying nothing here distinguishes them from it.
+
+**Nadia:** That's fair. There's one more set of results, which I find the most interesting. They treat the brain as a graph, regions as nodes and strong correlations as links, and compute things like how densely linked it is and how short the paths are between regions. For white matter to white matter, every one of those properties shifts with season, and the autumn network is denser and more efficient. Grey matter doesn't show it.
+
+**Theo:** Why white matter alone? That seems like either the real story or a warning sign.
+
+**Nadia:** Well... they don't really explain it. And that's where I'd want to look at the plots, because the figures tell you something the text doesn't. On almost every one, winter, spring and summer sit close together, nearly flat, and autumn alone sticks up.
+
+**Nadia:** And it's worth knowing what autumn means here. The seasons follow the dataset's acquisition quarters, so autumn runs from August through October, and winter from November through January.
+
+**Theo:** So their autumn starts in high summer. That's worth holding onto when we get to the weather.
+
+**Nadia:** Back to the shape, though.
+
+**Theo:** Huh. That's a different shape from the one the paper describes. A sine wave is a smooth tide. What you're describing is one quarter that's out of line with the other three. Those suggest very different causes.
+
+**Nadia:** Yes. And the sine-wave fitting doesn't settle it. There are four time points, one per season, and the fit has an amplitude, a phase and an offset. Three free numbers to describe four averages. A curve that bends to meet one high point will always look tidy.
+
+**Nadia:** To their credit, they flag part of this themselves. They note that a sine wave is symmetrical, so it may not be the right shape, and that they lacked exact scan dates, so each season is treated as one time point. They say a different curve would give similar conclusions, but they don't show it.
+
+**Theo:** So let me take the room on the alternative. If one quarter of acquisitions differs, I want to know what else differed in that quarter. A scanner drifts. Software gets updated. The staff changes. Recruitment shifts. Did they check the instrument?
+
+**Nadia:** They say plainly that they couldn't. Scanner calibration data weren't available, and they state that as a limitation, which is to their credit. And the methods drop the earliest quarters of the dataset because those were reconstructed with an older algorithm, so the pipeline did change over the project's life.
+
+**Theo:** Then how do they argue the scanner out of it?
+
+**Nadia:** Two arguments. The measures are normalized, and the effect isn't uniform across the brain. And when they split by sex, women show a seasonal difference and men don't, and they say this sex-dependent pattern has basically ruled out the scanner.
+
+**Theo:** I don't think it does. Men are the smaller group here, so missing a significant difference in them is weak evidence of anything. And a scanner artifact doesn't have to treat every brain identically. A difference in significance isn't a significant difference. I'd want the two sexes tested against each other directly, on the same seasonal contrast.
+
+**Nadia:** Mm-hm. I'd add one they don't mention. The Connectome Project recruited families, twins and siblings, and the paper doesn't say how relatives were handled. If related people were scanned in the same season, the groups are less independent than a hundred people each suggests.
+
+**Theo:** Now the weather. The abstract says temperature and daylength may explain how this arises. What's behind that?
+
+**Nadia:** They took average temperature and daylength for St. Louis, where the scans were done, and used them as regressors. They predict slow-wave power. They don't predict connectivity. And the peaks don't line up: temperature and daylength peak in summer, slow-wave power peaks in autumn.
+
+**Theo:** Then that's carrying more than the data can. With four time points, any two smooth seasonal curves will fit something, especially once you allow a lag. That's city-wide weather standing in for whatever each person was exposed to. I'd call it consistent with an environmental story, not evidence for one.
+
+**Nadia:** Agreed. And to be fair, they frame the lag as an observation, not a mechanism. Where I'd push back harder is the discussion. They suggest the seasonal swings can be as large as those from many neurological conditions, and they propose these networks as targets for treating seasonal affective disorder.
+
+**Theo:** Neither is in the data. Nobody here had a mood measure, nobody had a diagnosis, and no comparison to a neurological condition is shown. That's a leap from a between-group difference in healthy young adults.
+
+**Nadia:** Yeah, that's speculation, and it's the part I'd ignore.
+
+**Theo:** We've seen this design problem twice before. In episode ninety-four, the social media deactivation study, the authors ran ordinary cross-sectional comparisons on their own randomized data, and the estimates came out biased in unpredictable directions, sometimes the wrong sign. That's exactly the kind of comparison this paper rests on.
+
+**Nadia:** And it's a nice contrast with episode thirty-four, the consciousness adversarial collaboration, also imaging. There, the analyses were preregistered before anyone saw data. Here, a lot of tests are run, the passes are reported, and nothing is corrected. Same kind of scanner, very different discipline.
+
+**Theo:** So here's my verdict, and it's narrow. This doesn't establish that any person's brain cycles with the seasons. It's an uncorrected, between-group warning that scan date might be a confound in imaging studies. As a warning, I'll take it, because recording the date costs nothing.
+
+**Nadia:** I'd put it slightly more kindly. They used public data, named the scanner problem themselves, and the slow-wave power result is the cleanest thing here. It's a reasonable reason for the next long study to log the season. That's what it earns.
+
+**Theo:** Then three takeaways. One: across about four hundred people, slow-wave brain power differed by season, highest in autumn, and that's the paper's firmest result. Two: connectivity failed the overall test, and three of fourteen networks passing uncorrected tells you very little. Three: the pattern looks like one odd quarter rather than a smooth cycle, and nobody could check the scanner.
+
+**Nadia:** What I'd watch for is the same people scanned across a year. If autumn still stands out within a person, I'll believe the brain is doing it.
+
+**Theo:** And I'd watch for anyone with a calibrated scanner and a phantom scan every week. If the autumn bump shows up in the phantom too, the story's over. If it doesn't, I'd take this a lot more seriously.
+
+**Nadia:** The paper is in Scientific Reports, twenty twenty-three. Thanks for listening to Science TLDR.
