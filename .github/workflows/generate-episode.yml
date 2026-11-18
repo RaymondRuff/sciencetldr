@@ -50,12 +50,24 @@ on:
     - cron: '11 14 * * *'     # full sweep, and the day's publish slot
     - cron: '17 5 * * *'      # full sweep that closes expired PDF windows
     - cron: '28 7 * * *'      # second chance at that, just before the writer
+  # The mailbox doorbell: an Apps Script on the podcast account rings this
+  # when mail that the pipeline cares about arrives. GitHub's schedules have
+  # not started a run before 08:00 UTC since 2026-11-14, so without it an
+  # emailed paper waits for an afternoon sweep and is written the *following*
+  # morning. See tools/gmail-doorbell/.
+  repository_dispatch:
+    types: [mailbox]
   workflow_dispatch:
     inputs:
       issue:
         description: 'Issue number to generate (blank = sweep all eligible)'
         required: false
         type: string
+      publish:
+        description: 'Also publish the oldest waiting episode (off by default)'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -159,7 +171,11 @@ jobs:
           # daily sweep (and a manual run with no issue named) merges the oldest
           # waiting draft PR — one a day. Any other value keeps the manual merge.
           AUTO_PUBLISH: ${{ vars.AUTO_PUBLISH }}
-          PUBLISH_SLOT: ${{ github.event.schedule == '11 14 * * *' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
+          # Running this by hand used to take the day's publish slot with it,
+          # so collecting an emailed paper early also pushed a finished
+          # episode out hours before its time. Now a manual run only
+          # publishes if you tick the box, and the doorbell never does.
+          PUBLISH_SLOT: ${{ github.event.schedule == '11 14 * * *' || github.event_name == 'push' || inputs.publish }}
           ISSUE: ${{ inputs.issue }}
         run: |
           PUBLISH=""
