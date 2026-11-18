@@ -806,6 +806,30 @@ def check_balance(turns: list[dict]) -> list[str]:
     ]
 
 
+# "D-O-I", however it is hyphenated for the ear, and a raw DOI if one slips
+# through unspelled. The spoken form is the one that actually occurred.
+SPOKEN_DOI_RE = re.compile(r"\bD[-\s]?O[-\s]?I\b", re.IGNORECASE)
+
+
+def check_no_spoken_doi(turns: list[dict]) -> list[str]:
+    """The hosts never read a DOI aloud; it is a link in the show notes.
+
+    Episode ninety-nine closed with forty seconds of digits — "D-O-I ten dot
+    one one seven two slash j c i dot insight dot two zero five nine eight
+    four" — which nobody listening writes down. Matching the *spoken* spelling
+    matters: by the time a script is written the DOI has been expanded for the
+    ear, so DOI_RE alone would never see it.
+    """
+    errors: list[str] = []
+    for i, turn in enumerate(turns):
+        if SPOKEN_DOI_RE.search(turn["text"]) or DOI_RE.search(turn["text"]):
+            errors.append(
+                f"turn {i}: reads the DOI aloud — name the journal and the year; "
+                "the DOI is a link in the show notes"
+            )
+    return errors
+
+
 def check_sign_off(turns: list[dict]) -> list[str]:
     """The close may not name a day, because an episode cannot know what is next.
 
@@ -936,6 +960,7 @@ def validate(
             errors.append(f"cold open: {name} must be named in the first three turns")
 
     errors += check_sign_off(turns)
+    errors += check_no_spoken_doi(turns)
     warnings += check_balance(turns)
 
     full = "\n".join(t["text"] for t in turns)

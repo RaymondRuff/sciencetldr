@@ -123,6 +123,50 @@ class BalanceTests(unittest.TestCase):
         self.assertEqual(rt.check_balance([]), [])
 
 
+class SpokenDoiTests(unittest.TestCase):
+    """Forty seconds of digits that nobody writes down, and it's in the notes."""
+
+    def turn(self, text: str) -> list[dict]:
+        return [{"speaker": "Nadia", "text": text}]
+
+    def test_the_line_from_mondays_episode_is_rejected(self):
+        errors = rt.check_no_spoken_doi(self.turn(
+            "That's J-C-I Insight, this year. D-O-I ten dot one one seven two "
+            "slash j c i dot insight dot two zero five nine eight four."
+        ))
+        self.assertEqual(len(errors), 1)
+        self.assertIn("name the journal and the year", errors[0])
+
+    def test_the_spoken_spelling_is_what_gets_caught(self):
+        # By the time a script exists the DOI has been expanded for the ear,
+        # so a raw-DOI pattern alone would never see it.
+        self.assertEqual(rt.DOI_RE.search("D-O-I ten dot one one seven two"), None)
+        self.assertTrue(rt.check_no_spoken_doi(self.turn("D-O-I ten dot one")))
+
+    def test_an_unspelled_doi_is_caught_as_well(self):
+        self.assertTrue(rt.check_no_spoken_doi(self.turn("It's 10.1172/jci.insight.205984.")))
+
+    def test_journal_and_year_is_the_whole_sign_off(self):
+        self.assertEqual(
+            rt.check_no_spoken_doi(self.turn("That was Molecular Cancer Therapeutics, this year.")),
+            [],
+        )
+
+    def test_an_ordinary_sentence_is_not_a_doi(self):
+        for line in ("The doily pattern in figure two.", "Two of the mice died."):
+            with self.subTest(line=line):
+                self.assertEqual(rt.check_no_spoken_doi(self.turn(line)), [])
+
+    def test_validate_reports_it(self):
+        script = {"turns": [
+            {"speaker": "Nadia", "text": "Hi, and welcome to Science TLDR. I'm Nadia."},
+            {"speaker": "Theo", "text": "And I'm Theo."},
+            {"speaker": "Nadia", "text": "D-O-I ten dot one one seven two slash x."},
+        ]}
+        errors, _ = rt.validate(script)
+        self.assertTrue(any("reads the DOI aloud" in e for e in errors))
+
+
 class PromptContractTests(unittest.TestCase):
     """What the prompt tells the model must match what the validator enforces."""
 
@@ -146,6 +190,15 @@ class PromptContractTests(unittest.TestCase):
     def test_the_prompt_warns_about_the_sign_off_rule(self):
         # A mechanical rule the model is never told about is a trap.
         self.assertIn("Never name a day of the week", self.text())
+
+    def test_the_prompt_warns_about_the_doi_rule_too(self):
+        self.assertIn("Never read the DOI aloud", self.text())
+
+    def test_the_show_notes_still_carry_the_doi(self):
+        # Dropping it from the dialogue only works because it survives there.
+        notes = (ROOT / "prompts" / "show_notes.md").read_text(encoding="utf-8")
+        self.assertIn("DOI", notes)
+        self.assertIn("https://doi.org/", notes)
 
 
 if __name__ == "__main__":
