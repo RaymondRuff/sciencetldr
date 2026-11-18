@@ -441,16 +441,22 @@ The test: a disfluency should mark *thinking*, never *fumbling*.
 7. **Three takeaways**, delivered by Theo, from the results — not from the
    abstract's framing.
 8. **What I'd watch for.** One line each: the thing that would change their mind.
-9. **Sign-off.** Brief. Journal, DOI mentioned once, no promotional language.
+9. **Sign-off.** Brief. Name the journal and the year, and stop there. No
+   promotional language.
+   **Never read the DOI aloud.** A spoken DOI is forty seconds of digits and
+   letters — "D-O-I ten dot one one seven two slash j c i dot insight dot two
+   zero five nine eight four" — and nobody listening writes it down. It is in
+   the show notes as a link, which is where anyone who wants it will look. The
+   validator rejects a DOI in the dialogue, spelled for the ear or not.
    **Never name a day of the week and never promise the next episode.** An
    episode cannot know what comes next: a one-off can land on any day, and the
    Friday crawl sometimes finds nothing. "See you Friday" went out on
    2026-11-16 and was a promise the pipeline had not made. Name the present —
    the strand, in the cold open — and leave the future alone. The validator
    rejects a weekday in the closing turns.
-   A paper with **no DOI** — an industry white paper — has no such line: name
-   the organisation that published it instead ("it's a white paper, up on
-   Example Lab's site"). Never read a URL aloud.
+   An **industry white paper** has no journal either: name the organisation
+   that published it ("it's a white paper, up on Example Lab's site"). Never
+   read a URL aloud.
 
 ## MEMORY — cross-episode continuity
 
