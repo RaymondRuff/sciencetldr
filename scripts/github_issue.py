@@ -132,6 +132,53 @@ def list_pending_issues() -> list[dict]:
     return issues
 
 
+def get_issue(number: int) -> dict | None:
+    """One Issue, fetched directly, in the shape list_pending_issues() returns.
+
+    The list endpoint is eventually consistent: an Issue created seconds ago
+    is routinely missing from it. A direct GET is not, so this is how the
+    sweep learns about an Issue it has only just opened.
+    """
+    repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
+    try:
+        found = json.loads(_run(["gh", "api", f"repos/{repo}/issues/{number}"]))
+    except Exception as exc:  # noqa: BLE001 - a missing Issue is not fatal here
+        print(f"[issue] could not read #{number}: {exc}")
+        return None
+    if "pull_request" in found:
+        return None
+    return {
+        "number": found["number"],
+        "title": found.get("title", ""),
+        "body": found.get("body") or "",
+        "createdAt": found.get("created_at", ""),
+        "labels": [{"name": l["name"]} for l in found.get("labels", [])],
+    }
+
+
+def ensure_listed(issues: list[dict], numbers) -> list[dict]:
+    """`issues`, plus any of `numbers` the list endpoint has not caught up with.
+
+    On 2026-11-18 a one-off arrived with its PDF attached. The sweep opened
+    Issue #138 and, in the very next call, listed the pending Issues without
+    it — so the PDF was never staged, the reply was consumed as belonging to
+    an Issue that "isn't waiting", and a request was then emailed for the PDF
+    that had just been thrown away. Two fetches in one run, two different
+    answers.
+    """
+    known = {i["number"] for i in issues}
+    added = []
+    for number in sorted(set(numbers) - known):
+        found = get_issue(number)
+        if found is None:
+            continue
+        print(f"[issue] #{number} was missing from the Issue list; fetched it directly")
+        added.append(found)
+    if not added:
+        return issues
+    return sorted(issues + added, key=lambda i: i.get("createdAt") or "")
+
+
 def open_issues_with_label(label: str) -> list[int]:
     """Numbers of the open Issues carrying this label. REST, so a routine can call it."""
     repo = os.environ.get("GITHUB_REPOSITORY", "RaymondRuff/sciencetldr")
