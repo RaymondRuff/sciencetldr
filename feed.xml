@@ -2677,5 +2677,40 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 16 Nov 2026 11:25:54 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 101: Seasonal variations of functional connectivity of human brains]]></title>
+      <itunes:title><![CDATA[Seasonal variations of functional connectivity of human brains]]></itunes:title>
+      <description><![CDATA[<p><strong><a href="https://doi.org/10.1038/s41598-023-43152-4">Seasonal variations of functional connectivity of human brains</a></strong></p>
+<p><em>Scientific Reports, 2023</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s41598-023-43152-4">10.1038/s41598-023-43152-4</a></p>
+<p><strong>Question:</strong> Does resting-state fMRI activity and connectivity differ with the season in which a person is scanned?</p>
+<p><strong>Answer:</strong> In 410 Human Connectome Project adults, each measured at one time of year, low-frequency signal power (fALFF) and some connectivity measures peaked in autumn. Global connectivity failed its omnibus test, no multiple-comparison correction is reported, and scanner stability was unchecked.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>fALFF differed by season in grey and white matter (p = 0.013 and 0.017), highest in autumn.</li>
+<li>Global GM-WM connectivity was not significant overall (p = 0.089); 3 of 14 networks passed, uncorrected, at most about 20% above their lowest season.</li>
+<li>The pattern leans on one high autumn quarter more than a smooth cycle, and the authors could not check scanner calibration.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong><a href="https://doi.org/10.1038/s41598-023-43152-4">Seasonal variations of functional connectivity of human brains</a></strong></p>
+<p><em>Scientific Reports, 2023</em></p>
+<p>DOI: <a href="https://doi.org/10.1038/s41598-023-43152-4">10.1038/s41598-023-43152-4</a></p>
+<p><strong>Question:</strong> Does resting-state fMRI activity and connectivity differ with the season in which a person is scanned?</p>
+<p><strong>Answer:</strong> In 410 Human Connectome Project adults, each measured at one time of year, low-frequency signal power (fALFF) and some connectivity measures peaked in autumn. Global connectivity failed its omnibus test, no multiple-comparison correction is reported, and scanner stability was unchecked.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>fALFF differed by season in grey and white matter (p = 0.013 and 0.017), highest in autumn.</li>
+<li>Global GM-WM connectivity was not significant overall (p = 0.089); 3 of 14 networks passed, uncorrected, at most about 20% above their lowest season.</li>
+<li>The pattern leans on one high autumn quarter more than a smooth cycle, and the authors could not check scanner calibration.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-101</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/101-seasonal-variations-of-functional-connectivity-of-human.mp3" length="7596966" type="audio/mpeg"/>
+      <guid isPermaLink="false">b17e0118-71ae-4f96-a902-6afaf09ce580</guid>
+      <itunes:duration>633</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>101</itunes:episode>
+      <podcast:episode>101</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Wed, 18 Nov 2026 11:22:32 +0000</pubDate>
+    </item>
   </channel>
 </rss>

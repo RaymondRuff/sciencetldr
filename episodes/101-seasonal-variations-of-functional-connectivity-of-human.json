@@ -1,0 +1,36 @@
+{
+  "guid": "b17e0118-71ae-4f96-a902-6afaf09ce580",
+  "title": "Episode 101: Seasonal variations of functional connectivity of human brains",
+  "itunes_title": "Seasonal variations of functional connectivity of human brains",
+  "description": "**[Seasonal variations of functional connectivity of human brains](https://doi.org/10.1038/s41598-023-43152-4)**\n\n*Scientific Reports, 2023*\n\nDOI: [10.1038/s41598-023-43152-4](https://doi.org/10.1038/s41598-023-43152-4)\n\n**Question:** Does resting-state fMRI activity and connectivity differ with the season in which a person is scanned?\n\n**Answer:** In 410 Human Connectome Project adults, each measured at one time of year, low-frequency signal power (fALFF) and some connectivity measures peaked in autumn. Global connectivity failed its omnibus test, no multiple-comparison correction is reported, and scanner stability was unchecked.\n\n**Three takeaways**\n\n1. fALFF differed by season in grey and white matter (p = 0.013 and 0.017), highest in autumn.\n2. Global GM-WM connectivity was not significant overall (p = 0.089); 3 of 14 networks passed, uncorrected, at most about 20% above their lowest season.\n3. The pattern leans on one high autumn quarter more than a smooth cycle, and the authors could not check scanner calibration.",
+  "pub_date": "Wed, 18 Nov 2026 11:22:32 +0000",
+  "duration_seconds": 633,
+  "episode_number": 101,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "101-seasonal-variations-of-functional-connectivity-of-human.mp3",
+  "enclosure_length_bytes": 7596966,
+  "source_metadata": {
+    "title": "Seasonal variations of functional connectivity of human brains",
+    "doi": "10.1038/s41598-023-43152-4",
+    "dice_score": null,
+    "pdf_url": null,
+    "source": "one-off",
+    "digest_excerpt": "Queued by hand, outside the Monday digest and the Friday crawl.\nJournal: Scientific Reports",
+    "journal": "Scientific Reports",
+    "authors": [
+      "Lyuan Xu",
+      "Soyoung Choi",
+      "Yu Zhao",
+      "Muwei Li",
+      "Baxter P. Rogers",
+      "Adam Anderson",
+      "John C. Gore",
+      "Yurui Gao",
+      "Zhaohua Ding"
+    ],
+    "abstract": "AbstractSeasonal variations have long been observed in various aspects of human life. While there is an abundance of research that has characterized seasonality effects in, for example, cognition, mood, and behavior, including studies of underlying biophysical mechanisms, direct measurements of seasonal variations of brain functional activities have not gained wide attention. We have quantified seasonal effects on functional connectivity as derived from MRI scans. A cohort of healthy human subjects was divided into four groups based on the seasons of their scanning dates as documented in the image database of the Human Connectome Project. Sinusoidal functions were used as regressors to determine whether there were significant seasonal variations in measures of brain activities. We began with the analysis of seasonal variations of the fractional amplitudes of low frequency fluctuations of regional functional signals, followed by the seasonal variations of functional connectivity in both global- and network-level. Furthermore, relevant environmental factors, including average temperature and daylength, were found to be significantly associated with brain functional activities, which may explain how the observed seasonal fluctuations arise. Finally, topological properties of the brain functional network also showed significant variations across seasons. All the observations accumulated revealed seasonality effects of human brain activities in a resting-state, which may have important practical implications for neuroimaging research.",
+    "source_url": "https://doi.org/10.1038/s41598-023-43152-4"
+  },
+  "source_issue": 138
+}
