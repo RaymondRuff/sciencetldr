@@ -2,18 +2,36 @@
   "issue": 138,
   "writer": "routine",
   "paper_source": "Publisher PDF (emailed-pdf provenance) staged in the private papers repository as the Issue 138 bundle; doi 10.1038/s41598-023-43152-4",
-  "checked": false,
+  "checked": true,
   "callbacks": [
     34,
     94
   ],
-  "show_notes": "**[Seasonal variations of functional connectivity of human brains](https://doi.org/10.1038/s41598-023-43152-4)**\n\n*Scientific Reports, 2023*\n\nDOI: [10.1038/s41598-023-43152-4](https://doi.org/10.1038/s41598-023-43152-4)\n\n**Question:** Does resting-state fMRI activity and connectivity differ with the season in which a person is scanned?\n\n**Answer:** In 410 Human Connectome Project adults, each measured at one time of year, low-frequency signal power (fALFF) and some connectivity measures peaked in autumn. Global connectivity failed its omnibus test, no multiple-comparison correction is reported, and scanner stability was unchecked.\n\n**Three takeaways**\n\n1. fALFF differed by season in grey and white matter (p = 0.013 and 0.017), highest in autumn.\n2. Global GM-WM connectivity was not significant overall (p = 0.089); 3 of 14 networks passed, uncorrected, about 20% above their lowest season.\n3. Group means look like one high autumn quarter, not a smooth cycle, and the authors could not check scanner calibration.",
-  "verification_changes": [],
+  "show_notes": "**[Seasonal variations of functional connectivity of human brains](https://doi.org/10.1038/s41598-023-43152-4)**\n\n*Scientific Reports, 2023*\n\nDOI: [10.1038/s41598-023-43152-4](https://doi.org/10.1038/s41598-023-43152-4)\n\n**Question:** Does resting-state fMRI activity and connectivity differ with the season in which a person is scanned?\n\n**Answer:** In 410 Human Connectome Project adults, each measured at one time of year, low-frequency signal power (fALFF) and some connectivity measures peaked in autumn. Global connectivity failed its omnibus test, no multiple-comparison correction is reported, and scanner stability was unchecked.\n\n**Three takeaways**\n\n1. fALFF differed by season in grey and white matter (p = 0.013 and 0.017), highest in autumn.\n2. Global GM-WM connectivity was not significant overall (p = 0.089); 3 of 14 networks passed, uncorrected, at most about 20% above their lowest season.\n3. The pattern leans on one high autumn quarter more than a smooth cycle, and the authors could not check scanner calibration.",
+  "verification_changes": [
+    "Nadia said autumn was about twenty percent above the lowest season in all three significant networks; the paper says the highest was approximately 20% above the lowest, and Fig. 5 shows about 20-22% for ventral DMN and posterior insula but about 14% for sensorimotor. Restated as the top of the range, here and in show-notes takeaway 2.",
+    "Nadia said on almost every plot winter, spring and summer sit flat and autumn alone sticks up; Figs. 1 and 6 show a summer dip in WM fALFF, density and transitivity (winter vs summer transitivity is significant). Limited the flat-then-autumn shape to the connectivity plots, and softened takeaway 3 (dialogue and show notes) from 'one odd quarter rather than a smooth cycle' to 'leans on one high autumn quarter', since fALFF and three WM graph properties did pass the sinusoid test.",
+    "Nadia said a three-parameter sine fit to four means 'will always look tidy'; the fit has one residual degree of freedom and did fail for global FC and the three networks. Restated as a weak test rather than a guaranteed pass.",
+    "Turn 7 said white-matter signal 'used to be treated as noise'; the paper never says so. Replaced with the paper's own statement that cited work links WM BOLD signal to neural activity.",
+    "Turn 12 said each person was scanned 'over a day or two'; the paper does not state the scan schedule. Cut.",
+    "Turn 22 said grey matter 'doesn't show' the graph-property shift; the paper says GM-GM was not significant but similar trends were observed. Added the authors' caveat.",
+    "Theo asked for the sexes to be tested against each other as though the paper had not compared them; it reports a significant male-female difference in winter (Supp. Fig. S6). Added that, and reframed the ask as comparing the seasonal contrast between sexes.",
+    "Turn 36 stated the HCP recruited twins and siblings, which this paper never says. Verified against Van Essen et al. 2013, NeuroImage (the HCP overview, PMC3724347: subjects 'drawn from a population of adult twins and their non-twin siblings') and attributed to the project's own description.",
+    "Theo said the environmental fit was easy 'once you allow a lag'; the regression modelled no lag (the lag was an observation). Reworded to the freedom two seasonal regressors give over four time points.",
+    "Episode ninety-four callback said the authors ran 'cross-sectional' comparisons and that it was 'exactly' this paper's comparison, under 'this design problem twice before'; card 094 says standard non-experimental designs, and episode thirty-four is a contrast, not the same problem. Reworded to the card and softened.",
+    "Turn 44 said 'nothing is corrected'; the paper only fails to report a correction. Changed to 'no correction is reported'."
+  ],
   "runs": [
     {
       "role": "writer",
       "started": "2026-11-18T08:07:37Z",
       "finished": "2026-11-18T08:09:47Z",
+      "safeguard_stops": 0
+    },
+    {
+      "role": "checker",
+      "started": "2026-11-18T11:10:45Z",
+      "finished": "2026-11-18T11:14:34Z",
       "safeguard_stops": 0
     }
   ],
@@ -32,7 +50,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "So why is this worth ten minutes? Seasonal mood effects are old news. What does this add, and who should actually care?"
+      "text": "So why is this worth ten minutes? Seasonal mood effects are old news. What does this add, and who should care?"
     },
     {
       "speaker": "Nadia",
@@ -44,11 +62,11 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Right. Functional M-R-I tracks a blood-oxygen signal that rises and falls with local activity. At rest, with no task, those signals drift slowly, and regions that drift together are called functionally connected. They measured two things. One is how much of each region's signal sits in those slow fluctuations, a quantity with the unfortunate name fractional amplitude of low-frequency fluctuations. I'll just call it slow-wave power. The other is connectivity: how tightly regions correlate."
+      "text": "Right. Functional M-R-I tracks a blood-oxygen signal that rises and falls with local activity. At rest, with no task, those signals drift slowly, and regions that drift together are called functionally connected. They measured two things. One is how much of each region's signal sits in those slow fluctuations, with the unfortunate name fractional amplitude of low-frequency fluctuations. I'll just call it slow-wave power. The other is connectivity: how tightly regions correlate."
     },
     {
       "speaker": "Nadia",
-      "text": "Um, and one unusual choice: they include white matter, the wiring, and correlate it against grey matter. White-matter signal used to be treated as noise. A growing literature says it isn't."
+      "text": "Um, and one unusual choice: they include white matter, the wiring, and correlate it against grey matter. The authors cite earlier work suggesting the white-matter signal tracks neural activity too."
     },
     {
       "speaker": "Theo",
@@ -68,7 +86,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "It's exact. Every person is measured at a single moment in the year, over a day or two. Whatever the paper says about variation, it's variation between the people who happened to come in during autumn and the people who came in during summer."
+      "text": "It's exact. Every person is measured at a single point in the year. Whatever the paper says about variation, it's variation between the people who happened to come in during autumn and the people who came in during summer."
     },
     {
       "speaker": "Theo",
@@ -92,7 +110,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "It is. Then they break connectivity into fourteen brain networks. Three of them show a seasonal difference: a sensorimotor network, part of the default mode network, which is the set of regions active when you're not doing anything in particular, and the posterior insula. In those three, autumn is about twenty percent above the lowest season."
+      "text": "It is. Then they break connectivity into fourteen brain networks. Three of them show a seasonal difference: a sensorimotor network, part of the default mode network, which is the set of regions active when you're not doing anything in particular, and the posterior insula. The authors put the highest season at about twenty percent above the lowest. Reading the plots, that's the top of the range; the sensorimotor gap is smaller."
     },
     {
       "speaker": "Theo",
@@ -108,7 +126,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "That's fair. There's one more set of results, which I find the most interesting. They treat the brain as a graph, regions as nodes and strong correlations as links, and compute things like how densely linked it is and how short the paths are between regions. For white matter to white matter, every one of those properties shifts with season, and the autumn network is denser and more efficient. Grey matter doesn't show it."
+      "text": "That's fair. There's one more set of results, which I find the most interesting. They treat the brain as a graph, regions as nodes and strong correlations as links, and compute things like how densely linked it is and how short the paths are between regions. For white matter to white matter, every one of those properties shifts with season, and the autumn network is denser and more efficient. Grey matter doesn't reach significance, though the authors say the trend looks similar."
     },
     {
       "speaker": "Theo",
@@ -116,7 +134,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Well... they don't really explain it. And that's where I'd want to look at the plots, because the figures tell you something the text doesn't. On almost every one, winter, spring and summer sit close together, nearly flat, and autumn alone sticks up."
+      "text": "Well... they don't really explain it. And that's where I'd want to look at the plots, because the figures tell you something the text doesn't. On the connectivity plots, winter, spring and summer sit close together, nearly flat, and autumn alone sticks up. Some of the others have a summer dip too, but autumn is the extreme on every one."
     },
     {
       "speaker": "Nadia",
@@ -132,11 +150,11 @@
     },
     {
       "speaker": "Theo",
-      "text": "Huh. That's a different shape from the one the paper describes. A sine wave is a smooth tide. What you're describing is one quarter that's out of line with the other three. Those suggest very different causes."
+      "text": "Huh. That's a different shape from the one the paper describes. A sine wave is a smooth tide. What you're describing, at least for connectivity, is one quarter that's out of line with the other three. Those suggest very different causes."
     },
     {
       "speaker": "Nadia",
-      "text": "Yes. And the sine-wave fitting doesn't settle it. There are four time points, one per season, and the fit has an amplitude, a phase and an offset. Three free numbers to describe four averages. A curve that bends to meet one high point will always look tidy."
+      "text": "Yes. And the sine-wave fitting doesn't settle it. There are four time points, one per season, and the fit has an amplitude, a phase and an offset. Three free numbers to describe four averages. That leaves the fit very little room to fail, so passing it is a weak test of a yearly cycle."
     },
     {
       "speaker": "Nadia",
@@ -156,15 +174,15 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Two arguments. The measures are normalized, and the effect isn't uniform across the brain. And when they split by sex, women show a seasonal difference and men don't, and they say this sex-dependent pattern has basically ruled out the scanner."
+      "text": "Two arguments. The measures are normalized, and the effect isn't uniform across the brain. And when they split by sex, women show a seasonal difference and men don't, and the sexes differ from each other in winter. They say this sex-dependent pattern has basically ruled out the scanner."
     },
     {
       "speaker": "Theo",
-      "text": "I don't think it does. Men are the smaller group here, so missing a significant difference in them is weak evidence of anything. And a scanner artifact doesn't have to treat every brain identically. A difference in significance isn't a significant difference. I'd want the two sexes tested against each other directly, on the same seasonal contrast."
+      "text": "I don't think it does. Men are the smaller group here, so missing a significant difference in them is weak evidence of anything. And a scanner artifact doesn't have to treat every brain identically. A difference in significance isn't a significant difference, and a gap in one season isn't a different seasonal pattern. I'd want the seasonal contrast itself compared between the sexes."
     },
     {
       "speaker": "Nadia",
-      "text": "Mm-hm. I'd add one they don't mention. The Connectome Project recruited families, twins and siblings, and the paper doesn't say how relatives were handled. If related people were scanned in the same season, the groups are less independent than a hundred people each suggests."
+      "text": "Mm-hm. I'd add one they don't mention. The Connectome Project's own description says it recruited twins and their siblings, and this paper doesn't say how relatives were handled. If related people were scanned in the same season, the groups are less independent than a hundred people each suggests."
     },
     {
       "speaker": "Theo",
@@ -176,7 +194,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "Then that's carrying more than the data can. With four time points, any two smooth seasonal curves will fit something, especially once you allow a lag. That's city-wide weather standing in for whatever each person was exposed to. I'd call it consistent with an environmental story, not evidence for one."
+      "text": "Then that's carrying more than the data can. With four time points, two seasonal regressors have plenty of freedom to fit anything else seasonal. That's city-wide weather standing in for whatever each person was exposed to. I'd call it consistent with an environmental story, not evidence for one."
     },
     {
       "speaker": "Nadia",
@@ -192,11 +210,11 @@
     },
     {
       "speaker": "Theo",
-      "text": "We've seen this design problem twice before. In episode ninety-four, the social media deactivation study, the authors ran ordinary cross-sectional comparisons on their own randomized data, and the estimates came out biased in unpredictable directions, sometimes the wrong sign. That's exactly the kind of comparison this paper rests on."
+      "text": "We've seen what this kind of design can cost. In episode ninety-four, the social media deactivation study, the authors ran standard non-experimental comparisons on their own randomized data, and the estimates came out biased in unpredictable directions, sometimes the wrong sign. That's the same broad kind of comparison this paper rests on."
     },
     {
       "speaker": "Nadia",
-      "text": "And it's a nice contrast with episode thirty-four, the consciousness adversarial collaboration, also imaging. There, the analyses were preregistered before anyone saw data. Here, a lot of tests are run, the passes are reported, and nothing is corrected. Same kind of scanner, very different discipline."
+      "text": "And it's a nice contrast with episode thirty-four, the consciousness adversarial collaboration, also imaging. There, the analyses were preregistered before anyone saw data. Here, a lot of tests are run, the passes are reported, and no correction is reported. Same kind of scanner, very different discipline."
     },
     {
       "speaker": "Theo",
@@ -208,7 +226,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "Then three takeaways. One: across about four hundred people, slow-wave brain power differed by season, highest in autumn, and that's the paper's firmest result. Two: connectivity failed the overall test, and three of fourteen networks passing uncorrected tells you very little. Three: the pattern looks like one odd quarter rather than a smooth cycle, and nobody could check the scanner."
+      "text": "Then three takeaways. One: across about four hundred people, slow-wave brain power differed by season, highest in autumn, and that's the paper's firmest result. Two: connectivity failed the overall test, and three of fourteen networks passing uncorrected tells you very little. Three: the pattern leans on one high autumn quarter more than a smooth cycle, and nobody could check the scanner."
     },
     {
       "speaker": "Nadia",
