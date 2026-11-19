@@ -162,11 +162,20 @@ class Roster:
         _write(self.unsubscribed_path, self.unsubscribed, "Unsubscribed — never send to these")
         return self.repo.commit(message, paths=(LIST_DIR,))
 
-    def subscribe(self, address: str) -> str:
-        """Add an address. Returns what happened, for the reply."""
+    def subscribe(self, address: str, *, on_behalf: bool = False) -> str:
+        """Add an address. Returns what happened, for the reply.
+
+        `on_behalf` means somebody else asked for this address — the owner
+        adding a colleague who asked him in person. That cannot undo the
+        address's own decision to leave: a suppression entry is the one thing
+        a third party may not override. They can always re-subscribe
+        themselves, which is the only signal that actually means consent.
+        """
         address = normalise(address)
         if not valid(address):
             return "invalid"
+        if on_behalf and address in self.unsubscribed:
+            return "opted-out"
         self.unsubscribed.discard(address)
         if address in self.subscribers or address in legacy():
             self.subscribers.add(address)
@@ -356,6 +365,15 @@ def recipients() -> list[str]:
 
 
 REPLIES = {
+    "added-on-behalf": (
+        "You've been added to the Science TLDR weekly digest.\n\n"
+        "If that was not at your request, reply to this message with "
+        "'unsubscribe' as the subject and nothing further will arrive."
+    ),
+    "opted-out": (
+        "That address unsubscribed previously, so it was not added again. Only "
+        "the person holding it can rejoin, by writing in themselves."
+    ),
     "added": (
         "You're on the list.\n\nThe Science TLDR weekly digest goes out once a week: "
         "the most relevant recent papers on T cell engagers and multispecific immune "
@@ -377,7 +395,21 @@ REPLIES = {
     ),
 }
 
+# The digest a new subscriber gets says how they got here. Somebody added by
+# the owner did not ask us for anything, so telling them "you subscribed"
+# would be a small lie and the remedy belongs in the first line.
+PREAMBLE_ON_BEHALF = (
+    "You've been added to the Science TLDR weekly digest: the most relevant "
+    "recent papers on T cell engagers and multispecific immune engagers, with a "
+    "short read on each.\n\n"
+    "If that was not at your request, the link at the bottom takes you off the "
+    "list immediately and nothing else will arrive.\n\n"
+    "Here is the most recent one, from {date}."
+)
+
 SUBJECTS = {
+    "added-on-behalf": "You've been added to the Science TLDR digest",
+    "opted-out": "Not added to the Science TLDR digest",
     "added": "Subscribed to the Science TLDR digest",
     "already": "Already subscribed to the Science TLDR digest",
     "removed": "Unsubscribed from the Science TLDR digest",
@@ -403,14 +435,15 @@ def apply_requests(requests: list[dict]) -> list[dict]:
             for request in requests:
                 address = normalise(request.get("address", ""))
                 wants = request.get("wants")
+                on_behalf = bool(request.get("on_behalf"))
                 outcome = (
                     roster.unsubscribe(address) if wants == "unsubscribe"
-                    else roster.subscribe(address)
+                    else roster.subscribe(address, on_behalf=on_behalf)
                 )
                 if outcome == "invalid":
                     print(f"[list] ignoring a {wants} from an address we cannot use")
                     continue
-                print(f"[list] {wants}: {outcome}")
+                print(f"[list] {wants}{' on behalf' if on_behalf else ''}: {outcome}")
                 answers.append(
                     {
                         "uid": request.get("uid", ""),
@@ -420,6 +453,9 @@ def apply_requests(requests: list[dict]) -> list[dict]:
                         "body": REPLIES[outcome] + "\n",
                         # So the answer threads under what they sent.
                         "message_id": request.get("message_id", ""),
+                        "on_behalf": on_behalf,
+                        # Who to tell: the address itself, or whoever asked.
+                        "notify": normalise(request.get("notify", "")) or address,
                     }
                 )
             if answers:
@@ -446,6 +482,7 @@ def apply_requests(requests: list[dict]) -> list[dict]:
 WELCOME_OUTCOMES = ("added",)
 
 PREAMBLE = {
+    "added-on-behalf": PREAMBLE_ON_BEHALF,
     "added": (
         "You're on the list. The Science TLDR weekly digest goes out once a week: "
         "the most relevant recent papers on T cell engagers and multispecific "
@@ -520,7 +557,7 @@ def welcome_message(
         return SUBJECTS[outcome], REPLIES[outcome] + text_footer, None
     stamp, body_md = digest
     preamble = PREAMBLE[outcome].format(date=spoken_date(stamp))
-    lead = "Subscribed" if outcome == "added" else "Already subscribed"
+    lead = WELCOME_LEAD.get(outcome, "Already subscribed")
     subject = f"{lead} — Science TLDR Weekly Digest, {stamp}"
     text = f"{preamble}\n\n---\n\n{body_md}{text_footer}"
     rendered = render_html(body_md)
@@ -531,6 +568,48 @@ def welcome_message(
         )
         html = wrap_html(f"{paragraphs}<hr>{rendered}{html_footer}")
     return subject, text, html
+
+
+# How a welcome's subject opens, by outcome. An outcome with no entry here
+# would silently read "Already subscribed", which is how "added-on-behalf"
+# first went out saying the opposite of what had happened.
+WELCOME_LEAD = {
+    "added": "Subscribed",
+    "added-on-behalf": "You've been added",
+    "already": "Already subscribed",
+}
+
+OUTCOME_WORDS = {
+    "added": "added",
+    "already": "already on the list",
+    "removed": "removed",
+    "not-on-it": "was not on the list, and is now suppressed",
+    "opted-out": "unsubscribed previously, so NOT added — only they can rejoin",
+}
+
+
+def on_behalf_note(answers: list[dict]) -> tuple[str, str]:
+    """One summary for the owner, naming every address and what happened.
+
+    One note, not one per address: adding three colleagues should cost one
+    message. Naming each address is what makes a typo visible — a misspelling
+    would otherwise sit on the list as a silent dead entry.
+    """
+    lines = [f"  {a['address']} — {OUTCOME_WORDS.get(a['outcome'], a['outcome'])}" for a in answers]
+    added = [a for a in answers if a["outcome"] in WELCOME_OUTCOMES]
+    subject = (
+        f"{len(added)} added to the Science TLDR digest"
+        if added
+        else "Science TLDR digest: nothing changed"
+    )
+    body = "\n".join(lines) + "\n"
+    if added:
+        body += (
+            "\nEach of those is being sent the most recent digest now, with a "
+            "one-click unsubscribe at the bottom, so nobody is on the list "
+            "without being told they are.\n"
+        )
+    return subject, body
 
 
 def footer(unsubscribe_to: str) -> tuple[str, str]:
