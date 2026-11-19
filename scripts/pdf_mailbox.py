@@ -125,6 +125,39 @@ def one_off_note(subject: str) -> str | None:
     return re.sub(r"\s+", " ", match.group("note")).strip()
 
 
+# Addresses named in a subject line, for the owner adding somebody who asked
+# him rather than the mailbox. Subject only, never the body: a forwarded
+# request is full of addresses nobody meant to subscribe — signatures, quoted
+# headers, list footers.
+SUBJECT_ADDRESS_RE = re.compile(r"[^\s,;:<>()\[\]]+@[^\s,;:<>()\[\]]+\.[^\s,;:<>()\[\]]+")
+
+
+def addresses_in(subject: str) -> list[str]:
+    """Every usable address named in a subject, in order, without duplicates."""
+    seen: set[str] = set()
+    found: list[str] = []
+    for hit in SUBJECT_ADDRESS_RE.finditer(subject or ""):
+        address = mailing_list.normalise(hit.group(0).strip(".,;:"))
+        if mailing_list.valid(address) and address not in seen:
+            seen.add(address)
+            found.append(address)
+    return found
+
+
+def on_behalf_targets(subject: str, sender: str) -> list[str]:
+    """Addresses this sender is allowed to name in a subject.
+
+    Only the owner may: the original complaint was colleagues asking *him* to
+    join, and self-service only helps somebody who writes to the mailbox
+    themselves. Anyone else naming an address is simply subscribing their own,
+    which is what the rest of the pass does with them.
+    """
+    owner = owner_address()
+    if not owner or mailing_list.normalise(sender) != owner:
+        return []
+    return addresses_in(subject)
+
+
 def list_request(subject: str) -> str | None:
     """"subscribe", "unsubscribe", or None if this subject asks for neither."""
     subject = (subject or "").strip()
@@ -653,17 +686,29 @@ def _collect_list_requests(imap: imaplib.IMAP4_SSL) -> list[dict]:
             print(f"[list] rejecting a {wants}: the sender could not be verified")
             _reject(imap, uid)
             continue
-        found.append(
-            {
-                "uid": uid.decode(),
-                "address": sender,
-                "wants": wants,
-                "subject": subject,
-                # Carried through the manifest so the answer threads under
-                # the request instead of arriving as a loose message.
-                "message_id": str(header.get("Message-ID", "")),
-            }
-        )
+        entry = {
+            "uid": uid.decode(),
+            "address": sender,
+            "wants": wants,
+            "subject": subject,
+            # Carried through the manifest so the answer threads under
+            # the request instead of arriving as a loose message.
+            "message_id": str(header.get("Message-ID", "")),
+        }
+        # The owner may name who to add: "subscribe alice@example.com". The
+        # original complaint was people asking *him* to join, and self-service
+        # only helps someone who writes to the mailbox themselves. Restricted
+        # to the owner's own verified address, exactly as a one-off request is
+        # — anyone else naming an address simply gets subscribed themselves.
+        targets = on_behalf_targets(subject, sender)
+        if targets:
+            print(f"[list] {wants} from the owner for {len(targets)} address(es)")
+            found += [
+                dict(entry, address=target, on_behalf=True, notify=sender)
+                for target in targets
+            ]
+            continue
+        found.append(entry)
         print(f"[list] {wants} request received")
     return found
 
@@ -692,10 +737,27 @@ def handle_list_requests(requests: list[dict] | None = None) -> tuple[int, int]:
     requests = list_requests_received() if requests is None else requests
     if not requests:
         return 0, 0
+    answers = mailing_list.apply_requests(requests)
     pending: list[dict] = []
-    recorded = 0
-    for answered in mailing_list.apply_requests(requests):
-        recorded += 1
+    recorded = len(answers)
+
+    # What the owner asked for on somebody else's behalf: one note naming
+    # every address, not one note per address. Labelled here, as soon as the
+    # change is stored and he has been told — the welcome digests below are
+    # best-effort after that, and a missed one costs a new subscriber this
+    # week's digest rather than re-adding everybody on the next poll.
+    on_behalf = [a for a in answers if a.get("on_behalf")]
+    for uid in dict.fromkeys(a["uid"] for a in on_behalf):
+        group = [a for a in on_behalf if a["uid"] == uid]
+        if not mark_uid(uid):
+            print("[list] an owner's change could not be labelled; it may be answered twice")
+        subject, body = mailing_list.on_behalf_note(group)
+        reply_to(group[0]["notify"], subject, body, in_reply_to=group[0].get("message_id"))
+    pending += [a for a in on_behalf if a["outcome"] in mailing_list.WELCOME_OUTCOMES]
+
+    for answered in answers:
+        if answered.get("on_behalf"):
+            continue
         if answered["outcome"] in mailing_list.WELCOME_OUTCOMES:
             pending.append(answered)
             continue
@@ -737,8 +799,9 @@ def send_welcomes(pending: list[dict] | None = None) -> int:
     sent = 0
     for entry in pending:
         try:
+            outcome = "added-on-behalf" if entry.get("on_behalf") else entry["outcome"]
             subject, text, html = mailing_list.welcome_message(
-                digest, entry["outcome"], send_email.SENDER
+                digest, outcome, send_email.SENDER
             )
         except Exception as exc:  # noqa: BLE001 - never leave a subscriber silent
             print(f"[list] could not build the welcome ({exc}); sending the short note")

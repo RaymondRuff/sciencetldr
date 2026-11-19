@@ -576,6 +576,181 @@ class SentOnceTests(unittest.TestCase):
                 ml.sent_digests()
 
 
+class OnBehalfTests(unittest.TestCase):
+    """The owner adding somebody who asked him rather than the mailbox.
+
+    Self-service only reaches people who know to write to the podcast address
+    with the right subject. The complaint that started all of this was
+    colleagues asking Ray directly, and until now that meant editing
+    list/subscribers.txt by hand.
+    """
+
+    OWNER = "ray@example.com"
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+        for patch in (
+            mock.patch.dict(
+                "os.environ",
+                {"DIGEST_RECIPIENTS": LEGACY, "GMAIL_APP_PASSWORD": "x",
+                 "PDF_REQUEST_TO": self.OWNER},
+            ),
+        ):
+            patch.start()
+            self.addCleanup(patch.stop)
+
+    # ---- who may name an address ----------------------------------------
+
+    def test_the_owner_may_name_addresses(self):
+        self.assertEqual(
+            mailbox.on_behalf_targets("subscribe alice@example.com, bob@example.org", self.OWNER),
+            ["alice@example.com", "bob@example.org"],
+        )
+
+    def test_anybody_else_naming_an_address_is_ignored(self):
+        # They get subscribed themselves, which is the rest of the pass.
+        self.assertEqual(
+            mailbox.on_behalf_targets("subscribe alice@example.com", "stranger@example.net"),
+            [],
+        )
+
+    def test_case_and_display_form_do_not_defeat_the_owner_check(self):
+        self.assertEqual(
+            mailbox.on_behalf_targets("subscribe alice@example.com", "Ray@Example.com"),
+            ["alice@example.com"],
+        )
+
+    def test_with_no_owner_configured_nobody_may(self):
+        with mock.patch.dict("os.environ", {"PDF_REQUEST_TO": ""}):
+            self.assertEqual(
+                mailbox.on_behalf_targets("subscribe alice@example.com", self.OWNER), []
+            )
+
+    def test_a_subject_naming_nobody_is_an_ordinary_request(self):
+        self.assertEqual(mailbox.on_behalf_targets("subscribe", self.OWNER), [])
+        self.assertEqual(mailbox.on_behalf_targets("subscribe me please", self.OWNER), [])
+
+    def test_addresses_are_read_from_the_subject_only(self):
+        # A forwarded body is full of addresses nobody meant to subscribe.
+        for subject, want in (
+            ("subscribe <alice@example.com>", ["alice@example.com"]),
+            ("unsubscribe carol@example.net.", ["carol@example.net"]),
+            ("subscribe alice@example.com alice@example.com", ["alice@example.com"]),
+            ("subscribe not-an-address", []),
+        ):
+            with self.subTest(subject=subject):
+                self.assertEqual(mailbox.addresses_in(subject), want)
+
+    # ---- the consent rule ------------------------------------------------
+
+    def test_an_opt_out_cannot_be_undone_by_somebody_else(self):
+        roster = ml.Roster(FakeRepo(self.dir))
+        roster.unsubscribe("carol@example.net")
+        self.assertEqual(roster.subscribe("carol@example.net", on_behalf=True), "opted-out")
+        self.assertIn("carol@example.net", roster.unsubscribed)
+        self.assertNotIn("carol@example.net", roster.active())
+
+    def test_they_can_always_rejoin_themselves(self):
+        roster = ml.Roster(FakeRepo(self.dir))
+        roster.unsubscribe("carol@example.net")
+        self.assertEqual(roster.subscribe("carol@example.net"), "added")
+        self.assertIn("carol@example.net", roster.active())
+
+    # ---- the whole path --------------------------------------------------
+
+    def _requests(self, *targets: str, wants: str = "subscribe") -> list[dict]:
+        return [
+            {"uid": "7", "address": t, "wants": wants, "subject": "subscribe …",
+             "message_id": "<m@x>", "on_behalf": True, "notify": self.OWNER}
+            for t in targets
+        ]
+
+    def _handle(self, requests):
+        sent, labelled = [], []
+        with _patch_repo(FakeRepo(self.dir)), \
+                mock.patch.object(mailbox, "mark_uid", lambda uid, label=None: labelled.append(uid) or True), \
+                mock.patch.object(
+                    mailbox, "reply_to",
+                    lambda address, subject, body, html=None, in_reply_to=None: sent.append(
+                        (address, subject, body)) or True), \
+                mock.patch.object(mailbox, "drop_dir", lambda: self.dir / "drop"):
+            recorded, welcoming = mailbox.handle_list_requests(requests)
+        return recorded, welcoming, sent, labelled
+
+    def test_two_people_added_cost_one_note_to_the_owner(self):
+        recorded, welcoming, sent, labelled = self._handle(
+            self._requests("alice@example.com", "bob@example.org")
+        )
+        self.assertEqual((recorded, welcoming), (2, 2))
+        self.assertEqual(len(sent), 1, "one note, not one per address")
+        address, subject, body = sent[0]
+        self.assertEqual(address, self.OWNER)
+        self.assertIn("2 added", subject)
+        self.assertIn("alice@example.com — added", body)
+        self.assertIn("bob@example.org — added", body)
+        self.assertEqual(labelled, ["7"])
+
+    def test_the_note_names_every_outcome_so_a_typo_shows(self):
+        roster = ml.Roster(FakeRepo(self.dir))
+        roster.unsubscribe("carol@example.net")
+        roster.save("left")
+        _, _, sent, _ = self._handle(
+            self._requests("alice@example.com", "carol@example.net", "ray@example.com")
+        )
+        body = sent[0][2]
+        self.assertIn("alice@example.com — added", body)
+        self.assertIn("carol@example.net — unsubscribed previously", body)
+        self.assertIn("ray@example.com — already on the list", body)
+
+    def test_every_welcome_outcome_has_its_own_opening(self):
+        # Without a lead of its own, "added-on-behalf" read "Already
+        # subscribed" — the opposite of what had just happened.
+        for outcome, lead in (
+            ("added", "Subscribed"),
+            ("added-on-behalf", "You've been added"),
+            ("already", "Already subscribed"),
+        ):
+            with self.subTest(outcome=outcome):
+                subject, _, _ = ml.welcome_message(("2026-11-15", "# D\n"), outcome, "p@x.com")
+                self.assertTrue(subject.startswith(lead), subject)
+
+    def test_the_new_subscriber_is_told_they_were_added_not_that_they_asked(self):
+        self._handle(self._requests("alice@example.com"))
+        with mock.patch.object(mailbox, "drop_dir", lambda: self.dir / "drop"):
+            waiting = mailbox.welcomes_pending()
+        self.assertEqual([e["address"] for e in waiting], ["alice@example.com"])
+        self.assertTrue(waiting[0]["on_behalf"])
+        subject, text, _ = ml.welcome_message(
+            ("2026-11-15", "# Digest\n"), "added-on-behalf", "pod@example.com"
+        )
+        self.assertIn("been added", subject)
+        self.assertIn("You've been added", text)
+        self.assertIn("not at your request", text)
+
+    def test_the_owner_can_remove_somebody_who_asked_him_to(self):
+        roster = ml.Roster(FakeRepo(self.dir))
+        roster.subscribe("alice@example.com")
+        roster.save("joined")
+        _, welcoming, sent, _ = self._handle(
+            self._requests("alice@example.com", wants="unsubscribe")
+        )
+        self.assertEqual(welcoming, 0)
+        self.assertIn("alice@example.com — removed", sent[0][2])
+        with _patch_repo(FakeRepo(self.dir)):
+            self.assertNotIn("alice@example.com", ml.recipients())
+
+    def test_a_self_service_request_is_unaffected(self):
+        _, _, sent, labelled = self._handle(
+            [{"uid": "8", "address": "ben@example.net", "wants": "unsubscribe",
+              "subject": "unsubscribe", "message_id": "<n@x>"}]
+        )
+        address, subject, _ = sent[0]
+        self.assertEqual(address, "ben@example.net", "answered the sender, not the owner")
+        self.assertIn("Unsubscribed", subject)
+
+
 class WelcomeTests(unittest.TestCase):
     """A new subscriber's confirmation is the most recent digest itself."""
 

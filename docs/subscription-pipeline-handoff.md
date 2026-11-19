@@ -804,6 +804,54 @@ voice that nobody writes down, when the show notes already carry it as a link.
 Matching it needed the *spoken* spelling: by the time a script exists the DOI
 has been expanded for the ear, so `DOI_RE` never sees one.
 
+## Update, 2026-11-19: adding somebody who asked you, not the mailbox
+
+Self-service closed most of the original complaint, but not the part that
+started it. Back on the 13th it was *"several people have asked to join the
+email list"* — and a colleague who asks Ray in a meeting still needed him to
+hand-edit `list/subscribers.txt`, because the list only ever subscribes the
+verified sender.
+
+So the owner may now name addresses in the subject: `subscribe
+alice@example.com`, or several separated by commas, and `unsubscribe
+alice@example.com` to remove one. Only his own verified address may do it —
+`on_behalf_targets()` returns nothing for anybody else, who simply gets
+subscribed themselves as before. Same rule as a one-off paper request: naming
+what the show does is the owner's alone.
+
+**Subject only, never the body.** Forwarding somebody's "can you add me?" is
+the more natural gesture, but a forwarded body is full of addresses nobody
+meant to subscribe — signatures, quoted headers, list footers.
+
+**One note back, naming every address and its outcome.** Adding three
+colleagues costs one message, and naming each one is what makes a typo
+visible: a misspelling would otherwise sit on the list as a silent dead entry
+forever.
+
+### Two consent decisions, made deliberately
+
+**An opt-out cannot be undone by a third party.** `Roster.subscribe` takes
+`on_behalf`, and with it an address already on `list/unsubscribed.txt` comes
+back `opted-out` and is left alone. They can rejoin by writing in themselves,
+which is the only signal that actually means consent. Without this the owner
+could silently re-add somebody who had left, which is the one thing a
+suppression list exists to prevent.
+
+**Somebody added is told they were added.** The welcome they receive opens
+"You've been added to the Science TLDR weekly digest … If that was not at your
+request, the link at the bottom takes you off the list immediately", rather
+than the self-service "You're on the list". Telling someone they subscribed
+when they did not is a small lie, and the remedy belongs in the first line.
+This is notice-and-opt-out rather than confirmed opt-in; for a handful of
+colleagues who have asked in person that is proportionate, and the feature
+cannot tell the difference between those and anybody else, so that judgement
+stays with Ray.
+
+A bug worth recording: `welcome_message` derived its subject with `"Subscribed"
+if outcome == "added" else "Already subscribed"`, so the new outcome went out
+headed "Already subscribed" — the opposite of what had happened. It is a table
+now, and a test walks every welcome outcome.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
