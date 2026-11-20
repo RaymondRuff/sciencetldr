@@ -1,12 +1,22 @@
 # Issue #144 — script (routine writer)
 
-**Length:** 11,591 spoken chars (~10.8 min)  
+**Length:** 11,587 spoken chars (~10.8 min)  
 **Episodes cited:** [82]  
 **Paper text from:** Europe PMC PMC2874359 (full text), staged in the private papers repository as the Issue 144 bundle; doi 10.3201/eid1601.090726
 
 | Run | Started (UTC) | Finished (UTC) | Safeguard stops |
 |---|---|---|---|
 | writer | 2026-11-20T08:07:10Z | 2026-11-20T08:17:00Z | 0 |
+| checker | 2026-11-20T11:12:18Z | 2026-11-20T11:15:49Z | 0 |
+
+## Corrections made by the fact-check pass
+
+- Nadia said the recombinant had been reported as 'a couple more' strains in the United Kingdom; the paper gives no count for the UK strains (Erles and Brownlie, ref. 15), so the number is cut.
+- Nadia called the oldest archival recombinant 'about four years before anyone reported the subtype at all'; the paper says four years before it was reported in Italy, and the script itself describes strain UCD1, reported about twenty years earlier.
+- Nadia called the two CCoV genotypes 'near-identical across the genome'; the paper reports they share up to 96% nucleotide identity, an upper bound, so 'closely related' replaces it.
+- Theo's takeaway said the one-in-five average was 'almost entirely Hungary'; Hungary supplies 31 of the 78 CCoV-IIb samples and Italy 34, so the honest statement is that dropping Hungary leaves the rest of Europe near an eighth (47/368, 12.8%) — same correction in show-notes takeaway 1, and Nadia's 'hiding almost everything' softened to 'hiding a lot'.
+- Nadia described the ORF7a/7b control as run on 'twenty recombinant-positive samples' without the selection: the paper ran it on 20 samples positive for CCoV-IIb and negative for CCoV-I, now said out loud.
+- Trimmed the cold open's 're-read' aside to pay for the added clauses without going over the spoken-length ceiling.
 
 ## Show notes
 
@@ -22,7 +32,7 @@ DOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)
 
 **Three takeaways**
 
-1. About 1 in 5 CCoV-II infections were TGEV-like, but the average is driven by Hungary (31/32); 760 of 1,172 samples came from Italy, where it was 12.3%.
+1. About 1 in 5 CCoV-II infections were TGEV-like, but drop Hungary (31/32) and the rest is 47/368 (12.8%); 760 of 1,172 samples were Italian, at 12.3%.
 2. Recombination is solid: spike 5' end is 76.6-84.4% identical to TGEV versus 34.2-38.3% to CCoV-IIa, and an ORF7a/7b size assay excluded true TGEV in 20 samples.
 3. The suggestion that CCoV-IIa-based vaccines may underperform is a hypothesis; the authors state only vaccination-and-challenge trials could test it.
 
@@ -32,11 +42,11 @@ DOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)
 
 **Theo:** And I'm Theo. This is the Friday pick, so it's whatever has been most discussed on PubMed this week rather than anything we chose.
 
-**Nadia:** And at the top was a paper called Recombinant Canine Coronaviruses in Dogs, Europe, in Emerging Infectious Diseases — from twenty ten, which is part of why it's interesting to re-read. They screened more than a thousand faecal samples from dogs with acute diarrhoea, across fourteen European countries, for one hybrid virus: a dog coronavirus carrying a stretch of a pig coronavirus.
+**Nadia:** And at the top was a paper called Recombinant Canine Coronaviruses in Dogs, Europe, in Emerging Infectious Diseases — from twenty ten. They screened more than a thousand faecal samples from dogs with acute diarrhoea, across fourteen European countries, for one hybrid virus: a dog coronavirus carrying a stretch of a pig coronavirus.
 
 **Theo:** Okay. So why is that worth ten minutes? A hybrid virus in dogs sounds like veterinary housekeeping. What's the claim?
 
-**Nadia:** Hmm. The honest answer is that it's a counting paper, and the counting had never been done. Before this, the recombinant was a handful of isolates — four strains in Italy, a couple more in the United Kingdom. Nobody knew whether it was a freezer curiosity or established in dogs. The authors say it outright: nobody had determined the prevalence of this subtype.
+**Nadia:** Hmm. The honest answer is that it's a counting paper, and the counting had never been done. Before this, the recombinant was a handful of isolates — four strains in Italy, and others from the United Kingdom. Nobody knew whether it was a freezer curiosity or established in dogs. The authors say it outright: nobody had determined the prevalence of this subtype.
 
 **Theo:** Right, a different contribution from a mechanism paper. Then set up the virology, because "dog virus carrying pig virus" is doing a lot of work in that sentence.
 
@@ -44,7 +54,7 @@ DOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)
 
 **Theo:** Mm. So the species boundary is mostly about which animal you found it in.
 
-**Nadia:** Largely. The gene that does differ is the spike, the surface protein that binds the host cell — also the one antibodies mostly see. Dog coronavirus comes in two types, near-identical across the genome but strongly divergent in spike. And in some type two viruses, the first stretch of that gene — the part making the outward-facing tip — is the pig virus version instead. The rest is still a dog virus. That's the subtype they call two-b; the classical ones are two-a.
+**Nadia:** Largely. The gene that does differ is the spike, the surface protein that binds the host cell — also the one antibodies mostly see. Dog coronavirus comes in two types, closely related across the genome but strongly divergent in spike. And in some type two viruses, the first stretch of that gene — the part making the outward-facing tip — is the pig virus version instead. The rest is still a dog virus. That's the subtype they call two-b; the classical ones are two-a.
 
 **Theo:** Okay, I can hold that. So the central claim is that two-b is widespread?
 
@@ -64,7 +74,7 @@ DOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)
 
 **Theo:** A fifth. And how is it distributed? An average across Europe is usually hiding something.
 
-**Nadia:** It's hiding almost everything. Hungary is thirty-one of thirty-two. The United Kingdom is about a quarter, Italy about an eighth, then single strains from Greece, Romania and Sweden, and nothing from the rest.
+**Nadia:** It's hiding a lot. Hungary is thirty-one of thirty-two. The United Kingdom is about a quarter, Italy about an eighth, then single strains from Greece, Romania and Sweden, and nothing from the rest.
 
 **Theo:** Oh — so "a fifth of type two infections in Europe" is one country at saturation plus a long tail. Near-total in Hungary says something local: a trade route, a kennel network. One in eight in Italy says endemic and slow. The European average is the one I'd throw away.
 
@@ -82,7 +92,7 @@ DOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)
 
 **Theo:** Then let's do the recombination claim, because that's the part that could be an artefact. If pig and dog sequence turn up in one reaction, the boring explanation is that these dogs were shedding actual pig virus — they eat things.
 
-**Nadia:** Right, and the control for that is the best thing in the paper. The genomes end differently: dog and cat viruses carry two small accessory genes there, the pig virus one. So one P-C-R across that region gives a short product from pig virus and a much longer one from dog viruses. They ran it on twenty recombinant-positive samples.
+**Nadia:** Right, and the control for that is the best thing in the paper. The genomes end differently: dog and cat viruses carry two small accessory genes there, the pig virus one. So one P-C-R across that region gives a short product from pig virus and a much longer one from dog viruses. They ran it on twenty of the recombinant-positive samples, the ones with no type one in them.
 
 **Theo:** And?
 
@@ -110,7 +120,7 @@ DOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)
 
 **Theo:** Ah, okay. So that's not one recombination event spreading. That's the same swap happening more than once, at different times.
 
-**Nadia:** That's their reading, and I think it holds. The archival screening pushes the European ones back too: the oldest recombinant in the stored samples is from two thousand one, about four years before anyone reported the subtype at all.
+**Nadia:** That's their reading, and I think it holds. The archival screening pushes the European ones back too: the oldest recombinant in the stored samples is from two thousand one, about four years before the subtype was reported in Italy.
 
 **Theo:** Which is the useful kind of freezer result. It wasn't emerging when it was noticed; it was already there. Where does that leave the vaccine line?
 
@@ -126,7 +136,7 @@ DOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)
 
 **Nadia:** Mm. I'd add that the controls are better than the sampling. The gene-end assay and sequencing both ends were the right calls, and a lot of surveillance work of this vintage would have reported the band and stopped.
 
-**Theo:** Then three takeaways. One: in dogs with diarrhoea across Europe, about a fifth of type two infections carried the pig-type spike tip — but that average is almost entirely Hungary, at thirty-one of thirty-two. Two: the recombination is solid, because the front of the spike gene matches the pig virus far better than the classical dog version, and a gene-end control rules out pig virus in the samples. Three: the vaccine worry is a hypothesis, and the authors say so.
+**Theo:** Then three takeaways. One: in dogs with diarrhoea across Europe, about a fifth of type two infections carried the pig-type spike tip — but drop Hungary, at thirty-one of thirty-two, and the rest of Europe is nearer an eighth. Two: the recombination is solid, because the front of the spike gene matches the pig virus far better than the classical dog version, and a gene-end control rules out pig virus in the samples. Three: the vaccine worry is a hypothesis, and the authors say so.
 
 **Nadia:** What I'd watch for is a sample set that includes dogs without diarrhoea. If the recombinant turns up at the same rate in healthy animals, this stops being a disease story and becomes an ecology one — and that changes what the Hungarian number means.
 

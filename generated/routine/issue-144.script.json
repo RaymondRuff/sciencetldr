@@ -2,17 +2,30 @@
   "issue": 144,
   "writer": "routine",
   "paper_source": "Europe PMC PMC2874359 (full text), staged in the private papers repository as the Issue 144 bundle; doi 10.3201/eid1601.090726",
-  "checked": false,
+  "checked": true,
   "callbacks": [
     82
   ],
-  "show_notes": "**[Recombinant Canine Coronaviruses in Dogs, Europe](https://doi.org/10.3201/eid1601.090726)**\n\n*Emerging Infectious Diseases, 2010*\n\nDOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)\n\n**Question:** How common in European dogs are canine coronavirus (CCoV) type II strains whose spike 5' end is recombinant with porcine TGEV?\n\n**Answer:** In 1,172 faecal samples from dogs with enteritis in 14 countries (2001-2008), 493 carried CCoV and 78 of 400 CCoV-II-positive samples (19.5%) were TGEV-like subtype IIb — a diagnostic convenience sample with no healthy-dog comparison.\n\n**Three takeaways**\n\n1. About 1 in 5 CCoV-II infections were TGEV-like, but the average is driven by Hungary (31/32); 760 of 1,172 samples came from Italy, where it was 12.3%.\n2. Recombination is solid: spike 5' end is 76.6-84.4% identical to TGEV versus 34.2-38.3% to CCoV-IIa, and an ORF7a/7b size assay excluded true TGEV in 20 samples.\n3. The suggestion that CCoV-IIa-based vaccines may underperform is a hypothesis; the authors state only vaccination-and-challenge trials could test it.",
-  "verification_changes": [],
+  "show_notes": "**[Recombinant Canine Coronaviruses in Dogs, Europe](https://doi.org/10.3201/eid1601.090726)**\n\n*Emerging Infectious Diseases, 2010*\n\nDOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)\n\n**Question:** How common in European dogs are canine coronavirus (CCoV) type II strains whose spike 5' end is recombinant with porcine TGEV?\n\n**Answer:** In 1,172 faecal samples from dogs with enteritis in 14 countries (2001-2008), 493 carried CCoV and 78 of 400 CCoV-II-positive samples (19.5%) were TGEV-like subtype IIb — a diagnostic convenience sample with no healthy-dog comparison.\n\n**Three takeaways**\n\n1. About 1 in 5 CCoV-II infections were TGEV-like, but drop Hungary (31/32) and the rest is 47/368 (12.8%); 760 of 1,172 samples were Italian, at 12.3%.\n2. Recombination is solid: spike 5' end is 76.6-84.4% identical to TGEV versus 34.2-38.3% to CCoV-IIa, and an ORF7a/7b size assay excluded true TGEV in 20 samples.\n3. The suggestion that CCoV-IIa-based vaccines may underperform is a hypothesis; the authors state only vaccination-and-challenge trials could test it.",
+  "verification_changes": [
+    "Nadia said the recombinant had been reported as 'a couple more' strains in the United Kingdom; the paper gives no count for the UK strains (Erles and Brownlie, ref. 15), so the number is cut.",
+    "Nadia called the oldest archival recombinant 'about four years before anyone reported the subtype at all'; the paper says four years before it was reported in Italy, and the script itself describes strain UCD1, reported about twenty years earlier.",
+    "Nadia called the two CCoV genotypes 'near-identical across the genome'; the paper reports they share up to 96% nucleotide identity, an upper bound, so 'closely related' replaces it.",
+    "Theo's takeaway said the one-in-five average was 'almost entirely Hungary'; Hungary supplies 31 of the 78 CCoV-IIb samples and Italy 34, so the honest statement is that dropping Hungary leaves the rest of Europe near an eighth (47/368, 12.8%) — same correction in show-notes takeaway 1, and Nadia's 'hiding almost everything' softened to 'hiding a lot'.",
+    "Nadia described the ORF7a/7b control as run on 'twenty recombinant-positive samples' without the selection: the paper ran it on 20 samples positive for CCoV-IIb and negative for CCoV-I, now said out loud.",
+    "Trimmed the cold open's 're-read' aside to pay for the added clauses without going over the spoken-length ceiling."
+  ],
   "runs": [
     {
       "role": "writer",
       "started": "2026-11-20T08:07:10Z",
       "finished": "2026-11-20T08:17:00Z",
+      "safeguard_stops": 0
+    },
+    {
+      "role": "checker",
+      "started": "2026-11-20T11:12:18Z",
+      "finished": "2026-11-20T11:15:49Z",
       "safeguard_stops": 0
     }
   ],
@@ -27,7 +40,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "And at the top was a paper called Recombinant Canine Coronaviruses in Dogs, Europe, in Emerging Infectious Diseases — from twenty ten, which is part of why it's interesting to re-read. They screened more than a thousand faecal samples from dogs with acute diarrhoea, across fourteen European countries, for one hybrid virus: a dog coronavirus carrying a stretch of a pig coronavirus."
+      "text": "And at the top was a paper called Recombinant Canine Coronaviruses in Dogs, Europe, in Emerging Infectious Diseases — from twenty ten. They screened more than a thousand faecal samples from dogs with acute diarrhoea, across fourteen European countries, for one hybrid virus: a dog coronavirus carrying a stretch of a pig coronavirus."
     },
     {
       "speaker": "Theo",
@@ -35,7 +48,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Hmm. The honest answer is that it's a counting paper, and the counting had never been done. Before this, the recombinant was a handful of isolates — four strains in Italy, a couple more in the United Kingdom. Nobody knew whether it was a freezer curiosity or established in dogs. The authors say it outright: nobody had determined the prevalence of this subtype."
+      "text": "Hmm. The honest answer is that it's a counting paper, and the counting had never been done. Before this, the recombinant was a handful of isolates — four strains in Italy, and others from the United Kingdom. Nobody knew whether it was a freezer curiosity or established in dogs. The authors say it outright: nobody had determined the prevalence of this subtype."
     },
     {
       "speaker": "Theo",
@@ -51,7 +64,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Largely. The gene that does differ is the spike, the surface protein that binds the host cell — also the one antibodies mostly see. Dog coronavirus comes in two types, near-identical across the genome but strongly divergent in spike. And in some type two viruses, the first stretch of that gene — the part making the outward-facing tip — is the pig virus version instead. The rest is still a dog virus. That's the subtype they call two-b; the classical ones are two-a."
+      "text": "Largely. The gene that does differ is the spike, the surface protein that binds the host cell — also the one antibodies mostly see. Dog coronavirus comes in two types, closely related across the genome but strongly divergent in spike. And in some type two viruses, the first stretch of that gene — the part making the outward-facing tip — is the pig virus version instead. The rest is still a dog virus. That's the subtype they call two-b; the classical ones are two-a."
     },
     {
       "speaker": "Theo",
@@ -91,7 +104,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "It's hiding almost everything. Hungary is thirty-one of thirty-two. The United Kingdom is about a quarter, Italy about an eighth, then single strains from Greece, Romania and Sweden, and nothing from the rest."
+      "text": "It's hiding a lot. Hungary is thirty-one of thirty-two. The United Kingdom is about a quarter, Italy about an eighth, then single strains from Greece, Romania and Sweden, and nothing from the rest."
     },
     {
       "speaker": "Theo",
@@ -127,7 +140,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Right, and the control for that is the best thing in the paper. The genomes end differently: dog and cat viruses carry two small accessory genes there, the pig virus one. So one P-C-R across that region gives a short product from pig virus and a much longer one from dog viruses. They ran it on twenty recombinant-positive samples."
+      "text": "Right, and the control for that is the best thing in the paper. The genomes end differently: dog and cat viruses carry two small accessory genes there, the pig virus one. So one P-C-R across that region gives a short product from pig virus and a much longer one from dog viruses. They ran it on twenty of the recombinant-positive samples, the ones with no type one in them."
     },
     {
       "speaker": "Theo",
@@ -183,7 +196,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "That's their reading, and I think it holds. The archival screening pushes the European ones back too: the oldest recombinant in the stored samples is from two thousand one, about four years before anyone reported the subtype at all."
+      "text": "That's their reading, and I think it holds. The archival screening pushes the European ones back too: the oldest recombinant in the stored samples is from two thousand one, about four years before the subtype was reported in Italy."
     },
     {
       "speaker": "Theo",
@@ -215,7 +228,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "Then three takeaways. One: in dogs with diarrhoea across Europe, about a fifth of type two infections carried the pig-type spike tip — but that average is almost entirely Hungary, at thirty-one of thirty-two. Two: the recombination is solid, because the front of the spike gene matches the pig virus far better than the classical dog version, and a gene-end control rules out pig virus in the samples. Three: the vaccine worry is a hypothesis, and the authors say so."
+      "text": "Then three takeaways. One: in dogs with diarrhoea across Europe, about a fifth of type two infections carried the pig-type spike tip — but drop Hungary, at thirty-one of thirty-two, and the rest of Europe is nearer an eighth. Two: the recombination is solid, because the front of the spike gene matches the pig virus far better than the classical dog version, and a gene-end control rules out pig virus in the samples. Three: the vaccine worry is a hypothesis, and the authors say so."
     },
     {
       "speaker": "Nadia",
