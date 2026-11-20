@@ -1,0 +1,35 @@
+{
+  "guid": "682f50e3-96cd-4f31-b91c-cdf0e5f364a1",
+  "title": "Episode 102: Trending — Recombinant Canine Coronaviruses in Dogs, Europe",
+  "itunes_title": "Trending — Recombinant Canine Coronaviruses in Dogs, Europe",
+  "description": "**Top Trending Friday** — our weekly pick of the most-discussed paper on PubMed this week.\n\n**[Recombinant Canine Coronaviruses in Dogs, Europe](https://doi.org/10.3201/eid1601.090726)**\n\n*Emerging Infectious Diseases, 2010*\n\nDOI: [10.3201/eid1601.090726](https://doi.org/10.3201/eid1601.090726)\n\n**Question:** How common in European dogs are canine coronavirus (CCoV) type II strains whose spike 5' end is recombinant with porcine TGEV?\n\n**Answer:** In 1,172 faecal samples from dogs with enteritis in 14 countries (2001-2008), 493 carried CCoV and 78 of 400 CCoV-II-positive samples (19.5%) were TGEV-like subtype IIb — a diagnostic convenience sample with no healthy-dog comparison.\n\n**Three takeaways**\n\n1. About 1 in 5 CCoV-II infections were TGEV-like, but drop Hungary (31/32) and the rest is 47/368 (12.8%); 760 of 1,172 samples were Italian, at 12.3%.\n2. Recombination is solid: spike 5' end is 76.6-84.4% identical to TGEV versus 34.2-38.3% to CCoV-IIa, and an ORF7a/7b size assay excluded true TGEV in 20 samples.\n3. The suggestion that CCoV-IIa-based vaccines may underperform is a hypothesis; the authors state only vaccination-and-challenge trials could test it.",
+  "pub_date": "Fri, 20 Nov 2026 11:24:38 +0000",
+  "duration_seconds": 665,
+  "episode_number": 102,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "102-recombinant-canine-coronaviruses-in-dogs-europe.mp3",
+  "enclosure_length_bytes": 7990672,
+  "source_metadata": {
+    "title": "Recombinant Canine Coronaviruses in Dogs, Europe",
+    "doi": "10.3201/eid1601.090726",
+    "dice_score": null,
+    "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2874359/pdf/",
+    "source": "friday-trending",
+    "digest_excerpt": "PubMed Trending #1\nPMID: 20031041\nCitation: Emerg Infect Dis. 2010 Jan;16(1):41-7. doi: 10.3201/eid1601.090726.",
+    "authors": [
+      "Nicola Decaro",
+      "Viviana Mari",
+      "Gabriella Elia",
+      "Diane D. Addie",
+      "Michele Camero",
+      "Maria Stella Lucente",
+      "Vito Martella",
+      "Canio Buonavoglia"
+    ],
+    "journal": "Emerging Infectious Diseases",
+    "abstract": "Coronaviruses of potential recombinant origin with porcine transmissible gastroenteritis virus (TGEV), referred to as a new subtype (IIb) of canine coronavirus (CCoV), were recently identified in dogs in Europe. To assess the distribution of the TGEV-like CCoV subtype, during 2001-2008 we tested fecal samples from dogs with gastroenteritis. Of 1,172 samples, 493 (42.06%) were positive for CCoV. CCoV-II was found in 218 samples, and CCoV-I and CCoV-II genotypes were found in 182. Approximately 20% of the samples with CCoV-II had the TGEV-like subtype; detection rates varied according to geographic origin. The highest and lowest rates of prevalence for CCoV-II infection were found in samples from Hungary and Greece (96.87% and 3.45%, respectively). Sequence and phylogenetic analyses showed that the CCoV-IIb strains were related to prototype TGEV-like strains in the 5' and the 3' ends of the spike protein gene.",
+    "source_url": "https://doi.org/10.3201/eid1601.090726"
+  },
+  "source_issue": 144
+}

@@ -2712,5 +2712,42 @@
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Wed, 18 Nov 2026 11:22:32 +0000</pubDate>
     </item>
+    <item>
+      <title><![CDATA[Episode 102: Trending — Recombinant Canine Coronaviruses in Dogs, Europe]]></title>
+      <itunes:title><![CDATA[Trending — Recombinant Canine Coronaviruses in Dogs, Europe]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the most-discussed paper on PubMed this week.</p>
+<p><strong><a href="https://doi.org/10.3201/eid1601.090726">Recombinant Canine Coronaviruses in Dogs, Europe</a></strong></p>
+<p><em>Emerging Infectious Diseases, 2010</em></p>
+<p>DOI: <a href="https://doi.org/10.3201/eid1601.090726">10.3201/eid1601.090726</a></p>
+<p><strong>Question:</strong> How common in European dogs are canine coronavirus (CCoV) type II strains whose spike 5' end is recombinant with porcine TGEV?</p>
+<p><strong>Answer:</strong> In 1,172 faecal samples from dogs with enteritis in 14 countries (2001-2008), 493 carried CCoV and 78 of 400 CCoV-II-positive samples (19.5%) were TGEV-like subtype IIb — a diagnostic convenience sample with no healthy-dog comparison.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>About 1 in 5 CCoV-II infections were TGEV-like, but drop Hungary (31/32) and the rest is 47/368 (12.8%); 760 of 1,172 samples were Italian, at 12.3%.</li>
+<li>Recombination is solid: spike 5' end is 76.6-84.4% identical to TGEV versus 34.2-38.3% to CCoV-IIa, and an ORF7a/7b size assay excluded true TGEV in 20 samples.</li>
+<li>The suggestion that CCoV-IIa-based vaccines may underperform is a hypothesis; the authors state only vaccination-and-challenge trials could test it.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the most-discussed paper on PubMed this week.</p>
+<p><strong><a href="https://doi.org/10.3201/eid1601.090726">Recombinant Canine Coronaviruses in Dogs, Europe</a></strong></p>
+<p><em>Emerging Infectious Diseases, 2010</em></p>
+<p>DOI: <a href="https://doi.org/10.3201/eid1601.090726">10.3201/eid1601.090726</a></p>
+<p><strong>Question:</strong> How common in European dogs are canine coronavirus (CCoV) type II strains whose spike 5' end is recombinant with porcine TGEV?</p>
+<p><strong>Answer:</strong> In 1,172 faecal samples from dogs with enteritis in 14 countries (2001-2008), 493 carried CCoV and 78 of 400 CCoV-II-positive samples (19.5%) were TGEV-like subtype IIb — a diagnostic convenience sample with no healthy-dog comparison.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>About 1 in 5 CCoV-II infections were TGEV-like, but drop Hungary (31/32) and the rest is 47/368 (12.8%); 760 of 1,172 samples were Italian, at 12.3%.</li>
+<li>Recombination is solid: spike 5' end is 76.6-84.4% identical to TGEV versus 34.2-38.3% to CCoV-IIa, and an ORF7a/7b size assay excluded true TGEV in 20 samples.</li>
+<li>The suggestion that CCoV-IIa-based vaccines may underperform is a hypothesis; the authors state only vaccination-and-challenge trials could test it.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-102</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/102-recombinant-canine-coronaviruses-in-dogs-europe.mp3" length="7990672" type="audio/mpeg"/>
+      <guid isPermaLink="false">682f50e3-96cd-4f31-b91c-cdf0e5f364a1</guid>
+      <itunes:duration>665</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>102</itunes:episode>
+      <podcast:episode>102</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 20 Nov 2026 11:24:38 +0000</pubDate>
+    </item>
   </channel>
 </rss>
