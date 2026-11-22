@@ -852,6 +852,37 @@ if outcome == "added" else "Already subscribed"`, so the new outcome went out
 headed "Already subscribed" — the opposite of what had happened. It is a table
 now, and a test walks every welcome outcome.
 
+## Update, 2026-11-22: the Monday picker checks what we have already covered
+
+Ray saw RFD4-Proteina in the 22 November digest and asked whether it had been
+picked for an episode — we published it as episode 98 on the 11th, from the
+white paper. It had not: the digest lists it under **Notable Preprints**, where
+it happens to be numbered "### 1.", and the picker only ever considers
+peer-reviewed entries. Two sections, two number ones, and the near miss was
+decided by that boundary rather than by any check.
+
+The broader fix — matching titles, to catch the same work under a different
+identifier — he turned down, and convincingly: a preprint that later appears
+in a journal usually carries revisions and new experiments, so a second
+episode would be *worth* making rather than a duplicate. That argument changed
+the design rather than overriding it.
+
+What stayed worth fixing is narrower and has nothing to do with revisions:
+**the same paper, same DOI, by two routes in one week.** A paper emailed in as
+a one-off on the Tuesday can be the digest's top-scoring paper by the Sunday,
+and nothing would have noticed — the Friday crawl checks
+`already_seen_dois()`, but the Monday picker checked nothing, and a closed
+Issue is not in the pending list so `rank_queue` cannot see it either.
+
+`drop_covered()` now filters the candidates against published episodes and open
+Issues, **before** the floor is computed — otherwise a paper we have already
+covered could set the standard the rest are judged against, and a three would
+qualify as "the same standard" where a four should have taken the slot. A paper
+with no DOI is left alone, since there is nothing to compare and the
+white-paper path has its own URL check. If the check cannot run at all, every
+candidate stays: a Monday with no episode is worse than a small risk of a
+repeat.
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions

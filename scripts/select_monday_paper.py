@@ -28,6 +28,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 import paper_resolver
+import select_friday_paper
 import paper_text
 import pdf_window
 import github_issue
@@ -465,6 +466,43 @@ def open_pick(plan: PickPlan, *, source: str, title: str, labels: list[str], jou
     return open_staged(title=title, body=body, labels=labels, stage=finish)
 
 
+def drop_covered(papers: list[dict]) -> list[dict]:
+    """The candidates whose DOI we have not already published or queued.
+
+    The Friday crawl has always checked this; the Monday picker never did,
+    because its papers come from a digest of the week just gone and the
+    overlap looked impossible. It is not: a paper emailed in as a one-off on
+    the Tuesday can be the digest's top-scoring paper by the Sunday, and
+    nothing downstream would notice — a closed Issue is not in the pending
+    list, so rank_queue cannot see it either. Same paper, same DOI, two
+    routes, four days apart.
+
+    This does not try to catch the same work under a *different* identifier —
+    a preprint that later appears in a journal usually carries new experiments
+    and is worth revisiting on its own terms.
+
+    Never fatal. If the check itself cannot run, every paper stays a
+    candidate: a Monday with no episode is worse than a small risk of one we
+    have covered.
+    """
+    try:
+        seen = select_friday_paper.already_seen_dois()
+    except Exception as exc:  # noqa: BLE001 - the guard is a courtesy
+        print(f"[select-monday] could not check for papers already covered ({exc})")
+        return papers
+    kept = []
+    for paper in papers:
+        doi = (paper.get("doi") or "").strip().lower()
+        if doi and doi in seen:
+            print(
+                f"[select-monday] skipping {doi}: already published or queued — "
+                f"{paper['title'][:60]}"
+            )
+            continue
+        kept.append(paper)
+    return kept
+
+
 def main() -> None:
     github_issue.ensure_auth()
     source_label = os.environ.get("SELECTION_SOURCE", "monday-digest")
@@ -494,6 +532,18 @@ def main() -> None:
     print(f"[select-monday] parsed {len(papers)} candidates ({len(peer_reviewed)} peer-reviewed)")
     if not peer_reviewed:
         sys.exit("No peer-reviewed papers parsed from digest (only preprints found)")
+
+    # Before the floor is computed, so a paper we have covered cannot set the
+    # standard the rest are judged against.
+    eligible = drop_covered(peer_reviewed)
+    if not eligible:
+        sys.exit("Every peer-reviewed paper in this digest has already been covered")
+    if len(eligible) < len(peer_reviewed):
+        print(
+            f"[select-monday] {len(peer_reviewed) - len(eligible)} already covered; "
+            f"{len(eligible)} candidate(s) left"
+        )
+    peer_reviewed = eligible
 
     top_dice = peer_reviewed[0]["dice"]
     plan = plan_pick(peer_reviewed, floor=top_dice - 1, same_standard=same_dice)

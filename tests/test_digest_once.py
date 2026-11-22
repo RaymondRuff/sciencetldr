@@ -131,6 +131,10 @@ class PickerOnceTests(unittest.TestCase):
         self.digest.write_text("# Digest\n")
         self.opened: list[str] = []
         self.recorded: list[str] = []
+        # These tests are about one-episode-per-digest, not about duplicate
+        # detection, so already_seen_dois() is stubbed empty below. Left real
+        # it drops this paper — its DOI is a published episode — and main()
+        # exits before the part under test.
         self.paper = {
             "title": "A paper about engagers",
             "dice": 4,
@@ -146,6 +150,9 @@ class PickerOnceTests(unittest.TestCase):
                 mock.patch.object(picker.github_issue, "ensure_auth", lambda: None), \
                 mock.patch.object(picker, "latest_digest", lambda: self.digest), \
                 mock.patch.object(picker, "parse_papers", lambda text: [self.paper]), \
+                mock.patch.object(
+                    picker.select_friday_paper, "already_seen_dois", set
+                ), \
                 mock.patch.object(picker, "plan_pick", lambda *a, **k: plan), \
                 mock.patch.object(ml, "picked_digests", lambda: set(picked)), \
                 mock.patch.object(
