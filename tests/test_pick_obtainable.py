@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import sys
 import unittest
+from unittest import mock
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
@@ -163,3 +164,72 @@ class BodyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AlreadyCoveredTests(unittest.TestCase):
+    """The Monday picker will not queue a paper the show has already done.
+
+    The Friday crawl has always checked DOIs against published episodes and
+    open Issues; the Monday picker never did, because its candidates come from
+    a digest of the week just gone and the overlap looked impossible. It is
+    not: a paper emailed in as a one-off on the Tuesday can be the digest's
+    top-scoring paper by the Sunday. A closed Issue is not in the pending
+    list, so rank_queue cannot catch it downstream either.
+    """
+
+    def paper(self, doi: str, dice: int = 4, title: str = "A paper") -> dict:
+        return {"doi": doi, "title": title, "dice": dice, "is_preprint": False}
+
+    def covered(self, *dois: str):
+        return mock.patch.object(
+            monday.select_friday_paper,
+            "already_seen_dois",
+            lambda: {d.lower() for d in dois},
+        )
+
+    def test_a_paper_already_published_is_dropped(self):
+        papers = [self.paper("10.1038/done"), self.paper("10.1038/fresh")]
+        with self.covered("10.1038/done"):
+            kept = monday.drop_covered(papers)
+        self.assertEqual([p["doi"] for p in kept], ["10.1038/fresh"])
+
+    def test_the_comparison_ignores_case(self):
+        with self.covered("10.1038/DONE"):
+            kept = monday.drop_covered([self.paper("10.1038/done")])
+        self.assertEqual(kept, [])
+
+    def test_a_paper_with_no_doi_is_left_alone(self):
+        # Nothing to compare; the white-paper path has its own URL check.
+        with self.covered("10.1038/done"):
+            kept = monday.drop_covered([self.paper("")])
+        self.assertEqual(len(kept), 1)
+
+    def test_nothing_covered_changes_nothing(self):
+        papers = [self.paper("10.1038/a"), self.paper("10.1038/b")]
+        with self.covered():
+            self.assertEqual(monday.drop_covered(papers), papers)
+
+    def test_a_check_that_cannot_run_keeps_every_candidate(self):
+        # A Monday with no episode is worse than a small risk of a repeat.
+        def boom():
+            raise RuntimeError("github unreachable")
+
+        papers = [self.paper("10.1038/a")]
+        with mock.patch.object(
+            monday.select_friday_paper, "already_seen_dois", boom
+        ):
+            self.assertEqual(monday.drop_covered(papers), papers)
+
+    def test_dropping_the_top_paper_lowers_the_floor_with_it(self):
+        # The floor is DICE minus one from the best *eligible* paper. If a
+        # covered five set it, a three would qualify as "the same standard"
+        # and could take the slot off a four.
+        papers = [
+            self.paper("10.1038/done", dice=5),
+            self.paper("10.1038/four", dice=4),
+            self.paper("10.1038/three", dice=3),
+        ]
+        with self.covered("10.1038/done"):
+            kept = monday.drop_covered(papers)
+        self.assertEqual(kept[0]["dice"], 4)
+        self.assertEqual(kept[0]["dice"] - 1, 3, "floor follows the top eligible paper")
