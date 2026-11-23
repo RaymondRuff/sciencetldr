@@ -1,0 +1,35 @@
+{
+  "guid": "3c34d9f6-4a8c-4394-97be-d16978fef774",
+  "title": "Episode 103: Logic-gated T cell engager with mutant IL-2 potentiates antitumor responses without cytotoxicity in solid tumor models",
+  "itunes_title": "Logic-gated T cell engager with mutant IL-2 potentiates antitumor responses without cytotoxicity in solid tumor models",
+  "description": "**Monday Immune Engager** — our weekly pick from the latest immune-engager digest.\n\n**[Logic-gated T cell engager with mutant IL-2 potentiates antitumor responses without cytotoxicity in solid tumor models](https://doi.org/10.1172/JCI204657)**\n\n*The Journal of Clinical Investigation, 2026*\n\nDOI: [10.1172/JCI204657](https://doi.org/10.1172/JCI204657)\n\n**Question:** Can IL-2 support be delivered to engager-redirected T cells in solid tumours without the systemic toxicity that cytokine-armed engagers have shown?\n\n**Answer:** In CLDN-transduced mouse tumours, a protease-unmasked CD3 arm fused to an IL-2Rα/β-detuned IL-2 (3E, ~1,000-fold lower pSTAT5) gave regression with less weight loss and IFN-γ release than conventional engagers. All preclinical, n = 5–6 mice/group.\n\n**Three takeaways**\n\n1. Making IL-2 activity contingent on cis CD3 engagement is a reusable gating principle, not just a better-tolerated construct.\n2. The 3E variant lost IL-2Rβ as well as IL-2Rα binding, so the gating mechanism was partly unintended and is inferred, not dissected.\n3. TCF1+ stem-like TILs expanded and lymph-node cells from treated donors cured naive recipients; safety rests on weight and serum cytokines only.",
+  "pub_date": "Mon, 23 Nov 2026 11:25:18 +0000",
+  "duration_seconds": 647,
+  "episode_number": 103,
+  "episode_type": "full",
+  "explicit": "false",
+  "enclosure_filename": "103-logic-gated-t-cell-engager-with-mutant-il-2-potentiates.mp3",
+  "enclosure_length_bytes": 7766066,
+  "source_metadata": {
+    "title": "Logic-gated T cell engager with mutant IL-2 potentiates antitumor responses without cytotoxicity in solid tumor models",
+    "doi": "10.1172/JCI204657",
+    "dice_score": 5,
+    "pdf_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13767619/pdf/",
+    "source": "monday-digest",
+    "digest_excerpt": "## Top Papers\n\n### 1. Logic-gated T cell engager with mutant IL-2 potentiates antitumor responses without cytotoxicity in solid tumor models\n\nLi S, Li N, Liu X, Cai Y, Wang M, Wang H, et al.\n\n*The Journal of Clinical Investigation*\n\n[10.1172/JCI204657](https://doi.org/10.1172/JCI204657)\n\nTumour antigen × CD3 in a protease-activatable dual-variable-domain pro-antibody, fused to a triple-mutant IL-2 (DVD-3E).\n\nThe usual reading of poor engager performance in solid tumours is insufficient T cell numbers or antigen access; this group argues instead that the limiting signal is cytokine support, since a redirected T cell gets TCR signalling with no IL-2 to sustain it. Two separate attenuations are stacked into one molecule: the anti-CD3 arm is buried in a dual-variable-domain format that only opens on tumour protease cleavage, and the IL-2 moiety carries three mutations that cut receptor affinity enough to make it inert in circulation, so it only works where it is concentrated in cis alongside an engaged CD3. The consequence worth noting is mechanistic rather than merely tolerability-related: cis IL-2 plus TCR cosignalling expanded TCF1-positive tumour-infiltrating lymphocytes rather than just driving the existing effectors harder, which is a different durability argument than potency tuning. It remains a mouse study, and protease-dependent unmasking carries the familiar risk that normal tissue proteases blunt the gate.\n\nDICE score: 5 — Combines conditional CD3 unmasking with affinity-detuned cis-acting IL-2 in a single molecule, defining a reusable design principle for cytokine-supported engagers rather than a single better construct.\n\nChangping Laboratory and Tsinghua University, Yang-Xin Fu group.",
+    "authors": [
+      "Shijie Li",
+      "Nan Li",
+      "Xiangming Liu",
+      "Yueqi Cai",
+      "Mukai Wang",
+      "Huimin Wang",
+      "Yang-Xin Fu",
+      "Zaopeng Yang"
+    ],
+    "journal": "Journal of Clinical Investigation",
+    "abstract": "T cell engagers (TCEs) have achieved transformative success in B cell malignancies but show limited efficacy in solid tumors with severe toxicity. We propose that TCR signaling without IL-2 might limit the function of tumor-infiltrating lymphocytes (TILs). Here, we showed that insufficient IL-2 signaling is a key bottleneck for sustaining TCE-induced T cell function. Although exogenous IL-2 enhances TCE efficacy, its systemic administration causes more severe toxicity. We engineered a protease-activatable dual-variable domain (DVD) as a pro-antibody to reduce αCD3 off-tumor toxicity. Furthermore, we designed 3 additional mutations for IL-2 (3E) with markedly reduced receptor affinity, which remained inactive in the periphery. By coengineering the DVD and 3E into a single pro-drug molecule (DVD-3E), we achieved conditional IL-2 and TCR cosignaling strictly dependent on\n                    cis\n                    CD3 engagement within the tumor microenvironment (TME) upon protease cleavage. This logic-gated design restricted both TCE and cytokine activity to the TME, enabling potent antitumor responses without systemic toxicity. Mechanistically, DVD-3E enhanced not only the persistence and effector function of preexisting intratumoral T cells but also expanded TCF1\n                    +\n                    TILs, mitigating exhaustion and enabling durable systemic immunity. These findings define a new design principle for logic-gated TCEs that achieve a favorable balance between efficacy and safety, offering a strategy to overcome current therapeutic resistance.",
+    "source_url": "https://doi.org/10.1172/JCI204657"
+  },
+  "source_issue": 146
+}
