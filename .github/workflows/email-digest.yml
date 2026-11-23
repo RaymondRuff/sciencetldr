@@ -13,6 +13,14 @@ name: email-digest
 # late and sometimes not at all — see scripts/schedule_health.py — and if all
 # three are dropped, `mailing_list.py pending` opens an Issue about it.
 on:
+  # The mailing-list poll asks for the send when it notices the digest is
+  # unsent and Monday's windows have closed. That poll's schedule is actually
+  # delivered — two or three runs a day, every day — while this workflow's own
+  # Monday crons were not delivered at all on 2026-11-23 and ran seven to nine
+  # hours late on 11-16. Whichever gets here first sends; the sent record
+  # makes the other a no-op.
+  repository_dispatch:
+    types: [digest]
   schedule:
     - cron: '50 11 * * 1'
     - cron: '50 12 * * 1'

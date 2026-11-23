@@ -61,6 +61,12 @@ PICKED = "digests-picked.txt"
 # has been told — a scheduled run GitHub never delivers fails nothing, so
 # alert-on-failure sees no problem at all.
 OVERDUE_HOURS = 48
+
+# When Monday's send windows have closed, counted from midnight of the
+# digest's own date: a Sunday digest is sent by crons at 11:50, 12:50 and
+# 13:50 UTC on the Monday, so anything still unsent at 14:00 Monday — thirty
+# eight hours — needs chasing rather than waiting.
+DUE_HOURS = 38
 ALERT_LABEL = "pipeline-alert"
 
 ADDRESS_RE = re.compile(r"^[^@\s,;<>]+@[^@\s,;<>]+\.[^@\s,;<>]+$")
@@ -721,17 +727,53 @@ def _gh(*args: str) -> str:
     return result.stdout
 
 
-def pending() -> int:
-    """Open one Issue per digest that should have been emailed and was not.
+def ask_for_digest_send() -> bool:
+    """Ask email-digest to run now. Returns whether GitHub accepted it.
 
-    The send runs on a Monday-morning cron now, and a cron GitHub never
-    delivers is not a failure: alert-on-failure sees nothing and the digest
-    simply does not arrive. This is what notices. It is called from the
-    mailing-list poll, which runs several times a day.
+    A repository dispatch rather than a workflow dispatch because the token
+    this poll already holds can do it. Note it must be the PAT: a dispatch
+    fired with the default GITHUB_TOKEN deliberately triggers no workflow.
     """
-    late = [path.stem for path in unsent_digests() if overdue(path.stem)]
+    repo = os.environ.get("GH_REPO") or os.environ.get(
+        "GITHUB_REPOSITORY", "RaymondRuff/sciencetldr"
+    )
+    try:
+        _gh("api", "-X", "POST", f"repos/{repo}/dispatches", "-f", "event_type=digest")
+    except RuntimeError as exc:
+        print(f"[list] could not ask for the digest send: {exc}")
+        return False
+    print("[list] asked email-digest to run")
+    return True
+
+
+def pending() -> int:
+    """Chase a digest that has not gone out, and shout if chasing fails.
+
+    The send has its own Monday crons, and GitHub does not deliver them: none
+    at all on 2026-11-23, and seven to nine hours late on 11-16. This poll's
+    schedule *is* delivered, two or three times a day, so once Monday's
+    windows have closed it asks for the send itself rather than only filing a
+    complaint. The sent record keeps that safe — whichever route gets there
+    first sends, and the other finds it recorded and stops.
+
+    An Issue is still opened once a digest is properly overdue: by then the
+    asking has been tried several times and has not worked, which is a
+    different problem and wants a person.
+    """
+    waiting = [path.stem for path in unsent_digests()]
+    due = [stamp for stamp in waiting if overdue(stamp, hours=DUE_HOURS)]
+    if not due:
+        if waiting:
+            print(f"[list] {len(waiting)} digest(s) waiting, none past its send window yet")
+        else:
+            print("[list] no digest is waiting")
+        return 0
+    for stamp in due:
+        print(f"[list] {stamp} is unsent and its send window has closed")
+        ask_for_digest_send()
+
+    late = [stamp for stamp in due if overdue(stamp)]
     if not late:
-        print("[list] no digest is overdue")
         return 0
     try:
         existing = {
@@ -753,11 +795,12 @@ def pending() -> int:
         body = (
             f"`digest/{stamp}.md` is in the repository but is not on the sent record in "
             f"the papers repository, and it is more than {OVERDUE_HOURS} hours old.\n\n"
-            "The send runs on a Monday-morning schedule, and a scheduled run GitHub "
-            "never delivers fails nothing — so this Issue is the only thing that would "
-            "tell you.\n\n"
-            "To send it: Actions -> email-digest -> Run workflow. Closing this Issue "
-            "changes nothing; the next check opens it again until the digest goes out."
+            f"This check has been asking `email-digest` to run since the digest was "
+            f"{DUE_HOURS} hours old, so the send itself is failing rather than simply "
+            "not being scheduled — read the latest `email-digest` run.\n\n"
+            "To send it by hand: Actions -> email-digest -> Run workflow. Closing this "
+            "Issue changes nothing; the next check opens it again until the digest goes "
+            "out."
         )
         args = ["issue", "create", "--title", title, "--body", body, "--label", ALERT_LABEL]
         owner = os.environ.get("OWNER", "")

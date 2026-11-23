@@ -209,6 +209,8 @@ class WatchdogTests(unittest.TestCase):
 
         def run(*args):
             self.calls.append(args)
+            if args[:1] == ("api",):
+                return ""
             if args[:2] == ("issue", "list"):
                 return _json.dumps([{"title": t} for t in open_titles])
             return "https://github.com/owner/repo/issues/999\n"
@@ -234,10 +236,10 @@ class WatchdogTests(unittest.TestCase):
         self._pending(sent=set(), open_titles=["Digest 2026-11-01 has not been emailed"])
         self.assertEqual([c for c in self.calls if c[:2] == ("issue", "create")], [])
 
-    def test_a_digest_already_sent_is_not_overdue(self):
+    def test_a_digest_already_sent_is_not_chased(self):
         log = self._pending(sent={"2026-11-01"})
         self.assertEqual(self.calls, [])
-        self.assertIn("no digest is overdue", log)
+        self.assertIn("no digest is waiting", log)
 
     def test_a_digest_still_inside_its_send_window_is_left_alone(self):
         fresh = datetime.now(tz=timezone.utc).date().isoformat()
@@ -245,7 +247,69 @@ class WatchdogTests(unittest.TestCase):
         with mock.patch.object(ml, "overdue", lambda stamp, **kw: False):
             log = self._pending(sent=set())
         self.assertEqual(self.calls, [])
-        self.assertIn("no digest is overdue", log)
+        self.assertIn("none past its send window", log)
+
+    def dispatches(self) -> list[tuple]:
+        return [c for c in self.calls if c[:1] == ("api",)]
+
+    def test_a_digest_inside_its_send_window_is_not_chased(self):
+        # Monday's crons may still deliver; asking now would only race them.
+        fresh = (datetime.now(tz=timezone.utc) - timedelta(hours=10)).date().isoformat()
+        (self.digests / f"{fresh}.md").write_text("# Fresh\n")
+        with mock.patch.object(ml, "sent_digests", lambda: {"2026-11-01"}), \
+                mock.patch.object(ml, "_gh", self._gh([])), \
+                contextlib.redirect_stdout(io.StringIO()) as out:
+            ml.pending()
+        self.assertEqual(self.calls, [])
+        self.assertIn("none past its send window", out.getvalue())
+
+    def test_once_the_window_closes_it_asks_for_the_send(self):
+        # The fix for 2026-11-23: email-digest's own crons were not delivered
+        # at all, and this poll's schedule was.
+        log = self._pending(sent=set())
+        self.assertEqual(len(self.dispatches()), 1)
+        call = self.dispatches()[0]
+        self.assertIn("-X", call)
+        self.assertIn("event_type=digest", call)
+        self.assertIn("asked email-digest to run", log)
+
+    def test_asking_comes_before_complaining(self):
+        # A digest just past its window is chased but raises no Issue yet.
+        due = (datetime.now(tz=timezone.utc) - timedelta(hours=40)).date().isoformat()
+        for path in self.digests.glob("*.md"):
+            path.unlink()
+        (self.digests / f"{due}.md").write_text("# Due\n")
+        with mock.patch.object(ml, "sent_digests", set), \
+                mock.patch.object(ml, "_gh", self._gh([])), \
+                contextlib.redirect_stdout(io.StringIO()):
+            ml.pending()
+        self.assertEqual(len(self.dispatches()), 1)
+        self.assertEqual([c for c in self.calls if c[:2] == ("issue", "create")], [])
+
+    def test_a_properly_overdue_digest_is_chased_and_reported(self):
+        self._pending(sent=set())
+        self.assertEqual(len(self.dispatches()), 1, "still asks")
+        self.assertEqual(
+            len([c for c in self.calls if c[:2] == ("issue", "create")]), 1, "and shouts"
+        )
+
+    def test_the_issue_says_the_send_itself_is_failing(self):
+        self._pending(sent=set())
+        created = next(c for c in self.calls if c[:2] == ("issue", "create"))
+        body = created[created.index("--body") + 1]
+        self.assertIn("the send itself is failing", body)
+
+    def test_a_refused_dispatch_is_reported_not_fatal(self):
+        def refuse(*args):
+            if args[:1] == ("api",):
+                raise RuntimeError("403 Forbidden")
+            return "[]"
+
+        with mock.patch.object(ml, "sent_digests", set), \
+                mock.patch.object(ml, "_gh", refuse), \
+                contextlib.redirect_stdout(io.StringIO()) as out:
+            ml.pending()   # must not raise
+        self.assertIn("could not ask for the digest send", out.getvalue())
 
     def test_the_watchdog_never_fails_the_poll_that_runs_it(self):
         def boom(*a, **k):

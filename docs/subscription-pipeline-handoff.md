@@ -883,6 +883,42 @@ white-paper path has its own URL check. If the check cannot run at all, every
 candidate stays: a Monday with no episode is worse than a small risk of a
 repeat.
 
+## Update, 2026-11-23: the watchdog asks instead of only complaining
+
+The Monday episode dropped and the digest email did not. Nothing failed:
+`email-digest` **did not run at all**, because GitHub delivered none of its
+three Monday crons. The previous Monday it delivered all three — at 21:16,
+22:32 and 23:03 UTC, seven to nine hours after their 11:50 to 13:50 windows,
+so that week's digest went out at about one in the afternoon Pacific rather
+than before Ray was up. The Monday-cron design has therefore never once hit
+its target; on the 16th it was merely late enough to pass unnoticed.
+
+The watchdog would have filed an Issue at midnight, forty-eight hours after
+the digest's date. Ray noticed first.
+
+The irony is that two schedules in this repository *are* delivered reliably —
+the mailing-list poll, two or three runs a day without a gap, and the Apps
+Script doorbell's five-minute timer — and the digest was using neither. So
+`pending()` now **acts**: once Monday's send windows have closed (thirty-eight
+hours from midnight of the digest's own date) it fires a `repository_dispatch`
+at `email-digest` rather than waiting to complain. The sent record keeps that
+safe, as it keeps the three crons safe: whichever route arrives first sends,
+and the rest find it recorded and stop.
+
+The Issue is still opened at forty-eight hours, but it now says something
+different and more useful — by then the send has been asked for repeatedly and
+has not happened, so the failure is in the send itself rather than in the
+scheduling, and the body says to read the latest `email-digest` run.
+
+It must be the PAT that fires the dispatch: a repository dispatch sent with the
+default `GITHUB_TOKEN` deliberately triggers no workflow. The poll already
+holds `GH_PAT`.
+
+Still on the table and still Ray's call: about eight lines in the doorbell's
+`Code.gs` to ring a `digest` event on Monday mornings. That timer is the only
+genuinely punctual clock in the system, and it is the difference between
+"sometime Monday" and "before six in the morning Pacific".
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
