@@ -32,6 +32,17 @@ const WANTED = /^(?:(?:re|fwd?|fw)\s*:\s*)*\s*(?:one[-\s]?off|subscribe)\b/i;
 const LEAVING = /\bunsubscribe\b/i;
 const NUMBERED_REPLY = /\[Science TLDR #\d+\]/i;
 
+// Monday's digest send. GitHub's own crons for it were delivered seven to nine
+// hours late on 2026-11-16 and not at all on 11-23, so the only punctual clock
+// in this system rings for it too. The window sits after the Monday episode
+// publishes (about 11:25 UTC) and before six in the morning Pacific, which is
+// 14:00 UTC in winter and 13:00 in summer — so noon UTC is before six either
+// way. Ringing when the digest has already gone out is harmless: the send
+// picks the newest *unsent* digest and otherwise says there is nothing to do.
+const DIGEST_DAY = 1; // Monday, as getUTCDay() counts
+const DIGEST_FROM_HOUR = 12; // UTC
+const DIGEST_UNTIL_HOUR = 14;
+
 // Gmail's own labels, set by the pipeline once it has dealt with a message.
 const SEARCH =
   'newer_than:1d -from:me -label:tldr-processed -label:tldr-rejected';
@@ -50,6 +61,8 @@ function checkMailbox() {
   // Only ring for something that arrived since the last ring. Without this a
   // message waiting its two or three minutes for the sweep would ring again
   // on every tick.
+  maybeRingDigest(props, repo, token);
+
   const seen = Number(props.getProperty('LAST_SEEN') || 0);
   let newest = seen;
   let waiting = 0;
@@ -72,8 +85,28 @@ function checkMailbox() {
   }
 }
 
+/**
+ * Ask for the digest send, once, on a Monday morning.
+ *
+ * Called from the same five-minute tick as the mailbox check, so pasting this
+ * file is enough — the installed trigger still points at checkMailbox and
+ * does not need recreating.
+ */
+function maybeRingDigest(props, repo, token) {
+  const now = new Date();
+  if (now.getUTCDay() !== DIGEST_DAY) return;
+  const hour = now.getUTCHours();
+  if (hour < DIGEST_FROM_HOUR || hour >= DIGEST_UNTIL_HOUR) return;
+  const today = now.toISOString().slice(0, 10);
+  if (props.getProperty('LAST_DIGEST_RING') === today) return;
+  console.log('Monday morning: asking for the digest send');
+  if (ring(repo, token, 'digest')) {
+    props.setProperty('LAST_DIGEST_RING', today);
+  }
+}
+
 /** POST a repository_dispatch. Returns whether GitHub accepted it. */
-function ring(repo, token) {
+function ring(repo, token, eventType) {
   const response = UrlFetchApp.fetch('https://api.github.com/repos/' + repo + '/dispatches', {
     method: 'post',
     contentType: 'application/json',
@@ -82,12 +115,12 @@ function ring(repo, token) {
       Accept: 'application/vnd.github+json',
       'X-GitHub-Api-Version': '2022-11-28',
     },
-    payload: JSON.stringify({ event_type: 'mailbox' }),
+    payload: JSON.stringify({ event_type: eventType || 'mailbox' }),
     muteHttpExceptions: true,
   });
   const code = response.getResponseCode();
   if (code === 204) {
-    console.log('generate-episode asked to run');
+    console.log('dispatched: ' + (eventType || 'mailbox'));
     return true;
   }
   // Left unrecorded on failure, so the next tick tries again.
@@ -108,4 +141,10 @@ function installTrigger() {
 function ringNow() {
   const props = PropertiesService.getScriptProperties();
   ring(props.getProperty('GITHUB_REPO'), props.getProperty('GITHUB_TOKEN'));
+}
+
+/** Run by hand to send the digest now, whatever day it is. */
+function ringDigestNow() {
+  const props = PropertiesService.getScriptProperties();
+  ring(props.getProperty('GITHUB_REPO'), props.getProperty('GITHUB_TOKEN'), 'digest');
 }

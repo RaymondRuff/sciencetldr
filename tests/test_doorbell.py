@@ -110,6 +110,55 @@ class DoorbellContractTests(unittest.TestCase):
         self.assertTrue(self.rings(subject))
 
 
+class DigestRingTests(unittest.TestCase):
+    """The doorbell also rings for Monday's digest send.
+
+    email-digest's own crons were delivered seven to nine hours late on
+    2026-11-16 and not at all on 11-23. The Apps Script's five-minute timer is
+    the only punctual clock in this system, so it rings for the digest too.
+    The timing itself is tested with a fake clock in a Node harness; what is
+    pinned here is that the window the script uses lands where the product
+    needs it, and that the workflow is listening for the event.
+    """
+
+    def setUp(self) -> None:
+        self.source = DOORBELL.read_text(encoding="utf-8")
+
+    def constant(self, name: str) -> int:
+        found = re.search(rf"^const {name} = (\d+);", self.source, re.MULTILINE)
+        self.assertIsNotNone(found, f"{name} is gone from Code.gs")
+        return int(found.group(1))
+
+    def test_it_rings_on_a_monday(self):
+        # getUTCDay() counts Sunday as zero.
+        self.assertEqual(self.constant("DIGEST_DAY"), 1)
+
+    def test_the_window_is_after_the_episode_publishes(self):
+        # The Monday episode reaches the feed around 11:25 UTC; the email is
+        # meant to arrive with it, not before it.
+        self.assertGreaterEqual(self.constant("DIGEST_FROM_HOUR"), 12)
+
+    def test_the_window_closes_before_six_in_the_morning_pacific(self):
+        # 14:00 UTC is 06:00 in winter and 07:00 in summer, so the last ring
+        # must be before 14:00 either way.
+        self.assertLessEqual(self.constant("DIGEST_UNTIL_HOUR"), 14)
+        self.assertLess(self.constant("DIGEST_FROM_HOUR"), self.constant("DIGEST_UNTIL_HOUR"))
+
+    def test_the_send_workflow_listens_for_the_event(self):
+        workflow = (WORKFLOW.parent / "email-digest.yml").read_text(encoding="utf-8")
+        self.assertIn("repository_dispatch:", workflow)
+        self.assertIn("types: [digest]", workflow)
+        self.assertIn("'digest'", self.source)
+
+    def test_it_rings_at_most_once_a_monday(self):
+        self.assertIn("LAST_DIGEST_RING", self.source)
+
+    def test_pasting_the_file_is_enough(self):
+        # The installed trigger points at checkMailbox; the digest check is
+        # called from inside it, so nobody has to recreate the trigger.
+        self.assertIn("maybeRingDigest(props, repo, token);", self.source)
+
+
 class DoorbellWiringTests(unittest.TestCase):
     def setUp(self) -> None:
         self.workflow = WORKFLOW.read_text(encoding="utf-8")

@@ -15,11 +15,26 @@ sending a paper to hearing it.
 The doorbell makes that minutes. It also covers subscribe and unsubscribe mail
 and replies carrying a PDF, which were waiting on the same schedules.
 
+It also rings for **Monday's digest send**, at noon UTC, because
+`email-digest`'s own crons were delivered seven to nine hours late on
+2026-11-16 and not at all on 11-23. Noon UTC is after the Monday episode
+reaches the feed (about 11:25) and before six in the morning Pacific in either
+half of the year. It rings once a Monday; ringing when the digest has already
+gone out is harmless, since the send picks the newest *unsent* digest and
+otherwise says there is nothing to do.
+
 It is a **doorbell, not a gatekeeper**. It parses nothing and labels nothing;
 the Python in `scripts/pdf_mailbox.py` decides what every message means. A
 false ring costs one workflow run that finds nothing. A missed ring costs
 nothing at all, because the daily sweeps still collect the mail. Keep that
 asymmetry if you change the patterns.
+
+## Updating it
+
+Paste the new `Code.gs` over the old one and save. That is all — the installed
+trigger points at `checkMailbox`, and everything else is called from inside
+it, so the trigger never needs recreating. `ringDigestNow` sends the digest
+immediately, whatever day it is, if you want to check the wiring.
 
 ## Setup, once
 
