@@ -914,10 +914,17 @@ It must be the PAT that fires the dispatch: a repository dispatch sent with the
 default `GITHUB_TOKEN` deliberately triggers no workflow. The poll already
 holds `GH_PAT`.
 
-Still on the table and still Ray's call: about eight lines in the doorbell's
-`Code.gs` to ring a `digest` event on Monday mornings. That timer is the only
-genuinely punctual clock in the system, and it is the difference between
-"sometime Monday" and "before six in the morning Pacific".
+**Done the same evening.** Ray: *"Punctuality is a key aspect to a digest like
+this."* The doorbell now rings a `digest` event at noon UTC on Mondays — after
+the episode reaches the feed, before six in the morning Pacific in either half
+of the year, once a Monday. It is called from inside `checkMailbox`, so
+pasting the file is the whole update and the installed trigger never needs
+recreating.
+
+Three layers now, in order of punctuality: the Apps Script timer, which has
+never missed; the poll's dispatch once Monday's windows close; and
+`email-digest`'s own crons, which are the least reliable of the three and now
+only a backstop. The sent record is what makes stacking them free.
 
 ## The decision
 
