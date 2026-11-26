@@ -274,12 +274,19 @@ class WatchdogTests(unittest.TestCase):
         self.assertIn("asked email-digest to run", log)
 
     def test_asking_comes_before_complaining(self):
-        # A digest just past its window is chased but raises no Issue yet.
-        due = (datetime.now(tz=timezone.utc) - timedelta(hours=40)).date().isoformat()
-        for path in self.digests.glob("*.md"):
-            path.unlink()
-        (self.digests / f"{due}.md").write_text("# Due\n")
+        # A digest past its send window but not yet properly overdue is chased
+        # and raises no Issue.
+        #
+        # The thresholds count from midnight of the digest's own date, so
+        # "due but not overdue" is the clock window 14:00-24:00 UTC. Deriving
+        # a stamp from `now - 40 hours` therefore passed in the afternoon and
+        # failed after midnight — which is exactly what it did. The state is
+        # named here instead of being inferred from the wall clock.
+        due_not_overdue = lambda stamp, hours=ml.OVERDUE_HOURS, now=None: (  # noqa: E731
+            hours == ml.DUE_HOURS
+        )
         with mock.patch.object(ml, "sent_digests", set), \
+                mock.patch.object(ml, "overdue", due_not_overdue), \
                 mock.patch.object(ml, "_gh", self._gh([])), \
                 contextlib.redirect_stdout(io.StringIO()):
             ml.pending()

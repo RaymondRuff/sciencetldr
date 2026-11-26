@@ -8,6 +8,7 @@ its citation_doi meta tag. News-aggregator domains are skipped early.
 """
 from __future__ import annotations
 
+import os
 import re
 import time
 from dataclasses import dataclass
@@ -19,7 +20,8 @@ import requests
 from bs4 import BeautifulSoup
 
 REDDIT_TOP_URL = "https://www.reddit.com/r/science/top.json"
-REDDIT_RSS_URL = "https://www.reddit.com/r/science/top.rss"
+REDDIT_TOKEN_URL = "https://www.reddit.com/api/v1/access_token"
+REDDIT_OAUTH_TOP_URL = "https://oauth.reddit.com/r/science/top"
 REDDIT_UA = "ScienceTLDR-bot/1.0 (by /u/sciencetldr; +https://github.com/RaymondRuff/sciencetldr)"
 JOURNAL_UA = "Mozilla/5.0 (compatible; ScienceTLDR-bot/1.0; +https://github.com/RaymondRuff/sciencetldr)"
 
@@ -58,19 +60,71 @@ class RedditPost:
         return f"https://www.reddit.com{self.permalink}"
 
 
-def fetch_top_week(limit: int = 50) -> list[RedditPost]:
-    """Fetch top/week posts. Tries JSON first; falls back to RSS on 403/format error.
+def _app_only_token() -> str:
+    """An application-only bearer token, from the app's id and secret.
 
-    Reddit aggressively 403s datacenter IPs (GH Actions runners) on the JSON
-    endpoint regardless of User-Agent. The RSS endpoint sometimes still
-    serves them. RSS gives us less metadata (no score, comment count, flair,
-    or removed flag) so the resulting posts have score=0 and flair="".
+    Reddit 403s datacenter IPs — which every GitHub runner is — on the public
+    JSON endpoint whatever User-Agent you send, and on 2026-11-19 that cost
+    the Friday episode its strand. OAuth is the supported way in from a
+    server, and it is not rate-limited to death: a hundred requests a minute
+    per client against the one request a week this makes.
     """
-    try:
-        return _fetch_top_week_json(limit)
-    except (requests.HTTPError, RuntimeError) as exc:
-        print(f"[reddit] JSON endpoint failed ({exc}); trying RSS")
-        return _fetch_top_week_rss(limit)
+    client_id = os.environ.get("REDDIT_CLIENT_ID", "").strip()
+    secret = os.environ.get("REDDIT_CLIENT_SECRET", "").strip()
+    if not client_id or not secret:
+        raise RuntimeError("REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET are not set")
+    resp = requests.post(
+        REDDIT_TOKEN_URL,
+        auth=(client_id, secret),
+        data={"grant_type": "client_credentials"},
+        headers={"User-Agent": REDDIT_UA},
+        timeout=30,
+    )
+    resp.raise_for_status()
+    token = (resp.json() or {}).get("access_token", "")
+    if not token:
+        raise RuntimeError("Reddit returned no access_token")
+    return token
+
+
+def have_credentials() -> bool:
+    """Whether an app id and secret are configured for the OAuth route."""
+    return bool(
+        os.environ.get("REDDIT_CLIENT_ID", "").strip()
+        and os.environ.get("REDDIT_CLIENT_SECRET", "").strip()
+    )
+
+
+def fetch_top_week(limit: int = 50) -> list[RedditPost]:
+    """Fetch top/week posts, by OAuth where it is configured.
+
+    There is no fallback any more, and that is deliberate. The old one asked
+    for `/r/science/top.rss`, which Reddit answers "Not Found" for every
+    client including a browser — sorted RSS listings no longer exist — so it
+    had never once worked, while logging "trying RSS" as though it might.
+    A failure that announces itself is worth more than a fallback that cannot
+    succeed: select_friday_paper then says so and takes the PubMed strand,
+    which is what the hosts tell the listener.
+    """
+    if have_credentials():
+        return _fetch_top_week_oauth(limit)
+    print("[reddit] no app credentials; using the public endpoint (403s from a runner)")
+    return _fetch_top_week_json(limit)
+
+
+def _fetch_top_week_oauth(limit: int) -> list[RedditPost]:
+    resp = requests.get(
+        REDDIT_OAUTH_TOP_URL,
+        params={"t": "week", "limit": limit},
+        headers={
+            "Authorization": f"bearer {_app_only_token()}",
+            "User-Agent": REDDIT_UA,
+            "Accept": "application/json",
+        },
+        timeout=30,
+    )
+    resp.raise_for_status()
+    return _posts_from_listing(resp.json())
 
 
 def _fetch_top_week_json(limit: int) -> list[RedditPost]:
@@ -85,8 +139,16 @@ def _fetch_top_week_json(limit: int) -> list[RedditPost]:
     if "json" not in ctype:
         raise RuntimeError(f"Reddit returned non-JSON content-type: {ctype!r}")
 
-    data = resp.json()
-    children = data.get("data", {}).get("children", [])
+    return _posts_from_listing(resp.json())
+
+
+def _posts_from_listing(data: dict) -> list[RedditPost]:
+    """The usable posts in a Reddit listing, whichever route fetched it.
+
+    oauth.reddit.com returns the same shape as the public .json endpoint, so
+    the filtering lives here rather than twice.
+    """
+    children = (data or {}).get("data", {}).get("children", [])
     now = time.time()
     posts: list[RedditPost] = []
     for child in children:
@@ -112,71 +174,6 @@ def _fetch_top_week_json(limit: int) -> list[RedditPost]:
             num_comments=int(d.get("num_comments") or 0),
             created_utc=float(d.get("created_utc") or 0),
             flair=(d.get("link_flair_text") or "").strip(),
-        ))
-    return posts
-
-
-def _fetch_top_week_rss(limit: int) -> list[RedditPost]:
-    """Atom-feed fallback. The submitted URL is embedded in the entry's
-    content HTML as <a ...>[link]</a>; for self-posts that anchor points
-    back at the reddit thread itself, which we filter out."""
-    resp = requests.get(
-        REDDIT_RSS_URL,
-        params={"t": "week", "limit": limit},
-        headers={
-            "User-Agent": REDDIT_UA,
-            "Accept": "application/atom+xml,application/xml,text/xml",
-        },
-        timeout=30,
-    )
-    resp.raise_for_status()
-
-    soup = BeautifulSoup(resp.content, "lxml-xml")
-    now = time.time()
-    posts: list[RedditPost] = []
-
-    for entry in soup.find_all("entry"):
-        title_el = entry.find("title")
-        title = title_el.get_text().strip() if title_el else ""
-
-        link_el = entry.find("link")
-        permalink_url = (link_el.get("href") if link_el else "") or ""
-        permalink = permalink_url.replace("https://www.reddit.com", "")
-
-        published_el = entry.find("published")
-        created_utc = 0.0
-        if published_el and published_el.get_text():
-            try:
-                ts = published_el.get_text().strip().replace("Z", "+00:00")
-                created_utc = datetime.fromisoformat(ts).timestamp()
-            except Exception:
-                created_utc = 0.0
-        if created_utc and (now - created_utc) < MIN_POST_AGE_SECONDS:
-            continue
-
-        # Submitted URL is the [link] anchor inside the HTML-encoded content.
-        url = ""
-        content_el = entry.find("content")
-        if content_el and content_el.get_text():
-            inner = BeautifulSoup(content_el.get_text(), "html.parser")
-            for a in inner.find_all("a"):
-                if a.get_text().strip().lower() == "[link]":
-                    url = (a.get("href") or "").strip()
-                    break
-        if not url:
-            continue
-        # Self-posts: [link] points back at the comments page; skip.
-        if url == permalink_url or "/r/science/comments/" in url:
-            continue
-
-        posts.append(RedditPost(
-            title=title,
-            url=url,
-            permalink=permalink,
-            score=0,
-            num_comments=0,
-            created_utc=created_utc,
-            flair="",
         ))
     return posts
 

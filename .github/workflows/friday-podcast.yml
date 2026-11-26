@@ -32,6 +32,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          # Reddit 403s every datacenter IP on its public JSON endpoint, so
+          # the crawl goes through application-only OAuth. Without these two
+          # it falls back to that endpoint, which fails from a runner, and
+          # the Friday slot takes the PubMed strand instead. Register the app
+          # at https://www.reddit.com/prefs/apps (type: script).
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           # The pick stages its paper's full text in the private papers
           # repository, where the writer routine reads it; GH_PAT needs
           # Contents: Read and write there.
