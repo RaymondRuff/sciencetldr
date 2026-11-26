@@ -926,6 +926,71 @@ never missed; the poll's dispatch once Monday's windows close; and
 `email-digest`'s own crons, which are the least reliable of the three and now
 only a backstop. The sent record is what makes stacking them free.
 
+## Update, 2026-11-26: r/science by OAuth, and a fallback that never worked
+
+Friday's episode on 20 November opened as the PubMed trending pick, not the
+r/science one, and Ray asked whether the crawl had failed. It had. Issue #144
+carries `friday-reddit-failed`, and Thursday's run says why:
+
+    [reddit] JSON endpoint failed (403 Client Error: Blocked); trying RSS
+    [select-friday] reddit fetch failed: 404 Client Error: Not Found
+    [select-friday] reddit yielded nothing — falling back to PubMed trending
+
+Reddit 403s datacenter IPs on the public JSON endpoint whatever User-Agent it
+is sent, which the code's own docstring already said. The strand has otherwise
+held: **twenty-eight picks from Reddit against two failures**, the other in
+May.
+
+**The fallback had never worked.** It asked for `/r/science/top.rss?t=week`,
+which answers Reddit's "Not Found" feed — Ray confirmed it in a browser, where
+nothing is rate-limited or UA-blocked, and so did `/top/.rss`, which was the
+first guess at a fix. Sorted RSS listings no longer exist. Every variant
+tried from the sandbox:
+
+| | |
+|---|---|
+| `/r/science/top.rss?t=week` | 404, the one the code requested |
+| `/r/science/top/.rss?t=week` | 404 |
+| `/r/science/.rss?sort=top&t=week` | 404 |
+| `/r/science/.rss` | 429 — the path exists, the client is refused |
+| `/r/science/top.json?t=week` | 403, as in production |
+
+So the fallback burned a request to produce a guaranteed 404 while logging
+"trying RSS" as though it might succeed. It is gone. There is no fallback now,
+deliberately: a failure that announces itself is worth more than one that
+cannot succeed, and `select_friday_paper` already handles the failure properly
+by labelling the Issue and taking the PubMed strand, which the hosts then tell
+the listener.
+
+**The way in is application-only OAuth.** `_app_only_token()` exchanges the
+app's id and secret for a bearer token at
+`www.reddit.com/api/v1/access_token` with `grant_type=client_credentials`, and
+`_fetch_top_week_oauth()` reads `oauth.reddit.com/r/science/top?t=week`. That
+route is supported from a server and allows a hundred requests a minute per
+client against the one a week this makes. Both routes share
+`_posts_from_listing()`, because `oauth.reddit.com` returns the same shape as
+the public endpoint — so a post dropped by one is dropped by the other.
+
+Without credentials it still uses the public endpoint, which is what a laptop
+has and works there. Ray registers the app at
+`https://www.reddit.com/prefs/apps` (type: script) and adds
+`REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET` as repository secrets; the
+workflow already passes them. Nothing here can be tested end to end from the
+sandbox — Reddit refuses it with 403, 404 and 429 by turns even with
+`www.reddit.com` allowed — so Thursday's run is the real test, and a wrong app
+type or secret surfaces as an unswallowed `HTTPError` rather than as "reddit
+had nothing".
+
+### A test that only passed in the afternoon
+
+`test_asking_comes_before_complaining`, written on the 23rd, derived its digest
+date from `now - 40 hours`. The thresholds count from **midnight** of the
+digest's date, so "due but not overdue" is the clock window 14:00 to 24:00
+UTC: the test passed when it was written at about 17:40 and failed at 01:45
+three days later. It now names the state it wants instead of inferring it from
+the wall clock. Worth remembering that a date-stamped record compared against
+hour-based thresholds has no stable relationship to "now minus N hours".
+
 ## The decision
 
 Script generation currently runs on the **Anthropic API** from GitHub Actions
