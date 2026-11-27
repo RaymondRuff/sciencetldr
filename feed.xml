@@ -7,7 +7,7 @@
     <description><![CDATA[<p>Ten-minute paper summaries for scientists and experts.</p><p>Two episodes a week: Mondays feature the top-scoring paper from a curated weekly digest of T cell engager, bispecific antibody, and protein engineering literature. Fridays cover the top trending paper on PubMed — any field, whatever's catching the research community's attention that week.</p><p>Hosted by Raymond Ruff, a protein scientist working in translational immunotherapeutics. Audio is generated with NotebookLM; the host prompt aims for measured scientific skepticism rather than hype.</p><p>Feedback and paper suggestions: <a href="mailto:sciencetldrpod@gmail.com">sciencetldrpod@gmail.com</a></p>]]></description>
     <language>en</language>
     <copyright>Raymond Ruff 2023</copyright>
-    <lastBuildDate>Thu, 16 Oct 2025 00:19:35 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jan 2025 16:17:55 GMT</lastBuildDate>
     <generator>sciencetldr/feed_builder.py</generator>
     <itunes:author>Raymond Ruff</itunes:author>
     <itunes:type>episodic</itunes:type>
@@ -2785,6 +2785,43 @@
       <podcast:episode>103</podcast:episode>
       <itunes:explicit>false</itunes:explicit>
       <pubDate>Mon, 23 Nov 2026 11:25:18 +0000</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[Episode 104: Trending — Recommendations for the use of hormone and nonhormone treatment of vasomotor symptoms of menopause: Menopause Medical Eligibility Criteria (MenoMEC) based on insights from a modified Delphi panel]]></title>
+      <itunes:title><![CDATA[Trending — Recommendations for the use of hormone and nonhormone treatment of vasomotor symptoms of menopause: Menopause Medical Eligibility Criteria (MenoMEC) based on insights from a modified Delphi panel]]></itunes:title>
+      <description><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the most-discussed paper on PubMed this week.</p>
+<p><strong><a href="https://doi.org/10.1097/GME.0000000000002947">Recommendations for the use of hormone and nonhormone treatment of vasomotor symptoms of menopause: Menopause Medical Eligibility Criteria (MenoMEC) based on insights from a modified Delphi panel</a></strong></p>
+<p><em>Menopause, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1097/GME.0000000000002947">10.1097/GME.0000000000002947</a></p>
+<p><strong>Question:</strong> Can a US expert panel agree which hormone and nonhormone treatments for menopausal hot flashes suit women with specific comorbidities?</p>
+<p><strong>Answer:</strong> A 15-physician modified Delphi (11 answered the survey; consensus at ≥70% agreement) built a 1–4 eligibility grid. Online, no comorbidity reached consensus on hormone versus nonhormone therapy; all were settled in person, with no vote tallies reported.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Measured agreement covers the uncontroversial: hormone therapy first-line when safe, clonidine unanimously rejected; SSRIs/SNRIs, gabapentin, oxybutynin and NK-targeted drugs as alternatives.</li>
+<li>Hormone-or-not for every listed comorbidity missed the 70% bar online; the in-person resolution is expert judgment with no tallies reported.</li>
+<li>The contraceptive-style grid separates initiation from continuation and relative from absolute risk, so prior VTE is no longer an automatic no.</li>
+</ol>]]></description>
+      <content:encoded><![CDATA[<p><strong>Top Trending Friday</strong> — our weekly pick of the most-discussed paper on PubMed this week.</p>
+<p><strong><a href="https://doi.org/10.1097/GME.0000000000002947">Recommendations for the use of hormone and nonhormone treatment of vasomotor symptoms of menopause: Menopause Medical Eligibility Criteria (MenoMEC) based on insights from a modified Delphi panel</a></strong></p>
+<p><em>Menopause, 2026</em></p>
+<p>DOI: <a href="https://doi.org/10.1097/GME.0000000000002947">10.1097/GME.0000000000002947</a></p>
+<p><strong>Question:</strong> Can a US expert panel agree which hormone and nonhormone treatments for menopausal hot flashes suit women with specific comorbidities?</p>
+<p><strong>Answer:</strong> A 15-physician modified Delphi (11 answered the survey; consensus at ≥70% agreement) built a 1–4 eligibility grid. Online, no comorbidity reached consensus on hormone versus nonhormone therapy; all were settled in person, with no vote tallies reported.</p>
+<p><strong>Three takeaways</strong></p>
+<ol>
+<li>Measured agreement covers the uncontroversial: hormone therapy first-line when safe, clonidine unanimously rejected; SSRIs/SNRIs, gabapentin, oxybutynin and NK-targeted drugs as alternatives.</li>
+<li>Hormone-or-not for every listed comorbidity missed the 70% bar online; the in-person resolution is expert judgment with no tallies reported.</li>
+<li>The contraceptive-style grid separates initiation from continuation and relative from absolute risk, so prior VTE is no longer an automatic no.</li>
+</ol>]]></content:encoded>
+      <link>https://raymondruff.github.io/sciencetldr/#episode-104</link>
+      <enclosure url="https://raymondruff.github.io/sciencetldr/episodes/104-recommendations-for-the-use-of-hormone-and-nonhormone.mp3" length="7709051" type="audio/mpeg"/>
+      <guid isPermaLink="false">a5bceb0b-2c82-4686-a091-1146e9131a42</guid>
+      <itunes:duration>642</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>104</itunes:episode>
+      <podcast:episode>104</podcast:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <pubDate>Fri, 27 Nov 2026 11:21:47 +0000</pubDate>
     </item>
   </channel>
 </rss>
