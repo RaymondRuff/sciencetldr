@@ -2,18 +2,37 @@
   "issue": 152,
   "writer": "routine",
   "paper_source": "bundle:issue-152 (publisher HTML from journals.lww.com, staged in the papers repository and normalised by scripts/paper_bundle.py; Fig. 1 grid image not included)",
-  "checked": false,
+  "checked": true,
   "callbacks": [
     87,
     91
   ],
-  "show_notes": "**[Recommendations for the use of hormone and nonhormone treatment of vasomotor symptoms of menopause: Menopause Medical Eligibility Criteria (MenoMEC) based on insights from a modified Delphi panel](https://doi.org/10.1097/GME.0000000000002947)**\n\n*Menopause, 2026*\n\nDOI: [10.1097/GME.0000000000002947](https://doi.org/10.1097/GME.0000000000002947)\n\n**Question:** Can a US expert panel agree which hormone and nonhormone treatments for menopausal hot flashes suit women with specific comorbidities?\n\n**Answer:** A 15-physician modified Delphi (11 answered the survey; consensus at ≥70% agreement) built a 1–4 eligibility grid. Every comorbidity item failed online consensus and was settled in person, with no vote tallies reported.\n\n**Three takeaways**\n\n1. Measured agreement covers the uncontroversial: hormone therapy first-line when safe, clonidine unanimously rejected, SSRIs/SNRIs, gabapentin, oxybutynin and NK-targeted drugs as alternatives.\n2. All comorbidity questions missed the 70% bar online; their resolution in person is expert judgment of unreported unanimity.\n3. The contraceptive-style grid separates initiation from continuation and relative from absolute risk, so prior VTE is no longer an automatic no.",
-  "verification_changes": [],
+  "show_notes": "**[Recommendations for the use of hormone and nonhormone treatment of vasomotor symptoms of menopause: Menopause Medical Eligibility Criteria (MenoMEC) based on insights from a modified Delphi panel](https://doi.org/10.1097/GME.0000000000002947)**\n\n*Menopause, 2026*\n\nDOI: [10.1097/GME.0000000000002947](https://doi.org/10.1097/GME.0000000000002947)\n\n**Question:** Can a US expert panel agree which hormone and nonhormone treatments for menopausal hot flashes suit women with specific comorbidities?\n\n**Answer:** A 15-physician modified Delphi (11 answered the survey; consensus at ≥70% agreement) built a 1–4 eligibility grid. Online, no comorbidity reached consensus on hormone versus nonhormone therapy; all were settled in person, with no vote tallies reported.\n\n**Three takeaways**\n\n1. Measured agreement covers the uncontroversial: hormone therapy first-line when safe, clonidine unanimously rejected; SSRIs/SNRIs, gabapentin, oxybutynin and NK-targeted drugs as alternatives.\n2. Hormone-or-not for every listed comorbidity missed the 70% bar online; the in-person resolution is expert judgment with no tallies reported.\n3. The contraceptive-style grid separates initiation from continuation and relative from absolute risk, so prior VTE is no longer an automatic no.",
+  "verification_changes": [
+    "Nadia's Delphi turn stacked six figures (fifteen, nine-point, seventy percent, seven to nine, one to three); cut to fifteen and seventy percent, bands described as top and bottom thirds",
+    "Theo said 'seventy percent of eleven, that's eight people' (three figures in one turn); cut to 'eight people agreeing', which is the correct minimum (0.7 x 11 = 7.7)",
+    "Nadia's meeting-attendance turn spoke five figures (March 2025, fifteen, ten, seven, three); cut to fifteen and ten, the comparison Theo reacts to",
+    "Theo said the authors call anonymity 'the point' of a Delphi; the paper says anonymity gives equal weight without the pressures of open debate, reworded to that",
+    "Nadia called the contraceptive eligibility grid one 'American clinicians already know'; the paper does not say so, only that the format was chosen to aid interpretability and clinical use",
+    "Nadia said continuing 'a transdermal patch' in the sixties; the paper says transdermal HT, not specifically patches",
+    "Theo said nothing the drafters didn't phrase can reach consensus; the survey included open-ended questions and panelists raised barriers the survey never asked about, so the claim was softened to instrument shaping the rated statements",
+    "Nadia said 'insurers often demand a four- to six-week trial'; the paper says access challenges often require a 4-6 week trial, reworded to 'access rules' and 'a month or more' to keep the turn to one figure",
+    "Nadia said the one-week onset claim was 'from the discussion'; it is reported in the Results as panelists' remarks at the meeting, not the paper's Discussion section",
+    "Theo said 'mandatory liver tests'; the paper says NK drugs require routine liver function monitoring",
+    "Takeaway two said 'every comorbidity question failed'; the paper reports disagreement on HT-versus-NHT selection for each listed comorbidity, with no item-level counts, so it is now stated that way in dialogue and show notes",
+    "Show notes takeaway two said the in-person resolution was 'unreported unanimity', which implies the votes were unanimous; replaced with 'no tallies reported'"
+  ],
   "runs": [
     {
       "role": "writer",
       "started": "2026-11-27T08:06:34Z",
       "finished": "2026-11-27T08:10:59Z",
+      "safeguard_stops": 0
+    },
+    {
+      "role": "checker",
+      "started": "2026-11-27T11:10:07Z",
+      "finished": "2026-11-27T11:12:26Z",
       "safeguard_stops": 0
     }
   ],
@@ -56,7 +75,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Classically, experts rate statements anonymously, see the group's aggregate, and rate again, over several rounds. In the authors' own description, anonymity lets every view carry equal weight, without the pressures of open debate. Theirs is modified: one anonymous online survey, then an in-person meeting where items that hadn't reached agreement were discussed and re-voted. Fifteen physicians, each statement rated on a nine-point scale, and an item counted as consensus if seventy percent of panelists landed in the same band, seven to nine for agreement, one to three for disagreement."
+      "text": "Classically, experts rate statements anonymously, see the group's aggregate, and rate again, over several rounds. In the authors' own description, anonymity lets every view carry equal weight, without the pressures of open debate. Theirs is modified: one anonymous online survey, then an in-person meeting where items that hadn't reached agreement were discussed and re-voted. Fifteen physicians, each statement rated on a scale, and an item counted as consensus if seventy percent of panelists landed in the same band, the top third for agreement or the bottom third for disagreement."
     },
     {
       "speaker": "Theo",
@@ -76,7 +95,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "Oh, so the bar was really seventy percent of eleven. That's eight people, in the one round that's actually anonymous."
+      "text": "Oh, so the bar was really eight people agreeing, in the one round that's actually anonymous."
     },
     {
       "speaker": "Nadia",
@@ -92,7 +111,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "Then there are two readings. In one, the room genuinely converged: people heard the cardiologist and the oncologist reason it through and moved, which is what the modification is for. In the other, the anonymity the authors themselves call the point of a Delphi disappeared precisely where it was needed. Those two produce identical grids. So what does the paper report from the re-vote?"
+      "text": "Then there are two readings. In one, the room genuinely converged: people heard the cardiologist and the oncologist reason it through and moved, which is what the modification is for. In the other, the anonymity the authors themselves describe as shielding a Delphi from open debate disappeared precisely where it was needed. Those two produce identical grids. So what does the paper report from the re-vote?"
     },
     {
       "speaker": "Nadia",
@@ -104,7 +123,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "That's fair. And the first meeting, in March twenty twenty-five, had all fifteen. The final one, a year later, to finalise the recommendations, had ten. Seven in the room, three online."
+      "text": "That's fair. And the first meeting had all fifteen. The final one, a year later, to finalise the recommendations, had ten, some of them joining online."
     },
     {
       "speaker": "Theo",
@@ -116,7 +135,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Hormone therapy is first-line for moderate to severe symptoms in women without contraindications. For non-hormone options, the antidepressants, gabapentin and oxybutynin, with the neurokinin drugs supported as first-line where cost and access allow. Clonidine, a blood pressure drug, was unanimously not recommended, for lack of efficacy and a risk of low blood pressure. "
+      "text": "Hormone therapy is first-line for moderate to severe symptoms in women without contraindications. For non-hormone options, the antidepressants, gabapentin and oxybutynin, with the neurokinin drugs supported as first-line where cost and access allow. Clonidine, a blood pressure drug, was unanimously not recommended, for lack of efficacy and a risk of low blood pressure."
     },
     {
       "speaker": "Theo",
@@ -124,7 +143,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Probably. What I'd credit is the format. They modelled it on the American Medical Eligibility Criteria for Contraceptive Use, a grid American clinicians already know. Category one, no restriction. Two, advantages generally outweigh the risks. Three, risks usually outweigh the advantages. Four, unacceptable risk, don't use it. And each therapy gets separate ratings for starting it and for continuing it."
+      "text": "Probably. What I'd credit is the format. They modelled it on the American Medical Eligibility Criteria for Contraceptive Use, chosen, they say, to make it easy to interpret and use in clinic. Category one, no restriction. Two, advantages generally outweigh the risks. Three, risks usually outweigh the advantages. Four, unacceptable risk, don't use it. And each therapy gets separate ratings for starting it and for continuing it."
     },
     {
       "speaker": "Theo",
@@ -132,7 +151,7 @@
     },
     {
       "speaker": "Nadia",
-      "text": "Age shows it best. Over seventy, they judge the risks of hormone therapy generally greater than the benefits. In the sixties, continuing a transdermal patch generally favours the advantages, while starting oral hormones generally doesn't."
+      "text": "Age shows it best. Over seventy, they judge the risks of hormone therapy generally greater than the benefits. In the sixties, continuing hormones through the skin generally favours the advantages, while starting oral hormones generally doesn't."
     },
     {
       "speaker": "Theo",
@@ -176,11 +195,11 @@
     },
     {
       "speaker": "Theo",
-      "text": "That's episode ninety-one's problem, the interviews with young men about sex, where the guide never asked how sex feels and the absence of enjoyment became the headline. A Delphi panel can only agree or disagree with statements someone put in front of it. Nothing the drafters didn't phrase can reach consensus. Nobody has to steer. The instrument sets the space of possible answers."
+      "text": "That's episode ninety-one's problem, the interviews with young men about sex, where the guide never asked how sex feels and the absence of enjoyment became the headline. The survey did have free-text questions, and the room raised barriers it never asked about, like insurance. But the ratings are on statements someone put in front of the panel. Nobody has to steer for the instrument to shape the answers."
     },
     {
       "speaker": "Nadia",
-      "text": "One more place to separate claim from data. On the neurokinin drugs, panelists noted that clinicians want them for their fast onset, working within one week with minimal side effects, but that insurers often demand a four- to six-week trial of an off-label drug first."
+      "text": "One more place to separate claim from data. On the neurokinin drugs, panelists noted that clinicians want them for their fast onset, working within one week with minimal side effects, but that access rules often demand a month or more on an off-label drug first."
     },
     {
       "speaker": "Theo",
@@ -188,11 +207,11 @@
     },
     {
       "speaker": "Nadia",
-      "text": "That's from the discussion, not from data in this paper. And the same paper says these drugs need routine liver function monitoring, that fezolinetant is contraindicated in cirrhosis, and that elinzanetant may cause sleepiness. The authors also name limited long-term safety data on this class as a gap."
+      "text": "That's the panelists' remark at the meeting, not data in this paper. And the same paper says these drugs need routine liver function monitoring, that fezolinetant is contraindicated in cirrhosis, and that elinzanetant may cause sleepiness. The authors also name limited long-term safety data on this class as a gap."
     },
     {
       "speaker": "Theo",
-      "text": "So minimal side effects sits next to mandatory liver tests. I'd want the trial numbers for that claim, not the room's impression of them."
+      "text": "So minimal side effects sits next to routine liver tests. I'd want the trial numbers for that claim, not the room's impression of them."
     },
     {
       "speaker": "Nadia",
@@ -212,7 +231,7 @@
     },
     {
       "speaker": "Theo",
-      "text": "Two: every comorbidity question failed the seventy percent bar online and was settled in a room, with no tallies reported, so the hard cells are expert judgment of unknown unanimity. Three: the useful idea is the format, a one-to-four grid that separates starting from continuing, and relative from absolute risk, so a past clot stops being an automatic no."
+      "text": "Two: on hormones or not for every comorbidity they list, the panel missed the seventy percent bar online, and settled it in a room, with no tallies reported, so the hard cells are expert judgment of unknown unanimity. Three: the useful idea is the format, a one-to-four grid that separates starting from continuing, and relative from absolute risk, so a past clot stops being an automatic no."
     },
     {
       "speaker": "Nadia",
